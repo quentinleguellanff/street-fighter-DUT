@@ -51,6 +51,7 @@ int main()
     sf::Time elapsed1 = clock.restart();
     sf::Clock clockanim;
     sf::Clock clockanim3;
+    sf::Clock clockjump;
     int i = 0, time = 0;
     bool saut = false;
     bool moveright = false;
@@ -60,6 +61,7 @@ int main()
     bool coup = false;
     bool couppied = false;
     bool restart = false;
+    bool peutsauter = true;
 
     float v_x = 0;
     float v_saut = -70;
@@ -68,6 +70,7 @@ int main()
 
     int timeanim;
     int timemove;
+    int timeafterjump;
     int spriteanimrightx = 0;
     int spriteanimstatic = 0;
     int spriteanimjump = 0;
@@ -100,23 +103,37 @@ int main()
         time = elapsed1.asSeconds();
         sprite.setOrigin(taillesprite.x/2, 0.f);
 
-
-        /*if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            if(!(positionPerso.y - 10 < 0)){
-                perso.move(0.f,-10.f);
+        ///////////////////////////////////////////////////////
+        sf::Time elapsedjump = clockjump.getElapsedTime();
+        timeafterjump = elapsedjump.asMilliseconds();
+        if(!saut){
+            if(!peutsauter){
+                if(timeafterjump > 150){
+                    peutsauter = true;
+                }
             }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            if(!(positionPerso.y + 10 + taillePerso.y > LONGUEUR - tailleSol.y)){
-                perso.move(0.f,10.f);
-                cout << positionPerso.y << " ";
+        cout << peutsauter << "temps : " << timeafterjump << endl;
+
+
+        while (window.pollEvent(event)){
+
+            if (event.type == sf::Event::Closed){
+                window.close();
+
             }
-        }*/
-        if(!saut){
+            if (event.type == sf::Event::KeyReleased){
+                moveright = false;
+                moveleft = false;
+                restart = false;
+                spriteanimrightx = 0;
+                v_x = 0;
+            }
+        }
+
+        if(!saut && !coup && !couppied && peutsauter){
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-                    saut = true;
+                saut = true;
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sautleft && !sautright){
                     sautleft = true;
                 }
@@ -237,21 +254,6 @@ int main()
             }
         }
 
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed){
-                window.close();
-
-            }
-            if (event.type == sf::Event::KeyReleased){
-                moveright = false;
-                moveleft = false;
-                restart = false;
-                spriteanimrightx = 0;
-                v_x = 0;
-            }
-        }
-
         if(!moveleft && !moveright && !saut && !coup && !couppied){
             ///////////////// ANIMATION /////////////////////////////
                 sprite.setTextureRect(sf::IntRect(2+spriteanimstatic*123, 466,121,201));
@@ -264,8 +266,6 @@ int main()
                 if(spriteanimstatic >= 10){
                     spriteanimstatic = 0;
                 }
-
-                cout << spriteanimstatic << endl;
         }
 
         if(i != time){
@@ -320,12 +320,13 @@ int main()
                 sautleft = false;
                 sautright = false;
                 restart = false;
+                peutsauter = false;
                 v_y = v_saut;
                 positionPerso.y = 460;
                 perso.setPosition(positionPerso);
                 spriteanimjump = 0;
+                clockjump.restart();
             }
-            cout << positionPerso.y << endl;
         }
         if(coup){
             if(!saut){
