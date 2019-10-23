@@ -9,7 +9,7 @@ int main()
     const int LARGEUR = 1280;
     sf::RenderWindow window(sf::VideoMode(LARGEUR,LONGUEUR), "premiere fenetre");
     window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
     window.setVerticalSyncEnabled(true);
     sf::RectangleShape perso(sf::Vector2f(240.f, 400.f));
     sf::RectangleShape mannequin(sf::Vector2f(200.f, 500.f));
@@ -50,6 +50,7 @@ int main()
     sf::Clock clock;
     sf::Time elapsed1 = clock.restart();
     sf::Clock clockanim;
+    sf::Clock clockanim3;
     int i = 0, time = 0;
     bool saut = false;
     bool moveright = false;
@@ -57,16 +58,21 @@ int main()
     bool sautleft = false;
     bool sautright = false;
     bool coup = false;
+    bool couppied = false;
     bool restart = false;
 
     float v_x = 0;
-    float v_saut = -25;
-    float v_grav = 0.9;
+    float v_saut = -70;
+    float v_grav = 6;
     float v_y = v_saut;
 
     int timeanim;
+    int timemove;
     int spriteanimrightx = 0;
     int spriteanimstatic = 0;
+    int spriteanimjump = 0;
+    int spriteanimcoup = 0;
+    int spriteanimcouppied = 0;
 
 
     while (window.isOpen())
@@ -108,54 +114,127 @@ int main()
                 cout << positionPerso.y << " ";
             }
         }*/
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            if(!(positionPerso.x + taillePerso.x + 5 > LARGEUR)){
-                //perso.move(5.f,0.f);
-                moveright = true;
-            }
-            else{
-                moveright = false;
-            }
-            if(!restart){
-                clockanim.restart();
-                restart = true;
-            }
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            if(!(positionPerso.x - 5 < 0)){
-                //perso.move(-5.f,0.f);
-                moveleft = true;
-            }
-            else{
-                moveleft =  false;
-            }
-            if(!restart){
-                clockanim.restart();
-                restart = true;
-            }
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-                if(!saut){
+        if(!saut){
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
                     saut = true;
-                }
-                if(moveleft && !sautleft){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sautleft && !sautright){
                     sautleft = true;
-                    saut = true;
-
                 }
-                if(moveright && !sautright){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sautright && !sautleft){
                     sautright = true;
-                    saut = true;
+                }
+                if(!restart){
+                    clockanim.restart();
+                    restart = true;
                 }
 
+            }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                coup = true;
+
+        if(!coup && !couppied && !saut && !sautleft && !sautright){
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                if(!coup && !couppied){
+                    coup = true;
+                    moveright = false;
+                    moveleft = false;
+                    positionPerso.x += 112;
+                    positionPerso.y += 20;
+                    perso.setPosition(positionPerso);
+                    sprite.setPosition(positionPerso);
+                }
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                if(!coup && !couppied){
+                    couppied = true;
+                    moveright = false;
+                    moveleft = false;
+                    positionPerso.x += 160;
+                    perso.setPosition(positionPerso);
+                    sprite.setPosition(positionPerso);
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                if(!(positionPerso.x + taillePerso.x + 10 > LARGEUR) && !coup && !couppied && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                    //perso.move(5.f,0.f);
+                    moveright = true;
+                }
+                else{
+                    moveright = false;
+                }
+                if(!restart){
+                    clockanim.restart();
+                    restart = true;
+                }
+            }
+            if(moveright){
+                if(!saut){
+                    ///////////////// ANIMATION /////////////////////////////
+                    sprite.setTextureRect(sf::IntRect(2, 873,128,200));
+                    sf::Time elapsed2 = clockanim.getElapsedTime();
+                    timeanim = elapsed2.asMilliseconds();
+                    sf::Time elapsed3 = clockanim3.getElapsedTime();
+                    timemove = elapsed3.asMilliseconds();
+
+                    if(timeanim > 70){
+                        spriteanimrightx++;
+                        clockanim.restart();
+                    }
+                    if(spriteanimrightx >= 13){
+                        spriteanimrightx = 1;
+                    }
+                    if(spriteanimrightx >= 1){
+                        sprite.setTextureRect(sf::IntRect(2+spriteanimrightx*130, 873,128,200));
+                    }
+                    ///////////////// DEPLACEMENT /////////////////////////////
+                    v_x=15;
+                    if(timemove > 20){
+                        positionPerso.x += v_x;
+                        clockanim3.restart();
+                    }
+                    perso.setPosition(positionPerso);
+
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                if(!(positionPerso.x - 10 < 0)&& !coup && !couppied && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                    //perso.move(-5.f,0.f);
+                    moveleft = true;
+                }
+                else{
+                    moveleft =  false;
+                }
+                if(!restart){
+                    clockanim.restart();
+                    restart = true;
+                }
+            }
+            if(moveleft){
+                if(!saut){
+                    ///////////////// ANIMATION /////////////////////////////
+                    sprite.setScale(-2,2);
+                    sprite.setTextureRect(sf::IntRect(2, 11437,153,207));
+                    sf::Time elapsed2 = clockanim.getElapsedTime();
+                    timeanim = elapsed2.asMilliseconds();
+                    sf::Time elapsed3 = clockanim3.getElapsedTime();
+                    timemove = elapsed3.asMilliseconds();
+
+                    if(timeanim > 70){
+                        sprite.setTextureRect(sf::IntRect(157, 11437,153,207));
+                    }
+
+                    ///////////////// DEPLACEMENT /////////////////////////////
+                        v_x=-15;
+                    if(timemove > 20){
+                        positionPerso.x += v_x;
+                        clockanim3.restart();
+                    }
+                    perso.setPosition(positionPerso);
+                }
+            }
         }
 
         while (window.pollEvent(event))
@@ -167,79 +246,13 @@ int main()
             if (event.type == sf::Event::KeyReleased){
                 moveright = false;
                 moveleft = false;
-                coup = false;
                 restart = false;
                 spriteanimrightx = 0;
                 v_x = 0;
             }
         }
 
-        if(saut){
-                if(sautleft && !(positionPerso.x <= 0)){
-                    positionPerso.x += -5;
-                }
-                if(sautright && !(positionPerso.x + taillePerso.x >= LARGEUR)){
-                    positionPerso.x += +5;
-                }
-            positionPerso.y += v_y;
-
-            v_y += v_grav;
-
-            perso.setPosition(positionPerso);
-            if(positionPerso.y >= 460){
-                saut = false;
-                sautleft = false;
-                sautright = false;
-                v_y = v_saut;
-                positionPerso.y = 460;
-                perso.setPosition(positionPerso);
-            }
-            cout << positionPerso.y << endl;
-
-
-        }
-        if(moveright){
-                if(!saut){
-                    ///////////////// ANIMATION /////////////////////////////
-                    sprite.setTextureRect(sf::IntRect(2, 873,120,200));
-                    sf::Time elapsed2 = clockanim.getElapsedTime();
-                    timeanim = elapsed2.asMilliseconds();
-                    if(timeanim > 70){
-                        spriteanimrightx++;
-                        clockanim.restart();
-                    }
-                    if(spriteanimrightx >= 13){
-                        spriteanimrightx = 1;
-                    }
-                    if(spriteanimrightx >= 1){
-                        sprite.setTextureRect(sf::IntRect(2+spriteanimrightx*130, 873,120,200));
-                    }
-                    ///////////////// DEPLACEMENT /////////////////////////////
-                    v_x=5;
-                    positionPerso.x += v_x;
-                    perso.setPosition(positionPerso);
-
-                }
-        }
-        if(moveleft){
-                if(!saut){
-                    ///////////////// ANIMATION /////////////////////////////
-                    sprite.setScale(-2,2);
-                    sprite.setTextureRect(sf::IntRect(2, 11437,153,207));
-                    sf::Time elapsed2 = clockanim.getElapsedTime();
-                    timeanim = elapsed2.asMilliseconds();
-                    if(timeanim > 70){
-                        sprite.setTextureRect(sf::IntRect(157, 11437,153,207));
-                    }
-
-                    ///////////////// DEPLACEMENT /////////////////////////////
-                    v_x=-5;
-                    positionPerso.x += v_x;
-                    perso.setPosition(positionPerso);
-                }
-        }
-
-        if(!moveleft && !moveright && !saut){
+        if(!moveleft && !moveright && !saut && !coup && !couppied){
             ///////////////// ANIMATION /////////////////////////////
                 sprite.setTextureRect(sf::IntRect(2+spriteanimstatic*123, 466,121,201));
                 sf::Time elapsed2 = clockanim.getElapsedTime();
@@ -251,6 +264,7 @@ int main()
                 if(spriteanimstatic >= 10){
                     spriteanimstatic = 0;
                 }
+
                 cout << spriteanimstatic << endl;
         }
 
@@ -259,23 +273,129 @@ int main()
             text.setString(to_string(i));
         }
 
-        if(coup){
-            positionbras.x = positionPerso.x + taillePerso.x;
-            positionbras.y = positionPerso.y + taillePerso.y*1/3;
-            bras.setPosition(positionbras);
+        if(saut){
+            couppied = false;
+            coup = false;
+                //sprite.setTextureRect(sf::IntRect(2, 1650,156,208));
+            sf::Time elapsed2 = clockanim.getElapsedTime();
+            timeanim = elapsed2.asMilliseconds();
+            sf::Time elapsed3 = clockanim3.getElapsedTime();
+            timemove = elapsed3.asMilliseconds();
 
-            window.draw(bras);
+
+            if(timeanim > 100){
+                spriteanimjump++;
+                clockanim.restart();
+            }
+
+            if(spriteanimjump >= 5){
+                sprite.setTextureRect(sf::IntRect(2+(5*158), 1650,156,208));
+            }
+            else{
+                sprite.setTextureRect(sf::IntRect(2+spriteanimjump*158, 1650,156,208));
+            }
+            if(sautleft && !(positionPerso.x <= 0)){
+                sautright = false;
+                if(timemove > 20){
+                    positionPerso.x += -15;
+                    clockanim3.restart();
+                }
+            }
+            if(sautright && !(positionPerso.x + taillePerso.x >= LARGEUR)){
+                sautleft = false;
+                if(timemove > 20){
+                    positionPerso.x += 15;
+                    clockanim3.restart();
+                }
+            }
+            if(timemove > 20){
+                v_y += v_grav;
+                positionPerso.y += v_y;
+                clockanim3.restart();
+            }
+
+            perso.setPosition(positionPerso);
+            if(positionPerso.y >= 460){
+                saut = false;
+                sautleft = false;
+                sautright = false;
+                restart = false;
+                v_y = v_saut;
+                positionPerso.y = 460;
+                perso.setPosition(positionPerso);
+                spriteanimjump = 0;
+            }
+            cout << positionPerso.y << endl;
+        }
+        if(coup){
+            if(!saut){
+                moveright = false;
+                moveleft = false;
+                sf::Time elapsed2 = clockanim.getElapsedTime();
+                timeanim = elapsed2.asMilliseconds();
+
+                    if(timeanim > 30){
+                        spriteanimcoup++;
+                        clockanim.restart();
+                    }
+
+                    if(spriteanimcoup >= 5){
+                        spriteanimcoup = 0;
+                        positionPerso.x -= 112;
+                        positionPerso.y -= 20;
+                        perso.setPosition(positionPerso);
+                        sprite.setPosition(positionPerso);
+                        sprite.setTextureRect(sf::IntRect(2, 466,121,201));
+                        coup = false;
+                    }
+                    else{
+                        sprite.setTextureRect(sf::IntRect(2+spriteanimcoup*179, 2765,177,191));
+                    }
+
+
+            }
         }
 
-        if(coup && (positionbras.x + taillebras.x > posMannequin.x)){
+        if(couppied){
+            if(!saut){
+                moveright = false;
+                moveleft = false;
+                sf::Time elapsed2 = clockanim.getElapsedTime();
+                timeanim = elapsed2.asMilliseconds();
+
+                    if(timeanim > 30){
+                        spriteanimcouppied++;
+                        clockanim.restart();
+                    }
+
+                    if(spriteanimcouppied >= 8){
+                        spriteanimcouppied = 0;
+                        positionPerso.x -= 160;
+                        perso.setPosition(positionPerso);
+                        sprite.setPosition(positionPerso);
+                        sprite.setTextureRect(sf::IntRect(2, 466,121,201));
+                        couppied = false;
+                    }
+                    else{
+                        sprite.setTextureRect(sf::IntRect(2+spriteanimcouppied*204, 4738,202,203));
+                    }
+
+
+            }
+        }
+
+        if(coup && spriteanimcoup == 1 && (sprite.getPosition().x + taillePerso.x > posMannequin.x)){
 
             mannequin.setFillColor(sf::Color::Blue);
         }
+         if(couppied && spriteanimcouppied == 4 && (sprite.getPosition().x + taillePerso.x > posMannequin.x)){
 
+            mannequin.setFillColor(sf::Color::Blue);
+        }
         //window.draw(perso);
         window.draw(sol);
         window.draw(text);
-        window.draw(point);
+        //window.draw(point);
         window.draw(mannequin);
         window.draw(sprite);
 
@@ -284,3 +404,4 @@ int main()
 
     return 0;
 }
+
