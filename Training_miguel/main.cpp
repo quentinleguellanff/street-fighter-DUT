@@ -37,6 +37,7 @@ int main()
 		sf::Event event;
 		if(!inAction)
 		{
+			forward=false,backward=false,jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;punch=false,kick=false;
 			if (sf::Joystick::isConnected(0))
 			{
 				punch=sf::Joystick::isButtonPressed(0, 0);
@@ -44,7 +45,7 @@ int main()
 				controller0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 				controller0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 				cout<<"x : "<<controller0_axisX<<"\t y : "<<controller0_axisY<<endl;
-				if( (controller0_axisX > -30 && controller0_axisX < 30) && (controller0_axisY > -30 && controller0_axisY < 30))
+				if( (controller0_axisX > -40 && controller0_axisX < 40) && (controller0_axisY > -40 && controller0_axisY < 40))
 				{
 					forward=false;
 					backward=false;
@@ -52,15 +53,15 @@ int main()
 					jumpForward=false;
 					jumpBackward=false;
 				}
-				else if( (controller0_axisX > 30) && (controller0_axisY < 25 && controller0_axisY > -25) )
+				else if( (controller0_axisX > 40) && (controller0_axisY < 25 && controller0_axisY > -25) )
 					forward=true;
-				else if( (controller0_axisX < -30) && (controller0_axisY < 25 && controller0_axisY > -25) )
+				else if( (controller0_axisX < -40) && (controller0_axisY < 25 && controller0_axisY > -25) )
 					backward=true;
-				else if( (controller0_axisX>-15 && controller0_axisX<15) && (controller0_axisY<-50) )
+				else if( (controller0_axisX>-40 && controller0_axisX<40) && (controller0_axisY<-40) )
 					jump=true;
-				else if( (controller0_axisX<=80 && controller0_axisX>=15) && (controller0_axisY<-50) )
+				else if( (controller0_axisX<=95 && controller0_axisX>=40) && (controller0_axisY<-40) )
 					jumpForward=true;
-				else if( (controller0_axisX>=-80 && controller0_axisX<=-15) && (controller0_axisY<-50) )
+				else if( (controller0_axisX>=-95 && controller0_axisX<=-40) && (controller0_axisY<-40) )
 					jumpBackward=true;
 
 			}else
@@ -301,12 +302,6 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            if(event.type == sf::Event::KeyReleased || sf::Joystick::isConnected(0))
-            {
-            	forward=false;
-            	backward=false;
-            }
-
         }
 
 
