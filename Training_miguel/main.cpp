@@ -21,9 +21,9 @@ int main()
 
 	Personnage perso(background);
 
-	bool forward=false,backward=false,jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;
+	bool noMove=false, forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;
 	bool punch=false,kick=false;
-	int xForward=-1,xBackward=-1,xJump=-1,xJumpDirection=5,xPunch=-1,xKick=-1;
+	int xNoMove=-1, xForward=-1,xBackward=-1, xCrouch=-1, xJump=-1,xJumpDirection=5,xPunch=-1,xKick=-1;
 	sf::Clock clockAnim;
 	int timeanim;
 
@@ -37,25 +37,26 @@ int main()
 		sf::Event event;
 		if(!inAction)
 		{
-			forward=false,backward=false,jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;punch=false,kick=false;
+			noMove=false, forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;punch=false,kick=false;
 			if (sf::Joystick::isConnected(0))
 			{
 				punch=sf::Joystick::isButtonPressed(0, 0);
 				kick=sf::Joystick::isButtonPressed(0, 1);
 				controller0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 				controller0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
-				cout<<"x : "<<controller0_axisX<<"\t y : "<<controller0_axisY<<endl;
+				//cout<<"x : "<<controller0_axisX<<"\t y : "<<controller0_axisY<<endl;
 				if( (controller0_axisX > -40 && controller0_axisX < 40) && (controller0_axisY > -40 && controller0_axisY < 40))
 				{
+					noMove=true;
 					forward=false;
 					backward=false;
 					jump=false;
 					jumpForward=false;
 					jumpBackward=false;
 				}
-				else if( (controller0_axisX > 40) && (controller0_axisY < 25 && controller0_axisY > -25) )
+				else if( (controller0_axisX > 40) && (controller0_axisY < 45 && controller0_axisY > -25) )
 					forward=true;
-				else if( (controller0_axisX < -40) && (controller0_axisY < 25 && controller0_axisY > -25) )
+				else if( (controller0_axisX < -40) && (controller0_axisY < 45 && controller0_axisY > -25) )
 					backward=true;
 				else if( (controller0_axisX>-40 && controller0_axisX<40) && (controller0_axisY<-40) )
 					jump=true;
@@ -63,7 +64,8 @@ int main()
 					jumpForward=true;
 				else if( (controller0_axisX>=-95 && controller0_axisX<=-40) && (controller0_axisY<-40) )
 					jumpBackward=true;
-
+				else if( (controller0_axisX>-40 && controller0_axisX<40) && (controller0_axisY>40) )
+					crouch=true;
 			}else
 			{
 				forward=sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
@@ -82,14 +84,12 @@ int main()
 					forward=false;
 					backward=false;
 					kick=true;
-				}
-				if(jump && forward)
+				}else if(jump && forward)
 				{
 					jumpForward=true;
 					jump=false;
 					forward=false;
-				}
-				if(jump && backward)
+				}else if(jump && backward)
 				{
 					jumpBackward=true;
 					jump=false;
@@ -112,10 +112,16 @@ int main()
 				forward=false;
 				backward=false;
 			}
-			
+			if(!forward && !backward && !jump && !jumpForward && !jumpBackward && !inAction && !enMonte && !punch && !kick)
+				noMove=true;
 		}
 
-		if(forward==true)
+		if(!backward)
+			xBackward=-1;
+		if(!crouch)
+			xCrouch=-1;
+
+		if(forward)
 		{
 			sf::Time elapsedForward = clockAnim.getElapsedTime();
 			timeanim = elapsedForward.asMilliseconds();
@@ -125,22 +131,32 @@ int main()
 			}
 			perso.moveRight(background,xForward);
 			
+			
 			if(xForward==12)
 				xForward=1;
 			
-		}else if(backward==true){
+		}else if(backward){
 			sf::Time elapsedBackward = clockAnim.getElapsedTime();
 			timeanim = elapsedBackward.asMilliseconds();
-			if(timeanim > 10 || xBackward==-1)
+			if(timeanim > 50 || xBackward==-1)
 			{
 				xBackward++;
 				clockAnim.restart();
 			}
 			perso.moveLeft(background,xBackward);
-			if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || !((controller0_axisX < -80) && (controller0_axisY < 25 && controller0_axisY > -25)))
-				xBackward=0;
 
-		}else if(jump==true){
+		}else if(crouch)
+		{
+			sf::Time elapsedCrouch = clockAnim.getElapsedTime();
+			timeanim = elapsedCrouch.asMilliseconds();
+			if(timeanim > 50 || xCrouch==-1)
+			{
+				xCrouch++;
+				clockAnim.restart();
+			}
+			perso.crouch(background,xCrouch);
+
+		}else if(jump){
 			inAction=true;
 			sf::Time elapsedJump = clockAnim.getElapsedTime();
 			timeanim = elapsedJump.asMilliseconds();
@@ -209,7 +225,7 @@ int main()
 				inAction=false;
 				jumpForward=false;
 				enMonte=true;
-				perso.reset(window);
+				perso.reset(window,9);
 			}
 
 		}else if(jumpBackward){
@@ -256,14 +272,14 @@ int main()
 				inAction=false;
 				jumpBackward=false;
 				enMonte=true;
-				perso.reset(window);
+				perso.reset(window,9);
 			}
 
 		}else if(punch){
 			inAction=true;
 			sf::Time elapsedPunch = clockAnim.getElapsedTime();
 			timeanim = elapsedPunch.asMilliseconds();
-			if(timeanim > 80 || xPunch==-1){
+			if(timeanim > 70 || xPunch==-1){
 				xPunch++;
 				clockAnim.restart();
 			}
@@ -281,7 +297,7 @@ int main()
 			inAction=true;
 			sf::Time elapsedKick = clockAnim.getElapsedTime();
 			timeanim = elapsedKick.asMilliseconds();
-			if(timeanim > 100 || xKick==-1){
+			if(timeanim > 70 || xKick==-1){
 				xKick++;
 				clockAnim.restart();
 			}
@@ -294,7 +310,17 @@ int main()
 				inAction=false;
 			}
 		}else{
-			perso.reset(window);
+			sf::Time elapsedNoMove = clockAnim.getElapsedTime();
+			timeanim = elapsedNoMove.asMilliseconds();
+			if(timeanim > 150 || xNoMove==-1){
+				xNoMove++;
+				clockAnim.restart();
+			}
+			perso.reset (background,xNoMove);
+			
+			
+			if(xNoMove==9)
+				xNoMove=-1;
 		}
 
 

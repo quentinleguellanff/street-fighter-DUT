@@ -34,14 +34,14 @@ public:
     sf::Sprite getSprite() const; //récupère le sprite du personnage
     int	getPosX() const;
     int getPosY() const;
-	void reset(Background);
+	void reset(Background,int);
 
 	sf::RectangleShape getCorps() const;
 	sf::RectangleShape getBras() const;
 
-
     void moveRight(Background,int);
     void moveLeft(Background,int);
+    void crouch(Background,int x);
     void jumpNoMove(Background,int);
     void jumpMoveRight(Background,int,bool);
     void jumpMoveLeft(Background,int,bool);

@@ -33,7 +33,8 @@ void Hitbox::setCorps(std::string s,int posX,int posY)
 		_corps.setPosition(posX-(_taille.x*0.7),posY+_taille.y*0.1);	
 	}else if(s=="forward")
 		_corps.setPosition(posX-(_taille.x*0.8),posY+_taille.y*0.1);
-
+	else if("punch")
+		_corps.setPosition(posX-(_taille.x*1.3),posY+_taille.y*0.1);
 }
 
 void Hitbox::setBrasD(std::string s,int i,int posX,int posY)
@@ -43,14 +44,22 @@ void Hitbox::setBrasD(std::string s,int i,int posX,int posY)
 		if(i>=0 && i<6)
 			_brasD.setSize(sf::Vector2f(0, 0));
 		else
-			_brasD.setSize(sf::Vector2f(_taille.x/5, _taille.y*0.2));
+			_brasD.setSize(sf::Vector2f(_taille.x*0.2, _taille.y*0.2));
 
+		_brasD.setPosition(posX-_taille.x*0.3,posY+_taille.y*0.4);
 	}else if(s=="backward" || s=="jump")
 	{
 		_brasD.setSize(sf::Vector2f(0, 0));
+	}else if("punch")
+	{
+		if(i==2 || i==3)
+		{
+			_brasD.setSize(sf::Vector2f(_taille.x*0.8, _taille.y*0.2));
+			_brasD.setPosition(posX-(_taille.x*0.80),posY+_taille.y*0.35);
+		}else
+			_brasD.setSize(sf::Vector2f(0, 0));
+		
 	}
-	_brasD.setPosition(posX-_taille.x*0.3,posY+_taille.y*0.4);
-
 }
 
 

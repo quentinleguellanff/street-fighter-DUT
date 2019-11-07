@@ -48,6 +48,8 @@ void Personnage::moveRight(Background b,int x)
 	_x=_x+5;
 	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
 	keepInWalls(b);
+	_structure.setCorps("forward",_x,_y);
+	_structure.setBrasD("forward",x,_x,_y);
 }
 
 void Personnage::moveLeft(Background b,int x)
@@ -60,6 +62,18 @@ void Personnage::moveLeft(Background b,int x)
 	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
 	keepInWalls(b);
 
+}
+
+void Personnage::crouch(Background b,int x)
+{
+	if(x<=1)
+		setSprite(2+137*x,1862,135,172);
+	else
+		setSprite(2+274,1862,135,172);
+	if(x==0)	
+		_y=_y+30;
+	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
+	keepInWalls(b);
 }
 
 void Personnage::jumpNoMove(Background b,int x)
@@ -142,10 +156,12 @@ void Personnage::punch(Background b,int x)
         else if(x==5)
         {
             _x-=_tailleSprite.x*0.56;
-            reset(b);
+            reset(b,9);
         }
         _spritePersonnage.setPosition(sf::Vector2f(_x,_y));
-    }    
+    }
+    	_structure.setCorps("punch",_x,_y);
+    	_structure.setBrasD("punch",x,_x,_y);   
 }
 
 void Personnage::kick(Background b,int x)
@@ -167,6 +183,14 @@ void Personnage::kick(Background b,int x)
     }    
 }
 
+void Personnage::reset(Background b,int x)
+{
+	setSprite(2+123*x,466,121,201);
+	_y=b.getBottom()-getTailleY();
+	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
+    Hitbox tempHit(_tailleSprite,_x,_y);
+    _structure=tempHit;
+}
 
 ///// Méthodes de manipulation /////////
 
@@ -200,15 +224,6 @@ int Personnage::getPosX() const
 int Personnage::getPosY() const
 {
 	return _y;
-}
-
-void Personnage::reset(Background b)
-{
-	setSprite(2,466,121,201);
-	_y=b.getBottom()-getTailleY();
-	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
-    Hitbox tempHit(_tailleSprite,_x,_y);
-    _structure=tempHit;
 }
 
 sf::RectangleShape Personnage::getCorps() const

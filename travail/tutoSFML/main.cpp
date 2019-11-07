@@ -255,7 +255,6 @@ int main()
         }
 
         if(!moveleft && !moveright && !saut && !coup && !couppied){
-            ///////////////// ANIMATION /////////////////////////////
                 sprite.setTextureRect(sf::IntRect(2+spriteanimstatic*123, 466,121,201));
                 sf::Time elapsed2 = clockanim.getElapsedTime();
                 timeanim = elapsed2.asMilliseconds();
