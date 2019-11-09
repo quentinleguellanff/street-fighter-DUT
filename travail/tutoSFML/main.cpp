@@ -71,8 +71,8 @@ int main()
     bool couppied = false;
     bool restart = false;
     bool peutsauter = true;
-    bool peutcoup = false;
-    bool peutcouppied = false;
+    bool peutcoup = true;
+    bool peutcouppied = true;
 
     float v_x = 0;
     float v_saut = -70;
