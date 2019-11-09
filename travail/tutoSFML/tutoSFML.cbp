@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-s-d" />
@@ -31,6 +32,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -53,7 +55,13 @@
 		<Linker>
 			<Add directory="C:/Users/Quentin/Documents/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="include/Arene.h" />
+		<Unit filename="include/Broly.h" />
+		<Unit filename="include/Joueur.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Arene.cpp" />
+		<Unit filename="src/Broly.cpp" />
+		<Unit filename="src/Joueur.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
+#include "Broly.h"
+
 using namespace std;
 
 int main()
@@ -13,12 +15,10 @@ int main()
     window.setVerticalSyncEnabled(true);
     sf::RectangleShape perso(sf::Vector2f(240.f, 400.f));
     sf::RectangleShape mannequin(sf::Vector2f(200.f, 500.f));
-    sf::RectangleShape bras(sf::Vector2f(200.f, 50.f));
     sf::RectangleShape sol(sf::Vector2f(1280.f, 100.f));
     sol.setPosition(0.f,860.f);
     perso.setFillColor(sf::Color::Green);
     sol.setFillColor(sf::Color::Red);
-    sf::Vector2f positionrelperso;
     perso.setPosition(0.f,460.f);
     mannequin.setPosition(1000.f,360.f);
     sf::Texture texture;
@@ -28,12 +28,19 @@ int main()
     }
     //texture.setSmooth(true);
     sf::Sprite sprite;
+    sf::Sprite sprite2;
+    sf::Sprite spritemannequin;
     sprite.setTexture(texture);
     //sprite.setTextureRect(sf::IntRect(2, 467,120,200));
     sprite.setScale(-2,2); // augmente la taille du sprite -2 pour tourner le personnage vers la droite
-    sprite.setPosition(200.f, 400.f);
+    //sprite.setPosition(200.f, 400.f);
 
+    spritemannequin.setTexture(texture);
+    spritemannequin.setScale(2,2);
+    spritemannequin.setPosition(1000.f,460.f);
 
+    Broly Broly(-1);
+    sprite2 = Broly;
     sf::Font font;
     font.loadFromFile("arial.ttf");
     sf::Text text;
@@ -52,7 +59,9 @@ int main()
     sf::Clock clockanim;
     sf::Clock clockanim3;
     sf::Clock clockjump;
+    sf::Clock clockanim2;
     int i = 0, time = 0;
+
     bool saut = false;
     bool moveright = false;
     bool moveleft = false;
@@ -62,6 +71,8 @@ int main()
     bool couppied = false;
     bool restart = false;
     bool peutsauter = true;
+    bool peutcoup = false;
+    bool peutcouppied = false;
 
     float v_x = 0;
     float v_saut = -70;
@@ -77,20 +88,20 @@ int main()
     int spriteanimcoup = 0;
     int spriteanimcouppied = 0;
 
+    int cptanimstatic = 0;
 
     while (window.isOpen())
     {
         window.clear();
-        sprite.setTextureRect(sf::IntRect(2, 467,120,200));
+        cout << sprite.getLocalBounds().width << endl;
+        cout << sprite.getLocalBounds().height << endl;
+        spritemannequin.setColor(sf::Color(255,255,255,255));
+        //sprite.setTextureRect(sf::IntRect(2, 467,120,200));
         sf::Vector2f positionPerso = perso.getPosition();
         sf::Vector2f taillePerso = perso.getSize();
 
-        sf::Vector2f positionbras = bras.getPosition();
-        sf::Vector2f taillebras = bras.getSize();
-
         sf::Vector2f positionsprite = positionPerso;
         sf::Vector2f taillesprite = taillePerso;
-
         sprite.setPosition(positionsprite);
 
         sf::Vector2f tailleSol = sol.getSize();
@@ -103,16 +114,16 @@ int main()
         time = elapsed1.asSeconds();
         sprite.setOrigin(taillesprite.x/2, 0.f);
 
-        ///////////////////////////////////////////////////////
+          ///////////////////////////////////////////////////////
         sf::Time elapsedjump = clockjump.getElapsedTime();
         timeafterjump = elapsedjump.asMilliseconds();
-        if(!saut){
+        /*if(!saut){
             if(!peutsauter){
-                if(timeafterjump > 150){
+                if(timeafterjump > 20){
                     peutsauter = true;
                 }
             }
-        }
+        }*/
         cout << peutsauter << "temps : " << timeafterjump << endl;
 
 
@@ -128,6 +139,15 @@ int main()
                 restart = false;
                 spriteanimrightx = 0;
                 v_x = 0;
+            }
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space){
+                peutsauter = true;
+            }
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A){
+                peutcoup = true;
+            }
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Z){
+                peutcouppied = true;
             }
         }
 
@@ -149,28 +169,31 @@ int main()
         }
 
         if(!coup && !couppied && !saut && !sautleft && !sautright){
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                if(!coup && !couppied){
-                    coup = true;
-                    moveright = false;
-                    moveleft = false;
-                    positionPerso.x += 112;
-                    positionPerso.y += 20;
-                    perso.setPosition(positionPerso);
-                    sprite.setPosition(positionPerso);
+             if(peutcoup){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                    if(!coup && !couppied){
+                        coup = true;
+                        moveright = false;
+                        moveleft = false;
+                        positionPerso.x += 112;
+                        positionPerso.y += 20;
+                        perso.setPosition(positionPerso);
+                        sprite.setPosition(positionPerso);
+                    }
                 }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-                if(!coup && !couppied){
-                    couppied = true;
-                    moveright = false;
-                    moveleft = false;
-                    positionPerso.x += 160;
-                    perso.setPosition(positionPerso);
-                    sprite.setPosition(positionPerso);
+             }
+             if(peutcouppied){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                    if(!coup && !couppied){
+                        couppied = true;
+                        moveright = false;
+                        moveleft = false;
+                        positionPerso.x += 160;
+                        perso.setPosition(positionPerso);
+                        sprite.setPosition(positionPerso);
+                    }
                 }
-            }
-
+             }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 if(!(positionPerso.x + taillePerso.x + 10 > LARGEUR) && !coup && !couppied && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
@@ -257,6 +280,7 @@ int main()
         if(!moveleft && !moveright && !saut && !coup && !couppied){
             ///////////////// ANIMATION /////////////////////////////
                 sprite.setTextureRect(sf::IntRect(2+spriteanimstatic*123, 466,121,201));
+                spritemannequin.setTextureRect(sf::IntRect(2+spriteanimstatic*123, 466,121,201));
                 sf::Time elapsed2 = clockanim.getElapsedTime();
                 timeanim = elapsed2.asMilliseconds();
                 if(timeanim > 100){
@@ -266,7 +290,9 @@ int main()
                 if(spriteanimstatic >= 10){
                     spriteanimstatic = 0;
                 }
+                Broly.debout(cptanimstatic,clockanim2);
         }
+
 
         if(i != time){
             i+=1;
@@ -326,6 +352,9 @@ int main()
                 perso.setPosition(positionPerso);
                 spriteanimjump = 0;
                 clockjump.restart();
+                if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))){
+                        peutsauter = true;
+                }
             }
         }
         if(coup){
@@ -348,6 +377,10 @@ int main()
                         sprite.setPosition(positionPerso);
                         sprite.setTextureRect(sf::IntRect(2, 466,121,201));
                         coup = false;
+                        peutcoup = false;
+                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::A))){
+                            peutcoup = true;
+                        }
                     }
                     else{
                         sprite.setTextureRect(sf::IntRect(2+spriteanimcoup*179, 2765,177,191));
@@ -376,6 +409,11 @@ int main()
                         sprite.setPosition(positionPerso);
                         sprite.setTextureRect(sf::IntRect(2, 466,121,201));
                         couppied = false;
+                        peutcouppied = false;
+                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))){
+                            peutcouppied = true;
+                        }
+
                     }
                     else{
                         sprite.setTextureRect(sf::IntRect(2+spriteanimcouppied*204, 4738,202,203));
@@ -387,18 +425,20 @@ int main()
 
         if(coup && spriteanimcoup == 1 && (sprite.getPosition().x + taillePerso.x > posMannequin.x)){
 
-            mannequin.setFillColor(sf::Color::Blue);
+            spritemannequin.setColor(sf::Color::Blue);
         }
          if(couppied && spriteanimcouppied == 4 && (sprite.getPosition().x + taillePerso.x > posMannequin.x)){
 
-            mannequin.setFillColor(sf::Color::Blue);
+            spritemannequin.setColor(sf::Color::Blue);
         }
         //window.draw(perso);
         window.draw(sol);
         window.draw(text);
         //window.draw(point);
-        window.draw(mannequin);
+        window.draw(spritemannequin);
         window.draw(sprite);
+        //window.draw(sprite2);
+        window.draw(Broly);
 
         window.display();
     }
