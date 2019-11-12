@@ -412,3 +412,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
+1573584005 source:c:\users\anthime\documents\as1920\projet tutore cpp\git_projettutore\travail\test_sfml_anthime\testprojetsfml\main.cpp
+	<SFML/Graphics.hpp>
+	<iostream>
+

@@ -19,8 +19,18 @@ int main()
     murGauche.setFillColor(sf::Color::Black);
     murGauche.setPosition(sf::Vector2f(0.f,0.f));
 
+    //mur droite
+    sf::RectangleShape murDroite(sf::Vector2f(100.f, 750.f));
+    murDroite.setOutlineColor(sf::Color::Red);
+    murDroite.setOutlineThickness(4.0);
+    murDroite.setFillColor(sf::Color::Black);
+    murDroite.setPosition(sf::Vector2f(1100.f,0.f));
+
     sf::Clock clock;
     sf::Time Time;
+
+    int a = 4;
+    int i = 130;
 
     sf::Texture texture;
     if (!texture.loadFromFile("Sprite_perso1.png"))
@@ -32,7 +42,8 @@ int main()
     sprite.setTexture(texture);
 
     sprite.setTextureRect(sf::IntRect(4, 875, 121, 201));
-    sprite.setPosition(sf::Vector2f(120.f, 540.f));
+    sprite.setPosition(sf::Vector2f(250.f, 540.f));
+    sprite.scale(sf::Vector2f(-1,1));
 
 
     while (window.isOpen())
@@ -46,16 +57,34 @@ int main()
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
-             sprite.move(sf::Vector2f(1.f, 0.f));
+             if(sprite.getGlobalBounds().intersects(murDroite.getGlobalBounds())) {
+                sprite.move(sf::Vector2f(0.f, 0.f));
+            }
+            else{
+                sprite.move(sf::Vector2f(1.f, 0.f));
+                if(clock.getElapsedTime().asMilliseconds() > 150)
+                {
+                    sprite.setTextureRect(sf::IntRect(a, 875, 121, 201));
+                    a = a+i;
+                    clock.restart();
+                }
+
+            }
         }
 
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-            sprite.move(sf::Vector2f(-1.f, 0.f));
+            if(sprite.getGlobalBounds().intersects(murGauche.getGlobalBounds())) {
+                sprite.move(sf::Vector2f(0.f, 0.f));
+            }
+            else{
+                sprite.move(sf::Vector2f(-1.f, 0.f));
+            }
         }
 
         window.draw(sol);
         window.draw(murGauche);
+        window.draw(murDroite);
         window.draw(sprite);
         window.display();
         window.clear();
