@@ -11,7 +11,7 @@ int main()
     const int LARGEUR = 1280;
     sf::RenderWindow window(sf::VideoMode(LARGEUR,LONGUEUR), "premiere fenetre");
     window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
     sf::RectangleShape perso(sf::Vector2f(240.f, 400.f));
     sf::RectangleShape mannequin(sf::Vector2f(200.f, 500.f));
@@ -32,15 +32,15 @@ int main()
     sf::Sprite spritemannequin;
     sprite.setTexture(texture);
     //sprite.setTextureRect(sf::IntRect(2, 467,120,200));
-    sprite.setScale(-2,2); // augmente la taille du sprite -2 pour tourner le personnage vers la droite
+    sprite.setScale(-2,2); // augmente la taille du sprite de -2 pour tourner le personnage vers la droite
     //sprite.setPosition(200.f, 400.f);
 
     spritemannequin.setTexture(texture);
     spritemannequin.setScale(2,2);
     spritemannequin.setPosition(1000.f,460.f);
 
-    Broly Broly(-1);
-    sprite2 = Broly;
+    Broly Brolytest(-1);
+    //sprite2 = Brolytest;
     sf::Font font;
     font.loadFromFile("arial.ttf");
     sf::Text text;
@@ -60,6 +60,8 @@ int main()
     sf::Clock clockanim3;
     sf::Clock clockjump;
     sf::Clock clockanim2;
+    sf::Clock clocktest;
+    sf::Clock clocktest2;
     int i = 0, time = 0;
 
     bool saut = false;
@@ -73,6 +75,7 @@ int main()
     bool peutsauter = true;
     bool peutcoup = true;
     bool peutcouppied = true;
+    bool coupbrolytest = false;
 
     float v_x = 0;
     float v_saut = -70;
@@ -117,13 +120,7 @@ int main()
           ///////////////////////////////////////////////////////
         sf::Time elapsedjump = clockjump.getElapsedTime();
         timeafterjump = elapsedjump.asMilliseconds();
-        /*if(!saut){
-            if(!peutsauter){
-                if(timeafterjump > 20){
-                    peutsauter = true;
-                }
-            }
-        }*/
+
         cout << peutsauter << "temps : " << timeafterjump << endl;
 
 
@@ -196,6 +193,7 @@ int main()
              }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
+                Brolytest.avancer(clocktest);
                 if(!(positionPerso.x + taillePerso.x + 10 > LARGEUR) && !coup && !couppied && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
                     //perso.move(5.f,0.f);
                     moveright = true;
@@ -255,7 +253,6 @@ int main()
             if(moveleft){
                 if(!saut){
                     ///////////////// ANIMATION /////////////////////////////
-                    sprite.setScale(-2,2);
                     sprite.setTextureRect(sf::IntRect(2, 11437,153,207));
                     sf::Time elapsed2 = clockanim.getElapsedTime();
                     timeanim = elapsed2.asMilliseconds();
@@ -289,7 +286,7 @@ int main()
                 if(spriteanimstatic >= 10){
                     spriteanimstatic = 0;
                 }
-                Broly.debout(cptanimstatic,clockanim2);
+
         }
 
 
@@ -437,11 +434,34 @@ int main()
         window.draw(spritemannequin);
         window.draw(sprite);
         //window.draw(sprite2);
-        window.draw(Broly);
+        /*
+            TEST CLASSES BROLY
+        */
+        if(!moveleft && !moveright && !saut && !coup){
+            Brolytest.debout(clocktest);
+        }
+        if(moveleft){
+            Brolytest.avancer(clocktest);
+        }
+        if(moveright){
+            Brolytest.reculer(clocktest);
+        }
+        if(saut){
+            Brolytest.sauter(clocktest);
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                if(peutcoup){
+                    coupbrolytest = true;
+                }
+        }
+        if(coupbrolytest){
+            coupbrolytest = Brolytest.coupDePoing(clocktest);
+        }
+        window.draw(Brolytest);
+
 
         window.display();
     }
 
     return 0;
 }
-

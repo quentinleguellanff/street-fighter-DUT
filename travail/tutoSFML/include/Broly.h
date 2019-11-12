@@ -11,13 +11,22 @@ class Broly : public sf::Sprite
         int _orientation;
         sf::Texture _Texture;
         int _scale;
+        int _cptanimstatic;
+        int _cptanimavancer;
+        int _cptanimjump;
+        int _cptAnimCoupPoing;
+        bool _ok;
 
 
 
 
     public:
         Broly(int);
-        void debout(int& cptanimstatic,sf::Clock& clockanim);
+        void debout(sf::Clock& clock);
+        void avancer(sf::Clock& clock);
+        void reculer(sf::Clock& clock);
+        void sauter(sf::Clock& clock);
+        bool coupDePoing(sf::Clock& clock);
         virtual ~Broly();
 
 };

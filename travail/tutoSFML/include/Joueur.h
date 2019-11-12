@@ -8,7 +8,6 @@ class Joueur
         sf::Sprite _perso;
     public:
         Joueur(sf::Sprite& Perso);
-        sf::Sprite getPerso();
         bool avancer();
         bool reculer();
         bool coup();

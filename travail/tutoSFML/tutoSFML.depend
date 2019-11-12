@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1572467130 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\main.cpp
+1573525925 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
@@ -414,14 +414,14 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1572144732 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\broly.cpp
+1573525741 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\broly.cpp
 	"Broly.h"
 	"Arene.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
 
-1572143065 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\broly.h
+1573526577 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\broly.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
@@ -431,9 +431,11 @@
 
 1572128274 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\arene.h
 
-1572144010 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\joueur.cpp
+1573403298 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\joueur.cpp
 	"Joueur.h"
+	"Broly.h"
 
-1572144030 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\joueur.h
+1573402427 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\joueur.h
 	<SFML/Graphics.hpp>
+	"Broly.h"
 
