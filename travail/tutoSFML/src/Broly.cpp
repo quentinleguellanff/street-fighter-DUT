@@ -71,7 +71,7 @@ void Broly::reculer(sf::Clock& clock)
     setTextureRect(sf::IntRect(2, 11437,153,207));
     sf::Time elapsed = clock.getElapsedTime();
     int timeanim = elapsed.asMilliseconds();
-
+    cout << "temps anim reculer " << timeanim << endl;
     if(timeanim > 70){
         setTextureRect(sf::IntRect(157, 11437,153,207));
     }
