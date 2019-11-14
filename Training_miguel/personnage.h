@@ -1,7 +1,7 @@
 #ifndef PERSONNAGE_H
 #define PERSONNAGE_H
 
-#include "fonction.h"
+
 #include "hitbox.h"
 #include "background.h"
 #include <iostream>
@@ -22,12 +22,13 @@ private:
     float _y;                   //Position Y du perso
     sf::Vector2f _tailleSprite;
     void setSprite(int, int, int, int);
+    int _orientation;
     Hitbox _structure;
 
 public:
 
     Personnage(){};
-    Personnage(Background);    //Constructeur
+    Personnage(Background,int);    //Constructeur
     int getTailleY() const;
     sf::Vector2f getTaille() const;
     void keepInWalls(Background);
@@ -39,8 +40,8 @@ public:
 	sf::RectangleShape getCorps() const;
 	sf::RectangleShape getBras() const;
 
-    void moveRight(Background,int);
-    void moveLeft(Background,int);
+    void moveForward(Background,int);
+    void moveBackward(Background,int);
     void crouch(Background,int x);
     void jumpNoMove(Background,int);
     void jumpMoveRight(Background,int,bool);
@@ -49,7 +50,6 @@ public:
     void punch(Background ,int);
     void kick(Background b,int x);
   
- 
 };
 
 #endif

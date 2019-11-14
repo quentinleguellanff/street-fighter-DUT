@@ -1,7 +1,7 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#include "fonction.h"
+
 #include "hitbox.h"
 #include "personnage.h"
 #include <iostream>

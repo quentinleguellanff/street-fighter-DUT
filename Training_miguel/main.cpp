@@ -1,4 +1,4 @@
-#include "fonction.h"
+
 #include "hitbox.h"
 #include "personnage.h"
 #include "background.h"
@@ -14,18 +14,28 @@ int main()
 {
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(1920,1080),"la Bagarre");
+	//window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
+	//window.setMouseCursorVisible(0);
 	
 	Background background(window);
 
-	Personnage perso(background);
+	Personnage perso1(background,1);
+	Personnage perso2(background,2);
 
-	bool noMove=false, forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;
+	bool forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;
 	bool punch=false,kick=false;
 	int xNoMove=-1, xForward=-1,xBackward=-1, xCrouch=-1, xJump=-1,xJumpDirection=5,xPunch=-1,xKick=-1;
 	sf::Clock clockAnim;
 	int timeanim;
+
+	//////Personnage 2///////
+	bool forward2=false,backward2=false, crouch2=false, jump2=false,jumpForward2=false,jumpBackward2=false,inAction2=false, enMonte2=true;
+	bool punch2=false,kick2=false;
+	int xNoMove2=-1, xForward2=-1,xBackward2=-1, xCrouch2=-1, xJump2=-1,xJumpDirection2=5,xPunch2=-1,xKick2=-1;
+	sf::Clock clockAnim2;
+	int timeanim2;
 
 	float controller0_axisX, controller0_axisY;
 
@@ -37,7 +47,7 @@ int main()
 		sf::Event event;
 		if(!inAction)
 		{
-			noMove=false, forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;punch=false,kick=false;
+			forward=false,backward=false, crouch=false, jump=false,jumpForward=false,jumpBackward=false,inAction=false, enMonte=true;punch=false,kick=false;
 			if (sf::Joystick::isConnected(0))
 			{
 				punch=sf::Joystick::isButtonPressed(0, 0);
@@ -47,7 +57,6 @@ int main()
 				//cout<<"x : "<<controller0_axisX<<"\t y : "<<controller0_axisY<<endl;
 				if( (controller0_axisX > -40 && controller0_axisX < 40) && (controller0_axisY > -40 && controller0_axisY < 40))
 				{
-					noMove=true;
 					forward=false;
 					backward=false;
 					jump=false;
@@ -112,8 +121,7 @@ int main()
 				forward=false;
 				backward=false;
 			}
-			if(!forward && !backward && !jump && !jumpForward && !jumpBackward && !inAction && !enMonte && !punch && !kick)
-				noMove=true;
+			
 		}
 
 		if(!backward)
@@ -129,7 +137,7 @@ int main()
 				xForward++;
 				clockAnim.restart();
 			}
-			perso.moveRight(background,xForward);
+			perso1.moveForward(background,xForward);
 			
 			
 			if(xForward==12)
@@ -143,7 +151,7 @@ int main()
 				xBackward++;
 				clockAnim.restart();
 			}
-			perso.moveLeft(background,xBackward);
+			perso1.moveBackward(background,xBackward);
 
 		}else if(crouch)
 		{
@@ -154,7 +162,7 @@ int main()
 				xCrouch++;
 				clockAnim.restart();
 			}
-			perso.crouch(background,xCrouch);
+			perso1.crouch(background,xCrouch);
 
 		}else if(jump){
 			inAction=true;
@@ -164,18 +172,18 @@ int main()
 				xJump++;
 			else if(xJump==0 || xJump==6)
 			{
-				if(timeanim > 150){
+				if(timeanim > 100){
 					xJump++;
 					clockAnim.restart();
 				}
 			}else{
-				if(timeanim > 100){
+				if(timeanim > 70){
 					xJump++;
 					clockAnim.restart();
 				}
 			}
 			if(xJump>=0)
-				perso.jumpNoMove(background,xJump);
+				perso1.jumpNoMove(background,xJump);
 			if(xJump==7)
 			{
 				inAction=false;
@@ -215,7 +223,7 @@ int main()
 					}
 				}
 			}
-			perso.jumpMoveRight(background,xJumpDirection,enMonte);
+			perso1.jumpMoveRight(background,xJumpDirection,enMonte);
 			if(xJumpDirection==0)
 			{
 				enMonte=false;
@@ -225,7 +233,7 @@ int main()
 				inAction=false;
 				jumpForward=false;
 				enMonte=true;
-				perso.reset(window,9);
+				perso1.reset(window,9);
 			}
 
 		}else if(jumpBackward){
@@ -262,7 +270,7 @@ int main()
 					}
 				}
 			}
-			perso.jumpMoveLeft(background,xJumpDirection,enMonte);
+			perso1.jumpMoveLeft(background,xJumpDirection,enMonte);
 			if(xJumpDirection==0)
 			{
 				enMonte=false;
@@ -272,7 +280,7 @@ int main()
 				inAction=false;
 				jumpBackward=false;
 				enMonte=true;
-				perso.reset(window,9);
+				perso1.reset(window,9);
 			}
 
 		}else if(punch){
@@ -284,7 +292,7 @@ int main()
 				clockAnim.restart();
 			}
 			if(xPunch>=0)
-				perso.punch(window,xPunch);
+				perso1.punch(window,xPunch);
 
 			if(xPunch==5)
 			{
@@ -302,7 +310,7 @@ int main()
 				clockAnim.restart();
 			}
 			if(xKick>=0)
-				perso.kick(window,xKick);
+				perso1.kick(window,xKick);
 
 			if(xKick==7)
 			{
@@ -316,28 +324,110 @@ int main()
 				xNoMove++;
 				clockAnim.restart();
 			}
-			perso.reset (background,xNoMove);
+			perso1.reset (background,xNoMove);
 			
 			
 			if(xNoMove==9)
 				xNoMove=-1;
 		}
 
+		if(!inAction2)
+		{
+			jump2=sf::Keyboard::isKeyPressed(sf::Keyboard::C);
+			forward2=sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
+			punch2=sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+		}
 
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+		if(forward2)
+		{
+			sf::Time elapsedForward2 = clockAnim2.getElapsedTime();
+			timeanim2 = elapsedForward2.asMilliseconds();
+			if(timeanim2 > 70 || xForward2==-1){
+				xForward2++;
+				clockAnim2.restart();
+			}
+			perso2.moveForward(background,xForward2);
+			
+			
+			if(xForward2==12)
+				xForward2=1;
+			
+		}else if(jump2)
+		{
+			inAction2=true;
+			sf::Time elapsedJump = clockAnim2.getElapsedTime();
+			timeanim2 = elapsedJump.asMilliseconds();
+			if(jump2==-1 || jump2==6)
+				xJump2++;
+			else if(xJump2==0 || xJump2==6)
+			{
+				if(timeanim2 > 150){
+					xJump2++;
+					clockAnim2.restart();
+				}
+			}else{
+				if(timeanim2 > 100){
+					xJump2++;
+					clockAnim2.restart();
+				}
+			}
+			if(xJump2>=0)
+				perso2.jumpNoMove(background,xJump2);
+			if(xJump2==7)
+			{
+				inAction2=false;
+				xJump2=-1;
+			}
+		}else if(punch2){
+			inAction2=true;
+			sf::Time elapsedPunch2 = clockAnim2.getElapsedTime();
+			timeanim2 = elapsedPunch2.asMilliseconds();
+			if(timeanim2 > 70 || xPunch2==-1){
+				xPunch2++;
+				clockAnim2.restart();
+			}
+			if(xPunch2>=0)
+				perso2.punch(window,xPunch2);
+
+			if(xPunch2==5)
+			{
+				xPunch2=-1;
+				inAction2=false;
+			}
+
+		}else
+		{
+			sf::Time elapsedNoMove2 = clockAnim2.getElapsedTime();
+			timeanim2 = elapsedNoMove2.asMilliseconds();
+			if(timeanim2 > 150 || xNoMove2==-1){
+				xNoMove2++;
+				clockAnim2.restart();
+			}
+			perso2.reset(background,xNoMove2);
+			
+			if(xNoMove2==9)
+				xNoMove2=-1;
+
+	        while (window.pollEvent(event))
+	        {
+	            if (event.type == sf::Event::Closed)
+	                window.close();
+        }		
+		}
+
+
 
 
         window.draw(background.getSprite());
         window.draw(background.getSol());
 		window.draw(background.getWallLeft());
 		window.draw(background.getWallRight());
-        window.draw(perso.getSprite());
-        window.draw(perso.getCorps());
-        window.draw(perso.getBras());
+        window.draw(perso1.getSprite());
+        window.draw(perso1.getCorps());
+        window.draw(perso1.getBras());
+        window.draw(perso2.getSprite());
+        window.draw(perso2.getCorps());
+        window.draw(perso2.getBras());       
         window.display();
 	}
 	return 0;
