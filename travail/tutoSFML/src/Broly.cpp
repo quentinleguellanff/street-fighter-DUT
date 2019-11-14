@@ -1,5 +1,5 @@
-#include "Broly.h"
-#include "Arene.h"
+#include "include/Broly.h"
+#include "include/Arene.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
