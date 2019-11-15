@@ -1,0 +1,1 @@
+g++ -c main.cpp Player.cpp Player.h Scene.cpp Scene.h && g++ main.o Player.o Scene.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app && rm *.o *.h.gch
