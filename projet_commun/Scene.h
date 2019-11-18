@@ -32,6 +32,8 @@ public:
 	int getLeftLimit() const;
 	int getRightLimit() const;
 
+	sf::RectangleShape getSol() const;
+
 };
 
 #endif

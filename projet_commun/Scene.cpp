@@ -26,8 +26,8 @@ void Scene::chargementXenoverse()
 	_solScene.setSize(sf::Vector2f(1920.f, _hauteurSol));
 	_solScene.setPosition(0.f, _limiteSol);
 	_solScene.setFillColor(sf::Color(250,250,250,0));
-	//_solScene.setOutlineThickness(2.f);
-	//_solScene.setOutlineColor(sf::Color(250, 130, 1));
+	_solScene.setOutlineThickness(2.f);
+	_solScene.setOutlineColor(sf::Color(250, 130, 1));
 
 	_wallLeft.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallLeft.setPosition(0.f, 0.f);
@@ -57,4 +57,9 @@ int Scene::getLeftLimit() const
 int Scene::getRightLimit() const
 {
 	return _largeurWindow-_wallRight.getSize().x;
+}
+
+sf::RectangleShape Scene::getSol() const
+{
+	return _solScene;
 }
