@@ -25,6 +25,7 @@ private:
 	int _cptAvancer;
 	int _cptReculer;
 	int _cptStatic;
+	int _cptAccroupi;
 
 	int _cptSauter;
 
@@ -41,19 +42,24 @@ public:
 	
 
 	void reset();
-	void rotate(sf::Clock&,const sf::Sprite&);
+	void resetAccroupi();
+	void rotate(const sf::Sprite&);
 
-	void statique(sf::Clock&);
+	void statique(sf::Clock&,const sf::Sprite&);
+	void garde(sf::Clock&);
 	void avancer(sf::Clock&,const sf::Sprite&);
 	void reculer(sf::Clock&);
 
 	bool sauter(sf::Clock&);
 	bool sauterAvant(sf::Clock&,const sf::Sprite&);
 	bool sauterArriere(sf::Clock&);
+	void accroupi(sf::Clock&,bool);
 
 	bool apparition(sf::Clock&,sf::Sprite&);
 	bool punch(sf::Clock&);
+	bool sautPunch(sf::Clock&);
 	bool kick(sf::Clock&);
+	bool sautKick(sf::Clock&);
 	bool SP1(sf::Clock&,sf::Sprite&);
 	
 };

@@ -7,7 +7,7 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 {
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;
 
 	if (!_texture.loadFromFile("sprites/sprite_dhalsim.png"))
 	{
@@ -56,57 +56,71 @@ void Dhalsim::keepInWalls()
 }
 
 
+void Dhalsim::rotate(const sf::Sprite& ennemi)
+{
+	if( (getScale().x==SCALE && _posX> ennemi.getPosition().x) || (getScale().x==SCALE*-1 && _posX< ennemi.getPosition().x) )
+	{
+		_orientation=_orientation*-1;
+		_posX=_posX-_tailleSprite.x*_orientation;
+		setPosition(_posX,_posY);
+		setScale(_orientation*SCALE,SCALE);
+	}
+}
 
+/*
 void Dhalsim::rotate(sf::Clock& clockAnim,const sf::Sprite& _ennemi)
 {
 	
     bool fini=false;
     int delai=70;
-	if( (getScale().x==SCALE && _posX> _ennemi.getPosition().x) /*|| (getRotation()==360 && _posX< _ennemi.getPosition().x) */)
+	if( (getScale().x==SCALE && _posX> _ennemi.getPosition().x) || (getRotation()==360 && _posX< _ennemi.getPosition().x) )
 	{
-		//_cptAction=0;
-		while(_cptAction<3)
+		sf::Time elapsed = clockAnim.getElapsedTime();
+		int timeAnim = elapsed.asMilliseconds();
+		if(_cptAction==0)
 		{
-			sf::Time elapsed = clockAnim.getElapsedTime();
-    		int timeAnim = elapsed.asMilliseconds();
-			if(_cptAction==0)
-			{
-				if(timeAnim > delai){
-					cout<<"bienvenue"<<endl;
-				    clockAnim.restart();
-					_cptAction ++;
-				    setSprite(737,163,65,103);
-				}
-			}else if (_cptAction==1)
-			{
-				if(timeAnim > delai){
-				    clockAnim.restart();
-				    _cptAction ++;
-				    setSprite(810,163,63,103);
-				}
-			}else if(_cptAction==2)
-			{
-				if(timeAnim > delai){
-				    clockAnim.restart();
-				    _cptAction=0;
-				    _orientation=-_orientation;
-				    setSprite(881,163,93,103);
-				    scale(_orientation*SCALE,SCALE);
-				    fini=true;
-				}
+			if(timeAnim > delai){
+				cout<<"bienvenue"<<endl;
+			    clockAnim.restart();
+				_cptAction ++;
+			    setSprite(737,163,65,103);
+			}
+		}else if (_cptAction==1)
+		{
+			if(timeAnim > delai){
+			    clockAnim.restart();
+			    _cptAction ++;
+			    setSprite(810,163,63,103);
+			}
+		}else if(_cptAction==2)
+		{
+			if(timeAnim > delai){
+			    clockAnim.restart();
+			    _cptAction=0;
+			    _orientation=-_orientation;
+			    setSprite(881,163,93,103);
+			    scale(_orientation*SCALE,SCALE);
+			    fini=true;
 			}
 		}
+		
 	}
-}
+}*/
 
 
 /* ANIMATIONS */
 
 void Dhalsim::reset()
 {
-	setSprite(409,32,51,115);
+	//setSprite(409,32,51,115);
+	_cptSauter=0;_cptApparition=0;_cptAction=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	setPosition(_posX,_posY);
+}
+
+void Dhalsim::resetAccroupi()
+{
+	_cptAccroupi=0;
 }
 
 bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
@@ -201,9 +215,9 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 	return fini;
 }
 
-void Dhalsim::statique(sf::Clock& clockAnim)
+void Dhalsim::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
-    _cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;
+    //_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAccroupi=0;
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=150;
@@ -261,7 +275,24 @@ void Dhalsim::statique(sf::Clock& clockAnim)
 		}
     	break;
     }
+    rotate(ennemi);
 }
+
+
+void Dhalsim::garde(sf::Clock& clockAnim)
+{
+	_cptStatic=0;
+	_posY=_scene.getBottom()-_tailleSprite.y;
+	sf::Time elapsed = clockAnim.getElapsedTime();
+    int timeAnim = elapsed.asMilliseconds();
+    int delai=70;
+    if(timeAnim>delai)
+    {
+    	clockAnim.restart();
+    	setSprite(125,4747,63,100);
+    }
+}
+
 
 void Dhalsim::avancer(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
@@ -347,7 +378,7 @@ void Dhalsim::avancer(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 		}
     	break;
     }
-    rotate(clockAnim,ennemi);
+    rotate(ennemi);
 	keepInWalls();
 }
 
@@ -451,7 +482,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     {
     case 0:
 	    _cptSauter+=1;
-	    setSprite(974,1705,50,125);
+	    setSprite(974,1705,50,126);
     	break;
     case 1:
     	if(timeAnim > delai){
@@ -465,7 +496,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(1084,1705,57,125);
+		    setSprite(1084,1705,57,126);
 		    _posY-=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -474,7 +505,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(1148,1705,60,125);
+		    setSprite(1148,1705,60,126);
 		    _posY-=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -483,14 +514,14 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(1216,1705,65,125);
+		    setSprite(1216,1705,65,126);
 		}
     	break;
     case 5:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(1148,1705,60,125);
+		    setSprite(1148,1705,60,126);
 		    _posY+=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -499,7 +530,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(1084,1705,57,125);
+		    setSprite(1084,1705,57,126);
 		    _posY+=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -508,7 +539,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter+=1;
-		    setSprite(974,1705,50,125);
+		    setSprite(974,1705,50,126);
 		    _posY+=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -530,7 +561,7 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=50*_orientation;
+    int delai=70,deplacementY=150,deplacementX=30*_orientation;
     bool fini=false;
     switch(_cptSauter)
     {
@@ -615,7 +646,7 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 		}
     	break;
     }
-    rotate(clockAnim,ennemi);
+    rotate(ennemi);
     keepInWalls();
     return fini;
 }
@@ -625,7 +656,7 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=50*_orientation;
+    int delai=70,deplacementY=150,deplacementX=30*_orientation;
     bool fini=false;
     switch(_cptSauter)
     {
@@ -714,6 +745,44 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
     return fini;
 }
 
+void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
+{
+	_cptStatic=0;
+	sf::Time elapsed = clockAnim.getElapsedTime();
+    int timeAnim = elapsed.asMilliseconds();
+    int delai=35;
+    if(_cptAccroupi==0)
+    {
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(24,1424,82,95);
+    		_posY=_scene.getBottom()-_tailleSprite.y;
+			setPosition(_posX,_posY);
+    	}
+    }else if(_cptAccroupi==1)
+    {
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(114,1424,61,95);
+    	}
+    }else
+    {
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		if(garde==true)
+	    	{
+	    		setSprite(263,4776,59,71);
+	    	}else
+    			setSprite(183,1424,60,95);
+    	}
+    }
+}
+
 
 bool Dhalsim::punch(sf::Clock& clockAnim)
 {
@@ -763,6 +832,84 @@ bool Dhalsim::punch(sf::Clock& clockAnim)
 	}
 	keepInWalls();
 	return fini;
+}
+
+bool Dhalsim::sautPunch(sf::Clock& clockAnim)
+{
+	_cptStatic=0;
+	sf::Time elapsed = clockAnim.getElapsedTime();
+    int timeAnim = elapsed.asMilliseconds();
+    int delai=70,deplacement=125;
+    bool fini=false;
+    switch(_cptSauter)
+    {
+    case 0:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(974,1705,50,126);
+		    _posY-=deplacement;
+		    setPosition(_posX,_posY);
+		}
+    	break;
+    case 1:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(396,1857,96,85);
+    		_posY-=deplacement/2;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 2:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(500,1857,76,85);
+    	}
+    	break;
+    case 3:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(584,1864,116,76);
+    	}
+    	break;
+    case 4:
+    	if(timeAnim>delai*3)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(500,1857,76,85);
+    	}
+    	break;
+    case 5:
+    	if(timeAnim>delai)
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(396,1857,96,85);
+    		_posY+=deplacement/2;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 6:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter=0;
+		    setSprite(974,1705,50,126);
+		    _posY+=deplacement;
+		    setPosition(_posX,_posY);
+		    fini=true;
+		}
+    	break;
+    }
+    keepInWalls();
+    return fini;
 }
 
 
@@ -831,6 +978,94 @@ bool Dhalsim::kick(sf::Clock& clockAnim)
 	return fini;	
 }
 
+bool Dhalsim::sautKick(sf::Clock& clockAnim)
+{
+	_cptStatic=0;
+	sf::Time elapsed = clockAnim.getElapsedTime();
+    int timeAnim = elapsed.asMilliseconds();
+    int delai=70,deplacement=125;
+    bool fini=false;
+    switch(_cptSauter)
+    {
+    case 0:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(464,2319,62,110);
+    		_posX+=33*_orientation;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 1:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(534,2319,59,110);
+    		_posX+=2*_orientation;
+    		_posY-=deplacement;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 2:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(601,2319,53,110);
+    		_posX+=8*_orientation;
+    		_posY-=deplacement;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 3:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(662,2319,63,110);
+    		_posX-=8*_orientation;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 4:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(733,2319,99,110);
+    		_posY+=deplacement;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 5:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter++;
+    		setSprite(840,2319,70,110);
+    		_posY+=deplacement;
+    		setPosition(_posX,_posY);
+    	}
+    	break;
+    case 6:
+    	if(timeAnim>delai)
+    	{
+    		clockAnim.restart();
+    		_cptSauter=0;
+    		setSprite(918,2319,74,110);
+    		_posX-=35*_orientation;
+    		setPosition(_posX,_posY);
+    		fini=true;
+    	}
+    	break;
+    }
+    keepInWalls();
+    return fini;
+}
+
+
 
 bool Dhalsim::SP1(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
 {
@@ -876,6 +1111,7 @@ bool Dhalsim::SP1(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
 		    _posX-=4*SCALE*_orientation;
 			setPosition(_posX,_posY);
 			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
+			bouleFeu.setScale(_orientation*SCALE,SCALE);
 			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/3));
 		}
 		break;
@@ -925,9 +1161,6 @@ bool Dhalsim::SP1(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
 		fini=true;
 		_cptAction=0;
 	}
-	
-	cout<<_cptAction<<endl;
-	cout<<bouleFeu.getPosition().x<<"\t"<<_scene.getRightLimit()<<endl;
 	keepInWalls();
 	return fini;
 }
