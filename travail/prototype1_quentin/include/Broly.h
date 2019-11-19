@@ -15,7 +15,11 @@ class Broly : public sf::Sprite
         int _cptanimavancer;
         int _cptanimjump;
         int _cptAnimCoupPoing;
+        int _cptanimprendcoup;
+        int cptanimprendcoupbis;
         bool _ok;
+        sf::RectangleShape _hitboxpoing;
+        sf::RectangleShape _hitboxcorps;
 
 
 
@@ -28,6 +32,10 @@ class Broly : public sf::Sprite
         void sauter(sf::Clock& clock);
         bool coupDePoing(sf::Clock& clock);
         int getorientation();
+        sf::RectangleShape getHitboxpoing();
+        sf::RectangleShape getHitboxcorps();
+        bool esttouche(sf::RectangleShape hitboxpoing);
+        bool prendcoup(sf::Clock& clock);
         virtual ~Broly();
 
 };
