@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
-#include <sstream>
-#include "include/Broly.h"
-
+#include"menu.h"
+#include "Broly.h"
 using namespace std;
+
 
 int main()
 {
@@ -13,13 +16,16 @@ int main()
     window.setKeyRepeatEnabled(false);
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
+    Menu menu(window.getSize().x, window.getSize().y);
+    int go=0;
 
-    //affichage du sol a une position donnée
+
+    //affichage du sol a une position donne
     sf::RectangleShape sol(sf::Vector2f(1280.f, 100.f));
     sol.setPosition(0.f,860.f);
     sol.setFillColor(sf::Color(255,0,0,130));
 
-    //horloge permettant de récuperer le temps
+    //horloge permettant de rcuperer le temps
     sf::Clock clockanim;
     sf::Clock clockmove;
 
@@ -38,9 +44,11 @@ int main()
     hitbox1.setPosition(Brolytest.getPosition().x,Brolytest.getPosition().y);
     cout << "taille de la hitbox " << Brolytest.getLocalBounds().width*2 << "   " << Brolytest.getLocalBounds().height*2 << endl;
     cout << "position de la hitbox " << Brolytest.getPosition().x << "   " << Brolytest.getPosition().y << endl;
-    bool prendcoup = false;
-    bool prendcoup2 = false;
 
+    sf::RectangleShape hitboxpoing(sf::Vector2f(46.f,44.f));
+    hitboxpoing.setFillColor(sf::Color(255,255,255,0));
+    hitboxpoing.setOutlineThickness(5);
+    hitboxpoing.setOutlineColor(sf::Color::Red);
 
     sf::Sprite Joueur1;
     sf::Sprite Joueur2;
@@ -56,18 +64,44 @@ int main()
     bool coupPoing = false;
     bool coupPoing2 = false;
 
-        while (window.isOpen())
-        {
             Joueur1 = Brolytest;
             moveright = false;
             moveleft = false;
             moveright2 = false;
             moveleft2 = false;
 
-            // GESTION DES EVENEMENTS
-            window.clear();
 
 
+    while (window.isOpen()&& (go==0))
+    {
+
+        sf::Event event;
+        sf::Music music;
+        if (!music.openFromFile("Enregistrement.ogg")){
+        std::cout<<"pb";} // erreur
+        music.setVolume(50);
+        music.play();
+        while (window.pollEvent(event) ){
+
+            if (event.type == sf::Event::Closed)
+                window.close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                    menu.moveUp();
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            menu.moveDown();
+            }
+            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==0)){
+            go=1;
+            }
+        window.clear();
+        menu.draw(window);
+        window.display();}
+    }
+
+    while (window.isOpen()&& (go==1))
+    {
+    window.clear();
 
             sf::Event event;
             while (window.pollEvent(event)){
@@ -110,6 +144,7 @@ int main()
                         coupPoing = true;
                     }
             }
+
             if(moveright){
                 sf::Time elapsed = clockmove.getElapsedTime();
                 int timemove = elapsed.asMilliseconds();
@@ -135,28 +170,22 @@ int main()
                 Brolytest.reculer(clockanim);
                 saut = false;
             }
-            if(!moveright && !moveleft && !saut && !coupPoing && !prendcoup){
+            if(!moveright && !moveleft && !saut && !coupPoing){
                 Brolytest.debout(clockanim);
-
+                hitbox1.setPosition(Brolytest.getPosition().x+64, Brolytest.getPosition().y);
             }
             if(saut){
                 Brolytest.sauter(clockanim);
             }
             if(coupPoing){
                 peutcoup = false;
+                hitboxpoing.setPosition(Brolytest.getPosition().x + 112,Brolytest.getPosition().y+150);
                 coupPoing = Brolytest.coupDePoing(clockanim);
-                window.draw(Brolytest.getHitboxpoing());
-                if(coupPoing){
-                    if(Brolytest2.esttouche(Brolytest2.getHitboxpoing())){
-                        prendcoup2 = true;
-                        cout << "touche" << endl;
+                    if(!coupPoing){
+                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))){
+                            peutcoup = true;
+                        }
                     }
-                }
-                if(!coupPoing){
-                    if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))){
-                        peutcoup = true;
-                    }
-                }
             }
             /*
             ////////////////////COMMANDE JOUEUR 2////////////////
@@ -213,7 +242,7 @@ int main()
                 Brolytest2.avancer(clockanim2);
                 saut2 = false;
             }
-            if(!moveright2 && !moveleft2 && !saut2 && !coupPoing2 && !prendcoup2){
+            if(!moveright2 && !moveleft2 && !saut2){
                 Brolytest2.debout(clockanim2);
             }
             if(saut2){
@@ -222,13 +251,6 @@ int main()
             if(coupPoing2){
                 peutcoup2 = false;
                 coupPoing2 = Brolytest2.coupDePoing(clockanim2);
-                window.draw(Brolytest2.getHitboxpoing());
-                if(coupPoing2){
-                    if(Brolytest.esttouche(Brolytest2.getHitboxpoing())){
-                        prendcoup = true;
-                        cout << "touche" << endl;
-                    }
-                }
                     if(!coupPoing2){
                         if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::A))){
                             peutcoup2 = true;
@@ -236,23 +258,17 @@ int main()
                     }
             }
 
-            ///////////////INTERACTION//////////////////////
-            if(prendcoup){
-                prendcoup = Brolytest.prendcoup(clockanim);
-            }
-            if(prendcoup2){
-                prendcoup2 = Brolytest2.prendcoup(clockanim2);
-            }
-
-            cout << "hurtbox du broly 2 orientation 1  " << Brolytest2.getHitboxcorps().getPosition().x << endl;
 
             //AFFICHAGE
             window.draw(Joueur1);
             window.draw(Joueur2);
-            window.draw(Brolytest.getHitboxcorps());
-            window.draw(Brolytest2.getHitboxcorps());
+            window.draw(hitbox1);
+            window.draw(hitboxpoing);
+
             window.draw(sol);
             window.display();
         }
     return 0;
 }
+
+
