@@ -1,1 +1,0 @@
-g++ -c main.cpp hitbox.cpp hitbox.h fonction.cpp fonction.h personnage.cpp personnage.h background.cpp background.h ; g++ main.o fonction.o hitbox.o personnage.o background.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system ; ./sfml-app ; rm sfml-app main.o fonction.o fonction.h.gch hitbox.o hitbox.h.gch background.o background.h.gch personnage.o personnage.h.gch

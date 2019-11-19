@@ -1,5 +1,5 @@
-#include "include/Joueur.h"
-#include "include/Broly.h"
+#include "Joueur.h"
+#include "Broly.h"
 
 Joueur::Joueur(sf::Sprite& Perso)
 {

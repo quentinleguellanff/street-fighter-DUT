@@ -23,10 +23,26 @@ Broly::Broly(int Orientation)
     _cptanimavancer = 0;
     _cptanimjump = 0;
     _cptAnimCoupPoing = 0;
+    _cptanimprendcoup = 0;
     if(_orientation == -1){
         setOrigin(120.f, 0.f);
+        _hitboxpoing.setOrigin(-190.f, 0.f);
+        //_hitboxcorps.setOrigin(120.f, 0.f);
     }
     _ok = false;
+
+    _hitboxpoing.setSize(sf::Vector2f(46.f,44.f));
+    _hitboxpoing.setFillColor(sf::Color(255,255,255,0));
+    _hitboxpoing.setOutlineThickness(5);
+    _hitboxpoing.setOutlineColor(sf::Color::Red);
+
+    _hitboxcorps.setSize(sf::Vector2f(getLocalBounds().width,getLocalBounds().height*2));
+    _hitboxcorps.setFillColor(sf::Color(255,255,255,0));
+    _hitboxcorps.setOutlineThickness(5);
+    _hitboxcorps.setOutlineColor(sf::Color::Blue);
+    cptanimprendcoupbis = 6;
+
+
 }
 
 int Broly::getorientation(){
@@ -52,6 +68,7 @@ void Broly::debout(sf::Clock& clock)
         _cptanimstatic = 0;
     }
     setTextureRect(sf::IntRect(2+_cptanimstatic*123, 466,121,201));
+    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
 }
 
 void Broly::avancer(sf::Clock& clock)
@@ -71,6 +88,7 @@ void Broly::avancer(sf::Clock& clock)
     if(_cptanimavancer > 0){
         setTextureRect(sf::IntRect(2+_cptanimavancer*130, 873,128,200));
     }
+    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
 }
 
 void Broly::reculer(sf::Clock& clock)
@@ -82,6 +100,7 @@ void Broly::reculer(sf::Clock& clock)
     if(timeanim > 70){
         setTextureRect(sf::IntRect(157, 11437,153,207));
     }
+    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
 
  }
 
@@ -102,22 +121,28 @@ void Broly::sauter(sf::Clock& clock){
  }
 
 bool Broly::coupDePoing(sf::Clock& clock){
-        int decalagex = -112;
-        if(_orientation == -1){
-            decalagex = -decalagex;
-        }
+        int decalagex = -112*_orientation;
         if(!_ok){
             setPosition(getPosition().x+decalagex,getPosition().y+20);
             _ok = true;
         }
         sf::Time elapsed = clock.getElapsedTime();
         int timeanim = elapsed.asMilliseconds();
-        if(timeanim > 200){
+        if(timeanim > 30){
             _cptAnimCoupPoing++;
             clock.restart();
         }
 
+        if(_cptAnimCoupPoing == 1 || _cptAnimCoupPoing == 2 ){
+            //_hitboxpoing.setPosition(getPosition().x+decalagex+120, getPosition().y+182);
+            _hitboxpoing.setPosition(getPosition().x+3, getPosition().y+182);
+        }
+        else{
+           _hitboxpoing.setPosition(getPosition().x+166*_orientation, getPosition().y+60);
+        }
+
         if(_cptAnimCoupPoing >= 5){
+            clock.restart();
             _cptAnimCoupPoing = 0;
             setTextureRect(sf::IntRect(2, 466,121,201));
             cout <<" position du sprite "<< endl;
@@ -131,4 +156,77 @@ bool Broly::coupDePoing(sf::Clock& clock){
             setTextureRect(sf::IntRect(2+_cptAnimCoupPoing*179, 2765,177,191));
         }
         return true;
+}
+
+bool Broly::esttouche(sf::RectangleShape hitboxpoing){
+
+    cout << "position x : de la main" << hitboxpoing.getPosition().x << endl;
+
+    /*if(hitboxpoing.getPosition().x > _hitboxcorps.getPosition().x &&
+    ((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) <  (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x))){
+        return true;
+    }
+    else if(((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) >  _hitboxcorps.getPosition().x)){
+        return true;
+    }
+    /*else if(hitboxpoing.getPosition().x > (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x)){
+        return true;
+    }*/
+    if(_orientation == 1){
+        if(((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) >=  _hitboxcorps.getPosition().x)){
+                cout << "position x : de la main " << hitboxpoing.getPosition().x << endl;
+                cout << "position x : du bout de la main " << hitboxpoing.getPosition().x + hitboxpoing.getSize().x << endl;
+                cout << "position x du corps : " << _hitboxcorps.getPosition().x << endl;
+                cout << endl;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else if(_orientation == -1){
+        if((hitboxpoing.getPosition().x <  (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x))){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
+
+bool Broly::prendcoup(sf::Clock& clock){
+    if(!_ok){
+        setPosition(getPosition().x,getPosition().y+20);
+        _ok = true;
+    }
+    sf::Time elapsed = clock.getElapsedTime();
+    int timeanim = elapsed.asMilliseconds();
+    if(timeanim > 20){
+        _cptanimprendcoup +=1;
+        cptanimprendcoupbis -=1;
+        clock.restart();
+    }
+    if(cptanimprendcoupbis == 0){
+        _cptanimprendcoup = 0;
+        cptanimprendcoupbis = 6;
+        clock.restart();
+        _ok = false;
+        setPosition(getPosition().x,getPosition().y-20);
+        return false;
+    }
+    if(_cptanimprendcoup < 4){
+        setTextureRect(sf::IntRect(2+_cptanimprendcoup*142, 8288,140,196));
+    }
+    if(cptanimprendcoupbis <= 2){
+        setTextureRect(sf::IntRect(2+cptanimprendcoupbis*142, 8288,140,196));
+    }
+    return true;
+}
+
+sf::RectangleShape Broly::getHitboxpoing(){
+    return _hitboxpoing;
+}
+
+sf::RectangleShape Broly::getHitboxcorps(){
+    return _hitboxcorps;
 }
