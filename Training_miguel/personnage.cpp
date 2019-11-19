@@ -1,6 +1,5 @@
 #include "personnage.h"
 
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -11,48 +10,78 @@ using namespace std;
 
 
 
-Personnage::Personnage(Background b) 
+Personnage::Personnage(Background b,int i) 
 {
-	if (!_texturePersonnage.loadFromFile("images/Brolyspriteok.png"))
+	switch (i)
 	{
-	    std::cout<<"Erreur au chargement du sprite";
+	case 1:
+		_orientation=-1;
+		if (!_texturePersonnage.loadFromFile("images/Brolyspriteok.png"))
+		{
+		    std::cout<<"Erreur au chargement du sprite";
+		}
+		_spritePersonnage.setTexture(_texturePersonnage);
+		_spritePersonnage.scale(_orientation*SCALE,SCALE);
+		setSprite(2,466,121,201);
+		_x=0.f;_y=b.getBottom()-getTailleY();
+		_spritePersonnage.setPosition(sf::Vector2f(_x,_y ));
+	    
+	    break;
+	case 2:
+		_orientation=1;
+		if (!_texturePersonnage.loadFromFile("images/Brolyspriteok.png"))
+		{
+		    std::cout<<"Erreur au chargement du sprite";
+		}
+		_spritePersonnage.setTexture(_texturePersonnage);
+		_spritePersonnage.scale(_orientation*SCALE,SCALE);
+		setSprite(2,466,121,201);
+		_x=1920.f-_tailleSprite.x;_y=b.getBottom()-getTailleY();
+		_spritePersonnage.setPosition(sf::Vector2f(_x,_y ));
+	    break;
 	}
-	_spritePersonnage.setTexture(_texturePersonnage);
-
-	_spritePersonnage.scale(-SCALE,SCALE);
-	setSprite(2,466,121,201);
-	_x=0.f;_y=b.getBottom()-getTailleY();
-	_spritePersonnage.setPosition(sf::Vector2f(_x,_y ));
-    keepInWalls(b);
-    Hitbox tempHit(_tailleSprite,_x,_y);
+	keepInWalls(b);
+    Hitbox tempHit(_tailleSprite,_x,_y,_orientation);
     _structure=tempHit;
 }
 
 void Personnage::keepInWalls(Background b)
 {
-	if(_x-_tailleSprite.x<b.getLeftLimit())
-		_x=b.getLeftLimit()+_tailleSprite.x;
-	else if(_x>b.getRightLimit())
-		_x=b.getRightLimit();   
+	if(_orientation==-1)
+	{
+		if(_x-_tailleSprite.x<b.getLeftLimit())
+			_x=b.getLeftLimit()+_tailleSprite.x;
+		else if(_x>b.getRightLimit())
+			_x=b.getRightLimit();   
+	}else if(_orientation==1)
+	{
+		if(_x<b.getLeftLimit())
+			_x=b.getLeftLimit();
+		else if(_x+_tailleSprite.x>b.getRightLimit())
+			_x=b.getRightLimit()-_tailleSprite.x;   
+	}
 	if(_y+_tailleSprite.y>b.getBottom())
-		_y=b.getBottom()-_tailleSprite.y;
+			_y=b.getBottom()-_tailleSprite.y;
 	_spritePersonnage.setPosition(sf::Vector2f(_x,_y ));
 
 }
 
 ///// Deplacements //////////////////
 
-void Personnage::moveRight(Background b,int x)
+void Personnage::moveForward(Background b,int x)
 {
 	setSprite(2+130*x,874,128,202);
-	_x=_x+5;
+	if(_orientation==-1)
+		_x=_x+5;
+	else
+		_x=_x-5;
 	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
 	keepInWalls(b);
 	_structure.setCorps("forward",_x,_y);
 	_structure.setBrasD("forward",x,_x,_y);
 }
 
-void Personnage::moveLeft(Background b,int x)
+void Personnage::moveBackward(Background b,int x)
 {
 	if(x<=0)
         setSprite(2,11437,153,207);
@@ -188,7 +217,7 @@ void Personnage::reset(Background b,int x)
 	setSprite(2+123*x,466,121,201);
 	_y=b.getBottom()-getTailleY();
 	_spritePersonnage.setPosition(sf::Vector2f(_x,_y));
-    Hitbox tempHit(_tailleSprite,_x,_y);
+    Hitbox tempHit(_tailleSprite,_x,_y,_orientation);
     _structure=tempHit;
 }
 

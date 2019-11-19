@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
-#include "Broly.h"
+#include "include/Broly.h"
 
 using namespace std;
 
@@ -437,9 +437,6 @@ int main()
         /*
             TEST CLASSES BROLY
         */
-        if(!moveleft && !moveright && !saut && !coup){
-            Brolytest.debout(clocktest);
-        }
         if(moveleft){
             Brolytest.avancer(clocktest);
         }
@@ -456,6 +453,9 @@ int main()
         }
         if(coupbrolytest){
             coupbrolytest = Brolytest.coupDePoing(clocktest);
+        }
+        if(!moveleft && !moveright && !saut && !coupbrolytest){
+            Brolytest.debout(clocktest);
         }
         window.draw(Brolytest);
 
