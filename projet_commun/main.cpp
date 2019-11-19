@@ -39,7 +39,7 @@ int main()
 	Player joueur2(2);
 
 	/* Création des variables pour les actions à effectuer */
-	bool apparitionsFinies=false,chargementFini=false;
+	bool apparitionsFinies=false,actionFini_P1=true,actionFini_P2=true;
 	int deplacementX_P1, deplacementY_P1, action_P1;
 	int deplacementX_P2, deplacementY_P2, action_P2;
 
@@ -58,24 +58,56 @@ int main()
 		else
 		{
 			/* Récuperation des actions à effectuer */
-			joueur1.recuperationCommandesP1();
-			joueur2.recuperationCommandesP2();
-			deplacementX_P1=joueur1.getPosHorizontale();deplacementY_P1=joueur1.getPosVerticale();action_P1=joueur1.getAction();
-			deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
-			cout<<deplacementX_P1<<endl;
+			if(actionFini_P1)
+			{
+				joueur1.recuperationCommandesP1();
+				deplacementX_P1=joueur1.getPosHorizontale();deplacementY_P1=joueur1.getPosVerticale();action_P1=joueur1.getAction();
+			}
+			if(actionFini_P2)
+			{	
+				joueur2.recuperationCommandesP2();
+				deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
+			}
 
-			/* Lancement des animations (avec 2 threads?)*/
-			if(deplacementX_P1==1)
-				champion_P1.avancer(clockAnim_P1);
+			/* Lancement des animations Player 1*/
+			if(deplacementX_P1==1 && deplacementY_P1==1)
+				actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
+			else if(deplacementX_P1==-1 && deplacementY_P1==1)
+				actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
+			else if(deplacementX_P1==1)
+				champion_P1.avancer(clockAnim_P1,champion_P2);
 			else if(deplacementX_P1==-1)
 				champion_P1.reculer(clockAnim_P1);
+			else if(deplacementY_P1==1)
+				actionFini_P1=champion_P1.sauter(clockAnim_P1);
+			else if(action_P1==1)
+				actionFini_P1=champion_P1.punch(clockAnim_P1);
+			else if(action_P1==2)
+				actionFini_P1=champion_P1.kick(clockAnim_P1);
+			else if(action_P1==3)
+				actionFini_P1=champion_P1.SP1(clockAnim_P1,effet_P1);
 			else
 				champion_P1.statique(clockAnim_P1);
 
-			if(deplacementX_P2==1)
-				champion_P2.avancer(clockAnim_P2);
+
+			/* Lancement des animations Player 2*/
+
+			if(deplacementX_P2==1 && deplacementY_P2==1)
+				actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
+			else if(deplacementX_P2==-1 && deplacementY_P2==1)
+				actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
+			else if(deplacementX_P2==1)
+				champion_P2.avancer(clockAnim_P2,champion_P1);
 			else if(deplacementX_P2==-1)
 				champion_P2.reculer(clockAnim_P2);
+			else if(deplacementY_P2==1)
+				actionFini_P2=champion_P2.sauter(clockAnim_P2);
+			else if(action_P2==1)
+				actionFini_P2=champion_P2.punch(clockAnim_P2);
+			else if(action_P2==2)
+				actionFini_P2=champion_P2.kick(clockAnim_P2);
+			else if(action_P2==3)
+				actionFini_P2=champion_P2.SP1(clockAnim_P2,effet_P2);
 			else
 				champion_P2.statique(clockAnim_P2);
 
@@ -92,8 +124,8 @@ int main()
         window.draw(fond.getSprite());
         window.draw(fond.getSol());
         window.draw(champion_P1);
-        window.draw(effet_P1);
         window.draw(champion_P2);
+        window.draw(effet_P1);
         window.draw(effet_P2);
         window.display();
 

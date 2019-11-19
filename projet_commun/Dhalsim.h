@@ -17,38 +17,44 @@ private:
 	sf::Texture _texture;
 	sf::Vector2f _tailleSprite;
 	Scene _scene;
+	//sf::Sprite _ennemi;
+
 	float _posX;                   //Position X du perso
     float _posY;                   //Position Y du perso
 
-	int _cptStatic;
 	int _cptAvancer;
 	int _cptReculer;
+	int _cptStatic;
 
 	int _cptSauter;
 
 	int _cptApparition;
-	int _cptEffet;
-	int _cptPunch;
-
-	void _setSprite(int, int, int, int);
+	int _cptAction;
 
 public:
 	Dhalsim(){};
 	Dhalsim(int,const Scene&);
+	void setSprite(int, int, int, int);
 
 	void keepInWalls();
 	sf::Sprite getSprite() const;
+	
 
 	void reset();
+	void rotate(sf::Clock&,const sf::Sprite&);
 
 	void statique(sf::Clock&);
-	void avancer(sf::Clock&);
+	void avancer(sf::Clock&,const sf::Sprite&);
 	void reculer(sf::Clock&);
 
-	void sauter(sf::Clock&);
+	bool sauter(sf::Clock&);
+	bool sauterAvant(sf::Clock&,const sf::Sprite&);
+	bool sauterArriere(sf::Clock&);
 
 	bool apparition(sf::Clock&,sf::Sprite&);
-	void punch(sf::Clock&);
+	bool punch(sf::Clock&);
+	bool kick(sf::Clock&);
+	bool SP1(sf::Clock&,sf::Sprite&);
 	
 };
 
