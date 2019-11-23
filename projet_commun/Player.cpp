@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "IncludeManager.h"
 #include <string>
 
 using namespace std;
@@ -69,6 +69,28 @@ void Player::recuperationCommandesP1()    // Commandes pour le player 1
 	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
 
+void Player::recuperationAttaquesP1()
+{
+	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
+	{
+		bool punch=false,kick=false;
+		if (sf::Joystick::isConnected(0))   // Commandes pour manette
+		{
+			punch=sf::Joystick::isButtonPressed(0, 0);
+			kick=sf::Joystick::isButtonPressed(0, 1);
+		}else
+		{
+			punch=sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	
+			kick=sf::Keyboard::isKeyPressed(sf::Keyboard::E);
+		}
+		if(punch)
+			_action=1;
+		else if(kick)
+			_action=2;
+	}	
+}
+
+
 void Player::recuperationCommandesP2()    // Commandes pour le player 2
 {
 	_resetAttributs();
@@ -123,15 +145,35 @@ void Player::recuperationCommandesP2()    // Commandes pour le player 2
 	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
 
+void Player::recuperationAttaquesP2()
+{
+	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
+	{
+		bool punch=false,kick=false;
+		if (sf::Joystick::isConnected(0))   // Commandes pour manette
+		{
+			punch=sf::Joystick::isButtonPressed(0, 0);
+			kick=sf::Joystick::isButtonPressed(0, 1);
+		}else
+		{
+			punch=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  	
+			kick=sf::Keyboard::isKeyPressed(sf::Keyboard::M);
+		}
+		if(punch)
+			_action=1;
+		else if(kick)
+			_action=2;
+	}	
+}
 
 void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool garde, bool punch, bool kick, bool SP1 )
 {
-	if(punch && (avancer || reculer || saut))
+	if(punch && (avancer || reculer))
 	{
 		punch=true;
 		avancer=false;
 		reculer=false;
-	}else if(kick && (avancer || reculer || saut))
+	}else if(kick && (avancer || reculer))
 	{
 		kick=true;
 		avancer=false;
@@ -141,6 +183,7 @@ void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool
 		SP1=true;
 		avancer=false;
 		reculer=false;
+		saut=false;
 	}
 
 	if(sautAvant)

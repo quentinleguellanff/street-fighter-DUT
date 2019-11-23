@@ -1,15 +1,14 @@
-#include "Dhalsim.h"
-#include "Scene.h"
+#include "../IncludeManager.h"
 
 using namespace std;
 
-Dhalsim::Dhalsim(int orientation,const Scene& s)
+Jotaro::Jotaro(int orientation,const Scene& s)
 {
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;
 
-	if (!_texture.loadFromFile("sprites/sprite_dhalsim.png"))
+	if (!_texture.loadFromFile("sprites/sprite_jotaro.png"))
 	{
 	    std::cout<<"Erreur au chargement du sprite";
 	}
@@ -27,14 +26,14 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 	keepInWalls();
 }
 
-void Dhalsim::setSprite(int n1, int n2, int i1, int i2)
+void Jotaro::setSprite(int n1, int n2, int i1, int i2)
 {
 	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
 	setTextureRect(sf::IntRect(n1, n2,i1,i2));
 }
 
 
-void Dhalsim::keepInWalls()
+void Jotaro::keepInWalls()
 {
 	if(_orientation==-1)
 	{
@@ -56,7 +55,7 @@ void Dhalsim::keepInWalls()
 }
 
 
-void Dhalsim::rotate(const sf::Sprite& ennemi)
+void Jotaro::rotate(const sf::Sprite& ennemi)
 {
 	if( (getScale().x==SCALE && _posX> ennemi.getPosition().x) || (getScale().x==SCALE*-1 && _posX< ennemi.getPosition().x) )
 	{
@@ -67,63 +66,22 @@ void Dhalsim::rotate(const sf::Sprite& ennemi)
 	}
 }
 
-/*
-void Dhalsim::rotate(sf::Clock& clockAnim,const sf::Sprite& _ennemi)
-{
-	
-    bool fini=false;
-    int delai=70;
-	if( (getScale().x==SCALE && _posX> _ennemi.getPosition().x) || (getRotation()==360 && _posX< _ennemi.getPosition().x) )
-	{
-		sf::Time elapsed = clockAnim.getElapsedTime();
-		int timeAnim = elapsed.asMilliseconds();
-		if(_cptAction==0)
-		{
-			if(timeAnim > delai){
-				cout<<"bienvenue"<<endl;
-			    clockAnim.restart();
-				_cptAction ++;
-			    setSprite(737,163,65,103);
-			}
-		}else if (_cptAction==1)
-		{
-			if(timeAnim > delai){
-			    clockAnim.restart();
-			    _cptAction ++;
-			    setSprite(810,163,63,103);
-			}
-		}else if(_cptAction==2)
-		{
-			if(timeAnim > delai){
-			    clockAnim.restart();
-			    _cptAction=0;
-			    _orientation=-_orientation;
-			    setSprite(881,163,93,103);
-			    scale(_orientation*SCALE,SCALE);
-			    fini=true;
-			}
-		}
-		
-	}
-}*/
-
 
 /* ANIMATIONS */
 
-void Dhalsim::reset()
+void Jotaro::reset()
 {
-	//setSprite(409,32,51,115);
 	_cptSauter=0;_cptApparition=0;_cptAction=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	setPosition(_posX,_posY);
 }
 
-void Dhalsim::resetAccroupi()
+void Jotaro::resetAccroupi()
 {
 	_cptAccroupi=0;
 }
 
-bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
+bool Jotaro::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 {
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -215,71 +173,76 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 	return fini;
 }
 
-void Dhalsim::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
+void Jotaro::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
-    //_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAccroupi=0;
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=150;
+    int delai=120;
     switch (_cptStatic)
     {
     case 0:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-    		setSprite(24,163,96,103);
-    		_posY=_scene.getBottom()-_tailleSprite.y;
-			setPosition(_posX,_posY);
+    		setSprite(4,6,64,117);
 		}
     	break;
     case 1:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-		    setSprite(128,163,97,103);
+		    setSprite(80,6,64,117);
 		}
     	break;
     case 2:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-		    setSprite(233,163,94,103);
+		    setSprite(155,6,64,117);
 		}
     	break;
     case 3:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-		    setSprite(335,163,94,103);
+		    setSprite(232,6,66,117);
 		}
     	break;
     case 4:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-		    setSprite(437,163,93,103);
+		    setSprite(310,6,69,117);
 		}
     	break;
     case 5:
     	if(timeAnim > delai){
-		    _cptStatic +=1;
+		    _cptStatic ++;
 		    clockAnim.restart();
-		    setSprite(538,163,92,103);
+		    setSprite(390,6,67,117);
 		}
     	break;
     case 6:
     	if(timeAnim > delai){
+		    _cptStatic++;
+		    clockAnim.restart();
+		    setSprite(467,6,64,117);
+		}
+    	break;
+    case 7:
+    	if(timeAnim > delai){
 		    _cptStatic=0;
 		    clockAnim.restart();
-		    setSprite(638,163,91,103);
+		    setSprite(541,6,64,117);
 		}
     	break;
     }
     rotate(ennemi);
+    keepInWalls();
 }
 
 
-void Dhalsim::garde(sf::Clock& clockAnim)
+void Jotaro::garde(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
@@ -287,207 +250,362 @@ void Dhalsim::garde(sf::Clock& clockAnim)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     if(timeAnim>delai)
-    {
-    	clockAnim.restart();
-    	setSprite(125,4747,63,100);
-    }
+	{	
+    	if(_cptGarde==0)
+    	{
+	    	clockAnim.restart();
+	    	_cptGarde++;
+	    	setSprite(7,4991,110,125);
+
+	    }else if(_cptGarde==1)
+	    {
+	    	clockAnim.restart();
+	    	_cptGarde++;
+	    	setSprite(122,4991,139,125);
+	    }else if(_cptGarde>1)
+	    {
+	    	clockAnim.restart();
+	    	_cptGarde++;
+	    	setSprite(269,4991,108,125);
+	    }
+	}
+	keepInWalls();
 }
 
 
-void Dhalsim::avancer(sf::Clock& clockAnim,const sf::Sprite& ennemi)
+void Jotaro::avancer(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
 	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
-    int deplacement=30;
+    int delai=50;
+    int deplacement=35;
     switch (_cptAvancer)
     {
     case 0:
 		setPosition(_posX,_posY);
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-    		setSprite(24,284,75,101);
+    		setSprite(4,858,67,115);
     		_posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 1:
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-		    setSprite(107,284,68,101);
+		    setSprite(92,858,59,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 2:
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-		    setSprite(183,284,61,101);
+		    setSprite(174,858,47,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 3:
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-		    setSprite(252,284,58,101);
+		    setSprite(247,858,48,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 4:
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-		    setSprite(318,284,67,101);
+		    setSprite(316,858,53,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 5:
     	if(timeAnim > delai){
-		    _cptAvancer +=1;
+		    _cptAvancer ++;
 		    clockAnim.restart();
-		    setSprite(393,284,67,101);
+		    setSprite(387,858,70,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 6:
     	if(timeAnim > delai){
-		    _cptAvancer+=1;
+		    _cptAvancer++;
 		    clockAnim.restart();
-		    setSprite(468,284,63,101);
+		    setSprite(473,858,77,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 7:
     	if(timeAnim > delai){
-		    _cptAvancer=0;
+		    _cptAvancer++;
 		    clockAnim.restart();
-		    setSprite(539,284,66,101);
+		    setSprite(564,858,72,115);
 		    _posX+=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
+    case 8:
+    	if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(658,858,69,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 9:
+		if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(746,858,62,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 10:
+		if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(825,858,47,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 11:
+		if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(897,858,52,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 12:
+		if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(961,858,58,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 13:
+		if(timeAnim > delai){
+		    _cptAvancer++;
+		    clockAnim.restart();
+		    setSprite(1124,858,76,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 14:
+		if(timeAnim > delai){
+		    _cptAvancer=0;
+		    clockAnim.restart();
+		    setSprite(1209,858,72,115);
+		    _posX+=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
     }
     rotate(ennemi);
 	keepInWalls();
 }
 
 
-void Dhalsim::reculer(sf::Clock& clockAnim)
+void Jotaro::reculer(sf::Clock& clockAnim)
 {
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
-    int deplacement=30;
+    int delai=50;
+    int deplacement=25;
     switch (_cptReculer)
     {
     case 0:
 		setPosition(_posX,_posY);
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-    		setSprite(614,282,69,103);
+    		setSprite(1413,858,76,115);
     		_posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 1:
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-		    setSprite(691,282,63,103);
+		    setSprite(1499,858,75,115);
 		    _posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 2:
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-		    setSprite(762,282,60,103);
+		    setSprite(1583,858,58,115);
 		    _posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 3:
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-			setSprite(830,282,63,103);
+			setSprite(1656,858,52,115);
 			_posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 4:
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-			setSprite(901,282,62,103);
+			setSprite(1723,858,46,115);
 			_posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 5:
     	if(timeAnim > delai){
-		    _cptReculer +=1;
+		    _cptReculer ++;
 		    clockAnim.restart();
-		    setSprite(971,282,57,103);
+		    setSprite(1782,858,59,115);
 		    _posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 6:
     	if(timeAnim > delai){
-		    _cptReculer+=1;
+		    _cptReculer++;
 		    clockAnim.restart();
-			setSprite(1036,282,60,103);
+			setSprite(1854,858,59,115);
 			_posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
     case 7:
     	if(timeAnim > delai){
-		    _cptReculer=0;
+		    _cptReculer++;
 		    clockAnim.restart();
-			setSprite(1104,282,63,103);
+			setSprite(1931,858,72,115);
 			_posX-=_orientation*deplacement;
 			setPosition(_posX,_posY);
 		}
     	break;
+    case 8:
+    	if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2016,858,77,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 9:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2105,858,70,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 10:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2186,858,53,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 11:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2253,858,48,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 12:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2314,858,47,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 13:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2374,858,56,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 14:
+		if(timeAnim > delai){
+		    _cptReculer++;
+		    clockAnim.restart();
+		    setSprite(2443,858,67,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
+	case 15:
+		if(timeAnim > delai){
+		    _cptReculer=0;
+		    clockAnim.restart();
+		    setSprite(2523,858,72,115);
+		    _posX-=_orientation*deplacement;
+			setPosition(_posX,_posY);
+		}
+		break;
     }
 	keepInWalls();
 }
 
-bool Dhalsim::sauter(sf::Clock& clockAnim)
+bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacement=125;
+    int delai=70,deplacement=100;
     bool fini=false;
 
     switch(_cptSauter)
     {
     case 0:
-	    _cptSauter+=1;
-	    setSprite(974,1705,50,126);
+    	clockAttente.restart();
+	    _cptSauter++;
+	    setSprite(2,1101,97,153);
+	    _posY+=10;
+		setPosition(_posX,_posY);
     	break;
     case 1:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
+		    _cptSauter++;
+		    setSprite(109,1111,57,153);
 		    _posY-=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -495,8 +613,8 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     case 2:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(1084,1705,57,126);
+		    _cptSauter++;
+		    setSprite(183,1111,90,153);
 		    _posY-=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -504,8 +622,8 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     case 3:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(1148,1705,60,126);
+		    _cptSauter++;
+		    setSprite(281,1111,88,153);
 		    _posY-=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -513,24 +631,24 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     case 4:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(1216,1705,65,126);
+		    _cptSauter++;
+		    setSprite(383,1111,80,153);
+		    _posY-=deplacement;
+		    setPosition(_posX,_posY);
 		}
     	break;
     case 5:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(1148,1705,60,126);
-		    _posY+=deplacement;
-		    setPosition(_posX,_posY);
+		    _cptSauter++;
+		    setSprite(480,1111,85,153);
 		}
     	break;
     case 6:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(1084,1705,57,126);
+		    _cptSauter++;
+		    setSprite(576,1111,99,153);
 		    _posY+=deplacement;
 		    setPosition(_posX,_posY);
 		}
@@ -538,25 +656,82 @@ bool Dhalsim::sauter(sf::Clock& clockAnim)
     case 7:
     	if(timeAnim > delai){
 		    clockAnim.restart();
-		    _cptSauter+=1;
-		    setSprite(974,1705,50,126);
+		    _cptSauter++;
+		    setSprite(682,1111,101,153);
 		    _posY+=deplacement;
 		    setPosition(_posX,_posY);
 		}
     	break;
     case 8:
-    	clockAnim.restart();
-    	_cptSauter=0;
-    	fini=true;
-    	//reset();
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(793,1111,111,153);
+		    _posY+=deplacement;
+		    setPosition(_posX,_posY);	    	
+	    }
     	break;
+    case 9:
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(914,1111,125,153);
+		    _posY+=deplacement;
+		    setPosition(_posX,_posY);	    	
+	    }
+		break;
+	case 10:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1043,1111,104,153);
+	    		    	
+	    }
+		break;
+	case 11:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1154,1111,102,153);	    	
+	    }
+		break;
+	case 12:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1269,1101,91,153);
+	    	fini=true;	    	
+	    }
+		break;
+	case 13:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1372,1101,90,153);	    	
+	    }
+		break;
+	case 14:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1476,1102,71,153);  	
+	    }
+		break;
+	case 15:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter=0;
+	    	setSprite(1557,1102,76,153);
+	    	fini=true;  	    	
+	    }
+		break;
     }
     keepInWalls();
     return fini;
 }
 
 
-bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
+bool Jotaro::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -651,7 +826,7 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
     return fini;
 }
 
-bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
+bool Jotaro::sauterArriere(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -745,46 +920,69 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
     return fini;
 }
 
-void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
+void Jotaro::accroupi(sf::Clock& clockAnim,bool garde)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=35;
-    if(_cptAccroupi==0)
+    if(timeAnim>delai)
     {
-    	if(timeAnim>delai)
-    	{
+	    if(_cptAccroupi==0)
+	    {	
     		clockAnim.restart();
     		_cptAccroupi++;
-    		setSprite(24,1424,82,95);
+    		setSprite(914,743,97,102);
     		_posY=_scene.getBottom()-_tailleSprite.y;
 			setPosition(_posX,_posY);
-    	}
-    }else if(_cptAccroupi==1)
-    {
-    	if(timeAnim>delai)
-    	{
+	    }else if(_cptAccroupi==1)
+	    {
     		clockAnim.restart();
     		_cptAccroupi++;
-    		setSprite(114,1424,61,95);
-    	}
-    }else
-    {
-    	if(timeAnim>delai)
-    	{
+    		setSprite(1026,743,91,102);
+	    }else if(_cptAccroupi==2)
+	    {
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(1128,743,104,102);
+	    }else if(_cptAccroupi==3)
+	    {
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(1245,743,89,102);
+	    }else if(_cptAccroupi==4)
+	    {
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(1348,743,95,102);
+	    }else if(_cptAccroupi==5)
+	    {
+    		clockAnim.restart();
+    		_cptAccroupi++;
+    		setSprite(1455,743,89,102);
+	    }else if(_cptAccroupi==6)
+	    {
     		clockAnim.restart();
     		if(garde==true)
 	    	{
-	    		setSprite(263,4776,59,71);
+	    		setSprite(1783,5033,131,83);
+	    		_cptAccroupi++;
 	    	}else
-    			setSprite(183,1424,60,95);
-    	}
-    }
+    			setSprite(1552,743,95,102);
+	    }else
+	    {
+	    	clockAnim.restart();
+    		if(garde==true)
+	    	{
+	    		setSprite(1922,5033,112,83);
+	    	}else
+    			setSprite(1552,743,95,102);
+	    }
+	}
 }
 
 
-bool Dhalsim::punch(sf::Clock& clockAnim)
+bool Jotaro::punch(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -795,37 +993,72 @@ bool Dhalsim::punch(sf::Clock& clockAnim)
 	{
 	case 0:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(24,419,82,117);
+		    setSprite(6,2109,88,112);
 		}
 		break;
 	case 1:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(114,419,74,117);
+		    setSprite(102,2109,117,112);
 		}
 		break;
 	case 2:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(197,419,108,117);
+		    setSprite(227,2109,119,112);
 		}
 		break;
 	case 3:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(313,419,108,117);
+		    setSprite(359,2109,152,112);
 		}
 		break;
 	case 4:
 		if(timeAnim > delai){
-		    _cptAction =0;
+		    _cptAction++;
 		    clockAnim.restart();
-		    setSprite(429,419,75,117);
+		    setSprite(519,2109,110,112);
+		}
+		break;
+	case 5:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(637,2109,134,112);
+		}
+		break;
+	case 6:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(776,2109,132,112);
+		}
+		break;
+	case 7:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(915,2109,107,112);
+		}
+		break;
+	case 8:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(1031,2109,71,112);
+		}
+		break;
+	case 9:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(1110,2109,76,112);
 		    fini=true;
 		}
 		break;
@@ -834,7 +1067,7 @@ bool Dhalsim::punch(sf::Clock& clockAnim)
 	return fini;
 }
 
-bool Dhalsim::sautPunch(sf::Clock& clockAnim)
+bool Jotaro::sautPunch(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -913,7 +1146,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim)
 }
 
 
-bool Dhalsim::kick(sf::Clock& clockAnim)
+bool Jotaro::kick(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -924,52 +1157,65 @@ bool Dhalsim::kick(sf::Clock& clockAnim)
 	{
 	case 0:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(24,768,77,113);
+		    setSprite(1322,2103,74,118);
 		}
 		break;
 	case 1:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(109,768,56,113);
-		    _posX+=18*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(1414,2103,76,118);
 		}
 		break;
 	case 2:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(173,768,126,113);
-		    _posX-=8*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(1507,2103,89,118);
 		}
 		break;
 	case 3:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(307,768,122,113);
+		    setSprite(1612,2103,130,118);
 		}
 		break;
 	case 4:
 		if(timeAnim > delai){
-		    _cptAction +=1;
+		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(437,768,56,113);
-		    _posX+=8*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(1758,2103,124,118);
 		}
 		break;
 	case 5:
 		if(timeAnim > delai){
+		    _cptAction++;
+		    clockAnim.restart();
+		    setSprite(1893,2103,112,118);
+		}
+		break;
+	case 6:
+		if(timeAnim > delai){
+		    _cptAction++;
+		    clockAnim.restart();
+		    setSprite(2018,2103,104,118);
+		}
+		break;
+	case 7:
+		if(timeAnim > delai){
+		    _cptAction++;
+		    clockAnim.restart();
+		    setSprite(2131,2103,71,118);
+		}
+		break;
+	case 8:
+		if(timeAnim > delai){
 		    _cptAction =0;
 		    clockAnim.restart();
-		    setSprite(501,768,77,113);
-		    _posX-=18*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(2215,2103,77,118);
 		    fini=true;
 		}
 		break;
@@ -978,7 +1224,7 @@ bool Dhalsim::kick(sf::Clock& clockAnim)
 	return fini;	
 }
 
-bool Dhalsim::sautKick(sf::Clock& clockAnim)
+bool Jotaro::sautKick(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1067,7 +1313,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim)
 
 
 
-bool Dhalsim::SP1(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
+bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1080,84 +1326,97 @@ bool Dhalsim::SP1(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(24,3233,76,120);
-		    _posX-=10*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(7,3742,110,116);
 		}
 		break;
 	case 1:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(108,3233,81,120);
-		    _posX-=6*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(122,3742,139,116);
 		}
 		break;
 	case 2:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(197,3233,58,120);
-		    _posX+=28*SCALE*_orientation;
-			setPosition(_posX,_posY);
+		    setSprite(269,3742,108,116);
 		}
 		break;
 	case 3:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(263,3233,92,120);
-		    _posX-=4*SCALE*_orientation;
-			setPosition(_posX,_posY);
-			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
-			bouleFeu.setScale(_orientation*SCALE,SCALE);
-			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/3));
+		    setSprite(386,3742,122,116);
+		}
+		break;
+	case 4:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(515,3742,121,116);
+
+			starPlat.setTextureRect(sf::IntRect(671,3724,100,135));
+			starPlat.setScale(_orientation*SCALE,SCALE);
+			starPlat.setPosition(_posX+((_tailleSprite.x/2)*_orientation),_posY);
+		}
+		break;
+	case 5:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+			starPlat.setTextureRect(sf::IntRect(875,3724,142,135));
 		}
 		break;
 	}
+	if(timeAnim>delai)
+	{
+		if(_cptAction==6 || _cptAction==28 || _cptAction==40)
 
+
+
+	}
 	if(_cptAction>=4 && _cptAction<8)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(310,3355,39,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(310,3355,39,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>7 && _cptAction<11)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(263,3355,39,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(263,3355,39,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>10 && _cptAction<15)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(217,3355,38,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(217,3355,38,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>14 && _cptAction<20)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(167,3355,42,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(167,3355,42,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>19 && _cptAction<24)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(119,3355,40,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(119,3355,40,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>23 && _cptAction<28)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(71,3355,40,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(71,3355,40,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}else if(_cptAction>27)
 	{
 		_cptAction +=1;
-		bouleFeu.setTextureRect(sf::IntRect(24,3355,39,25));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(24,3355,39,25));
+		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}
 
-	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+	if( (_orientation==1 && starPlat.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && starPlat.getPosition().x<=_scene.getLeftLimit()) )
 	{
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/2));
+		starPlat.setTextureRect(sf::IntRect(0,0,0,0));
+		starPlat.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/2));
 		fini=true;
 		_cptAction=0;
 	}

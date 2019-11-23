@@ -34,8 +34,11 @@ public:
 	Player(){};
 	Player(int);
 	void recuperationCommandesP1();
+	void recuperationAttaquesP1();
 	void recuperationCommandesP2();
+	void recuperationAttaquesP2();
 	void gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere,bool garde, bool punch, bool kick, bool SP1);
+
 	int getPosHorizontale();
 	int getPosVerticale();
 	int getAction();
