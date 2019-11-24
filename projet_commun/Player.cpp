@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "IncludeManager.h"
 #include <string>
 
 using namespace std;
@@ -19,7 +19,7 @@ void Player::recuperationCommandesP1()    // Commandes pour le player 1
 {
 	_resetAttributs();
 
-	bool avancer=false,reculer=false, accroupi=false, saut=false,sautAvant=false,sautArriere=false,punch=false,kick=false,SP1=false;
+	bool avancer=false,reculer=false, accroupi=false, saut=false,sautAvant=false,sautArriere=false,garde=false,punch=false,kick=false,SP1=false;
 
 	if (sf::Joystick::isConnected(0))   // Commandes pour manette
 	{
@@ -60,20 +60,42 @@ void Player::recuperationCommandesP1()    // Commandes pour le player 1
 		avancer=sf::Keyboard::isKeyPressed(sf::Keyboard::D);  	// touche pour avancer:    D
 		saut=sf::Keyboard::isKeyPressed(sf::Keyboard::Z);	  	// touche pour sauter:     Z
 		accroupi=sf::Keyboard::isKeyPressed(sf::Keyboard::S);	// touche pour accroupir:  S
+		garde=sf::Keyboard::isKeyPressed(sf::Keyboard::C);	  	// touche pour protection: C   
 		punch=sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	// touche pour puncher:    A
 		kick=sf::Keyboard::isKeyPressed(sf::Keyboard::E);	  	// touche pour kicker:     E
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::R);		// touche pour spécial 1:  R
-
 	}
 	
-	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,punch,kick,SP1 );	
+	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
+
+void Player::recuperationAttaquesP1()
+{
+	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
+	{
+		bool punch=false,kick=false;
+		if (sf::Joystick::isConnected(0))   // Commandes pour manette
+		{
+			punch=sf::Joystick::isButtonPressed(0, 0);
+			kick=sf::Joystick::isButtonPressed(0, 1);
+		}else
+		{
+			punch=sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	
+			kick=sf::Keyboard::isKeyPressed(sf::Keyboard::E);
+		}
+		if(punch)
+			_action=1;
+		else if(kick)
+			_action=2;
+	}	
+}
+
 
 void Player::recuperationCommandesP2()    // Commandes pour le player 2
 {
 	_resetAttributs();
 
-	bool avancer=false,reculer=false, accroupi=false, saut=false,sautAvant=false,sautArriere=false,punch=false,kick=false,SP1=false;
+	bool avancer=false,reculer=false, accroupi=false, saut=false,sautAvant=false,sautArriere=false,garde=false,punch=false,kick=false,SP1=false;
 
 	if (sf::Joystick::isConnected(1))   // Commandes pour manette
 	{
@@ -114,29 +136,48 @@ void Player::recuperationCommandesP2()    // Commandes pour le player 2
 		avancer=sf::Keyboard::isKeyPressed(sf::Keyboard::Left);  	// touche pour avancer:    Left
 		saut=sf::Keyboard::isKeyPressed(sf::Keyboard::Up);	  		// touche pour sauter:     Up
 		accroupi=sf::Keyboard::isKeyPressed(sf::Keyboard::Down);	// touche pour accroupir:  Down
+		garde=sf::Keyboard::isKeyPressed(sf::Keyboard::O);	  		// touche pour protection: O   
 		punch=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  		// touche pour puncher:    P
 		kick=sf::Keyboard::isKeyPressed(sf::Keyboard::M);	  		// touche pour kicker:     M
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::L);			// touche pour spécial 1:  L
 
 	}
-	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,punch,kick,SP1 );	
+	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
 
-
-void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool punch, bool kick, bool SP1 )
+void Player::recuperationAttaquesP2()
 {
-	if(punch && (avancer || reculer || saut))  // A garder tant que 1 seul punch créé
+	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
+	{
+		bool punch=false,kick=false;
+		if (sf::Joystick::isConnected(0))   // Commandes pour manette
+		{
+			punch=sf::Joystick::isButtonPressed(0, 0);
+			kick=sf::Joystick::isButtonPressed(0, 1);
+		}else
+		{
+			punch=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  	
+			kick=sf::Keyboard::isKeyPressed(sf::Keyboard::M);
+		}
+		if(punch)
+			_action=1;
+		else if(kick)
+			_action=2;
+	}	
+}
+
+void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool garde, bool punch, bool kick, bool SP1 )
+{
+	if(punch && (avancer || reculer))
 	{
 		punch=true;
 		avancer=false;
 		reculer=false;
-		saut=false;
-	}else if(kick && (avancer || reculer || saut))  // A garder tant que 1 seul kick créé
+	}else if(kick && (avancer || reculer))
 	{
 		kick=true;
 		avancer=false;
 		reculer=false;
-		saut=false;
 	}else if(SP1 && (avancer || reculer || saut))
 	{
 		SP1=true;
@@ -172,15 +213,16 @@ void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool
 	else 
 		_posVerticale=0;
 
-
-	if(punch)
+	if(garde)
+		_action=0;
+	else if(punch)
 		_action=1;
 	else if(kick)
 		_action=2;
 	else if(SP1)
 		_action=3;
 	else
-		_action=0;
+		_action=-1;
 }
 
 

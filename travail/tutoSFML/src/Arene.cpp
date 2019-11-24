@@ -1,5 +1,5 @@
-#include "include/Arene.h"
-
+//#include "include/Arene.h"
+/*
 Arene::Arene()
 {
     _taillesol = 100;
@@ -8,3 +8,4 @@ Arene::Arene()
 int Arene::getTailleSol(){
     return _taillesol;
 }
+*/

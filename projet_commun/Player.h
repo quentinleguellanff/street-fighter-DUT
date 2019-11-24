@@ -18,10 +18,11 @@ private:
 	int _posVerticale;
 	int _action;
 	/* 	relation int-action
-		0-rien
-		1-punch
-		2-kick
-		3-SP1
+	   -1 - rien
+	    0 - garde
+		1 - punch
+		2 - kick
+		3 - SP1
 	*/
 	sf::Event _eventTouche;
 	float joystick0_axisX;
@@ -33,8 +34,11 @@ public:
 	Player(){};
 	Player(int);
 	void recuperationCommandesP1();
+	void recuperationAttaquesP1();
 	void recuperationCommandesP2();
-	void gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool punch, bool kick, bool SP1);
+	void recuperationAttaquesP2();
+	void gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere,bool garde, bool punch, bool kick, bool SP1);
+
 	int getPosHorizontale();
 	int getPosVerticale();
 	int getAction();

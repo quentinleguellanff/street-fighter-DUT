@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1573597851 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\main.cpp
+1573770662 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
-	"Broly.h"
+	"include/Broly.h"
 
 1525812018 c:\users\quentin\documents\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -414,9 +414,8 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1573597796 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\broly.cpp
+1574000159 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\broly.cpp
 	"Broly.h"
-	"Arene.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
@@ -426,12 +425,11 @@
 	<iostream>
 	<sstream>
 
-1572128252 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\arene.cpp
-	"Arene.h"
+1574000191 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\arene.cpp
 
 1572128274 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\include\arene.h
 
-1573403298 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\joueur.cpp
+1574000184 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\tutosfml\src\joueur.cpp
 	"Joueur.h"
 	"Broly.h"
 
