@@ -25,8 +25,7 @@ Broly::Broly(int Orientation)
     _cptAnimCoupPoing = 0;
     _cptanimprendcoup = 0;
     if(_orientation == -1){
-        setOrigin(120.f, 0.f);
-        _hitboxpoing.setOrigin(-190.f, 0.f);
+        setOrigin(getLocalBounds().width, 0.f);
         //_hitboxcorps.setOrigin(120.f, 0.f);
     }
     _ok = false;
@@ -67,8 +66,9 @@ void Broly::debout(sf::Clock& clock)
     if(_cptanimstatic >= 10){
         _cptanimstatic = 0;
     }
-    setTextureRect(sf::IntRect(2+_cptanimstatic*123, 466,121,201));
-    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
+    setTextureRect(sf::IntRect(2+_cptanimstatic*123, 466,120,201));
+
+    _hitboxcorps.setPosition(getPosition().x+getLocalBounds().width/2,getPosition().y);
 }
 
 void Broly::avancer(sf::Clock& clock)
@@ -135,16 +135,27 @@ bool Broly::coupDePoing(sf::Clock& clock){
 
         if(_cptAnimCoupPoing == 1 || _cptAnimCoupPoing == 2 ){
             //_hitboxpoing.setPosition(getPosition().x+decalagex+120, getPosition().y+182);
-            _hitboxpoing.setPosition(getPosition().x+3, getPosition().y+182);
+            if(_orientation == 1){
+                _hitboxpoing.setPosition(getPosition().x, getPosition().y+182);
+            }
+            else{
+                _hitboxpoing.setPosition(getPosition().x+getLocalBounds().width*2-120-46+5, getPosition().y+182);
+                cout << "position de la hitbox" << _hitboxpoing.getPosition().x << endl; // 56 = taille de l'anim - taille joueur
+            }
         }
         else{
-           _hitboxpoing.setPosition(getPosition().x+166*_orientation, getPosition().y+60);
+            if(_orientation == 1){
+                _hitboxpoing.setPosition(getPosition().x+166, getPosition().y+60);
+            }
+            else{
+                _hitboxpoing.setPosition(getPosition().x, getPosition().y+60);
+            }
         }
 
         if(_cptAnimCoupPoing >= 5){
             clock.restart();
             _cptAnimCoupPoing = 0;
-            setTextureRect(sf::IntRect(2, 466,121,201));
+            setTextureRect(sf::IntRect(2, 466,120,201));
             cout <<" position du sprite "<< endl;
             cout << getPosition().x << endl;
             cout << getPosition().y << endl;
@@ -157,35 +168,25 @@ bool Broly::coupDePoing(sf::Clock& clock){
         }
         return true;
 }
+/*
+bool Broly::touche(sf::RectangleShape hitboxcorps){
 
-bool Broly::esttouche(sf::RectangleShape hitboxpoing){
-
-    cout << "position x : de la main" << hitboxpoing.getPosition().x << endl;
-
-    /*if(hitboxpoing.getPosition().x > _hitboxcorps.getPosition().x &&
-    ((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) <  (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x))){
-        return true;
-    }
-    else if(((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) >  _hitboxcorps.getPosition().x)){
-        return true;
-    }
-    /*else if(hitboxpoing.getPosition().x > (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x)){
-        return true;
-    }*/
-    if(_orientation == 1){
-        if(((hitboxpoing.getPosition().x + hitboxpoing.getSize().x) >=  _hitboxcorps.getPosition().x)){
-                cout << "position x : de la main " << hitboxpoing.getPosition().x << endl;
-                cout << "position x : du bout de la main " << hitboxpoing.getPosition().x + hitboxpoing.getSize().x << endl;
-                cout << "position x du corps : " << _hitboxcorps.getPosition().x << endl;
-                cout << endl;
+    if(_orientation == -1){
+            cout << "voici la position du poing de broly -1 : " << _hitboxpoing.getPosition().x << endl;
+            cout <<endl;
+            cout <<"Voici la position du corps de broly 1 : " << hitboxcorps.getPosition().x << endl;
+        if(_hitboxpoing.getPosition().x >=  hitboxcorps.getPosition().x){
             return true;
         }
         else{
             return false;
         }
     }
-    else if(_orientation == -1){
-        if((hitboxpoing.getPosition().x <  (_hitboxcorps.getPosition().x + _hitboxcorps.getSize().x))){
+    if(_orientation == 1){
+        if((_hitboxpoing.getPosition().x <=  (hitboxcorps.getPosition().x + hitboxcorps.getSize().x))){
+                cout << "voici la position du poing de broly 1 : " << _hitboxpoing.getPosition().x << endl;
+            cout <<endl;
+            cout <<"Voici la position du corps de broly -1 : " << hitboxcorps.getPosition().x << endl;
             return true;
         }
         else{
@@ -193,7 +194,7 @@ bool Broly::esttouche(sf::RectangleShape hitboxpoing){
         }
     }
 }
-
+*/
 bool Broly::prendcoup(sf::Clock& clock){
     if(!_ok){
         setPosition(getPosition().x,getPosition().y+20);

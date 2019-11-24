@@ -34,7 +34,7 @@ class Broly : public sf::Sprite
         int getorientation();
         sf::RectangleShape getHitboxpoing();
         sf::RectangleShape getHitboxcorps();
-        bool esttouche(sf::RectangleShape hitboxpoing);
+        bool touche(sf::RectangleShape hitboxcorps);
         bool prendcoup(sf::Clock& clock);
         virtual ~Broly();
 

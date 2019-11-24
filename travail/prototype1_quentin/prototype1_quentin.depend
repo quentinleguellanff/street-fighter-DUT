@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1574013494 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\main.cpp
+1574215884 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
-	"Broly.h"
+	"include/Broly.h"
+	"collision.h"
 
 1525812018 c:\users\quentin\documents\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -414,13 +415,23 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1573914445 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\src\broly.cpp
-	"Broly.h"
+1574215221 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\src\broly.cpp
+	"../include/Broly.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>
 
-1573878341 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\include\broly.h
+1574206521 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\include\broly.h
+	<SFML/Graphics.hpp>
+	<iostream>
+	<sstream>
+
+1574215857 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\collision.cpp
+	<SFML/Graphics.hpp>
+	<iostream>
+	<sstream>
+
+1574215947 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\prototype1_quentin\collision.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	<sstream>

@@ -56,6 +56,8 @@
 			<Add option="-DSFML_STATIC" />
 			<Add directory="../../../../SFML-2.5.1/include" />
 		</Compiler>
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
 		<Unit filename="include/Broly.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Broly.cpp" />

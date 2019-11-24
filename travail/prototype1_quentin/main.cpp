@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "include/Broly.h"
+#include "collision.h"
 
 using namespace std;
 
@@ -147,7 +148,8 @@ int main()
                 coupPoing = Brolytest.coupDePoing(clockanim);
                 window.draw(Brolytest.getHitboxpoing());
                 if(coupPoing){
-                    if(Brolytest2.esttouche(Brolytest2.getHitboxpoing())){
+                    if(collision(Brolytest2.getHitboxcorps(),Brolytest.getHitboxpoing())){
+                    //if(Brolytest.touche(Brolytest2.getHitboxcorps())){
                         prendcoup2 = true;
                         cout << "touche" << endl;
                     }
@@ -224,7 +226,8 @@ int main()
                 coupPoing2 = Brolytest2.coupDePoing(clockanim2);
                 window.draw(Brolytest2.getHitboxpoing());
                 if(coupPoing2){
-                    if(Brolytest.esttouche(Brolytest2.getHitboxpoing())){
+                    if(collision(Brolytest.getHitboxcorps(),Brolytest2.getHitboxpoing())){
+                    //if(Brolytest2.touche(Brolytest.getHitboxpoing())){
                         prendcoup = true;
                         cout << "touche" << endl;
                     }
@@ -251,6 +254,8 @@ int main()
             window.draw(Joueur2);
             window.draw(Brolytest.getHitboxcorps());
             window.draw(Brolytest2.getHitboxcorps());
+            window.draw(Brolytest.getHitboxpoing());
+            window.draw(Brolytest2.getHitboxpoing());
             window.draw(sol);
             window.display();
         }

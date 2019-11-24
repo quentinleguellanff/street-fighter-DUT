@@ -487,3 +487,43 @@
 	<SFML/System.hpp>
 	<vector>
 
+1574204304 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\dhalsim.cpp
+	"Dhalsim.h"
+	"Scene.h"
+
+1574204304 c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\dhalsim.h
+	"Scene.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574204304 c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\scene.h
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574204309 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\main.cpp
+	"Player.h"
+	"Scene.h"
+	"Dhalsim.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574204304 c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\player.h
+	<iostream>
+	<string>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574204304 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\player.cpp
+	"Player.h"
+	<string>
+
+1574204304 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\projet_commun\scene.cpp
+	"Scene.h"
+
