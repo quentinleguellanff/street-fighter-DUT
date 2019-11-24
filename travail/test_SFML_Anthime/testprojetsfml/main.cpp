@@ -46,6 +46,12 @@ int main()
     sprite.scale(sf::Vector2f(-1,1));
 
 
+    sf::Sprite coup;
+    coup.setTexture(texture);
+
+    coup.setTextureRect(sf::IntRect(4, 2275, 121, 201));
+    coup.scale(sf::Vector2f(-1,1));
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -55,6 +61,8 @@ int main()
                 window.close();
         }
 
+
+        //Retour à gauche
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
              if(sprite.getGlobalBounds().intersects(murDroite.getGlobalBounds())) {
@@ -64,14 +72,16 @@ int main()
                 sprite.move(sf::Vector2f(1.f, 0.f));
                 if(clock.getElapsedTime().asMilliseconds() > 150)
                 {
+                    cout << a << endl;
                     sprite.setTextureRect(sf::IntRect(a, 875, 121, 201));
                     a = a+i;
                     clock.restart();
                 }
-
+                if(a > 1565) a = 4;
             }
         }
 
+        //Déplacement à droite
          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
             if(sprite.getGlobalBounds().intersects(murGauche.getGlobalBounds())) {
@@ -82,13 +92,34 @@ int main()
             }
         }
 
+        //Coup de poing
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            a = 4;
+            coup.setPosition(sprite.getPosition());
+            if(sprite.getGlobalBounds().intersects(murDroite.getGlobalBounds())) {
+                sprite.move(sf::Vector2f(0.f, 0.f));
+            }
+            else{
+                if(clock.getElapsedTime().asMilliseconds() > 150)
+                {
+                    coup.setTextureRect(sf::IntRect(a, 2275, 121, 201));
+                    a = a+i;
+                    clock.restart();
+                }
+                if(a > 1565) a = 4;
+            }
+
+        }
+
+
         window.draw(sol);
         window.draw(murGauche);
         window.draw(murDroite);
         window.draw(sprite);
         window.display();
         window.clear();
-    }
 
+    }
     return 0;
 }

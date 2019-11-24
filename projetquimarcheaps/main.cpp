@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -43,10 +44,15 @@ int main()
 	int deplacementX_P1, deplacementY_P1, action_P1;
 	int deplacementX_P2, deplacementY_P2, action_P2;
 
+    /* menu */
+	int go=0;
+	Menu menu(window.getSize().x, window.getSize().y);
+
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
 	{
 		window.clear();
+
 		sf::Event event;
 
 		sf::Time elapsedAttente_P1 = clockAttente_P1.getElapsedTime();
@@ -55,6 +61,26 @@ int main()
     	sf::Time elapsedAttente_P2 = clockAttente_P2.getElapsedTime();
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
+        if (go==0){
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                menu.moveUp();
+                }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                menu.moveDown();
+                }
+            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==0)){
+                go=1;
+                }
+            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==2)){
+				window.close();
+                }
+        window.clear();
+        menu.draw(window);
+        window.display();
+        }
+
+        else{
 		if(!apparitionsFinies)
 		{
 			apparitionsFinies=champion_P1.apparition(clockAnim_P1,effet_P1);
@@ -74,7 +100,7 @@ int main()
 				action_P1=joueur1.getAction();
 			}
 			if(actionFini_P2)
-			{	
+			{
 				champion_P2.reset();
 				joueur2.recuperationCommandesP2();
 				deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
@@ -175,7 +201,7 @@ int main()
 			/* Gestion de la fermeture de la fenetre */
 		}
 
-		
+
 		while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -191,5 +217,6 @@ int main()
         window.draw(effet_P2);
         window.display();
 
+	}
 	}
 }
