@@ -1,1 +1,7 @@
 *.o
+*.layout
+*.cscope_file_list
+*.depend
+*.cbp
+*.dll
+*.exe
