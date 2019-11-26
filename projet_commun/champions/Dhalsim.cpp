@@ -6,7 +6,7 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 {
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_dhalsim.png"))
 	{
@@ -31,6 +31,7 @@ void Dhalsim::setSprite(int n1, int n2, int i1, int i2)
 	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
 	setTextureRect(sf::IntRect(n1, n2,i1,i2));
 }
+
 
 
 void Dhalsim::keepInWalls()
@@ -66,12 +67,16 @@ void Dhalsim::rotate(const sf::Sprite& ennemi)
 	}
 }
 
+int Dhalsim::getOrientation() const
+{
+	return _orientation*-1;
+}
+
 
 /* ANIMATIONS */
 
 void Dhalsim::reset()
 {
-	//setSprite(409,32,51,115);
 	_cptSauter=0;_cptApparition=0;_cptAction=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	setPosition(_posX,_posY);
@@ -176,7 +181,6 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 
 void Dhalsim::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
-    //_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAccroupi=0;
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=150;

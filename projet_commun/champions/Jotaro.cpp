@@ -6,7 +6,7 @@ Jotaro::Jotaro(int orientation,const Scene& s)
 {
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;_cptSP=0;_indexTab=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_jotaro.png"))
 	{
@@ -30,6 +30,28 @@ void Jotaro::setSprite(int n1, int n2, int i1, int i2)
 {
 	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
 	setTextureRect(sf::IntRect(n1, n2,i1,i2));
+}
+
+
+void Jotaro::ajouterTexture(int n1, int n2, int i1, int i2)
+{
+	_tabSP[_indexTab][0]=n1;
+	_tabSP[_indexTab][1]=n2;
+	_tabSP[_indexTab][2]=i1;
+	_tabSP[_indexTab][3]=i2;
+	_indexTab++;
+}
+
+void Jotaro::resetTexture()
+{
+	for(int i=0;i<=25;i++)
+	{
+		_tabSP[i][0]=0;
+		_tabSP[i][1]=0;
+		_tabSP[i][2]=0;
+		_tabSP[i][3]=0;
+	}
+	_indexTab=0;
 }
 
 
@@ -66,14 +88,18 @@ void Jotaro::rotate(const sf::Sprite& ennemi)
 	}
 }
 
+int Jotaro::getOrientation() const
+{
+	return _orientation*-1;
+}
+
 
 /* ANIMATIONS */
 
 void Jotaro::reset()
 {
-	_cptSauter=0;_cptApparition=0;_cptAction=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
-	setPosition(_posX,_posY);
+    setPosition(_posX,_posY);
 }
 
 void Jotaro::resetAccroupi()
@@ -81,100 +107,21 @@ void Jotaro::resetAccroupi()
 	_cptAccroupi=0;
 }
 
-bool Jotaro::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
+bool Jotaro::apparition(sf::Clock& clockAnim,sf::Sprite& starPlat)
 {
-	sf::Time elapsed = clockAnim.getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
-    bool fini=false;
-    int delai=200;
-    
-   	switch(_cptApparition)
+	if(_cptApparition==0)
 	{
-	case 0:
-		bandeau.setTexture(_texture);
-	    bandeau.setTextureRect(sf::IntRect(0,0,0,0));
-	    bandeau.setScale(_orientation*SCALE,SCALE);
-	    bandeau.setPosition(_posX-(_tailleSprite.x*_orientation),_posY);
-
-		setSprite(24,32,51,115);
-		_cptApparition +=1;
-		break;
-	case 1:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(83,32,52,115);
-		    _posX-=1*SCALE*_orientation;
-			setPosition(_posX,_posY);
-		}
-		break;
-	case 2:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(143,32,53,115);
-		    _posX-=1*SCALE*_orientation;
-			setPosition(_posX,_posY);    
-		}
-		break;
-	case 3:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(204,32,59,115);
-		    _posX-=6*SCALE*_orientation;
-			setPosition(_posX,_posY);
-		    bandeau.setTextureRect(sf::IntRect(462, 70,78,77));
-		}
-		break;
-	case 4:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(271,32,64,115);
-		    _posX-=5*SCALE*_orientation;
-			setPosition(_posX,_posY);
-			bandeau.setTextureRect(sf::IntRect(542, 70,78,77));
-		}
-		break;
-	case 5:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(343,32,58,115);
-		    _posX+=6*SCALE*_orientation;
-			setPosition(_posX,_posY);
-		    bandeau.setTextureRect(sf::IntRect(622, 70,78,77));
-		}
-		break;
-	case 6:
-		if(timeAnim > delai){
-		    _cptApparition +=1;
-		    clockAnim.restart();
-		    setSprite(409,32,51,115);
-		    _posX+=13*SCALE*_orientation;
-			setPosition(_posX,_posY);
-			bandeau.setPosition(_posX-(_tailleSprite.x*_orientation),_posY);
-		}
-		break;
-	}
-	if(_cptApparition>=7)
-	{
+		starPlat.setTexture(_texture);
+		starPlat.setTextureRect(sf::IntRect(0,0,0,0));
 		_cptApparition++;
-		bandeau.setPosition(_posX-((_tailleSprite.x+_cptApparition*3)*_orientation),_posY+_cptApparition);
 	}
-	if(_cptApparition==70)
-	{
-		bandeau.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-	}
-
-	
+	bool fini=SP(clockAnim,starPlat);
 	return fini;
 }
 
 void Jotaro::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 {
+    _cptGarde=0;
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=120;
@@ -182,6 +129,8 @@ void Jotaro::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
     {
     case 0:
     	if(timeAnim > delai){
+		    _posY=_scene.getBottom()-_tailleSprite.y;
+			setPosition(_posX,_posY);
 		    _cptStatic ++;
 		    clockAnim.restart();
     		setSprite(4,6,64,117);
@@ -246,6 +195,7 @@ void Jotaro::garde(sf::Clock& clockAnim)
 {
 	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
+	setPosition(_posX,_posY);
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
@@ -589,7 +539,7 @@ bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacement=100;
+    int delai=700,deplacement=100;
     bool fini=false;
 
     switch(_cptSauter)
@@ -598,8 +548,8 @@ bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
     	clockAttente.restart();
 	    _cptSauter++;
 	    setSprite(2,1101,97,153);
-	    _posY+=10;
-		setPosition(_posX,_posY);
+	    _posY=_scene.getBottom()-_tailleSprite.y;
+	    setPosition(_posX,_posY);
     	break;
     case 1:
     	if(timeAnim > delai){
@@ -692,41 +642,39 @@ bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 		if(timeAnim > delai/2){
 	    	clockAnim.restart();
 	    	_cptSauter++;
-	    	setSprite(1154,1111,102,153);	    	
+	    	setSprite(1154,1111,102,153);    	
 	    }
 		break;
 	case 12:
 		if(timeAnim > delai/2){
 	    	clockAnim.restart();
 	    	_cptSauter++;
-	    	setSprite(1269,1101,91,153);
-	    	fini=true;	    	
+	    	setSprite(1269,1102,91,151);    	
 	    }
 		break;
 	case 13:
 		if(timeAnim > delai){
 	    	clockAnim.restart();
 	    	_cptSauter++;
-	    	setSprite(1372,1101,90,153);	    	
+	    	setSprite(1372,1102,90,151);	    	
 	    }
 		break;
 	case 14:
 		if(timeAnim > delai){
 	    	clockAnim.restart();
 	    	_cptSauter++;
-	    	setSprite(1476,1102,71,153);  	
+	    	setSprite(1476,1102,71,152);  	
 	    }
 		break;
 	case 15:
 		if(timeAnim > delai){
 	    	clockAnim.restart();
 	    	_cptSauter=0;
-	    	setSprite(1557,1102,76,153);
+	    	setSprite(1557,1136,76,118);
 	    	fini=true;  	    	
 	    }
 		break;
     }
-    keepInWalls();
     return fini;
 }
 
@@ -736,90 +684,148 @@ bool Jotaro::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=30*_orientation;
+    int delai=70,deplacementY=100,deplacementX=35*_orientation;
     bool fini=false;
+
     switch(_cptSauter)
     {
     case 0:
-    	if(timeAnim > delai){
-		    clockAnim.restart();
-		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    	}
+	    _cptSauter++;
+	    setSprite(2,1101,97,153);
+	    _posY=_scene.getBottom()-_tailleSprite.y;
+	    setPosition(_posX,_posY);
     	break;
     case 1:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    		_posX+=deplacementX;_posY-=deplacementY;
+		    setSprite(109,1111,57,153);
+		    _posY-=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 2:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(254,1720,68,111);
-    		_posX+=deplacementX*2;_posY-=deplacementY;
+		    setSprite(183,1111,90,153);
+		    _posY-=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 3:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(330,1720,80,111);
-    		_posX+=deplacementX;_posY-=deplacementY;
+		    setSprite(281,1111,88,153);
+		    _posY-=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 4:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(418,1720,79,111);
-    		_posX+=deplacementX;
+		    setSprite(383,1111,80,153);
+		    _posY-=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 5:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(505,1720,57,111);
-    		_posX+=deplacementX*4;_posY+=deplacementY;
-		    setPosition(_posX,_posY);
-    	}
+		    setSprite(480,1111,85,153);
+		}
     	break;
     case 6:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(570,1720,103,111);
-    		_posX+=deplacementX*2;_posY+=deplacementY;
+		    setSprite(576,1111,99,153);
+		    _posY+=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 7:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    		_posX+=deplacementX;_posY+=deplacementY;
+		    setSprite(682,1111,101,153);
+		    _posY+=deplacementY;
+		    _posX+=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 8:
     	if(timeAnim > delai){
-		    clockAnim.restart();
-		    _cptSauter++;
-			setSprite(108,1720,68,111);
-			_cptSauter=0;
-			fini=true;
-			reset();
-		}
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(793,1111,111,153);
+		    _posY+=deplacementY;
+		    _posX+=deplacementX;
+		    setPosition(_posX,_posY);	    	
+	    }
     	break;
+    case 9:
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(914,1111,125,153);
+		    _posY+=deplacementY;
+		    _posX+=deplacementX;
+		    setPosition(_posX,_posY);	    	
+	    }
+		break;
+	case 10:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1043,1111,104,153);
+	    		    	
+	    }
+		break;
+	case 11:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1154,1111,102,153);    	
+	    }
+		break;
+	case 12:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1269,1102,91,151);    	
+	    }
+		break;
+	case 13:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1372,1102,90,151);	    	
+	    }
+		break;
+	case 14:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1476,1102,71,152);  	
+	    }
+		break;
+	case 15:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter=0;
+	    	setSprite(1557,1136,76,118);
+	    	fini=true;  	    	
+	    }
+		break;
     }
     rotate(ennemi);
     keepInWalls();
@@ -831,90 +837,148 @@ bool Jotaro::sauterArriere(sf::Clock& clockAnim)
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=30*_orientation;
+    int delai=70,deplacementY=100,deplacementX=50*_orientation;
     bool fini=false;
+
     switch(_cptSauter)
     {
     case 0:
-    	if(timeAnim > delai){
-		    clockAnim.restart();
-		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    	}
+	    _cptSauter++;
+	    setSprite(2,1101,97,153);
+	    _posY=_scene.getBottom()-_tailleSprite.y;
+	    setPosition(_posX,_posY);
     	break;
     case 1:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    		_posX-=deplacementX;_posY-=deplacementY;
+		    setSprite(109,1111,57,153);
+		    _posY-=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 2:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(570,1720,103,111);
-    		_posX-=deplacementX*2;_posY-=deplacementY;
+		    setSprite(183,1111,90,153);
+		    _posY-=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 3:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(505,1720,57,111);
-    		_posX-=deplacementX;_posY-=deplacementY;
+		    setSprite(281,1111,88,153);
+		    _posY-=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 4:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(418,1720,79,111);
-    		_posX-=deplacementX;
+		    setSprite(383,1111,80,153);
+		    _posY-=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 5:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(330,1720,80,111);
-    		_posX-=deplacementX*4;_posY+=deplacementY;
-		    setPosition(_posX,_posY);
-    	}
+		    setSprite(480,1111,85,153);
+		}
     	break;
     case 6:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(254,1720,68,111);
-    		_posX-=deplacementX*2;_posY+=deplacementY;
+		    setSprite(576,1111,99,153);
+		    _posY+=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 7:
     	if(timeAnim > delai){
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(108,1720,68,111);
-    		_posX-=deplacementX;_posY+=deplacementY;
+		    setSprite(682,1111,101,153);
+		    _posY+=deplacementY;
+		    _posX-=deplacementX;
 		    setPosition(_posX,_posY);
-    	}
+		}
     	break;
     case 8:
     	if(timeAnim > delai){
-		    clockAnim.restart();
-		    _cptSauter++;
-			setSprite(108,1720,68,111);
-			_cptSauter=0;
-			fini=true;
-			reset();
-		}
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(793,1111,111,153);
+		    _posY+=deplacementY;
+		    _posX-=deplacementX;
+		    setPosition(_posX,_posY);	    	
+	    }
     	break;
+    case 9:
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(914,1111,125,153);
+		    _posY+=deplacementY;
+		    _posX-=deplacementX;
+		    setPosition(_posX,_posY);	    	
+	    }
+		break;
+	case 10:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1043,1111,104,153);
+	    		    	
+	    }
+		break;
+	case 11:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1154,1111,102,153);    	
+	    }
+		break;
+	case 12:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1269,1102,91,151);    	
+	    }
+		break;
+	case 13:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1372,1102,90,151);	    	
+	    }
+		break;
+	case 14:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1476,1102,71,152);  	
+	    }
+		break;
+	case 15:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter=0;
+	    	setSprite(1557,1136,76,118);
+	    	fini=true;  	    	
+	    }
+		break;
     }
     keepInWalls();
     return fini;
@@ -968,7 +1032,10 @@ void Jotaro::accroupi(sf::Clock& clockAnim,bool garde)
 	    		setSprite(1783,5033,131,83);
 	    		_cptAccroupi++;
 	    	}else
+	    	{
     			setSprite(1552,743,95,102);
+    			_cptGarde=0;
+    		}
 	    }else
 	    {
 	    	clockAnim.restart();
@@ -976,7 +1043,7 @@ void Jotaro::accroupi(sf::Clock& clockAnim,bool garde)
 	    	{
 	    		setSprite(1922,5033,112,83);
 	    	}else
-    			setSprite(1552,743,95,102);
+    			_cptAccroupi=6;
 	    }
 	}
 }
@@ -1056,7 +1123,7 @@ bool Jotaro::punch(sf::Clock& clockAnim)
 		break;
 	case 9:
 		if(timeAnim > delai){
-		    _cptAction ++;
+		    _cptAction =0;
 		    clockAnim.restart();
 		    setSprite(1110,2109,76,112);
 		    fini=true;
@@ -1064,6 +1131,97 @@ bool Jotaro::punch(sf::Clock& clockAnim)
 		break;
 	}
 	keepInWalls();
+	return fini;
+}
+
+bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat)
+{
+	if(!_SPChargee)
+	{
+		ajouterTexture(1751,4643,112,128);ajouterTexture(1870,4643,108,128);ajouterTexture(2157,4643,161,128);ajouterTexture(2467,4643,127,128);
+		ajouterTexture(2762,4643,219,128);ajouterTexture(3128,4643,218,128);ajouterTexture(3634,4643,129,128);
+		_SPChargee=true;
+	}
+	_cptStatic=0;
+	sf::Time elapsed = clockAnim.getElapsedTime();
+    int timeAnim = elapsed.asMilliseconds();
+    int delai=70;
+    bool fini=false;
+    switch (_cptAction)
+	{
+	case 0:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(13,4649,76,117);
+		    starPlat.setTexture(_texture);
+		    starPlat.setScale(_orientation*SCALE,SCALE);
+			starPlat.setPosition(_posX+(_tailleSprite.x*_orientation),_posY);
+		}
+		break;
+	case 1:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(101,4649,122,117);
+		}
+		break;
+	case 2:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(228,4649,118,117);
+		}
+		break;
+	case 3:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(357,4649,113,117);
+		}
+		break;
+	case 4:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(477,4649,113,117);
+		}
+		break;
+	case 5:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(598,4649,106,117);
+		}
+		break;
+	case 13:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(1064,4649,75,117);
+		}
+		break;
+	case 14:
+		if(timeAnim > delai){
+		    _cptAction ++;
+		    clockAnim.restart();
+		    setSprite(1145,4649,74,117);
+		}
+		break;
+	case 15:
+		if(timeAnim > delai){
+		    _cptAction =0;
+		    clockAnim.restart();
+		    fini=true;
+		}
+		break;
+	}
+	if(timeAnim>delai && _cptAction>5 && _cptAction<13)
+	{
+		clockAnim.restart();
+		_cptAction++;
+		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-6][0],_tabSP[_cptAction-6][1],_tabSP[_cptAction-6][2],_tabSP[_cptAction-6][3]));
+	}
 	return fini;
 }
 
@@ -1224,97 +1382,19 @@ bool Jotaro::kick(sf::Clock& clockAnim)
 	return fini;	
 }
 
-bool Jotaro::sautKick(sf::Clock& clockAnim)
-{
-	_cptStatic=0;
-	sf::Time elapsed = clockAnim.getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacement=125;
-    bool fini=false;
-    switch(_cptSauter)
-    {
-    case 0:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(464,2319,62,110);
-    		_posX+=33*_orientation;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 1:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(534,2319,59,110);
-    		_posX+=2*_orientation;
-    		_posY-=deplacement;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 2:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(601,2319,53,110);
-    		_posX+=8*_orientation;
-    		_posY-=deplacement;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 3:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(662,2319,63,110);
-    		_posX-=8*_orientation;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 4:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(733,2319,99,110);
-    		_posY+=deplacement;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 5:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter++;
-    		setSprite(840,2319,70,110);
-    		_posY+=deplacement;
-    		setPosition(_posX,_posY);
-    	}
-    	break;
-    case 6:
-    	if(timeAnim>delai)
-    	{
-    		clockAnim.restart();
-    		_cptSauter=0;
-    		setSprite(918,2319,74,110);
-    		_posX-=35*_orientation;
-    		setPosition(_posX,_posY);
-    		fini=true;
-    	}
-    	break;
-    }
-    keepInWalls();
-    return fini;
-}
-
-
 
 bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat)
 {
+	if(!_SPChargee)
+	{
+		ajouterTexture(671,3724,100,135);ajouterTexture(875,3724,142,135);ajouterTexture(1025,3724,185,135);ajouterTexture(1219,3724,169,135);
+		ajouterTexture(1395,3724,184,135);ajouterTexture(1586,3724,176,135);ajouterTexture(1768,3724,158,135);ajouterTexture(1933,3724,150,135);
+		ajouterTexture(2091,3724,165,135);ajouterTexture(2264,3724,164,135);ajouterTexture(2436,3724,163,135);ajouterTexture(2607,3724,151,135);
+		ajouterTexture(2765,3724,195,135);ajouterTexture(2968,3724,187,135);ajouterTexture(3162,3724,168,135);ajouterTexture(3339,3724,140,135);
+		ajouterTexture(3485,3724,138,135);ajouterTexture(3630,3724,179,135);ajouterTexture(3816,3724,170,135);ajouterTexture(3995,3724,166,135);
+		ajouterTexture(4170,3724,175,135);ajouterTexture(4354,3724,174,135);ajouterTexture(4536,3724,171,135);ajouterTexture(4714,3724,155,135);
+		_SPChargee=true;
+	}
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1326,100 +1406,74 @@ bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat)
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(7,3742,110,116);
+		    setSprite(21,3742,75,116);
+		    starPlat.setTexture(_texture);
 		}
 		break;
 	case 1:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(122,3742,139,116);
+		    setSprite(106,3742,100,116);
 		}
 		break;
 	case 2:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(269,3742,108,116);
+		    setSprite(216,3742,113,116);
 		}
 		break;
 	case 3:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(386,3742,122,116);
+		    setSprite(338,3742,113,116);
 		}
 		break;
 	case 4:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-		    setSprite(515,3742,121,116);
+		    setSprite(459,3742,108,116);
 
-			starPlat.setTextureRect(sf::IntRect(671,3724,100,135));
+			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 			starPlat.setScale(_orientation*SCALE,SCALE);
-			starPlat.setPosition(_posX+((_tailleSprite.x/2)*_orientation),_posY);
+			starPlat.setPosition(_posX+(_tailleSprite.x*_orientation),_scene.getBottom()-_tabSP[_cptAction-4][3]*SCALE);
 		}
 		break;
 	case 5:
 		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
-			starPlat.setTextureRect(sf::IntRect(875,3724,142,135));
+			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 		}
 		break;
 	}
-	if(timeAnim>delai)
+	if(timeAnim>delai/3 && _cptAction>5)
 	{
-		if(_cptAction==6 || _cptAction==28 || _cptAction==40)
-
-
-
+		if(_cptAction==8)
+		{
+			_cptSP++;
+		}
+		clockAnim.restart();
+		_cptAction++;
+		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
+		if(_cptAction==27)
+		{
+			if(_cptSP==3)
+			{
+				fini=true;
+				_SPChargee=false;
+				_cptAction=0;
+				starPlat.setTextureRect(sf::IntRect(0,0,0,0));
+				resetTexture();
+				reset();
+			}else
+			{
+				_cptAction=8;
+			}
+		}
 	}
-	if(_cptAction>=4 && _cptAction<8)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(310,3355,39,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>7 && _cptAction<11)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(263,3355,39,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>10 && _cptAction<15)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(217,3355,38,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>14 && _cptAction<20)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(167,3355,42,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>19 && _cptAction<24)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(119,3355,40,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>23 && _cptAction<28)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(71,3355,40,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}else if(_cptAction>27)
-	{
-		_cptAction +=1;
-		starPlat.setTextureRect(sf::IntRect(24,3355,39,25));
-		starPlat.setPosition(starPlat.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-	}
-
-	if( (_orientation==1 && starPlat.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && starPlat.getPosition().x<=_scene.getLeftLimit()) )
-	{
-		starPlat.setTextureRect(sf::IntRect(0,0,0,0));
-		starPlat.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/2));
-		fini=true;
-		_cptAction=0;
-	}
-	keepInWalls();
 	return fini;
 }
