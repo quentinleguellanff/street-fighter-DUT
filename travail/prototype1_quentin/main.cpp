@@ -32,13 +32,6 @@ int main()
     Broly Brolytest2(1);
 
 
-    sf::RectangleShape hitbox1(sf::Vector2f(Brolytest.getLocalBounds().width,Brolytest.getLocalBounds().height*2));
-    hitbox1.setFillColor(sf::Color(255,255,255,0));
-    hitbox1.setOutlineThickness(5);
-    hitbox1.setOutlineColor(sf::Color::Blue);
-    hitbox1.setPosition(Brolytest.getPosition().x,Brolytest.getPosition().y);
-    cout << "taille de la hitbox " << Brolytest.getLocalBounds().width*2 << "   " << Brolytest.getLocalBounds().height*2 << endl;
-    cout << "position de la hitbox " << Brolytest.getPosition().x << "   " << Brolytest.getPosition().y << endl;
     bool prendcoup = false;
     bool prendcoup2 = false;
 
@@ -60,10 +53,12 @@ int main()
         while (window.isOpen())
         {
             Joueur1 = Brolytest;
+            Joueur2 = Brolytest2;
             moveright = false;
             moveleft = false;
             moveright2 = false;
             moveleft2 = false;
+
 
             // GESTION DES EVENEMENTS
             window.clear();
@@ -90,73 +85,74 @@ int main()
             *
             *
             **/
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                if(!(Brolytest.getPosition().x + Brolytest.getLocalBounds().width*2 + 10 > LARGEUR)){
-                    moveright = true;
-                }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                if(!(Brolytest.getPosition().x - 10 < 0)){
-                    moveleft = true;
-                }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                saut = true;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){
-                    if(peutcoup){
-                        coupPoing = true;
+            if(!prendcoup){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                {
+                    if(!(Brolytest.getPosition().x + Brolytest.getLocalBounds().width*2 + 10 > LARGEUR)){
+                        moveright = true;
                     }
-            }
-            if(moveright){
-                sf::Time elapsed = clockmove.getElapsedTime();
-                int timemove = elapsed.asMilliseconds();
-                int v_x = +15;
-                if(timemove > 20){
-                    Joueur1.setPosition(Joueur1.getPosition().x+v_x,Joueur1.getPosition().y);
-                    clockmove.restart();
+                    if(Brolytest.collision(Brolytest2)){
+                        moveright = false;
+                    }
                 }
-                Brolytest.setPosition(Joueur1.getPosition());
-                Brolytest.avancer(clockanim);
-                saut = false;
-            }
-            if(moveleft){
-
-                sf::Time elapsed = clockmove.getElapsedTime();
-                int timemove = elapsed.asMilliseconds();
-                int v_x = -15;
-                if(timemove > 20){
-                    Joueur1.setPosition(Joueur1.getPosition().x+v_x,Joueur1.getPosition().y);
-                    clockmove.restart();
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                {
+                    if(!(Brolytest.getPosition().x - 10 < 0)){
+                        moveleft = true;
+                    }
                 }
-                Brolytest.setPosition(Joueur1.getPosition());
-                Brolytest.reculer(clockanim);
-                saut = false;
-            }
-            if(!moveright && !moveleft && !saut && !coupPoing && !prendcoup){
-                Brolytest.debout(clockanim);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                {
+                    saut = true;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){
+                        if(peutcoup){
+                            coupPoing = true;
+                        }
+                }
+                if(moveright){
+                    sf::Time elapsed = clockmove.getElapsedTime();
+                    int timemove = elapsed.asMilliseconds();
+                    int v_x = +15;
+                    if(timemove > 20){
+                        Joueur1.setPosition(Joueur1.getPosition().x+v_x,Joueur1.getPosition().y);
+                        clockmove.restart();
+                    }
+                    Brolytest.setPosition(Joueur1.getPosition());
+                    Brolytest.avancer(clockanim);
+                    saut = false;
+                }
+                if(moveleft){
 
-            }
-            if(saut){
-                Brolytest.sauter(clockanim);
-            }
-            if(coupPoing){
-                peutcoup = false;
-                coupPoing = Brolytest.coupDePoing(clockanim);
-                window.draw(Brolytest.getHitboxpoing());
+                    sf::Time elapsed = clockmove.getElapsedTime();
+                    int timemove = elapsed.asMilliseconds();
+                    int v_x = -15;
+                    if(timemove > 20){
+                        Joueur1.setPosition(Joueur1.getPosition().x+v_x,Joueur1.getPosition().y);
+                        clockmove.restart();
+                    }
+                    Brolytest.setPosition(Joueur1.getPosition());
+                    Brolytest.reculer(clockanim);
+                    saut = false;
+                }
+                if(!moveright && !moveleft && !saut && !coupPoing && !prendcoup){
+                    Brolytest.debout(clockanim);
+
+                }
+                if(saut){
+                    Brolytest.sauter(clockanim);
+                }
                 if(coupPoing){
-                    if(collision(Brolytest2.getHitboxcorps(),Brolytest.getHitboxpoing())){
-                    //if(Brolytest.touche(Brolytest2.getHitboxcorps())){
-                        prendcoup2 = true;
-                        cout << "touche" << endl;
+                    peutcoup = false;
+                    coupPoing = Brolytest.coupDePoing(clockanim);
+                    if(Brolytest.collision(Brolytest2)){
+                         prendcoup2 = true;
                     }
-                }
-                if(!coupPoing){
-                    if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))){
-                        peutcoup = true;
+
+                    if(!coupPoing){
+                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))){
+                            peutcoup = true;
+                        }
                     }
                 }
             }
@@ -167,76 +163,77 @@ int main()
             *
             *
             **/
-            Joueur2 = Brolytest2;
+            if(!prendcoup2){
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
-                if(!(Brolytest2.getPosition().x + Brolytest2.getLocalBounds().width*2 + 10 > LARGEUR)){
-                    moveright2 = true;
-                }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-            {
-                if(!(Brolytest2.getPosition().x - 10 < 0)){
-                    moveleft2 = true;
-                }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-            {
-                saut2 = true;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                    if(peutcoup2){
-                        coupPoing2 = true;
-                    }
-            }
-            if(moveright2){
-                sf::Time elapsed = clockmove2.getElapsedTime();
-                int timemove = elapsed.asMilliseconds();
-                int v_x = +15;
-                if(timemove > 20){
-                    Joueur2.setPosition(Joueur2.getPosition().x+v_x,Joueur2.getPosition().y);
-                    clockmove2.restart();
-                }
-                Brolytest2.setPosition(Joueur2.getPosition());
-                Brolytest2.reculer(clockanim2);
-                saut2 = false;
-            }
-            if(moveleft2){
-
-                sf::Time elapsed = clockmove2.getElapsedTime();
-                int timemove = elapsed.asMilliseconds();
-                int v_x = -15;
-                if(timemove > 20){
-                    Joueur2.setPosition(Joueur2.getPosition().x+v_x,Joueur2.getPosition().y);
-                    clockmove2.restart();
-                }
-                Brolytest2.setPosition(Joueur2.getPosition());
-                Brolytest2.avancer(clockanim2);
-                saut2 = false;
-            }
-            if(!moveright2 && !moveleft2 && !saut2 && !coupPoing2 && !prendcoup2){
-                Brolytest2.debout(clockanim2);
-            }
-            if(saut2){
-                Brolytest2.sauter(clockanim2);
-            }
-            if(coupPoing2){
-                peutcoup2 = false;
-                coupPoing2 = Brolytest2.coupDePoing(clockanim2);
-                window.draw(Brolytest2.getHitboxpoing());
-                if(coupPoing2){
-                    if(collision(Brolytest.getHitboxcorps(),Brolytest2.getHitboxpoing())){
-                    //if(Brolytest2.touche(Brolytest.getHitboxpoing())){
-                        prendcoup = true;
-                        cout << "touche" << endl;
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                {
+                    if(!(Brolytest2.getPosition().x + Brolytest2.getLocalBounds().width*2 + 10 > LARGEUR)){
+                            moveright2 = true;
                     }
                 }
-                    if(!coupPoing2){
-                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::A))){
-                            peutcoup2 = true;
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                {
+                    if(!(Brolytest2.getPosition().x - 10 < 0)){
+                            moveleft2 = true;
+                    }
+                    if(Brolytest2.collision(Brolytest)){
+                            moveleft2 = false;
+                    }
+
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+                {
+                    saut2 = true;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                        if(peutcoup2){
+                            coupPoing2 = true;
                         }
+                }
+                if(moveright2){
+                    sf::Time elapsed = clockmove2.getElapsedTime();
+                    int timemove = elapsed.asMilliseconds();
+                    int v_x = +15;
+                    if(timemove > 20){
+                        Joueur2.setPosition(Joueur2.getPosition().x+v_x,Joueur2.getPosition().y);
+                        clockmove2.restart();
                     }
+                    Brolytest2.setPosition(Joueur2.getPosition());
+                    Brolytest2.reculer(clockanim2);
+                    saut2 = false;
+                }
+                if(moveleft2){
+
+                    sf::Time elapsed = clockmove2.getElapsedTime();
+                    int timemove = elapsed.asMilliseconds();
+                    int v_x = -15;
+                    if(timemove > 20){
+                        Joueur2.setPosition(Joueur2.getPosition().x+v_x,Joueur2.getPosition().y);
+                        clockmove2.restart();
+                    }
+                    Brolytest2.setPosition(Joueur2.getPosition());
+                    Brolytest2.avancer(clockanim2);
+                    saut2 = false;
+                }
+                if(!moveright2 && !moveleft2 && !saut2 && !coupPoing2 && !prendcoup2){
+                    Brolytest2.debout(clockanim2);
+                }
+                if(saut2){
+                    Brolytest2.sauter(clockanim2);
+                }
+                if(coupPoing2){
+                    peutcoup2 = false;
+                    coupPoing2 = Brolytest2.coupDePoing(clockanim2);
+                        if(Brolytest2.collision(Brolytest)){
+                            prendcoup = true;
+                        }
+
+                        if(!coupPoing2){
+                            if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::A))){
+                                peutcoup2 = true;
+                            }
+                        }
+                }
             }
 
             ///////////////INTERACTION//////////////////////
@@ -247,15 +244,12 @@ int main()
                 prendcoup2 = Brolytest2.prendcoup(clockanim2);
             }
 
-            cout << "hurtbox du broly 2 orientation 1  " << Brolytest2.getHitboxcorps().getPosition().x << endl;
 
             //AFFICHAGE
+            window.draw(Brolytest2.gethurtbox());
+            window.draw(Brolytest.gethurtbox());
             window.draw(Joueur1);
             window.draw(Joueur2);
-            window.draw(Brolytest.getHitboxcorps());
-            window.draw(Brolytest2.getHitboxcorps());
-            window.draw(Brolytest.getHitboxpoing());
-            window.draw(Brolytest2.getHitboxpoing());
             window.draw(sol);
             window.display();
         }

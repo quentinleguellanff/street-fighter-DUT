@@ -15,7 +15,7 @@ Broly::Broly(int Orientation)
     _scale = 2; // ratio de scale du personnage, zoom le sprite pour qu'il apparaisse plus grand
     setTexture(_Texture); // charge le sprite avec la texture initialisé précedemment
     setScale(_scale*_orientation,_scale); //permet de mettre le scale en définissant l'orientation du perso
-    setPosition(300.f,460.f); // position initiale du perso/sprite dans la fenetre
+    setPosition(800.f,460.f); // position initiale du perso/sprite dans la fenetre
     /*sf::Vector2i tailleBroly = sf::Vector2i(120,200);
     sf::IntRect(2,467,120,200);*/
     setTextureRect(sf::IntRect(2, 467,120,200));
@@ -26,19 +26,15 @@ Broly::Broly(int Orientation)
     _cptanimprendcoup = 0;
     if(_orientation == -1){
         setOrigin(getLocalBounds().width, 0.f);
-        //_hitboxcorps.setOrigin(120.f, 0.f);
+        setPosition(300.f,460.f); // position initiale du perso/sprite dans la fenetre
     }
     _ok = false;
 
-    _hitboxpoing.setSize(sf::Vector2f(46.f,44.f));
-    _hitboxpoing.setFillColor(sf::Color(255,255,255,0));
-    _hitboxpoing.setOutlineThickness(5);
-    _hitboxpoing.setOutlineColor(sf::Color::Red);
-
-    _hitboxcorps.setSize(sf::Vector2f(getLocalBounds().width,getLocalBounds().height*2));
-    _hitboxcorps.setFillColor(sf::Color(255,255,255,0));
-    _hitboxcorps.setOutlineThickness(5);
-    _hitboxcorps.setOutlineColor(sf::Color::Blue);
+    _hurtbox.setFillColor(sf::Color(255,255,255,0));
+    _hurtbox.setOutlineColor(sf::Color::Blue);
+    _hurtbox.setOutlineThickness(2);
+    _hurtbox.setPosition(getPosition());
+    _hurtbox.setSize(sf::Vector2f(getGlobalBounds().width,getGlobalBounds().height));
     cptanimprendcoupbis = 6;
 
 
@@ -67,8 +63,7 @@ void Broly::debout(sf::Clock& clock)
         _cptanimstatic = 0;
     }
     setTextureRect(sf::IntRect(2+_cptanimstatic*123, 466,120,201));
-
-    _hitboxcorps.setPosition(getPosition().x+getLocalBounds().width/2,getPosition().y);
+    _hurtbox.setPosition(getPosition());
 }
 
 void Broly::avancer(sf::Clock& clock)
@@ -88,7 +83,7 @@ void Broly::avancer(sf::Clock& clock)
     if(_cptanimavancer > 0){
         setTextureRect(sf::IntRect(2+_cptanimavancer*130, 873,128,200));
     }
-    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
+    _hurtbox.setPosition(getPosition());
 }
 
 void Broly::reculer(sf::Clock& clock)
@@ -100,8 +95,7 @@ void Broly::reculer(sf::Clock& clock)
     if(timeanim > 70){
         setTextureRect(sf::IntRect(157, 11437,153,207));
     }
-    _hitboxcorps.setPosition(getPosition().x+60,getPosition().y);
-
+    _hurtbox.setPosition(getPosition());
  }
 
 void Broly::sauter(sf::Clock& clock){
@@ -134,22 +128,7 @@ bool Broly::coupDePoing(sf::Clock& clock){
         }
 
         if(_cptAnimCoupPoing == 1 || _cptAnimCoupPoing == 2 ){
-            //_hitboxpoing.setPosition(getPosition().x+decalagex+120, getPosition().y+182);
-            if(_orientation == 1){
-                _hitboxpoing.setPosition(getPosition().x, getPosition().y+182);
-            }
-            else{
-                _hitboxpoing.setPosition(getPosition().x+getLocalBounds().width*2-120-46+5, getPosition().y+182);
-                cout << "position de la hitbox" << _hitboxpoing.getPosition().x << endl; // 56 = taille de l'anim - taille joueur
-            }
-        }
-        else{
-            if(_orientation == 1){
-                _hitboxpoing.setPosition(getPosition().x+166, getPosition().y+60);
-            }
-            else{
-                _hitboxpoing.setPosition(getPosition().x, getPosition().y+60);
-            }
+            _hurtbox.setPosition(getPosition());
         }
 
         if(_cptAnimCoupPoing >= 5){
@@ -168,33 +147,12 @@ bool Broly::coupDePoing(sf::Clock& clock){
         }
         return true;
 }
-/*
-bool Broly::touche(sf::RectangleShape hitboxcorps){
 
-    if(_orientation == -1){
-            cout << "voici la position du poing de broly -1 : " << _hitboxpoing.getPosition().x << endl;
-            cout <<endl;
-            cout <<"Voici la position du corps de broly 1 : " << hitboxcorps.getPosition().x << endl;
-        if(_hitboxpoing.getPosition().x >=  hitboxcorps.getPosition().x){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    if(_orientation == 1){
-        if((_hitboxpoing.getPosition().x <=  (hitboxcorps.getPosition().x + hitboxcorps.getSize().x))){
-                cout << "voici la position du poing de broly 1 : " << _hitboxpoing.getPosition().x << endl;
-            cout <<endl;
-            cout <<"Voici la position du corps de broly -1 : " << hitboxcorps.getPosition().x << endl;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+bool Broly::collision(Broly& ennemi){
+
+    return getGlobalBounds().intersects(ennemi.getGlobalBounds());
 }
-*/
+
 bool Broly::prendcoup(sf::Clock& clock){
     if(!_ok){
         setPosition(getPosition().x,getPosition().y+20);
@@ -224,10 +182,6 @@ bool Broly::prendcoup(sf::Clock& clock){
     return true;
 }
 
-sf::RectangleShape Broly::getHitboxpoing(){
-    return _hitboxpoing;
-}
-
-sf::RectangleShape Broly::getHitboxcorps(){
-    return _hitboxcorps;
+sf::RectangleShape Broly::gethurtbox(){
+    return _hurtbox;
 }
