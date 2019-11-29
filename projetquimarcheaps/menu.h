@@ -10,20 +10,24 @@ private:
     int _selection;
     sf::Font font;
     sf::Text menu[nbcase];
-
+    bool _monter;
+    bool _descendre;
+    float joystick0_axisX;
+	float joystick0_axisY;
+    sf::Texture textureCase;
 public:
 
     Menu (float width, float height);
     ~Menu();
 
     void draw(sf::RenderWindow &window);
+    void bouger();
     void moveUp();
     void moveDown();
     int getSelection();
+    void reset();
+    bool getMonter();
+    bool getDescendre();
     };
-class cScreen
-{
-public :
-    virtual int Run (sf::RenderWindow &App) = 0;
-};
+
 #endif // FONCTION_H_INCLUDED

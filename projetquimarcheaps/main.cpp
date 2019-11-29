@@ -1,4 +1,4 @@
-//#include "IncludeManager.h"
+#include "IncludeManager.h"
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -41,11 +41,18 @@ int main()
 
 	/* Création des variables pour les actions à effectuer */
 	bool apparitionsFinies=false,actionFini_P1=true,actionFini_P2=true;
+	bool peutmonter = true, peutdescendre = true;
 	int deplacementX_P1, deplacementY_P1, action_P1;
 	int deplacementX_P2, deplacementY_P2, action_P2;
 
     /* menu */
 	int go=0;
+	sf::Texture menufond;
+    if(!menufond.loadFromFile("menufond.jpg")){
+        std::cout<<"erreur fond"<<endl;
+    }
+    sf::Sprite spritemenu;
+    spritemenu.setTexture(menufond);
 	Menu menu(window.getSize().x, window.getSize().y);
 
 	/* Ouverture de la fenetre */
@@ -62,13 +69,45 @@ int main()
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
         if (go==0){
+            while (window.pollEvent(event))
+            {
+                switch ( event.type ){
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                menu.moveUp();
+                case sf::Event::Closed:
+                        window.close( );
+                        break;
+                case sf::Event::KeyReleased:
+                    switch (event.key.code){
+                    case sf::Keyboard::Z:
+                      peutmonter = true;
+                      break;
+                    case sf::Keyboard::S:
+                        peutdescendre=true;
+                        break;}
                 }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                    if(peutmonter){
+                        menu.moveUp();
+                        peutmonter = false;
+                    }
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                    if(peutdescendre){
+                        menu.moveDown();
+                        peutdescendre = false;
+                    }
+                }
+               /* if (menu.getMonter()==true){
+                    menu.reset();
+                    menu.moveUp();
+                    std::cout<<"haut"<<endl;
+                    }
+            if (menu.getDescendre()==true){
+                menu.reset();
                 menu.moveDown();
-                }
+                std::cout<<"bas"<<endl;
+                }*/
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==0)){
                 go=1;
                 }
@@ -76,11 +115,12 @@ int main()
 				window.close();
                 }
         window.clear();
+        window.draw(spritemenu);
         menu.draw(window);
         window.display();
         }
 
-        else{
+        else {
 		if(!apparitionsFinies)
 		{
 			apparitionsFinies=champion_P1.apparition(clockAnim_P1,effet_P1);

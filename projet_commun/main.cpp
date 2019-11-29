@@ -39,7 +39,7 @@ int main()
 	Player joueur2(2);
 
 	/* Création des variables pour les actions à effectuer */
-	bool apparitionsFinies=false,actionFini_P1=true,actionFini_P2=true;
+	bool apparitionsFinies_P1=false,apparitionsFinies_P2=false,actionFini_P1=true,actionFini_P2=true;
 	int deplacementX_P1, deplacementY_P1, action_P1;
 	int deplacementX_P2, deplacementY_P2, action_P2;
 
@@ -55,10 +55,12 @@ int main()
     	sf::Time elapsedAttente_P2 = clockAttente_P2.getElapsedTime();
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
-		if(!apparitionsFinies)
+		if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 		{
-			apparitionsFinies=champion_P1.apparition(clockAnim_P1,effet_P1);
-			apparitionsFinies=champion_P2.apparition(clockAnim_P2,effet_P2);
+			if(!apparitionsFinies_P1)
+				apparitionsFinies_P1=champion_P1.apparition(clockAnim_P1,effet_P1);
+			if(!apparitionsFinies_P2)
+				apparitionsFinies_P2=champion_P2.apparition(clockAnim_P2,effet_P2);
 		}
 		else
 		{
@@ -87,11 +89,19 @@ int main()
 			/* Lancement des animations Player 1*/
 
 			if(deplacementX_P1==1 && deplacementY_P1==1)
-				actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
-
+			{
+				if(champion_P1.getOrientation()==-1)
+					actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
+				else
+					actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
+			}
 			else if(deplacementX_P1==-1 && deplacementY_P1==1)
-				actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
-
+			{
+				if(champion_P1.getOrientation()==-1)	
+					actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
+				else
+					actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
+			}
 			else if(deplacementY_P1==1 && action_P1==2)
 				actionFini_P1=champion_P1.sautKick(clockAnim_P1);
 
@@ -99,11 +109,19 @@ int main()
 				actionFini_P1=champion_P1.sautPunch(clockAnim_P1);
 
 			else if(deplacementX_P1==1)
-				champion_P1.avancer(clockAnim_P1,champion_P2);
-
+			{
+				if(champion_P1.getOrientation()==-1)	
+					champion_P1.avancer(clockAnim_P1,champion_P2);
+				else 
+					champion_P1.reculer(clockAnim_P1);
+			}
 			else if(deplacementX_P1==-1)
-				champion_P1.reculer(clockAnim_P1);
-
+			{
+				if(champion_P1.getOrientation()==-1)
+					champion_P1.reculer(clockAnim_P1);
+				else
+					champion_P1.avancer(clockAnim_P1,champion_P2);
+			}
 			else if(deplacementY_P1==1)
 				actionFini_P1=champion_P1.sauter(clockAnim_P1,clockAttente_P1);
 
@@ -120,7 +138,7 @@ int main()
 				actionFini_P1=champion_P1.kick(clockAnim_P1);
 
 			else if(action_P1==3)
-				actionFini_P1=champion_P1.SP(clockAnim_P1,effet_P1);
+				actionFini_P1=champion_P1.punchSP(clockAnim_P1,effet_P1);
 
 			else
 				champion_P1.statique(clockAnim_P1,champion_P2);
@@ -131,11 +149,19 @@ int main()
 			/* Lancement des animations Player 2*/
 
 			if(deplacementX_P2==1 && deplacementY_P2==1)
-				actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
-
+			{
+				if(champion_P2.getOrientation()==1)	
+					actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
+				else
+					actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
+			}
 			else if(deplacementX_P2==-1 && deplacementY_P2==1)
-				actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
-
+			{
+				if(champion_P2.getOrientation()==1)	
+					actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
+				else
+					actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
+			}
 			else if(deplacementY_P2==1 && action_P2==2)
 				actionFini_P2=champion_P2.sautKick(clockAnim_P2);
 
@@ -143,11 +169,19 @@ int main()
 				actionFini_P2=champion_P2.sautPunch(clockAnim_P2);
 
 			else if(deplacementX_P2==1)
-				champion_P2.avancer(clockAnim_P2,champion_P1);
-
+			{
+				if(champion_P2.getOrientation()==1)
+					champion_P2.avancer(clockAnim_P2,champion_P1);
+				else
+					champion_P2.reculer(clockAnim_P2); 
+			}
 			else if(deplacementX_P2==-1)
-				champion_P2.reculer(clockAnim_P2);
-
+			{
+				if(champion_P2.getOrientation()==1)	
+					champion_P2.reculer(clockAnim_P2);
+				else
+					champion_P2.avancer(clockAnim_P2,champion_P1);
+			}
 			else if(deplacementY_P2==1)
 				actionFini_P2=champion_P2.sauter(clockAnim_P2,clockAttente_P2);
 

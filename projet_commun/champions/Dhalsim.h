@@ -4,6 +4,7 @@
 #include "../IncludeManager.h"
 
 #include <iostream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -15,6 +16,7 @@ private:
 	const int SCALE=3.5;
 	int _orientation;
 	sf::Texture _texture;
+
 	sf::Vector2f _tailleSprite;
 	Scene _scene;
 
@@ -34,11 +36,12 @@ private:
 public:
 	Dhalsim(){};
 	Dhalsim(int,const Scene&);
-	void setSprite(int, int, int, int);
+	void setSprite(int,int,int,int);
 
 	void keepInWalls();
 	sf::Sprite getSprite() const;
-	
+	int getOrientation() const;
+
 
 	void reset();
 	void resetAccroupi();
