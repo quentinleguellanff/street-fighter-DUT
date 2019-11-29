@@ -32,7 +32,8 @@ class Broly : public sf::Sprite
         void sauter(sf::Clock& clock);
         bool coupDePoing(sf::Clock& clock);
         int getorientation();
-        bool collision(Broly& ennemi);
+        bool collisioncoup(sf::RectangleShape hurtboxEnnemi);
+        bool collisioncorps(Broly& ennemi);
         bool prendcoup(sf::Clock& clock);
         sf::RectangleShape gethurtbox();
         virtual ~Broly();

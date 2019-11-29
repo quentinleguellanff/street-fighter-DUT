@@ -91,7 +91,7 @@ int main()
                     if(!(Brolytest.getPosition().x + Brolytest.getLocalBounds().width*2 + 10 > LARGEUR)){
                         moveright = true;
                     }
-                    if(Brolytest.collision(Brolytest2)){
+                    if(Brolytest.collisioncorps(Brolytest2)){
                         moveright = false;
                     }
                 }
@@ -145,7 +145,7 @@ int main()
                 if(coupPoing){
                     peutcoup = false;
                     coupPoing = Brolytest.coupDePoing(clockanim);
-                    if(Brolytest.collision(Brolytest2)){
+                    if(Brolytest.collisioncoup(Brolytest2.gethurtbox())){
                          prendcoup2 = true;
                     }
 
@@ -176,7 +176,7 @@ int main()
                     if(!(Brolytest2.getPosition().x - 10 < 0)){
                             moveleft2 = true;
                     }
-                    if(Brolytest2.collision(Brolytest)){
+                    if(Brolytest2.collisioncorps(Brolytest)){
                             moveleft2 = false;
                     }
 
@@ -224,7 +224,7 @@ int main()
                 if(coupPoing2){
                     peutcoup2 = false;
                     coupPoing2 = Brolytest2.coupDePoing(clockanim2);
-                        if(Brolytest2.collision(Brolytest)){
+                        if(Brolytest2.collisioncoup(Brolytest.gethurtbox())){
                             prendcoup = true;
                         }
 
@@ -246,10 +246,10 @@ int main()
 
 
             //AFFICHAGE
-            window.draw(Brolytest2.gethurtbox());
-            window.draw(Brolytest.gethurtbox());
             window.draw(Joueur1);
             window.draw(Joueur2);
+            window.draw(Brolytest2.gethurtbox());
+            window.draw(Brolytest.gethurtbox());
             window.draw(sol);
             window.display();
         }
