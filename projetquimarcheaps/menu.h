@@ -3,31 +3,33 @@
 
 #include <SFML/Graphics.hpp>
 
-const int nbcase=3;
 class Menu {
-private:
+public:
 
     int _selection;
+    sf::Texture textureCase;
+    sf::Texture fond;
     sf::Font font;
-    sf::Text menu[nbcase];
-    bool _monter;
-    bool _descendre;
+    sf::Sprite spriteMenu[6];
+    sf::Sprite spriteMenux[3];
+    sf::Sprite sfond;
+    sf::Vector2f position;
+    sf::Text titre;
+
     float joystick0_axisX;
 	float joystick0_axisY;
-    sf::Texture textureCase;
-public:
+
+
 
     Menu (float width, float height);
     ~Menu();
 
     void draw(sf::RenderWindow &window);
-    void bouger();
+
     void moveUp();
     void moveDown();
     int getSelection();
-    void reset();
-    bool getMonter();
-    bool getDescendre();
+
     };
 
 #endif // FONCTION_H_INCLUDED

@@ -20,6 +20,9 @@ private:
 	sf::Vector2f _tailleSprite;
 	Scene _scene;
 
+	sf::RectangleShape _hurtbox;
+	sf::RectangleShape _hitbox;
+
 	float _posX;                   //Position X du perso
     float _posY;                   //Position Y du perso
 
@@ -42,13 +45,17 @@ public:
 	sf::Sprite getSprite() const;
 	int getOrientation() const;
 
+	sf::RectangleShape getHurtbox();
+	sf::RectangleShape getHitbox();
 
 	void reset();
 	void resetAccroupi();
 	void rotate(const sf::Sprite&);
+	bool prendCoup(sf::Clock&);
 
 	void statique(sf::Clock&,const sf::Sprite&);
 	void garde(sf::Clock&);
+	bool finGarde(sf::Clock&);
 	void avancer(sf::Clock&,const sf::Sprite&);
 	void reculer(sf::Clock&);
 

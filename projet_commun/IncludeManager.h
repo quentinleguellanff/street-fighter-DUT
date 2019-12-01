@@ -5,6 +5,6 @@
 #include "Scene.h"
 #include "champions/Dhalsim.h"
 #include "champions/Jotaro.h"
-
+#include "menu.h"
 
 #endif
