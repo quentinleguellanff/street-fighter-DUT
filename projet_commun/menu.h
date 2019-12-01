@@ -12,12 +12,19 @@ private:
 
     int _selection;
     sf::Font font;
-    sf::Text menu[nbcase];
-    bool _monter;
-    bool _descendre;
-    float joystick0_axisX;
-	float joystick0_axisY;
     sf::Texture textureCase;
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
+
+    sf::Sprite spriteMenu[6];
+    sf::Sprite spriteMenux[3];
+    sf::Sprite sfond;
+    sf::Vector2f position;
+    sf::Text titre;
+
+
+    float joystick0_axisX;
+    float joystick0_axisY;
     sf::Clock clockAttente;
 public:
 
