@@ -47,18 +47,12 @@ int main()
 
     /* menu */
 	int go=0;
-	sf::Texture menufond;
-    if(!menufond.loadFromFile("menufond.jpg")){
-        std::cout<<"erreur fond"<<endl;
-    }
-    sf::Sprite spritemenu;
-    spritemenu.setTexture(menufond);
+
 	Menu menu(window.getSize().x, window.getSize().y);
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
 	{
-		window.clear();
 
 		sf::Event event;
 
@@ -69,6 +63,7 @@ int main()
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
         if (go==0){
+
             while (window.pollEvent(event))
             {
                 switch ( event.type ){
@@ -98,24 +93,15 @@ int main()
                         peutdescendre = false;
                     }
                 }
-               /* if (menu.getMonter()==true){
-                    menu.reset();
-                    menu.moveUp();
-                    std::cout<<"haut"<<endl;
-                    }
-            if (menu.getDescendre()==true){
-                menu.reset();
-                menu.moveDown();
-                std::cout<<"bas"<<endl;
-                }*/
+
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==0)){
                 go=1;
                 }
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==2)){
 				window.close();
                 }
+
         window.clear();
-        window.draw(spritemenu);
         menu.draw(window);
         window.display();
         }
@@ -259,4 +245,5 @@ int main()
 
 	}
 	}
+
 }
