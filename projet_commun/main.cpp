@@ -44,15 +44,10 @@ int main()
 	int deplacementX_P2, deplacementY_P2, action_P2, derniereAction_P2=-1;
 
 	/* Déclarations pour le menu */
-	int selecEcran=1;
+	int selecEcran=0;
 	bool peutmonter = true, peutdescendre = true;
-	sf::Texture menufond;
-    if(!menufond.loadFromFile("background/menu.png")){
-        std::cout<<"erreur fond"<<endl;
-    }
-    sf::Sprite spritemenu;
-    spritemenu.setTexture(menufond);
-	Menu menu(window.getSize().x, window.getSize().y);
+	
+    Menu menu(window.getSize().x, window.getSize().y);
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
@@ -72,7 +67,6 @@ int main()
             while (window.pollEvent(event))
                 menu.bouger(selecEcran,event);            
 	        
-	        window.draw(spritemenu);
 	        menu.draw(window);
 	        window.display();
         }

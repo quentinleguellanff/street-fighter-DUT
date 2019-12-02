@@ -430,7 +430,65 @@
 	<SFML/Graphics.hpp>
 	"menu.cpp"
 
-1574500521 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\main.cpp
+1575309441 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\main.cpp
+	"IncludeManager.h"
 	<iostream>
 	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574873930 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\dhalsim.cpp
+	"../IncludeManager.h"
+
+1575308793 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\includemanager.h
+	"Player.h"
+	"Scene.h"
+	"champions/Dhalsim.h"
+	"champions/Jotaro.h"
+	"menuSelect.h"
+
+1574873931 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\player.h
+	<iostream>
+	<string>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574873932 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\scene.h
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574873930 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\dhalsim.h
+	"../IncludeManager.h"
+	<iostream>
+	<fstream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574873931 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\jotaro.h
+	"../IncludeManager.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1575309199 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\jotaro.cpp
+	"../IncludeManager.h"
+
+1574873931 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\player.cpp
+	"IncludeManager.h"
+	<string>
+
+1574873932 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\scene.cpp
+	"IncludeManager.h"
+
+1575309053 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menuselect.h
+
+1574875693 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menuselect.cpp
+	<iostream>
+	<SFML/Graphics.hpp>
+	"menuSelect.h"
 
