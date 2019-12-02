@@ -42,7 +42,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="IncludeManager.h" />
+		<Unit filename="Player.cpp" />
+		<Unit filename="Player.h" />
+		<Unit filename="Scene.cpp" />
+		<Unit filename="Scene.h" />
+		<Unit filename="champions/Dhalsim.cpp" />
+		<Unit filename="champions/Dhalsim.h" />
+		<Unit filename="champions/Jotaro.cpp" />
+		<Unit filename="champions/Jotaro.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menuSelect.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
