@@ -41,17 +41,18 @@ int main()
 
 	/* Création des variables pour les actions à effectuer */
 	bool apparitionsFinies=false,actionFini_P1=true,actionFini_P2=true;
+	bool peutmonter = true, peutdescendre = true;
 	int deplacementX_P1, deplacementY_P1, action_P1;
 	int deplacementX_P2, deplacementY_P2, action_P2;
 
     /* menu */
 	int go=0;
+
 	Menu menu(window.getSize().x, window.getSize().y);
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
 	{
-		window.clear();
 
 		sf::Event event;
 
@@ -63,24 +64,49 @@ int main()
 
         if (go==0){
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                menu.moveUp();
+            while (window.pollEvent(event))
+            {
+                switch ( event.type ){
+
+                case sf::Event::Closed:
+                        window.close( );
+                        break;
+                case sf::Event::KeyReleased:
+                    switch (event.key.code){
+                    case sf::Keyboard::Z:
+                      peutmonter = true;
+                      break;
+                    case sf::Keyboard::S:
+                        peutdescendre=true;
+                        break;}
                 }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                menu.moveDown();
+            }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                    if(peutmonter){
+                        menu.moveUp();
+                        peutmonter = false;
+                    }
                 }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                    if(peutdescendre){
+                        menu.moveDown();
+                        peutdescendre = false;
+                    }
+                }
+
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==0)){
                 go=1;
                 }
             if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) && (menu.getSelection()==2)){
 				window.close();
                 }
+
         window.clear();
         menu.draw(window);
         window.display();
         }
 
-        else{
+        else {
 		if(!apparitionsFinies)
 		{
 			apparitionsFinies=champion_P1.apparition(clockAnim_P1,effet_P1);
@@ -219,4 +245,5 @@ int main()
 
 	}
 	}
+
 }
