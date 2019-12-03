@@ -73,7 +73,7 @@ int main()
                 if (event.type == sf::Event::Closed){
                     window.close();
                 }
-                if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Numpad1){
+                if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::M){
                     peutcoup = true;
                 }
                 if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A){
@@ -107,7 +107,7 @@ int main()
                 {
                     saut = true;
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
                         if(peutcoup){
                             coupPoing = true;
                         }
@@ -152,7 +152,7 @@ int main()
                     }
                     */
                     if(!coupPoing){
-                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))){
+                        if(!(sf::Keyboard::isKeyPressed(sf::Keyboard::M))){
                             peutcoup = true;
                         }
                     }

@@ -39,9 +39,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="../../../../SFML-2.5.1/include" />
+			<Add directory="../../../SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
 			<Add directory="../../../../SFML-2.5.1/lib" />
+			<Add directory="../../../SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="Broly.cpp" />
 		<Unit filename="Broly.h" />

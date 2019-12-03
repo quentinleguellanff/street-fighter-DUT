@@ -2,5 +2,4 @@
 *.layout
 *.cscope_file_list
 *.depend
-*.dll
 *.exe
