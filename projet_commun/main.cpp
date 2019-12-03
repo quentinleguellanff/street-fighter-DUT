@@ -46,8 +46,12 @@ int main()
 	/* Déclarations pour le menu */
 	int selecEcran=0;
 	bool peutmonter = true, peutdescendre = true;
-	
+
     Menu menu(window.getSize().x, window.getSize().y);
+
+    /* Déclaration menu selection */
+    MenuSelection menuSel(window.getSize().x, window.getSize().y);
+    sf::Event eventS;
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
@@ -61,17 +65,33 @@ int main()
     	sf::Time elapsedAttente_P2 = clockAttente_P2.getElapsedTime();
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
-		
+
     	if (selecEcran==0)
     	{
             while (window.pollEvent(event))
-                menu.bouger(selecEcran,event);            
-	        
+                menu.bouger(selecEcran,event);
+
 	        menu.draw(window);
 	        window.display();
         }
 
         else if(selecEcran==1)
+        {
+            while (window.pollEvent(eventS))
+	        {
+	            if (eventS.type == sf::Event::Closed)
+	                window.close();
+                    menuSel.bouger(eventS);
+                    selecEcran = menuSel.validationPerso(eventS);
+	        }
+
+            window.clear();
+            menuSel.draw(window);
+	        window.display();
+
+
+        }
+        else if(selecEcran==2)
         {
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
@@ -94,7 +114,7 @@ int main()
 					action_P1=joueur1.getAction();
 				}
 				if(actionFini_P2)
-				{	
+				{
 					champion_P2.reset();
 					joueur2.recuperationCommandesP2();
 					deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
@@ -119,7 +139,7 @@ int main()
 				}
 				else if(deplacementX_P1==-1 && deplacementY_P1==1)
 				{
-					if(champion_P1.getOrientation()==-1)	
+					if(champion_P1.getOrientation()==-1)
 						actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
 					else
 						actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
@@ -132,9 +152,9 @@ int main()
 
 				else if(deplacementX_P1==1)
 				{
-					if(champion_P1.getOrientation()==-1)	
+					if(champion_P1.getOrientation()==-1)
 						champion_P1.avancer(clockAnim_P1,champion_P2);
-					else 
+					else
 						champion_P1.reculer(clockAnim_P1);
 				}
 				else if(deplacementX_P1==-1)
@@ -181,14 +201,14 @@ int main()
 
 				else if(deplacementX_P2==1 && deplacementY_P2==1)
 				{
-					if(champion_P2.getOrientation()==1)	
+					if(champion_P2.getOrientation()==1)
 						actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
 					else
 						actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
 				}
 				else if(deplacementX_P2==-1 && deplacementY_P2==1)
 				{
-					if(champion_P2.getOrientation()==1)	
+					if(champion_P2.getOrientation()==1)
 						actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
 					else
 						actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
@@ -204,11 +224,11 @@ int main()
 					if(champion_P2.getOrientation()==1)
 						champion_P2.avancer(clockAnim_P2,champion_P1);
 					else
-						champion_P2.reculer(clockAnim_P2); 
+						champion_P2.reculer(clockAnim_P2);
 				}
 				else if(deplacementX_P2==-1)
 				{
-					if(champion_P2.getOrientation()==1)	
+					if(champion_P2.getOrientation()==1)
 						champion_P2.reculer(clockAnim_P2);
 					else
 						champion_P2.avancer(clockAnim_P2,champion_P1);
