@@ -4,7 +4,7 @@
 using namespace std;
 
 Menu::Menu(float width,float height){
-    if(!font.loadFromFile("Amatic-Bold.ttf")) {
+    if(!font.loadFromFile("OCRAEXT.ttf")) {
         std::cout<<"erreur police";
     }
     if(!menuFond.loadFromFile("background/menu.png")){

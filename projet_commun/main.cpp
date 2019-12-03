@@ -157,7 +157,7 @@ int main()
 					actionFini_P1=champion_P1.punch(clockAnim_P1);
 
 				else if(action_P1==2)
-					actionFini_P1=champion_P1.prendCoup(clockAnim_P1);
+					actionFini_P1=champion_P1.kick(clockAnim_P1);
 
 				else if(action_P1==3)
 					actionFini_P1=champion_P1.SP(clockAnim_P1,effet_P1);

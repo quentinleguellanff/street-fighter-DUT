@@ -22,7 +22,6 @@ private:
     sf::Vector2f position;
     sf::Text titre;
 
-
     float joystick0_axisX;
     float joystick0_axisY;
     sf::Clock clockAttente;
