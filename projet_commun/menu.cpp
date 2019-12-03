@@ -161,17 +161,17 @@ void Menu::moveDown()
 
 
 MenuSelection::MenuSelection(float width,float height){
-        if (!fontMenu.loadFromFile("atari.ttf"))
+        if (!fontMenu.loadFromFile("MenuSelection/atari.ttf"))
                 {
                     cout << "ERREUR : chargement de police atari.ttf" << endl;
                 }
 
-              if (!perso1.loadFromFile("browli.png"))
+              if (!perso1.loadFromFile("MenuSelection/browli.png"))
                 {
                     cout << "ERREUR : chargement d'image personnage : browli.png" << endl;
                 }
 
-              if (!perso2.loadFromFile("dhalsim.png"))
+              if (!perso2.loadFromFile("MenuSelection/dhalsim.png"))
                 {
                     cout << "ERREUR : chargement d'image personnage : dhalsim.png" << endl;
                 }
