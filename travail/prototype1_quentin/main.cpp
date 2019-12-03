@@ -167,7 +167,7 @@ int main()
 
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
-                    if(!(Brolytest2.getPosition().x + Brolytest2.getLocalBounds().width*2 + 10 > LARGEUR)){
+                    if(!(Brolytest2.gethurtbox().getGlobalBounds().left + Brolytest2.gethurtbox().getLocalBounds().width  > LARGEUR)){
                             moveright2 = true;
                     }
                 }
