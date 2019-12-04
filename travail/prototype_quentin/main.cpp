@@ -167,6 +167,7 @@ int main()
             {
                 peutcoup = false;
                 coupPoing = Brolytest.coupDePoing(clockanim,Brolytest2.gethurtbox(),prendcoup2);
+                window.draw(Brolytest.gethitbox());
                 /*if(Brolytest.collisioncoup(Brolytest2.gethurtbox())){
                      prendcoup2 = true;
                 }
@@ -266,6 +267,7 @@ int main()
                 prendcoup2 = false;
                 peutcoup2 = false;
                 coupPoing2 = Brolytest2.coupDePoing(clockanim2,Brolytest.gethurtbox(),prendcoup);
+                window.draw(Brolytest2.gethitbox());
                 /*if(Brolytest2.collisioncoup(Brolytest.gethurtbox())){
                     prendcoup = true;
                 }
@@ -289,9 +291,11 @@ int main()
 
         if(prendcoup)
         {
+
             if(coupPoing){
                 coupPoing = false;
                 Brolytest.setPosition(Brolytest.getPosition().x+112*Brolytest.getorientation(),Brolytest.getPosition().y);
+                Brolytest.resetcoup();
             }
             Brolytest.prendcoup(clockanim,prendcoup);
             if(!prendcoup){
@@ -303,17 +307,13 @@ int main()
             if(coupPoing2){
                 coupPoing2 = false;
                 Brolytest2.setPosition(Brolytest2.getPosition().x+112*Brolytest2.getorientation(),Brolytest2.getPosition().y);
+                Brolytest2.resetcoup();
             }
             Brolytest2.prendcoup(clockanim2,prendcoup2);
             if(!prendcoup2){
                 peutcoup2 = true;
             }
         }
-        /*
-        if(prendcoup && prendcoup2){
-            Brolytest.prendcoup(clockanim,prendcoup);
-            Brolytest2.prendcoup(clockanim2,prendcoup2);
-        }*/
         cout << " Broly1 touche  : " << prendcoup << endl;
         cout << " Broly2 touche  : " << prendcoup2 << endl;
         //AFFICHAGE
@@ -323,6 +323,7 @@ int main()
         window.draw(Brolytest.gethurtbox());
         window.draw(sol);
         window.display();
+
     }
     return 0;
 }

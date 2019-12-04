@@ -27,6 +27,8 @@ Broly::Broly(int Orientation)
     if(_orientation == -1){
         setOrigin(getLocalBounds().width, 0.f);
         setPosition(300.f,460.f); // position initiale du perso/sprite dans la fenetre
+        _hitbox.setOrigin(getLocalBounds().width,0.f);
+
     }
     _ok = false;
 
@@ -35,7 +37,17 @@ Broly::Broly(int Orientation)
     _hurtbox.setOutlineThickness(2);
     _hurtbox.setPosition(getPosition().x, getPosition().y);
     _hurtbox.setOrigin(-getGlobalBounds().width/4, 0.f);
-    _hurtbox.setSize(sf::Vector2f(getGlobalBounds().width/2,getGlobalBounds().height));
+    if(_orientation == -1){
+        _hurtbox.setOrigin(0.f,0.f);
+    }
+    _hurtbox.setSize(sf::Vector2f(8*getGlobalBounds().width/10,getGlobalBounds().height));
+
+    _hitbox.setScale(_scale*_orientation,_scale);
+    _hitbox.setFillColor(sf::Color(255,255,255,0));
+    _hitbox.setOutlineColor(sf::Color::Red);
+    _hitbox.setOutlineThickness(2);
+    _hitbox.setPosition(getPosition().x, getPosition().y+97*2);
+    _hitbox.setSize(sf::Vector2f(23.f,21.f));
     cptanimprendcoupbis = 6;
 
 
@@ -116,6 +128,7 @@ void Broly::sauter(sf::Clock& clock){
  }
 
 bool Broly::coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& touche){
+
         int decalagex = -112*_orientation;
         int decalage_hurtbox = 80*_orientation;
         if(!_ok){
@@ -125,12 +138,13 @@ bool Broly::coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& 
         }
         sf::Time elapsed = clock.getElapsedTime();
         int timeanim = elapsed.asMilliseconds();
-        if(timeanim > 70){
+        if(timeanim > 30){
             _cptAnimCoupPoing++;
             clock.restart();
         }
 
         if(_cptAnimCoupPoing == 1){
+                _hitbox.setPosition(getPosition().x, getPosition().y+90*2);
                 if(collisioncoup(hurtboxEnnemi)){
                     touche = true;
                 }
@@ -155,12 +169,12 @@ bool Broly::coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& 
 
 bool Broly::collisioncoup(sf::RectangleShape hurtboxEnnemi){
 
-    return getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
+    return _hitbox.getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
 }
 
 bool Broly::collisioncorps(Broly& ennemi){
 
-    return getGlobalBounds().intersects(ennemi.getGlobalBounds());
+    return _hurtbox.getGlobalBounds().intersects(ennemi.gethurtbox().getGlobalBounds());
 }
 
 void Broly::prendcoup(sf::Clock& clock,bool &touche){
@@ -173,7 +187,7 @@ void Broly::prendcoup(sf::Clock& clock,bool &touche){
     if(timeanim > 20){
         _cptanimprendcoup +=1;
         cptanimprendcoupbis -=1;
-        setPosition(getPosition().x+10*_orientation,getPosition().y);
+        setPosition(getPosition().x+17*_orientation,getPosition().y);
         _hurtbox.setPosition(getPosition());
         clock.restart();
     }
@@ -195,4 +209,12 @@ void Broly::prendcoup(sf::Clock& clock,bool &touche){
 
 sf::RectangleShape Broly::gethurtbox(){
     return _hurtbox;
+}
+
+sf::RectangleShape Broly::gethitbox(){
+    return _hitbox;
+}
+
+void Broly::resetcoup(){
+    _cptAnimCoupPoing = 0;
 }
