@@ -534,3 +534,67 @@
 1574639574 c:\users\quentin\documents\iut_orsay\projet_c++_git\projetquimarcheaps\menu.h
 	<SFML/Graphics.hpp>
 
+1575234550 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\menu.cpp
+	<iostream>
+	"menu.h"
+
+1575234036 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\menu.h
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574639574 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\player.cpp
+	"IncludeManager.h"
+	<string>
+
+1575234036 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\includemanager.h
+	"Player.h"
+	"Scene.h"
+	"champions/Dhalsim.h"
+	"champions/Jotaro.h"
+	"menu.h"
+
+1574639574 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\player.h
+	<iostream>
+	<string>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574204304 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\scene.h
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1575234036 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\champions\dhalsim.h
+	"../IncludeManager.h"
+	<iostream>
+	<fstream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1575234036 c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\champions\jotaro.h
+	"../IncludeManager.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1574639574 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\scene.cpp
+	"IncludeManager.h"
+
+1575234588 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\main.cpp
+	"IncludeManager.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
+
+1575234036 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\champions\dhalsim.cpp
+	"../IncludeManager.h"
+
+1575234036 source:c:\users\quentin\documents\iut_orsay\projet_c++_git\travail\miguel_training_codeblocks\champions\jotaro.cpp
+	"../IncludeManager.h"
+
