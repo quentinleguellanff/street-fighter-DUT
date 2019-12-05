@@ -11,8 +11,8 @@ int main()
 {
 	/* Gestion de la fenetre */
 	sf::RenderWindow window;
-	//window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
-	window.create(sf::VideoMode(1920,1080),"la Bagarre");
+	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
+	//window.create(sf::VideoMode(1920,1080),"la Bagarre");
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
 	window.setMouseCursorVisible(0);
@@ -27,8 +27,6 @@ int main()
 	sf::Clock clockAttente_P2;
 
 	/* Variable de création des deux champions */
-	//bool championsCrees=false;
-	//int selecChamp_P1=-1,selecChamp_P2=-1;
 	Jotaro champion_P1(-1,fond);
 	Dhalsim champion_P2(1,fond);
 
@@ -87,38 +85,15 @@ int main()
                     selecEcran = menuSel.validationPerso(eventS);
 	        }
 
-	        /*if(selecEcran==2)
-	        {
-	        	switch(selecChamp_P1)
-				{
-				case 0:
-					Jotaro champion_P1(-1,fond);
-					break;
-				case 1:
-					Dhalsim champion_P1(-1,fond);
-					break;
-				}
-
-				switch(selecChamp_P2)
-				{
-				case 0:
-					Jotaro champion_P2(1,fond);
-					break;
-				case 1:
-					Dhalsim champion_P2(1,fond);
-					break;
-				}
-	        }*/
-
             window.clear();
             menuSel.draw(window);
 	        window.display();
 
-
-        }
-        else if(selecEcran==2)
-        {
-
+        }else if(selecEcran==-1)
+	    {
+	    	window.close();
+	    }else if(selecEcran==2)
+    	{  	
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
 				if(!apparitionsFinies_P1)
@@ -288,6 +263,7 @@ int main()
 			}
 
 			/* Gestion de la fermeture de la fenetre */
+			sf::Event event;
 			while (window.pollEvent(event))
 	        {
 	            if (event.type == sf::Event::Closed)
@@ -309,10 +285,12 @@ int main()
 	        window.draw(champion_P2.getHitbox());
 
 	        window.display();
-	    }else if(selecEcran==-1)
-	    {
-	    	window.close();
-	    }
+    }
+
+
+    
+	    
+	    
 	}
 }
 

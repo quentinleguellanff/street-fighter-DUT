@@ -328,8 +328,6 @@ int MenuSelection::validationPerso(sf::Event event)
 
     if(choixJ1 != -1 && choixJ2 != -1)
     {
-        //selecChamp_P1=etatPersoJ1;
-        //selecChamp_P2=etatPersoJ2;
         return 2;
     } 
     else return 1;
