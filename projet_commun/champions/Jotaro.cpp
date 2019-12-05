@@ -670,105 +670,140 @@ bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
     int delai=70,deplacement=100;
     bool fini=false;
 
-    if(_cptSauter==0)
+    switch(_cptSauter)
     {
+    case 0:
     	clockAttente.restart();
+	    _cptSauter++;
+	    setSprite(2,1101,97,153);
+	    _posX-=25*SCALE;
+	    _posY=_scene.getBottom()-_tailleSprite.y;
+	    
+    	break;
+    case 1:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(2,1101,97,153);
-		    _posX-=25*SCALE;
-		    _posY=_scene.getBottom()-_tailleSprite.y;
-    }
-    else if(timeAnim > delai)
-   	{
-	    switch(_cptSauter)
-	    {
-	    case 1:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(109,1111,57,153);
-			    _posX+=25*SCALE;
-			    _posY-=deplacement;
-	    	break;
-	    case 2:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(183,1111,90,153);
-			    _posX-=13*SCALE;
-			    _posY-=deplacement;
-	    	break;
-	    case 3:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(281,1111,88,153);
-			    _posY-=deplacement;
-	    	break;
-	    case 4:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(383,1111,80,153);
-			    _posY-=deplacement;
-	    	break;
-	    case 5:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(480,1111,85,153);
-	    	break;
-	    case 6:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(576,1111,99,153);
-			    _posX-=8*SCALE;
-			    _posY+=deplacement;
-	    	break;
-	    case 7:
-			    clockAnim.restart();
-			    _cptSauter++;
-			    setSprite(682,1111,101,153);
-			    _posY+=deplacement;
-	    	break;
-	    case 8:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(793,1111,111,153);
-			    _posY+=deplacement;
-	    	break;
-	    case 9:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(914,1111,125,153);
-			    _posY+=deplacement;
-			break;
-		case 10:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(1043,1111,104,153);
-		    	_posX+=8*SCALE;
-			break;
-		case 11:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(1269,1102,91,151);    	
-			break;
-		case 12:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(1372,1102,90,151);
-			break;
-		case 13:
-		    	clockAnim.restart();
-		    	_cptSauter++;
-		    	setSprite(1476,1102,71,152);  	
-			break;
-		case 14:
-		    	clockAnim.restart();
-		    	_cptSauter=0;
-		    	setSprite(4,6,64,117);
-		    	fini=true;  	
-		    	_posX+=8*SCALE;
-			break;
+		    setSprite(109,1111,57,153);
+		    _posX+=25*SCALE;
+		    _posY-=deplacement;
+		    
+		}
+    	break;
+    case 2:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(183,1111,90,153);
+		    _posX-=13*SCALE;
+		    _posY-=deplacement;
+		    
+		}
+    	break;
+    case 3:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(281,1111,88,153);
+		    _posY-=deplacement;
+		    
+		}
+    	break;
+    case 4:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(383,1111,80,153);
+		    _posY-=deplacement;
+		    
+		}
+    	break;
+    case 5:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(480,1111,85,153);
+		}
+    	break;
+    case 6:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(576,1111,99,153);
+		    _posX-=8*SCALE;
+		    _posY+=deplacement;
+		    
+		}
+    	break;
+    case 7:
+    	if(timeAnim > delai){
+		    clockAnim.restart();
+		    _cptSauter++;
+		    setSprite(682,1111,101,153);
+		    _posY+=deplacement;
+		    
+		}
+    	break;
+    case 8:
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(793,1111,111,153);
+		    _posY+=deplacement;
+		    	    	
 	    }
-	}
+    	break;
+    case 9:
+    	if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(914,1111,125,153);
+		    _posY+=deplacement;
+		    	    	
+	    }
+		break;
+	case 10:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1043,1111,104,153);
+	    	_posX+=8*SCALE;
+	    		    		    	
+	    }
+		break;
+	case 11:
+		if(timeAnim > delai/2){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1269,1102,91,151);    	
+	    }
+		break;
+	case 12:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1372,1102,90,151);
 
+	    }
+		break;
+	case 13:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter++;
+	    	setSprite(1476,1102,71,152);  	
+	    }
+		break;
+	case 14:
+		if(timeAnim > delai){
+	    	clockAnim.restart();
+	    	_cptSauter=0;
+	    	setSprite(4,6,64,117);
+	    	fini=true;  	
+	    	_posX+=8*SCALE;
+	    	    	
+	    }
+		break;
+    }
     _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.75));
     _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.25);
     setPosition(_posX,_posY);
@@ -908,91 +943,91 @@ bool Jotaro::sauterArriere(sf::Clock& clockAnim)
 	    switch(_cptSauter)
 	    {
 	    case 1:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(109,1111,57,153);
-		    _posY-=deplacementY;
-		    _posX-=deplacementX;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(109,1111,57,153);
+			    _posY-=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 2:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(183,1111,90,153);
-		    _posY-=deplacementY;
-		    _posX-=deplacementX;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(183,1111,90,153);
+			    _posY-=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 3:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(281,1111,88,153);
-		    _posY-=deplacementY;
-		    _posX-=deplacementX;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(281,1111,88,153);
+			    _posY-=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 4:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(383,1111,80,153);
-		    _posY-=deplacementY;
-		    _posX-=deplacementX;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(383,1111,80,153);
+			    _posY-=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 5:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(480,1111,85,153);
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(480,1111,85,153);
 	    	break;
 	    case 6:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(576,1111,99,153);
-		    _posY+=deplacementY;
-		    _posX-=deplacementX;
-	    	break;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(576,1111,99,153);
+			    _posY+=deplacementY;
+			    _posX-=deplacementX;
+		    	break;
 	    case 7:
-		    clockAnim.restart();
-		    _cptSauter++;
-		    setSprite(682,1111,101,153);
-		    _posY+=deplacementY;
-		    _posX-=deplacementX;
+			    clockAnim.restart();
+			    _cptSauter++;
+			    setSprite(682,1111,101,153);
+			    _posY+=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 8:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(793,1111,111,153);
-		    _posY+=deplacementY;
-		    _posX-=deplacementX;
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(793,1111,111,153);
+			    _posY+=deplacementY;
+			    _posX-=deplacementX;
 	    	break;
 	    case 9:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(914,1111,125,153);
-		    _posY+=deplacementY;
-		    _posX-=deplacementX;
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(914,1111,125,153);
+			    _posY+=deplacementY;
+			    _posX-=deplacementX;
 			break;
 		case 10:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(1043,1111,104,153);
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(1043,1111,104,153);
 			break;
 		case 11:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(1269,1102,91,151);    	
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(1269,1102,91,151);    	
 			break;
 		case 12:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(1372,1102,90,151);	    	
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(1372,1102,90,151);	    	
 			break;
 		case 13:
-	    	clockAnim.restart();
-	    	_cptSauter++;
-	    	setSprite(1476,1102,71,152);  	
+		    	clockAnim.restart();
+		    	_cptSauter++;
+		    	setSprite(1476,1102,71,152);  	
 			break;
 		case 14:
-	    	clockAnim.restart();
-	    	_cptSauter=0;
-	    	setSprite(1557,1136,76,118);
-	    	fini=true;  	    	
+		    	clockAnim.restart();
+		    	_cptSauter=0;
+		    	setSprite(1557,1136,76,118);
+		    	fini=true;  	    	
 			break;
 	    }
 	}
@@ -1286,22 +1321,15 @@ bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat)
 
 bool Jotaro::kick(sf::Clock& clockAnim)
 {
-	cout<<_cptAction<<endl;
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
-	
-	if(timeAnim>delai)
+	if(timeAnim>delai*1.5)
 	{
-		switch (_cptAction)
+		switch(_cptAction)
 		{
-		case 0:
-			    _cptAction ++;
-			    clockAnim.restart();
-			    setSprite(1322,2103,74,118);
-			break;
 		case 1:
 			if(timeAnim > delai*1.5){
 			    _cptAction ++;
@@ -1319,6 +1347,16 @@ bool Jotaro::kick(sf::Clock& clockAnim)
 			    _posX-=5*SCALE*_orientation;
 			    
 			}
+			break;	
+		}
+	}else if(timeAnim>delai)
+	{
+		switch (_cptAction)
+		{
+		case 0:
+			    _cptAction ++;
+			    clockAnim.restart();
+			    setSprite(1322,2103,74,118);
 			break;
 		case 3:
 			    _cptAction ++;
@@ -1518,51 +1556,58 @@ bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
-	
-	if(timeAnim>delai && _cptAction<6)
+    switch (_cptAction)
 	{
-	    switch (_cptAction)
-		{
-		case 0:
+	case 0:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(21,3742,75,116);
 		    starPlat.setTexture(_texture);
-			break;
-		case 1:
+		}
+		break;
+	case 1:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(106,3742,100,116);
-			break;
-		case 2:
+		}
+		break;
+	case 2:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(216,3742,113,116);
-			break;
-		case 3:
+		}
+		break;
+	case 3:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(338,3742,113,116);
-			break;
-		case 4:
+		}
+		break;
+	case 4:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(459,3742,108,116);
 
 			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 			starPlat.setScale(_orientation*SCALE,SCALE);
-			starPlat.setPosition(_posX+(_tailleSprite.x/2*_orientation),_scene.getBottom()-_tabSP[_cptAction-4][3]*SCALE);
-			break;
-		case 5:
+			starPlat.setPosition(_posX+(_tailleSprite.x*_orientation),_scene.getBottom()-_tabSP[_cptAction-4][3]*SCALE);
+		}
+		break;
+	case 5:
+		if(timeAnim > delai){
 		    _cptAction ++;
 		    clockAnim.restart();
 			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 			_hitbox.setSize(sf::Vector2f(110*SCALE,77*SCALE));
 			_hitbox.setPosition(starPlat.getPosition().x+65*SCALE*_orientation,starPlat.getPosition().y+18*SCALE);
-			break;
 		}
+		break;
 	}
-
 	if(timeAnim>delai/3 && _cptAction>5)
 	{
 		if(_cptAction==8)

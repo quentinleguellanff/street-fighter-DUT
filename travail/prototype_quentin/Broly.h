@@ -20,6 +20,7 @@ class Broly : public sf::Sprite
         bool _ok;
 
         sf::RectangleShape _hurtbox;
+        sf::RectangleShape _hitbox;
 
 
 
@@ -36,6 +37,8 @@ class Broly : public sf::Sprite
         bool collisioncorps(Broly& ennemi);
         void prendcoup(sf::Clock& clock,bool& touche);
         sf::RectangleShape gethurtbox();
+        sf::RectangleShape gethitbox();
+        void resetcoup();
         virtual ~Broly();
 
 };

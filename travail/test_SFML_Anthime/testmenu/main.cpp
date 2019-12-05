@@ -98,7 +98,7 @@ int main()
                         titre.setFont(fontMenu);
                         titre.setString("Selection des personnages");
                         titre.setCharacterSize(50);
-                        titre.setColor(sf::Color::White);
+                        titre.setFillColor(sf::Color::White);
                         titre.setStyle(sf::Text::Bold);
                         titre.setPosition(sf::Vector2f(580,12));
 
@@ -106,7 +106,7 @@ int main()
                         j1.setFont(fontMenu);
                         j1.setString("Joueur 1");
                         j1.setCharacterSize(26);
-                        j1.setColor(sf::Color::White);
+                        j1.setFillColor(sf::Color::White);
                         j1.setStyle(sf::Text::Bold);
                         j1.setPosition(sf::Vector2f(350,100));
 
@@ -114,7 +114,7 @@ int main()
                         j2.setFont(fontMenu);
                         j2.setString("Joueur 2");
                         j2.setCharacterSize(26);
-                        j2.setColor(sf::Color::White);
+                        j2.setFillColor(sf::Color::White);
                         j2.setStyle(sf::Text::Bold);
                         j2.setPosition(sf::Vector2f(1150,100));
 
@@ -122,7 +122,7 @@ int main()
                         nomPersoJ1.setFont(fontMenu);
                         nomPersoJ1.setString("Broly");
                         nomPersoJ1.setCharacterSize(30);
-                        nomPersoJ1.setColor(sf::Color::White);
+                        nomPersoJ1.setFillColor(sf::Color::White);
                         nomPersoJ1.setStyle(sf::Text::Bold);
                         nomPersoJ1.setPosition(sf::Vector2f(350,750));
 
@@ -130,7 +130,7 @@ int main()
                         nomPersoJ2.setFont(fontMenu);
                         nomPersoJ2.setString("Broly");
                         nomPersoJ2.setCharacterSize(30);
-                        nomPersoJ2.setColor(sf::Color::White);
+                        nomPersoJ2.setFillColor(sf::Color::White);
                         nomPersoJ2.setStyle(sf::Text::Bold);
                         nomPersoJ2.setPosition(sf::Vector2f(1150,750));
 
