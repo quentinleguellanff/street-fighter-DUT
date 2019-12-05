@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "Broly.h"
-#include "collision.h"
+#include "joueur.h"
 
 using namespace std;
 
@@ -35,7 +35,8 @@ int main()
     bool prendcoup = false;
     bool prendcoup2 = false;
 
-
+    Joueur joueur1(1);
+    Joueur joueur2(2);
 
 
     sf::Sprite Joueur1;
@@ -84,6 +85,14 @@ int main()
                 peutcoup2 = true;
             }
         }
+
+      /*  if(joueur2.getpointdevie() == 0){
+            cout << "LE JOUEUR 1 REMPORTE LA PARTIE" << endl;
+        }
+        if(joueur1.getpointdevie() == 0){
+            cout << "LE JOUEUR 2 REMPORTE LA PARTIE" << endl;
+        }
+    */
         /*
         ////////////////////COMMANDE JOUEUR 1////////////////
         *
@@ -299,6 +308,7 @@ int main()
             }
             Brolytest.prendcoup(clockanim,prendcoup);
             if(!prendcoup){
+                //joueur1.prendDegats();
                 peutcoup = true;
             }
         }
@@ -312,6 +322,7 @@ int main()
             Brolytest2.prendcoup(clockanim2,prendcoup2);
             if(!prendcoup2){
                 peutcoup2 = true;
+                //joueur2.prendDegats();
             }
         }
         cout << " Broly1 touche  : " << prendcoup << endl;
@@ -322,6 +333,8 @@ int main()
         window.draw(Brolytest2.gethurtbox());
         window.draw(Brolytest.gethurtbox());
         window.draw(sol);
+        window.draw(joueur1.getBarreVie());
+        window.draw(joueur2.getBarreVie());
         window.display();
 
     }
