@@ -1,7 +1,20 @@
 # depslib dependency file v1.0
-1573143821 source:c:\users\anthime\documents\as1920\projet tutore cpp\testprojetsfml\main.cpp
-	<SFML/Graphics.hpp>
+1574873930 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\dhalsim.cpp
+	"../IncludeManager.h"
+
+1575308793 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\includemanager.h
+	"Player.h"
+	"Scene.h"
+	"champions/Dhalsim.h"
+	"champions/Jotaro.h"
+	"menuSelect.h"
+
+1574873931 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\player.h
 	<iostream>
+	<string>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
 
 1571073961 c:\program files (x86)\sfml-2.5.1\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -412,48 +425,6 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1573584005 source:c:\users\anthime\documents\as1920\projet tutore cpp\git_projettutore\travail\test_sfml_anthime\testprojetsfml\main.cpp
-	<SFML/Graphics.hpp>
-	<iostream>
-
-1573999685 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testprojetsfml\main.cpp
-	<SFML/Graphics.hpp>
-	<iostream>
-
-1574448506 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menu.cpp
-	<iostream>
-	<SFML/Graphics.hpp>
-	"menu.cpp"
-
-1574448506 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menu.cpp
-	<iostream>
-	<SFML/Graphics.hpp>
-	"menu.cpp"
-
-1575309441 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\main.cpp
-	"IncludeManager.h"
-	<iostream>
-	<SFML/Graphics.hpp>
-	<SFML/Window.hpp>
-	<SFML/System.hpp>
-
-1574873930 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\dhalsim.cpp
-	"../IncludeManager.h"
-
-1575308793 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\includemanager.h
-	"Player.h"
-	"Scene.h"
-	"champions/Dhalsim.h"
-	"champions/Jotaro.h"
-	"menuSelect.h"
-
-1574873931 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\player.h
-	<iostream>
-	<string>
-	<SFML/Graphics.hpp>
-	<SFML/Window.hpp>
-	<SFML/System.hpp>
-
 1574873932 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\scene.h
 	<iostream>
 	<SFML/Graphics.hpp>
@@ -475,8 +446,17 @@
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
 
+1575309053 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menuselect.h
+
 1575309199 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\champions\jotaro.cpp
 	"../IncludeManager.h"
+
+1575369046 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\main.cpp
+	"IncludeManager.h"
+	<iostream>
+	<SFML/Graphics.hpp>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
 
 1574873931 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\player.cpp
 	"IncludeManager.h"
@@ -484,11 +464,4 @@
 
 1574873932 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\scene.cpp
 	"IncludeManager.h"
-
-1575309053 c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menuselect.h
-
-1574875693 source:c:\users\anthime\documents\as1920\projet tutore cpp\gitprojet\travail\test_sfml_anthime\testmenu\menuselect.cpp
-	<iostream>
-	<SFML/Graphics.hpp>
-	"menuSelect.h"
 
