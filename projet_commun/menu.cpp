@@ -90,8 +90,9 @@ void Menu::draw(sf::RenderWindow &window){
     }
 
 // Recupérer les intructions de l'utilisateur
-void Menu::bouger(int& selecEcran, sf::Event event)
+void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
 {
+    bool peutmonter = true, peutdescendre = true;
     if (sf::Joystick::isConnected(0))
     {
         sf::Time elapsed = clockAttente.getElapsedTime();
@@ -113,18 +114,44 @@ void Menu::bouger(int& selecEcran, sf::Event event)
         }
     }else
     {
-        if(event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Z)
-        moveUp();
+        while (window.pollEvent(event))
+            {
+                switch ( event.type ){
 
-        else if (event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::S)
-            moveDown();
+                case sf::Event::Closed:
+                        window.close( );
+                        break;
+                case sf::Event::KeyReleased:
+                    switch (event.key.code){
+                    case sf::Keyboard::Z:
+                      peutmonter = true;
+                      break;
+                    case sf::Keyboard::S:
+                        peutdescendre=true;
+                        break;}
+                }
+            }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                    if(peutmonter){
+                        moveUp();
+                        peutmonter = false;
+                    }
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                    if(peutdescendre){
+                        moveDown();
+                        peutdescendre = false;
+                    }
+                }
+
 
         else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
             selecEcran=1;
 
         else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
-            selecEcran=-1;
-    }
+            window.close();
+                }
+
 }
 
 //Monter dans le menu

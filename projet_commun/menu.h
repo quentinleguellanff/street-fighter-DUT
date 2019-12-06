@@ -32,7 +32,7 @@ public:
     ~Menu();
 
     void draw(sf::RenderWindow &window);
-    void bouger(int&,sf::Event);
+    void bouger(int&,sf::Event, sf::RenderWindow &window);
     void moveUp();
     void moveDown();
     };
@@ -76,9 +76,9 @@ private:
     sf::Sprite spriteP2;
 
     int hauteurPerso;
-    
+
     int hauteurTexte;
-    
+
     bool etat = 0;
     int etatPersoJ1 = 0;
     int etatPersoJ2 = 1;

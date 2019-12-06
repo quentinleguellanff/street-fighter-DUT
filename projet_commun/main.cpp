@@ -47,7 +47,7 @@ int main()
 
 	/* Déclarations pour le menu */
 	int selecEcran=0;
-	bool peutmonter = true, peutdescendre = true;
+
 
     Menu menu(window.getSize().x, window.getSize().y);
 
@@ -71,7 +71,7 @@ int main()
     	if (selecEcran==0)
     	{
             while (window.pollEvent(event))
-                menu.bouger(selecEcran,event);
+                menu.bouger(selecEcran,event, window);
 
 	        menu.draw(window);
 	        window.display();
