@@ -59,9 +59,6 @@ int main()
             joueur1.recupCommande();
             joueur2.recupCommande();
 
-            joueur1.prendCoup(clockanim,joueur1.prendcoup,window);
-            joueur2.prendCoup(clockanim2,joueur2.prendcoup,window);
-
             joueur1.statique(clockanim,window);
             joueur2.statique(clockanim2,window);
 
@@ -71,8 +68,13 @@ int main()
             joueur1.avancegauche(clockanim,clockmove,window);
             joueur2.avancegauche(clockanim2,clockmove2,window);
 
+            joueur1.prendCoup(clockanim,joueur1.prendcoup,window);
+            joueur2.prendCoup(clockanim2,joueur2.prendcoup,window);
+
             joueur1.coupDePoing(clockanim,joueur2.getHurtbox(),joueur2.prendcoup,window);
             joueur2.coupDePoing(clockanim2,joueur1.getHurtbox(),joueur1.prendcoup,window);
+
+
 
 
             //window.draw(joueur1.getHurtbox());
@@ -82,6 +84,8 @@ int main()
             window.draw(sol);
             window.draw(joueur1.getBarreVie());
             window.draw(joueur2.getBarreVie());
+            //window.draw(joueur1.getHurtbox());
+            //window.draw(joueur2.getHurtbox());
             window.display();
         }
         if(fincombat){

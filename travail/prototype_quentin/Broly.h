@@ -32,7 +32,7 @@ class Broly
         void debout(sf::Clock& clock,sf::RenderWindow& window);
         void avancer(sf::Clock& clockanim,sf::Clock& clockmove,sf::RenderWindow& window);
         void reculer(sf::Clock& clockanim,sf::Clock& clockmove,sf::RenderWindow& window);
-        void sauter(sf::Clock& clock);
+        void sauter(sf::Clock& clock,sf::Clock& clockmove);
         bool coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
         int getorientation();
         bool collisioncoup(sf::RectangleShape hurtboxEnnemi);
@@ -41,6 +41,7 @@ class Broly
         sf::RectangleShape gethurtbox();
         sf::RectangleShape gethitbox();
         void resetcoup();
+        void ResteDansFenetre();
         virtual ~Broly();
 
 };
