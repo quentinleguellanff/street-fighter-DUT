@@ -47,11 +47,13 @@ public:
 
 	sf::RectangleShape getHurtbox();
 	sf::RectangleShape getHitbox();
+	bool collisioncorps(sf::RectangleShape);
+	bool collisioncoup(sf::RectangleShape);
 
 	void reset();
 	void resetAccroupi();
 	void rotate(const sf::Sprite&);
-	bool prendCoup(sf::Clock&);
+	bool prendCoup(sf::Clock&,bool&);
 
 	void statique(sf::Clock&,const sf::Sprite&);
 	void garde(sf::Clock&);
@@ -65,11 +67,11 @@ public:
 	void accroupi(sf::Clock&,bool);
 
 	bool apparition(sf::Clock&,sf::Sprite&);
-	bool punch(sf::Clock&);
-	bool sautPunch(sf::Clock&);
-	bool kick(sf::Clock&);
-	bool sautKick(sf::Clock&);
-	bool SP(sf::Clock&,sf::Sprite&);
+	bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&);
+	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&);
+	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&);
+	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&);
+	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&);
 	
 };
 
