@@ -180,13 +180,7 @@ int Jotaro::getOrientation() const
 
 /* ANIMATIONS */
 
-void Jotaro::reset()
-{
-	_posY=_scene.getBottom()-_tailleSprite.y;
-    
-}
-
-void Jotaro::resetAccroupi()
+void Jotaro::resetCptAccroupi()
 {
 	_cptAccroupi=0;
 }
@@ -306,7 +300,6 @@ bool Jotaro::apparition(sf::Clock& clockAnim,sf::Sprite& starPlat)
 				_cptApparition=0;
 				starPlat.setTextureRect(sf::IntRect(0,0,0,0));
 				resetTexture();
-				reset();
 			}
 	    }
 
@@ -1618,10 +1611,9 @@ bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hur
 				_hitbox.setSize(sf::Vector2f(0,0));
 				fini=true;
 				_SPChargee=false;
-				_cptAction=0;
+				_cptAction=0; 
 				starPlat.setTextureRect(sf::IntRect(0,0,0,0));
 				resetTexture();
-				reset();
 			}else
 			{
 				_cptAction=8;

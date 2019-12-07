@@ -167,14 +167,7 @@ int Dhalsim::getOrientation() const
 
 /* ANIMATIONS */
 
-void Dhalsim::reset()
-{
-	_cptSauter=0;_cptApparition=0;_cptAction=0;
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	setPosition(_posX,_posY);
-}
-
-void Dhalsim::resetAccroupi()
+void Dhalsim::resetCptAccroupi()
 {
 	_cptAccroupi=0;
 }
@@ -691,7 +684,6 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
 			_cptSauter=0;
 			fini=true;
 			_hurtbox.setPosition(_posX,_posY);
-			reset();
 	    	break;
 	    }
 	}
@@ -789,7 +781,6 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
 			_cptSauter=0;
 			fini=true;
 			_hurtbox.setPosition(_posX,_posY);
-			reset();
 	    	break;
 	    }
 	}

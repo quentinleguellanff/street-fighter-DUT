@@ -59,10 +59,11 @@ int main()
     MenuCommandes menuCommandes;
 
     /* Musique */
-	/*sf::Music musique;
+	sf::Music musique;
     if (!musique.openFromFile("musique/musicBagarre.ogg")){
             std::cout<<"erreur musique";
     }
+    musique.setVolume(1.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -126,7 +127,6 @@ int main()
 				/* Récuperation des actions à effectuer */
 				if(actionFini_P1)
 				{
-					champion_P1.reset();
 					joueur1.recuperationCommandesP1();
 					deplacementX_P1=joueur1.getPosHorizontale();deplacementY_P1=joueur1.getPosVerticale();action_P1=joueur1.getAction();
 				}else if(actionFini_P1==false && timeAttente_P1<150)
@@ -136,7 +136,6 @@ int main()
 				}
 				if(actionFini_P2)
 				{
-					champion_P2.reset();
 					joueur2.recuperationCommandesP2();
 					deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
 				}else if(actionFini_P2==false && timeAttente_P2<150)
@@ -209,7 +208,7 @@ int main()
 					champion_P1.statique(clockAnim_P1,champion_P2);
 
 				if(deplacementY_P1!=-1)
-					champion_P1.resetAccroupi();
+					champion_P1.resetCptAccroupi();
 
 				if( !(action_P1!=derniereAction_P1 && derniereAction_P1==0) || actionFini_P1==true)
 					derniereAction_P1=action_P1;
@@ -280,7 +279,7 @@ int main()
 					champion_P2.statique(clockAnim_P2,champion_P1);
 
 				if(deplacementY_P2!=-1)
-					champion_P2.resetAccroupi();
+					champion_P2.resetCptAccroupi();
 
 				if( !(action_P1!=derniereAction_P2 && derniereAction_P2==0) || actionFini_P2==true)
 					derniereAction_P2=action_P2;
@@ -296,7 +295,7 @@ int main()
 	        /* renvoi sur le menu principal car fin de partie */
 	        if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0)) 
 	        {
-	        	selecEcran==0;
+	        	selecEcran=0;
 	        	joueur1.resetPV();
 	        	joueur2.resetPV();
 	        }	
