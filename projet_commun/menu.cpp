@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Menu::Menu(float width,float height){
+MenuPrincipal::MenuPrincipal(float width,float height){
 
     if(!font.loadFromFile("OCRAEXT.ttf")) {
         std::cout<<"erreur police";
@@ -78,10 +78,10 @@ Menu::Menu(float width,float height){
     _selection=0;
 }
 
-Menu::~Menu(){
+MenuPrincipal::~MenuPrincipal(){
 }
 
-void Menu::draw(sf::RenderWindow &window){
+void MenuPrincipal::draw(sf::RenderWindow &window){
         window.draw(spriteFond);
         window.draw(titre);
         window.draw(spriteMenux[0]);
@@ -90,7 +90,7 @@ void Menu::draw(sf::RenderWindow &window){
     }
 
 // Recupérer les intructions de l'utilisateur
-void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
+void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
 {
     bool peutmonter = true, peutdescendre = true;
     if (sf::Joystick::isConnected(0))
@@ -108,6 +108,8 @@ void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
                 moveDown();
             else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==0))
                 selecEcran=1;
+            else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==1))
+                selecEcran=3;
             else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==2))
                 selecEcran=-1;
             clockAttente.restart();
@@ -131,13 +133,13 @@ void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
                         break;}
                 }
             }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
                     if(peutmonter){
                         moveUp();
                         peutmonter = false;
                     }
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
                     if(peutdescendre){
                         moveDown();
                         peutdescendre = false;
@@ -148,6 +150,9 @@ void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
         else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
             selecEcran=1;
 
+        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+            selecEcran=3;
+
         else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
             window.close();
                 }
@@ -155,7 +160,7 @@ void Menu::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
 }
 
 //Monter dans le menu
-void Menu::moveUp(){
+void MenuPrincipal::moveUp(){
     if (_selection==1){
             spriteMenux[_selection]=spriteMenu[1];
             _selection=_selection -1;
@@ -171,7 +176,7 @@ void Menu::moveUp(){
 }
 
 //Descendre dans le menu
-void Menu::moveDown()
+void MenuPrincipal::moveDown()
 {
     if (_selection==1){
             spriteMenux[_selection]=spriteMenu[1];
@@ -392,4 +397,49 @@ int MenuSelection::validationPerso(sf::Event event)
         return 2;
     }
     else return 1;
+}
+
+
+MenuCommandes::MenuCommandes() 
+{
+    if(!menuFond.loadFromFile("background/menu.png")){
+        std::cout<<"erreur fond"<<endl;
+    }
+
+    spriteFond.setTexture(menuFond);
+
+    if (!fontCommandes.loadFromFile("OCRAEXT.ttf"))
+    {
+        cout << "ERREUR : chargement de police ocr.ttf" << endl;
+    }
+    if(!textureManette.loadFromFile("sprites/manette.png")) {
+        std::cout<<"erreur manette";
+    }
+    if(!textureClavier.loadFromFile("sprites/clavier.png")) {
+        std::cout<<"erreur clavier";
+    }
+
+
+    spriteCommandes[0].setPosition(sf::Vector2f(300,150));
+    spriteCommandes[0].setTexture(textureClavier);
+    spriteCommandes[0].setTextureRect(sf::IntRect(0, 5, 1350, 700));
+
+    retour.setFont(fontCommandes);
+    retour.setString("Appuyez sur echap pour revenir au menu");
+    retour.setCharacterSize(20);
+    retour.setFillColor(sf::Color::White);
+    retour.setStyle(sf::Text::Italic);
+    retour.setPosition(sf::Vector2f(750,900));
+}
+void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
+{
+if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
+    selecEcran=0;}
+    return;
+}
+void MenuCommandes::draw(sf::RenderWindow &window)
+{
+        window.draw(spriteFond);
+        window.draw(spriteCommandes[0]);
+        window.draw(retour);
 }

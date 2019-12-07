@@ -396,9 +396,8 @@ int MenuSelection::validationPerso(sf::Event event)
 
 
 
-   Commandes::Commandes() {
-
-
+Commandes::Commandes() 
+{
     if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
     }

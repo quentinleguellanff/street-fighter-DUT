@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -11,8 +12,7 @@ int main()
 {
 	/* Gestion de la fenetre */
 	sf::RenderWindow window;
-	//window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
-	window.create(sf::VideoMode(1920,1080),"la Bagarre");
+	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
 	window.setMouseCursorVisible(0);
@@ -27,8 +27,7 @@ int main()
 	sf::Clock clockAttente_P2;
 
 	/* Variable de création des deux champions */
-	//bool championsCrees=false;
-	//int selecChamp_P1=-1,selecChamp_P2=-1;
+	//int selecChamp_P1=-1,selecChamp_P2=-1;	variables destinées à la selection du champion
 	Jotaro champion_P1(-1,fond);
 	Dhalsim champion_P2(1,fond);
 
@@ -50,11 +49,22 @@ int main()
 	int selecEcran=0;
 
 
-    Menu menu(window.getSize().x, window.getSize().y);
+    MenuPrincipal menuPrinc(window.getSize().x, window.getSize().y);
 
     /* Déclaration menu selection */
     MenuSelection menuSel(window);
     sf::Event eventS;
+
+    /* Déclaration menu commandes */
+    MenuCommandes menuCommandes;
+
+    /* Musique */
+	/*sf::Music musique;
+    if (!musique.openFromFile("musique/musicBagarre.ogg")){
+            std::cout<<"erreur musique";
+    }
+    musique.play();
+    musique.setLoop(true);
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
@@ -62,6 +72,7 @@ int main()
 		window.clear();
 		sf::Event event;
 
+		/* initialisation des timers pour permettre entre la demande du saut et de l'attaque en l'air */
 		sf::Time elapsedAttente_P1 = clockAttente_P1.getElapsedTime();
     	int timeAttente_P1 = elapsedAttente_P1.asMilliseconds();
 
@@ -69,16 +80,16 @@ int main()
     	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
 
 
-    	if (selecEcran==0)
+    	if (selecEcran==0)	//menu principal
     	{
             while (window.pollEvent(event))
-                menu.bouger(selecEcran,event, window);
+                menuPrinc.bouger(selecEcran,event, window);
 
-	        menu.draw(window);
+	        menuPrinc.draw(window);
 	        window.display();
         }
 
-        else if(selecEcran==1)
+        else if(selecEcran==1) //menu de selection des personnages
         {
             while (window.pollEvent(eventS))
 	        {
@@ -88,38 +99,21 @@ int main()
                     selecEcran = menuSel.validationPerso(eventS);
 	        }
 
-	        /*if(selecEcran==2)
-	        {
-	        	switch(selecChamp_P1)
-				{
-				case 0:
-					Jotaro champion_P1(-1,fond);
-					break;
-				case 1:
-					Dhalsim champion_P1(-1,fond);
-					break;
-				}
-
-				switch(selecChamp_P2)
-				{
-				case 0:
-					Jotaro champion_P2(1,fond);
-					break;
-				case 1:
-					Dhalsim champion_P2(1,fond);
-					break;
-				}
-	        }*/
-
             window.clear();
             menuSel.draw(window);
 	        window.display();
 
 
-        }
-        else if(selecEcran==2)
+        }else if(selecEcran==3)
+        {
+            while (window.pollEvent(event))
+                menuCommandes.retourMenu(selecEcran,event);
+            menuCommandes.draw(window);
+            window.display();
+        }else if(selecEcran==2)	//lancement du combat
         {
 
+        	/* lancement des animations de début de combat */
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
 				if(!apparitionsFinies_P1)
@@ -299,10 +293,16 @@ int main()
 	                window.close();
 	        }
 
-	        if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0))
-	        	window.close();
+	        /* renvoi sur le menu principal car fin de partie */
+	        if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0)) 
+	        {
+	        	selecEcran==0;
+	        	joueur1.resetPV();
+	        	joueur2.resetPV();
+	        }	
 
 
+	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
 	        window.draw(fond.getSol());
 
@@ -311,16 +311,16 @@ int main()
 
 	        window.draw(champion_P1);
 	        window.draw(effet_P1);
-	        window.draw(champion_P1.getHurtbox());
-	        window.draw(champion_P1.getHitbox());
+	        //window.draw(champion_P1.getHurtbox());
+	        //window.draw(champion_P1.getHitbox());
 
 	        window.draw(champion_P2);
 	        window.draw(effet_P2);
-	        window.draw(champion_P2.getHurtbox());
-	        window.draw(champion_P2.getHitbox());
+	        //window.draw(champion_P2.getHurtbox());
+	        //window.draw(champion_P2.getHitbox());
 
 	        window.display();
-	    }else if(selecEcran==-1)
+	    }else if(selecEcran==-1) //fermuture de la fenetre
 	    {
 	    	window.close();
 	    }
