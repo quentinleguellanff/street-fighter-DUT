@@ -209,7 +209,7 @@ int main()
 					actionFini_P1=champion_P1.kick(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(action_P1==3)
-					actionFini_P1=champion_P1.SP(clockAnim_P1,effet_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1.punchSP(clockAnim_P1,effet_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
 
 				else
 					champion_P1.statique(clockAnim_P1,champion_P2);

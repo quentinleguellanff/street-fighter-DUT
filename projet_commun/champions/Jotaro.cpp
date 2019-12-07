@@ -780,8 +780,8 @@ bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 	    }
 	}
 
-    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.75));
-    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.25);
+    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.7));
+    _hurtbox.setPosition(_posX+_tailleSprite.x*0.4,_posY+_tailleSprite.y*0.25);
     setPosition(_posX,_posY);
     return fini;
 }
