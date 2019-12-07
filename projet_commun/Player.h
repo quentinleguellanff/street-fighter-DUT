@@ -12,6 +12,8 @@ class Player
 {
 private:
 	int _numPlayer;
+	int _PV;
+	sf::RectangleShape _barrePV;
 
 	void _resetAttributs();
 	int _posHorizontale;
@@ -32,7 +34,7 @@ private:
 
 public:
 	Player(){};
-	Player(int);
+	Player(int,sf::RenderWindow&);
 	void recuperationCommandesP1();
 	void recuperationAttaquesP1();
 	void recuperationCommandesP2();
@@ -42,7 +44,9 @@ public:
 	int getPosHorizontale();
 	int getPosVerticale();
 	int getAction();
-
+	int getPV();
+	void setDegats(int);
+	sf::RectangleShape getBarrePV();
 };
 
 #endif

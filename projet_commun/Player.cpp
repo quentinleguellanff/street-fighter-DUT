@@ -3,9 +3,20 @@
 
 using namespace std;
 
-Player::Player(int n)
+Player::Player(int n,sf::RenderWindow& window)
 {
 	_numPlayer=n;
+	_PV=100;
+
+	_barrePV.setSize(sf::Vector2f(_PV*8,50));
+	if(n==1)
+	{
+		_barrePV.setPosition(sf::Vector2f(20,20));
+	}else
+	{
+		_barrePV.setScale(-1,1);
+		_barrePV.setPosition(sf::Vector2f(window.getSize().x-20,20));
+	}
 }
 
 void Player::_resetAttributs()
@@ -239,4 +250,31 @@ int Player::getPosVerticale()
 int Player::getAction()
 {
 	return _action;
+}
+
+int Player::getPV()
+{
+	return _PV;
+}
+
+void Player::setDegats(int degats)
+{
+	_PV-=degats;
+}
+
+sf::RectangleShape Player::getBarrePV()
+{
+	if(_PV>66)
+		_barrePV.setFillColor(sf::Color(0,250,0));
+	else if(_PV>33)
+		_barrePV.setFillColor(sf::Color(255,165,0));
+	else 
+		_barrePV.setFillColor(sf::Color(255,0,0));
+
+	if(_PV>0)
+		_barrePV.setSize(sf::Vector2f(_PV*8,50));
+	else
+		_barrePV.setSize(sf::Vector2f(0,50));
+
+	return _barrePV;
 }

@@ -56,6 +56,16 @@ sf::RectangleShape Dhalsim::getHitbox()
 	return _hitbox;
 }
 
+bool Dhalsim::collisioncoup(sf::RectangleShape hurtboxEnnemi){
+
+    return _hitbox.getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
+}
+
+bool Dhalsim::collisioncorps(sf::RectangleShape hurtboxEnnemi){
+
+    return _hurtbox.getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
+}
+
 
 void Dhalsim::keepInWalls()
 {
@@ -99,13 +109,13 @@ void Dhalsim::rotate(const sf::Sprite& ennemi)
 	}
 }
 
-bool Dhalsim::prendCoup(sf::Clock& clockAnim)
+bool Dhalsim::prendCoup(sf::Clock& clockAnim,bool& enCours)
 {
 	bool fini=false;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
-    _hitbox.setSize(sf::Vector2f(0,0));
+    _hurtbox.setSize(sf::Vector2f(0,0));
     if(timeAnim > delai)
     {
     	switch(_cptAction)
@@ -140,10 +150,12 @@ bool Dhalsim::prendCoup(sf::Clock& clockAnim)
     		setSprite(24,163,96,103);
     		_posY-=3*SCALE;
     		fini=true;
+    		enCours=false;
     		break;
     	}
     }
     setPosition(_posX,_posY);
+    keepInWalls();
     return fini;
 }
 
@@ -829,7 +841,7 @@ void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
 }
 
 
-bool Dhalsim::punch(sf::Clock& clockAnim)
+bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -881,11 +893,17 @@ bool Dhalsim::punch(sf::Clock& clockAnim)
 		}
 	}
 
+	if(collisioncoup(hurtboxEnnemi))
+	{
+		prendCoup=true;
+		ennemi.setDegats(10);
+	}
+
 	keepInWalls();
 	return fini;
 }
 
-bool Dhalsim::sautPunch(sf::Clock& clockAnim)
+bool Dhalsim::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -960,12 +978,18 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim)
 	    }
 	}
 
+	if(collisioncoup(hurtboxEnnemi))
+	{
+		prendCoup=true;
+		ennemi.setDegats(10);
+	}
+
     keepInWalls();
     return fini;
 }
 
 
-bool Dhalsim::kick(sf::Clock& clockAnim)
+bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1032,11 +1056,17 @@ bool Dhalsim::kick(sf::Clock& clockAnim)
 		}
 	}
 
+	if(collisioncoup(hurtboxEnnemi))
+	{
+		prendCoup=true;
+		ennemi.setDegats(10);
+	}
+
 	keepInWalls();
 	return fini;	
 }
 
-bool Dhalsim::sautKick(sf::Clock& clockAnim)
+bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1122,13 +1152,19 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim)
 	    }
 	}
 
+	if(collisioncoup(hurtboxEnnemi))
+	{
+		prendCoup=true;
+		ennemi.setDegats(10);
+	}
+
     keepInWalls();
     return fini;
 }
 
 
 
-bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
+bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1223,6 +1259,12 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu)
 
     _hitbox.setSize(sf::Vector2f(bouleFeu.getGlobalBounds().width,bouleFeu.getGlobalBounds().height));
 	_hitbox.setPosition(bouleFeu.getPosition().x,bouleFeu.getPosition().y);
+
+	if(collisioncoup(hurtboxEnnemi))
+	{
+		prendCoup=true;
+		ennemi.setDegats(30);
+	}
 
 	keepInWalls();
 	return fini;
