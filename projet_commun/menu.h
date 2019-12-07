@@ -8,7 +8,7 @@
 using namespace std ;
 const int nbcase=3;
 
-class Menu {
+class MenuPrincipal {
 private:
 
     int _selection;
@@ -28,8 +28,8 @@ private:
     sf::Clock clockAttente;
 public:
 
-    Menu (float width, float height);
-    ~Menu();
+    MenuPrincipal (float width, float height);
+    ~MenuPrincipal();
 
     void draw(sf::RenderWindow &window);
     void bouger(int&,sf::Event, sf::RenderWindow &window);
@@ -90,6 +90,23 @@ public :
     void draw(sf::RenderWindow &window);
     void bouger(sf::Event,sf::RenderWindow&);
     int validationPerso(sf::Event event);
+};
+
+class MenuCommandes {
+    private:
+    sf::Texture textureManette;
+    sf::Texture textureClavier;
+    sf::Sprite spriteCommandes[2];
+    sf::Vector2f position;
+    sf::Font fontCommandes;
+    sf::Text retour;
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
+
+    public:
+        MenuCommandes();
+        void retourMenu(int& selecEcran,sf::Event event);
+        void draw(sf::RenderWindow &window);
 };
 
 #endif // MENU_H

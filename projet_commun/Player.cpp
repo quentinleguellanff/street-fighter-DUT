@@ -257,6 +257,11 @@ int Player::getPV()
 	return _PV;
 }
 
+void Player::resetPV()
+{
+	_PV=100;
+}
+
 void Player::setDegats(int degats)
 {
 	_PV-=degats;
