@@ -75,7 +75,6 @@ void Joueur::recupCommande()
 
 void Joueur::statique(sf::Clock& clock,sf::RenderWindow& window)
 {
-    _peutcoup = true;
     if(!_avancedroite && !_avancegauche && !_saut && !_attaque && !prendcoup)
     {
         _Broly.debout(clock,window);
@@ -119,6 +118,7 @@ void Joueur::coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool&
     {
         if(prendcoup){
             _attaque = false;
+
             //_Broly.spriteBroly.setPosition(_Broly.spriteBroly.getPosition().x+112*_Broly.getorientation(),_Broly.spriteBroly.getPosition().y);
             _Broly.resetcoup();
             //exception a lancer quand broly se prend un coup lorsqu'il tape pour le deplacer et remettre ses anim a 0
