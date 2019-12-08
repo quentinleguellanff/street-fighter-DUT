@@ -389,13 +389,15 @@ int MenuSelection::validationPerso(sf::Event event)
             annulerChoixJ2.setStyle(sf::Text::Italic);
             annulerChoixJ2.setPosition(sf::Vector2f(1000,hauteurTexte+15));
     }
-
     if(choixJ1 != -1 && choixJ2 != -1)
     {
         //selecChamp_P1=etatPersoJ1;
         //selecChamp_P2=etatPersoJ2;
         return 2;
     }
+    else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
+        return 0;
+
     else return 1;
 }
 
@@ -412,9 +414,9 @@ MenuCommandes::MenuCommandes()
     {
         cout << "ERREUR : chargement de police ocr.ttf" << endl;
     }
-    if(!textureManette.loadFromFile("sprites/manette.png")) {
+    /*if(!textureManette.loadFromFile("sprites/manette.png")) {
         std::cout<<"erreur manette";
-    }
+    }*/
     if(!textureClavier.loadFromFile("sprites/clavier.png")) {
         std::cout<<"erreur clavier";
     }
@@ -433,9 +435,13 @@ MenuCommandes::MenuCommandes()
 }
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
 {
-if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
-    selecEcran=0;}
-    return;
+    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
+        selecEcran=0;
+    }else if (sf::Joystick::isConnected(0))
+    {
+        if(sf::Joystick::isButtonPressed(0, 1))
+            selecEcran=0;
+    }
 }
 void MenuCommandes::draw(sf::RenderWindow &window)
 {

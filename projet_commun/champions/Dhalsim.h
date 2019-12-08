@@ -13,65 +13,70 @@
 class Dhalsim : public sf::Sprite
 {
 private:
-	const int SCALE=3.5;
-	int _orientation;
-	sf::Texture _texture;
+	const int SCALE=3.5;	//échelle d'agrandissement du champion
+	int _orientation;		//orientation du personnage (-1 : personnage à gauche)
+	sf::Texture _texture;	//texture du personnage
 
-	sf::Vector2f _tailleSprite;
-	Scene _scene;
+	sf::Vector2f _tailleSprite;		//taille du personnage sous la forme d'un vector de float à 2 dimensions
+	Scene _scene;					//la scene sur laquelle se passe le combat
 
-	sf::RectangleShape _hurtbox;
-	sf::RectangleShape _hitbox;
+	sf::RectangleShape _hurtbox;	//zone de prise de dégats
+	sf::RectangleShape _hitbox;		//zone de mise de dégats
 
-	float _posX;                   //Position X du perso
-    float _posY;                   //Position Y du perso
+	float _posX;                    //Position X du perso
+    float _posY;                    //Position Y du perso
 
-	int _cptAvancer;
-	int _cptReculer;
-	int _cptStatic;
-	int _cptAccroupi;
+	int _cptAvancer;				//compteur pour l'animation avancer
+	int _cptReculer;				//compteur pour l'animation reculer
+	int _cptStatic;					//compteur pour l'animation de repos
+	int _cptAccroupi;				//compteur pour l'animation	accroupi
 
-	int _cptSauter;
+	int _cptSauter;					//compteur pour les animations de saut
 
-	int _cptApparition;
-	int _cptAction;
+	int _cptApparition;				//compteur pour l'animation de début de combat
+	int _cptAction;					//compteur pour les animations de type attaques 
 
 public:
-	Dhalsim(){};
-	Dhalsim(int,const Scene&);
-	void setSprite(int,int,int,int);
+	Dhalsim(){};	//constructeur vide
+	Dhalsim(int,const Scene&);		//constructeur du champion
 
-	void keepInWalls();
-	sf::Sprite getSprite() const;
-	int getOrientation() const;
+	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
+	sf::Sprite getSprite() const;			//recupérer le sprite du personnage pour l'afficher
 
-	sf::RectangleShape getHurtbox();
-	sf::RectangleShape getHitbox();
-	bool collisioncorps(sf::RectangleShape);
-	bool collisioncoup(sf::RectangleShape);
+	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
+	void resetTexture();		//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
 
-	void reset();
-	void resetAccroupi();
-	void rotate(const sf::Sprite&);
-	bool prendCoup(sf::Clock&,bool&);
+	sf::RectangleShape getHurtbox();	//permet de récupérer la zone de prise de dégats notamment pour pouvoir l'afficher
+	sf::RectangleShape getHitbox();		//permet de récupérer la zone de mise de dégats notamment pour pouvoir l'afficher
+	bool collisioncorps(sf::RectangleShape);	//permet de bloquer le fait que les deux personnages puis se croiser
+	bool collisioncoup(sf::RectangleShape);		//permet de gérer la prise de coups
 
-	void statique(sf::Clock&,const sf::Sprite&);
-	void garde(sf::Clock&);
-	bool finGarde(sf::Clock&);
-	void avancer(sf::Clock&,const sf::Sprite&);
-	void reculer(sf::Clock&);
+	void keepInWalls();		//permet de maintenir les personnages entre les limites de la carte
+	int getOrientation() const;		//récupérer l'orientation du personnage
+	
+	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
+	void rotate(const sf::Sprite&);		//gère la rotation des personnages quand ils se dépassent
+	bool prendCoup(sf::Clock&,bool&);	//animation de prise de coup
 
-	bool sauter(sf::Clock&,sf::Clock&);
-	bool sauterAvant(sf::Clock&,const sf::Sprite&);
-	bool sauterArriere(sf::Clock&);
-	void accroupi(sf::Clock&,bool);
+	void statique(sf::Clock&,const sf::Sprite&);	//animation au repos
+	void garde(sf::Clock&);			//animation de garde debout				--> gestion de la garde à faire
+	bool finGarde(sf::Clock&);		//animation de fin de garde
+	void avancer(sf::Clock&,const sf::Sprite&);		//animation de marche vers l'avant
+	void reculer(sf::Clock&);		//animation de marche vers l'arrière
 
-	bool apparition(sf::Clock&,sf::Sprite&);
-	bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&);
-	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&);
-	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&);
-	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&);
-	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&);
+	bool sauter(sf::Clock&,sf::Clock&);		//animation de saut
+	bool sauterAvant(sf::Clock&,const sf::Sprite&);		//animation de saut vers l'arrière
+	bool sauterArriere(sf::Clock&);		//animation de saut vers l'arrière
+	void accroupi(sf::Clock&,bool);		//animation accroupi
+	bool seLever(sf::Clock& clockAnim);		//animation de fin d'accroupissement
+
+	bool apparition(sf::Clock&,sf::Sprite&);	//animation de début de combat
+	bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&);				//animation de coup de poing
+	bool punchSP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&){return true;};	//animation de coup de poing spéciales   -> à faire
+	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&);			//animation de coup de poing en saut
+	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&);					//animation de coup de pied
+	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&);				//animation de coup de pied en saut
+	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&);		//animation de coup spécial
 	
 };
 
