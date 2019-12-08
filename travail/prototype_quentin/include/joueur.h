@@ -18,6 +18,11 @@ class Joueur
         bool _couppoing;
         bool _attaque;
         bool _peutcoup;
+        bool _ensaut;
+        bool _statique;
+        bool _peutsauter;
+        bool _ensautgauche;
+        bool _ensautdroite;
 
         Broly _Broly;
         sf::RectangleShape _barreVie;
@@ -37,7 +42,8 @@ class Joueur
         void coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
         void statique(sf::Clock& clock,sf::RenderWindow& window);
         void antiSpam(sf::Event& event);
-        void prendCoup(sf::Clock& clock,bool& touche, sf::RenderWindow& window);
+        void prendCoup(sf::Clock& clock,sf::Clock& clockmove,bool& touche, sf::RenderWindow& window);
+        void saut(sf::Clock& clock, sf::Clock& clockmove,sf::RenderWindow& window);
 
         sf::RectangleShape getBarreVie();
         Broly getBroly();

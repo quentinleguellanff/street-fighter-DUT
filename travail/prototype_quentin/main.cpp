@@ -8,8 +8,8 @@ using namespace std;
 
 int main()
 {
-    const int LONGUEUR = 960;
-    const int LARGEUR = 1280;
+    const int LONGUEUR = 900;
+    const int LARGEUR = 1440;
     sf::RenderWindow window(sf::VideoMode(LARGEUR,LONGUEUR), "prototype");
     window.setKeyRepeatEnabled(false);
     window.setFramerateLimit(60);
@@ -19,7 +19,7 @@ int main()
     bool fincombat = false;
 
     //affichage du sol a une position donnée
-    sf::RectangleShape sol(sf::Vector2f(1280.f, 100.f));
+    sf::RectangleShape sol(sf::Vector2f(1440.f, 100.f));
     sol.setPosition(0.f,860.f);
     sol.setFillColor(sf::Color(255,0,0,130));
 
@@ -59,6 +59,9 @@ int main()
             joueur1.recupCommande();
             joueur2.recupCommande();
 
+            joueur1.saut(clockanim,clockmove,window);
+            joueur2.saut(clockanim2,clockmove2,window);
+
             joueur1.statique(clockanim,window);
             joueur2.statique(clockanim2,window);
 
@@ -68,8 +71,8 @@ int main()
             joueur1.avancegauche(clockanim,clockmove,window);
             joueur2.avancegauche(clockanim2,clockmove2,window);
 
-            joueur1.prendCoup(clockanim,joueur1.prendcoup,window);
-            joueur2.prendCoup(clockanim2,joueur2.prendcoup,window);
+            joueur1.prendCoup(clockanim,clockmove,joueur1.prendcoup,window);
+            joueur2.prendCoup(clockanim2,clockmove2,joueur2.prendcoup,window);
 
             joueur1.coupDePoing(clockanim,joueur2.getHurtbox(),joueur2.prendcoup,window);
             joueur2.coupDePoing(clockanim2,joueur1.getHurtbox(),joueur1.prendcoup,window);
@@ -84,8 +87,8 @@ int main()
             window.draw(sol);
             window.draw(joueur1.getBarreVie());
             window.draw(joueur2.getBarreVie());
-            //window.draw(joueur1.getHurtbox());
-            //window.draw(joueur2.getHurtbox());
+            window.draw(joueur1.getHurtbox());
+            window.draw(joueur2.getHurtbox());
             window.display();
         }
         if(fincombat){
