@@ -31,8 +31,8 @@ int main()
 	//Personnage champion_P1();
 	//Personnage champion_P2();
 
-	Jotaro champion_P1(-1,fond);
-	Ryu champion_P2(1,fond);
+	Ryu champion_P1(-1,fond);
+	Dhalsim champion_P2(1,fond);
 
 	/* Création des sprites pour les effets */
 	sf::Sprite effet_P1;
@@ -66,9 +66,13 @@ int main()
     if (!musique.openFromFile("musique/musicBagarre.ogg")){
             std::cout<<"erreur musique";
     }
-    musique.setVolume(1.f) ;
+    musique.setVolume(10.f) ;
     musique.play();
     musique.setLoop(true);
+
+    /* Effets musicaux champions */
+    sf::Music son_P1;
+    sf::Music son_P2;
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
@@ -208,7 +212,7 @@ int main()
 					actionFini_P1=champion_P1.kick(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(action_P1==3)
-					actionFini_P1=champion_P1.punchSP(clockAnim_P1,effet_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1.SP(clockAnim_P1,effet_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2,son_P1);
 
 				else
 					champion_P1.statique(clockAnim_P1,champion_P2);
@@ -282,7 +286,7 @@ int main()
 					actionFini_P2=champion_P2.kick(clockAnim_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
 
 				else if(action_P2==3)
-					actionFini_P2=champion_P2.SP(clockAnim_P2,effet_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2.SP(clockAnim_P2,effet_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1,son_P2);
 
 				else
 					champion_P2.statique(clockAnim_P2,champion_P1);
@@ -312,7 +316,7 @@ int main()
 
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
-	        window.draw(fond.getSol());
+	        //window.draw(fond.getSol());
 
 	        window.draw(joueur1.getBarrePV());
 	        window.draw(joueur2.getBarrePV());

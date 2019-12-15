@@ -45,7 +45,7 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 bool Dhalsim::prendCoup(sf::Clock& clockAnim,bool& enCours,sf::Sprite& effet)
 {
 	bool fini=false;
-	_cptSauter=0;
+	_cptSauter=0;_cptAction=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -53,42 +53,41 @@ bool Dhalsim::prendCoup(sf::Clock& clockAnim,bool& enCours,sf::Sprite& effet)
     _hurtbox.setSize(sf::Vector2f(0,0));
     if(timeAnim > delai)
     {
-    	switch(_cptAction)
+    	switch(_cptPrendCoup)
     	{
     	case 0:
     		clockAnim.restart();
-    		_cptAction++;
+    		_cptPrendCoup++;
     		setSprite(24,4996,85,100);
     		_posX-=10*SCALE*_orientation;
-    		_posY+=3*SCALE;
     		break;
     	case 1:
     		clockAnim.restart();
-    		_cptAction++;
+    		_cptPrendCoup++;
     		setSprite(117,4996,90,100);
     		_posX-=10*SCALE*_orientation;
     		break;
     	case 2:
     		clockAnim.restart();
-    		_cptAction++;
+    		_cptPrendCoup++;
     		setSprite(215,4996,93,100);
     		_posX-=10*SCALE*_orientation;
     		break;
     	case 3:
     		clockAnim.restart();
-    		_cptAction++;
+    		_cptPrendCoup++;
     		setSprite(117,4996,90,100);
     		break;
     	case 4:
     		clockAnim.restart();
-    		_cptAction=0;
+    		_cptPrendCoup=0;
     		setSprite(24,163,96,103);
-    		_posY-=3*SCALE;
     		fini=true;
     		enCours=false;
     		break;
     	}
     }
+    _posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
     keepInWalls();
     return fini;
@@ -532,11 +531,11 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,Personnage& ennemi)
 	    switch(_cptSauter)
 	    {
 	    case 0:
-	    clockAnim.restart();
-	    _cptSauter++;
-		setSprite(108,1720,68,111);
-		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-		_hurtbox.setPosition(_posX,_posY);
+		    clockAnim.restart();
+		    _cptSauter++;
+			setSprite(108,1720,68,111);
+			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
+			_hurtbox.setPosition(_posX,_posY);
 	    	break;
 	    case 1:
 		    clockAnim.restart();
@@ -602,11 +601,11 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,Personnage& ennemi)
 	    	break;
 	    case 8:
 		    clockAnim.restart();
-		    _cptSauter++;
-			setSprite(108,1720,68,111);
-			_cptSauter=0;
-			fini=true;
+		    _cptSauter=0;
+			setSprite(24,1720,82,111);
+			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
 			_hurtbox.setPosition(_posX,_posY);
+			fini=true;
 	    	break;
 	    }
 	}
@@ -699,11 +698,11 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
 	    	break;
 	    case 8:
 		    clockAnim.restart();
-		    _cptSauter++;
-			setSprite(108,1720,68,111);
-			_cptSauter=0;
-			fini=true;
+		    _cptSauter=0;
+			setSprite(24,1720,82,111);
+			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
 			_hurtbox.setPosition(_posX,_posY);
+			fini=true;
 	    	break;
 	    }
 	}
@@ -1078,7 +1077,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,boo
 
 
 
-bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();

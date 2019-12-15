@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 
 class Personnage
@@ -82,7 +83,7 @@ public:
 	virtual bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&){return true;};			//animation de coup de poing en saut
 	virtual bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&){return true;};					//animation de coup de pied
 	virtual bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&){return true;};				//animation de coup de pied en saut
-	virtual bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&){return true;};		//animation de coup spécial
+	virtual bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&){return true;};		//animation de coup spécial
 };
 
 class Jotaro : public Personnage
@@ -117,7 +118,7 @@ public:
 	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;			//animation de coup de poing en saut
 	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;					//animation de coup de pied
 	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de pied en saut
-	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&) override;		//animation de coup spécial
+	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
 class Dhalsim : public Personnage
@@ -144,7 +145,7 @@ public:
 	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;			//animation de coup de poing en saut
 	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;					//animation de coup de pied
 	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de pied en saut
-	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&) override;		//animation de coup spécial
+	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
 class Ryu : public Personnage
@@ -171,7 +172,7 @@ public:
 	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;			//animation de coup de poing en saut
 	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;					//animation de coup de pied
 	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de pied en saut
-	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&) override;		//animation de coup spécial
+	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
 #endif

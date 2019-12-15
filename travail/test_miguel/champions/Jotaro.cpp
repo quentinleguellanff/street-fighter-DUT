@@ -1427,7 +1427,7 @@ bool Jotaro::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool
 }
 
 
-bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
 {
 	if(!_SPChargee)
 	{
@@ -1438,6 +1438,9 @@ bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hur
 		ajouterTexture(3485,3724,138,135);ajouterTexture(3630,3724,179,135);ajouterTexture(3816,3724,170,135);ajouterTexture(3995,3724,166,135);
 		ajouterTexture(4170,3724,175,135);ajouterTexture(4354,3724,174,135);ajouterTexture(4536,3724,171,135);ajouterTexture(4714,3724,155,135);
 		_SPChargee=true;
+		if (!son.openFromFile("musique/jotaro_SP.ogg"))
+		        std::cout<<"erreur musique";
+		son.play();
 	}
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();

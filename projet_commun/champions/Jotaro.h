@@ -12,7 +12,7 @@
 class Jotaro : public sf::Sprite
 {
 private:
-	const int SCALE=3;		//échelle d'agrandissement du champion
+	const float SCALE=3.7;		//échelle d'agrandissement du champion
 	int _orientation;		//orientation du personnage (-1 : personnage à gauche)
 	sf::Texture _texture;	//texture du personnage
 
@@ -34,6 +34,7 @@ private:
 
 	int _cptApparition;				//compteur pour l'animation de début de combat
 	int _cptAction;					//compteur pour les animations de type attaques 
+	int _cptPrendCoup;
 	int _cptGarde;					//compteur pour l'animation de garde debout
 
 	int _tabSP[25][4];				//tableau pour stocker les coordonnées des sprites pour les animations spéciales (SP)
@@ -60,7 +61,7 @@ public:
 	
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(const sf::Sprite&);		//gère la rotation des personnages quand ils se dépassent
-	bool prendCoup(sf::Clock&,bool&);	//animation de prise de coup
+	bool prendCoup(sf::Clock&,bool&,sf::Sprite&);	//animation de prise de coup
 
 	void statique(sf::Clock&,const sf::Sprite&);	//animation au repos
 	void garde(sf::Clock&);			//animation de garde debout				--> gestion de la garde à faire

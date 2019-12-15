@@ -46,7 +46,7 @@ int main()
 	int deplacementX_P2, deplacementY_P2, action_P2, derniereAction_P2=-1;
 
 	/* Déclarations pour le menu */
-	int selecEcran=0;
+	int selecEcran=2;
 
 
     MenuPrincipal menuPrinc(window.getSize().x, window.getSize().y);
@@ -147,7 +147,10 @@ int main()
 				/* Lancement des animations Player 1*/
 
 				if(prendCoup_P1)
-					actionFini_P1=champion_P1.prendCoup(clockAnim_P1,prendCoup_P1);
+				{
+					deplacementX_P1==0;deplacementY_P1==0;action_P1=-1;
+					actionFini_P1=champion_P1.prendCoup(clockAnim_P1,prendCoup_P1,effet_P1);
+				}
 				else if(action_P1!=derniereAction_P1 && derniereAction_P1==0 && deplacementY_P1==0)
 					actionFini_P1=champion_P1.finGarde(clockAnim_P1);
 				else if(etaitAccroupi_P1 && deplacementY_P1!=-1)
@@ -219,7 +222,10 @@ int main()
 				/* Lancement des animations Player 2*/
 
 				if(prendCoup_P2)
+				{
+					deplacementX_P2==0;deplacementY_P2==0;action_P2=-1;
 					actionFini_P2=champion_P2.prendCoup(clockAnim_P2,prendCoup_P2);
+				}
 				else if(derniereAction_P2!=action_P2 && derniereAction_P2==0 && deplacementY_P2==0)
 					actionFini_P2=champion_P2.finGarde(clockAnim_P2);
 
@@ -310,13 +316,13 @@ int main()
 
 	        window.draw(champion_P1);
 	        window.draw(effet_P1);
-	        //window.draw(champion_P1.getHurtbox());
+	        window.draw(champion_P1.getHurtbox());
 	        //window.draw(champion_P1.getHitbox());
 
 	        window.draw(champion_P2);
 	        window.draw(effet_P2);
 	        //window.draw(champion_P2.getHurtbox());
-	        //window.draw(champion_P2.getHitbox());
+	        window.draw(champion_P2.getHitbox());
 
 	        window.display();
 	    }else if(selecEcran==-1) //fermuture de la fenetre
