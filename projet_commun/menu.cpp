@@ -26,7 +26,7 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     titre.setFillColor(sf::Color::White);
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(120);
-    titre.setPosition(sf::Vector2f(600,50));
+    titre.setPosition(sf::Vector2f(width/3.2,height/21.6));
 
 
 
@@ -37,32 +37,32 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     }
     textureCase.setSmooth(true);
 
-    spriteMenu[0].setPosition(sf::Vector2f(700,350));
+    spriteMenu[0].setPosition(sf::Vector2f(width/2.74,height/3.08));
     spriteMenu[0].setTexture(textureCase);
     spriteMenu[0].setTextureRect(sf::IntRect(13, 12, 779, 180));
     spriteMenu[0].setScale(0.7f, 0.7f);
 
-    spriteMenu[1].setPosition(sf::Vector2f(700,580));
+    spriteMenu[1].setPosition(sf::Vector2f(width/2.74,height/1.86));
     spriteMenu[1].setTexture(textureCase);
     spriteMenu[1].setTextureRect(sf::IntRect(10, 337, 779, 180));
     spriteMenu[1].setScale(0.7f, 0.7f);
 
-    spriteMenu[2].setPosition(sf::Vector2f(700,810));
+    spriteMenu[2].setPosition(sf::Vector2f(width/2.74,height/1.33));
     spriteMenu[2].setTexture(textureCase);
     spriteMenu[2].setTextureRect(sf::IntRect(10,656, 779, 180));
     spriteMenu[2].setScale(0.7f, 0.7f);
 
-    spriteMenu[3].setPosition(sf::Vector2f(700,350));
+    spriteMenu[3].setPosition(sf::Vector2f(width/2.74,height/3.08));
     spriteMenu[3].setTexture(textureCase);
     spriteMenu[3].setTextureRect(sf::IntRect(816, 12, 779, 180));
     spriteMenu[3].setScale(0.7f, 0.7f);
 
-    spriteMenu[4].setPosition(sf::Vector2f(700,580));
+    spriteMenu[4].setPosition(sf::Vector2f(width/2.74,height/1.86));
     spriteMenu[4].setTexture(textureCase);
     spriteMenu[4].setTextureRect(sf::IntRect(816, 337, 779, 180));
     spriteMenu[4].setScale(0.7f, 0.7f);
 
-    spriteMenu[5].setPosition(sf::Vector2f(700,810));
+    spriteMenu[5].setPosition(sf::Vector2f(width/2.74,height/1.33));
     spriteMenu[5].setTexture(textureCase);
     spriteMenu[5].setTextureRect(sf::IntRect(816,656, 779, 180));
     spriteMenu[5].setScale(0.7f, 0.7f);
@@ -228,11 +228,11 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setCharacterSize(50);
         titre.setFillColor(sf::Color::White);
         titre.setStyle(sf::Text::Bold);
-        titre.setPosition(sf::Vector2f(720,50));
+        titre.setPosition(sf::Vector2f(window.getSize().x/2.66,window.getSize().y/21.6));
 
         //ligne delim
         ligneDelim.setSize(sf::Vector2f(5, 600));
-        ligneDelim.setPosition(sf::Vector2f(960, 300));
+        ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -402,7 +402,7 @@ int MenuSelection::validationPerso(sf::Event event)
 }
 
 
-MenuCommandes::MenuCommandes() 
+MenuCommandes::MenuCommandes(float width, float height)
 {
     if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
@@ -422,7 +422,7 @@ MenuCommandes::MenuCommandes()
     }
 
 
-    spriteCommandes[0].setPosition(sf::Vector2f(300,150));
+    spriteCommandes[0].setPosition(sf::Vector2f(width/3.4,height/7.2));
     spriteCommandes[0].setTexture(textureClavier);
     spriteCommandes[0].setTextureRect(sf::IntRect(0, 5, 1350, 700));
 
@@ -431,7 +431,7 @@ MenuCommandes::MenuCommandes()
     retour.setCharacterSize(20);
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
-    retour.setPosition(sf::Vector2f(750,900));
+    retour.setPosition(sf::Vector2f(width/2.56,height/1.2));
 }
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
 {

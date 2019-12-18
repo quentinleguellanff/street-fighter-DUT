@@ -46,7 +46,7 @@ int main()
 	int deplacementX_P2, deplacementY_P2, action_P2, derniereAction_P2=-1;
 
 	/* Déclarations pour le menu */
-	int selecEcran=2;
+	int selecEcran=0;
 
 
     MenuPrincipal menuPrinc(window.getSize().x, window.getSize().y);
@@ -56,7 +56,7 @@ int main()
     sf::Event eventS;
 
     /* Déclaration menu commandes */
-    MenuCommandes menuCommandes;
+    MenuCommandes menuCommandes(window.getSize().x,window.getSize().x);
 
     /* Musique */
 	sf::Music musique;
@@ -299,12 +299,12 @@ int main()
 	        }
 
 	        /* renvoi sur le menu principal car fin de partie */
-	        if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0)) 
+	        if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0))
 	        {
 	        	selecEcran=0;
 	        	joueur1.resetPV();
 	        	joueur2.resetPV();
-	        }	
+	        }
 
 
 	        /* affichage des élements graphiques */
