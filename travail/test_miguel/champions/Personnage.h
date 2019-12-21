@@ -45,7 +45,7 @@ protected:
 	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
 public:
 	Personnage(){};		//constructeur vide
-
+	Personnage(int, const Scene&){};
 	//void operator=(Dhalsim);
 	sf::Sprite getSprite();
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille

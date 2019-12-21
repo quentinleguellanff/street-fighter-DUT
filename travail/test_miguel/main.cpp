@@ -28,11 +28,11 @@ int main()
 
 	/* Variable de création des deux champions */
 	//int selecChamp_P1=-1,selecChamp_P2=-1;	variables destinées à la selection du champion
-	//Personnage champion_P1();
-	//Personnage champion_P2();
+	Personnage champion_P1(-1,fond);
+	Personnage champion_P2(-1,fond);
 
-	Ryu champion_P1(-1,fond);
-	Dhalsim champion_P2(1,fond);
+	champion_P1=Ryu(-1,fond);
+	champion_P2=Dhalsim(1,fond);
 
 	/* Création des sprites pour les effets */
 	sf::Sprite effet_P1;
