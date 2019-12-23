@@ -1,1 +1,0 @@
-g++ -c *.cpp *.h champions/*.cpp champions/*.h && g++ *.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system && ./sfml-app && rm *.o *.h.gch sfml-app champions/*.h.gch

@@ -104,7 +104,7 @@ class MenuCommandes {
     sf::Sprite spriteFond;
 
     public:
-        MenuCommandes();
+        MenuCommandes(float width, float height);
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
 };

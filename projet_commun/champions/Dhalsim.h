@@ -13,7 +13,7 @@
 class Dhalsim : public sf::Sprite
 {
 private:
-	const int SCALE=3.5;	//échelle d'agrandissement du champion
+	const float SCALE=4;	//échelle d'agrandissement du champion
 	int _orientation;		//orientation du personnage (-1 : personnage à gauche)
 	sf::Texture _texture;	//texture du personnage
 
