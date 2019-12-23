@@ -11,6 +11,7 @@ class Joueur
     private:
         int _nbPointVie;
         int _numero;
+        int _cpttouche;
 
         bool _avancedroite;
         bool _avancegauche;
@@ -23,30 +24,38 @@ class Joueur
         bool _peutsauter;
         bool _ensautgauche;
         bool _ensautdroite;
+        bool _seretourner;
+        bool _prendcoup;
+
+
 
         Broly _Broly;
         sf::RectangleShape _barreVie;
+        sf::Clock _clockjoueur;
 
 
     public:
 
-        bool prendcoup;
-
+        Joueur();
         Joueur(int i,Broly& broly);
         virtual ~Joueur();
 
         void prendDegats();
         void recupCommande();
-        void avancedroite(sf::Clock& clockanim, sf::Clock& clockmove,sf::RenderWindow& window);
-        void avancegauche(sf::Clock& clockanim, sf::Clock& clockmove,sf::RenderWindow& window);
-        void coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
-        void statique(sf::Clock& clock,sf::RenderWindow& window);
+        void avancedroite(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
+        void avancegauche(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
+        void coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
+        void statique(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
         void antiSpam(sf::Event& event);
-        void prendCoup(sf::Clock& clock,sf::Clock& clockmove,bool& touche, sf::RenderWindow& window);
-        void saut(sf::Clock& clock, sf::Clock& clockmove,sf::RenderWindow& window);
-
+        void prendCoup(bool& touche, sf::RenderWindow& window);
+        void saut(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi,bool ennemiensaut);
+        void setVitesseX(int);
+        int getVitesseX();
+        void deplacer(int);
+        void seretourner(sf::RectangleShape hurtboxEnnemi);
         sf::RectangleShape getBarreVie();
         Broly getBroly();
+        bool getEtat();
         sf::RectangleShape getHurtbox();
         sf::RectangleShape getHitbox();
 };

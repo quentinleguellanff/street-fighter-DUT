@@ -3,6 +3,7 @@
 #include <sstream>
 #include "Broly.h"
 #include "joueur.h"
+#include "collisionmanager.h"
 
 using namespace std;
 
@@ -17,10 +18,14 @@ int main()
 
     bool combat = true;
     bool fincombat = false;
+    bool toucheJ1 = false;
+    bool toucheJ2 = false;
 
     //affichage du sol a une position donnée
-    sf::RectangleShape sol(sf::Vector2f(1440.f, 100.f));
-    sol.setPosition(0.f,860.f);
+    sf::RectangleShape sol(sf::Vector2f(window.getSize().x, 40.f));
+    sf::RectangleShape fenetrecollision(sf::Vector2f(window.getSize()));
+    //effetcoup.setFillColor(sf::Color::White);
+    sol.setPosition(0.f,window.getSize().y-sol.getSize().y);
     sol.setFillColor(sf::Color(255,0,0,130));
 
     //horloge permettant de récuperer le temps
@@ -38,6 +43,8 @@ int main()
 
     Joueur joueur1(1,Brolytest);
     Joueur joueur2(2,Brolytest2);
+
+    collisionmanager collision;
 
     while (window.isOpen())
     {
@@ -59,31 +66,34 @@ int main()
             joueur1.recupCommande();
             joueur2.recupCommande();
 
-            joueur1.saut(clockanim,clockmove,window);
-            joueur2.saut(clockanim2,clockmove2,window);
+            joueur1.saut(window,joueur2.getHurtbox(),joueur2.getEtat());
+            joueur2.saut(window,joueur1.getHurtbox(),joueur1.getEtat());
 
-            joueur1.statique(clockanim,window);
-            joueur2.statique(clockanim2,window);
+            joueur1.statique(window,joueur2.getHurtbox());
+            joueur2.statique(window,joueur1.getHurtbox());
 
-            joueur1.avancedroite(clockanim,clockmove,window);
-            joueur2.avancedroite(clockanim2,clockmove2,window);
+            joueur1.avancedroite(window,joueur2.getHurtbox());
+            joueur2.avancedroite(window,joueur1.getHurtbox());
 
-            joueur1.avancegauche(clockanim,clockmove,window);
-            joueur2.avancegauche(clockanim2,clockmove2,window);
+            joueur1.avancegauche(window,joueur2.getHurtbox());
+            joueur2.avancegauche(window,joueur1.getHurtbox());
 
-            joueur1.prendCoup(clockanim,clockmove,joueur1.prendcoup,window);
-            joueur2.prendCoup(clockanim2,clockmove2,joueur2.prendcoup,window);
+            joueur1.prendCoup(toucheJ1,window);
+            joueur2.prendCoup(toucheJ2,window);
 
-            joueur1.coupDePoing(clockanim,joueur2.getHurtbox(),joueur2.prendcoup,window);
-            joueur2.coupDePoing(clockanim2,joueur1.getHurtbox(),joueur1.prendcoup,window);
+            joueur1.coupDePoing(joueur2.getHurtbox(),toucheJ2,window);
+            joueur2.coupDePoing(joueur1.getHurtbox(),toucheJ1,window);
 
+            //collision.collisionpersonnage(joueur1,joueur2);
 
-
+            if(toucheJ2 || toucheJ1){
+                //window.draw(effetcoup);
+            }
 
             //window.draw(joueur1.getHurtbox());
             //window.draw(joueur2.getHurtbox());
-            //window.draw(joueur1.getHitbox());
-            //window.draw(joueur2.getHitbox());
+            window.draw(joueur1.getHitbox());
+            window.draw(joueur2.getHitbox());
             window.draw(sol);
             window.draw(joueur1.getBarreVie());
             window.draw(joueur2.getBarreVie());

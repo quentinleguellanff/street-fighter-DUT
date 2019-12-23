@@ -18,11 +18,14 @@ class Broly
         int _cptanimprendcoup;
         int cptanimprendcoupbis;
         int _vsaut;
+        float _vitesseX;
         bool _ok;
-        sf::Sprite spriteBroly;
 
+        sf::Sprite spriteBroly;
         sf::RectangleShape _hurtbox;
         sf::RectangleShape _hitbox;
+        sf::Clock _clockanim;
+        sf::Clock _clockmove;
 
 
 
@@ -30,19 +33,27 @@ class Broly
     public:
         Broly();
         Broly(int);
-        void debout(sf::Clock& clock,sf::RenderWindow& window);
-        void avancer(sf::Clock& clockanim,sf::Clock& clockmove,sf::RenderWindow& window);
-        void reculer(sf::Clock& clockanim,sf::Clock& clockmove,sf::RenderWindow& window);
-        bool sauter(sf::Clock& clock,sf::Clock& clockmove,sf::RenderWindow& window,int vitesse);
-        bool coupDePoing(sf::Clock& clock,sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
+        void debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
+        void avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
+        void reculer(sf::RenderWindow& window);
+        bool sauter(sf::RenderWindow& window,int direction,bool ennemiensaut,sf::RectangleShape hurtboxEnnemi);
+        bool coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
         int getorientation();
         bool collisioncoup(sf::RectangleShape hurtboxEnnemi);
-        bool collisioncorps(Broly& ennemi);
-        void prendcoup(sf::Clock& clock,sf::Clock& clockmove,bool& touche,sf::RenderWindow& window);
+        bool collisioncorps(sf::RectangleShape hurtboxEnnemi);
+        void prendcoup(bool& touche,sf::RenderWindow& window);
         sf::RectangleShape gethurtbox();
         sf::RectangleShape gethitbox();
         void resetcoup();
+        void restartPrendcoup();
         void ResteDansFenetre();
+        void setVitesseX(int);
+        int getVitesseX();
+        void collisionPersonnage(sf::RectangleShape hurtboxEnnemi);
+        void collision(sf::RectangleShape hurtboxEnnemi);
+        void collisionsaut(sf::RectangleShape hurtboxEnnemi);
+        void deplacer(int vitesse);
+        void retourner();
         virtual ~Broly();
 
 };
