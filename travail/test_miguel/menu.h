@@ -88,8 +88,17 @@ private:
 public :
     MenuSelection(sf::RenderWindow&);
     void draw(sf::RenderWindow &window);
+
+    void persoSuivant_P1(int&,sf::RenderWindow&);
+    void persoPrecedent_P1(int&,sf::RenderWindow&);
+
+    void persoSuivant_P2(int&,sf::RenderWindow&);
+    void persoPrecedent_P2(int&,sf::RenderWindow&);
+
     void bouger(sf::Event,sf::RenderWindow&);
-    int validationPerso(sf::Event event);
+    int validationPerso(sf::Event event,int&,int&);
+
+    void reset();
 };
 
 class MenuCommandes {

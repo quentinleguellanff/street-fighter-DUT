@@ -7,7 +7,7 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 	SCALE=4;
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_dhalsim.png"))
 	{

@@ -68,7 +68,7 @@ public:
 	virtual void statique(sf::Clock&,Personnage&){};	//animation au repos
 	virtual void garde(sf::Clock&){};			//animation de garde debout				--> gestion de la garde à faire
 	virtual bool finGarde(sf::Clock&){return true;};		//animation de fin de garde
-	virtual void avancer(sf::Clock&,Personnage&){};		//animation de marche vers l'avant
+	virtual void avancer(sf::Clock&,Personnage&){std::cout<<"bonjour"<<std::endl;};		//animation de marche vers l'avant
 	virtual void reculer(sf::Clock&){};		//animation de marche vers l'arrière
 
 	virtual bool sauter(sf::Clock&,sf::Clock&){return true;};		//animation de saut
@@ -98,19 +98,19 @@ public:
 	void ajouterTexture(int,int,int,int) override;	//permet de remplir le tableau _tabSP
 	void resetTexture() override;		//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
 
-	bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
+	virtual bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
 
-	void statique(sf::Clock&,Personnage&) override;	//animation au repos
-	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
-	bool finGarde(sf::Clock&) override;		//animation de fin de garde
-	void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
-	void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
+	virtual void statique(sf::Clock&,Personnage&) override;	//animation au repos
+	virtual void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
+	virtual bool finGarde(sf::Clock&) override;		//animation de fin de garde
+	virtual void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
+	virtual void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
 
-	bool sauter(sf::Clock&,sf::Clock&) override;		//animation de saut
-	bool sauterAvant(sf::Clock&,Personnage&) override;		//animation de saut vers l'arrière
-	bool sauterArriere(sf::Clock&) override;		//animation de saut vers l'arrière
-	void accroupi(sf::Clock&,bool) override;		//animation accroupi
-	bool seLever(sf::Clock& clockAnim) override;		//animation de fin d'accroupissement
+	virtual bool sauter(sf::Clock&,sf::Clock&) override;		//animation de saut
+	virtual bool sauterAvant(sf::Clock&,Personnage&) override;		//animation de saut vers l'arrière
+	virtual bool sauterArriere(sf::Clock&) override;		//animation de saut vers l'arrière
+	virtual void accroupi(sf::Clock&,bool) override;		//animation accroupi
+	virtual bool seLever(sf::Clock& clockAnim) override;		//animation de fin d'accroupissement
 
 	bool apparition(sf::Clock&,sf::Sprite&) override;	//animation de début de combat
 	bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de poing
@@ -127,25 +127,25 @@ public:
 	Dhalsim(){};	//constructeur vide
 	Dhalsim(int,const Scene&);		//constructeur du champion
 	
-	bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
+	virtual bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
 
-	void statique(sf::Clock&,Personnage&) override;	//animation au repos
-	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
-	bool finGarde(sf::Clock&) override;		//animation de fin de garde
-	void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
-	void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
+	virtual void statique(sf::Clock&,Personnage&) override;	//animation au repos
+	virtual void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
+	virtual bool finGarde(sf::Clock&) override;		//animation de fin de garde
+	virtual void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
+	virtual void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
 
-	bool sauter(sf::Clock&,sf::Clock&) override;		//animation de saut
-	bool sauterAvant(sf::Clock&,Personnage&) override;		//animation de saut vers l'arrière
-	bool sauterArriere(sf::Clock&) override;		//animation de saut vers l'arrière
-	void accroupi(sf::Clock&,bool) override;		//animation accroupi
+	virtual bool sauter(sf::Clock&,sf::Clock&) override;		//animation de saut
+	virtual bool sauterAvant(sf::Clock&,Personnage&) override;		//animation de saut vers l'arrière
+	virtual bool sauterArriere(sf::Clock&) override;		//animation de saut vers l'arrière
+	virtual void accroupi(sf::Clock&,bool) override;		//animation accroupi
 
-	bool apparition(sf::Clock&,sf::Sprite&) override;	//animation de début de combat
-	bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de poing
-	bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;			//animation de coup de poing en saut
-	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;					//animation de coup de pied
-	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de pied en saut
-	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&) override;		//animation de coup spécial
+	virtual bool apparition(sf::Clock&,sf::Sprite&) override;	//animation de début de combat
+	virtual bool punch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de poing
+	virtual bool sautPunch(sf::Clock&,sf::RectangleShape,bool&,Player&) override;			//animation de coup de poing en saut
+	virtual bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;					//animation de coup de pied
+	virtual bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&) override;				//animation de coup de pied en saut
+	virtual bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
 class Ryu : public Personnage
@@ -154,7 +154,7 @@ public:
 	Ryu(){};	//constructeur vide
 	Ryu(int,const Scene&);		//constructeur du champion
 	
-	bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
+	virtual bool prendCoup(sf::Clock&,bool&,sf::Sprite&) override;	//animation de prise de coup
 
 	void statique(sf::Clock&,Personnage&) override;	//animation au repos
 	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire

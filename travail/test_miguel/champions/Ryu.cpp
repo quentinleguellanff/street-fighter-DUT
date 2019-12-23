@@ -7,7 +7,7 @@ Ryu::Ryu(int orientation,const Scene& s)
 	SCALE=4.2;
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_ryu.png"))
 	{
@@ -159,7 +159,7 @@ void Ryu::statique(sf::Clock& clockAnim,Personnage& ennemi)
 {
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=150;
+    int delai=70;
     
     if(timeAnim>delai)
     {

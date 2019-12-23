@@ -27,12 +27,18 @@ int main()
 	sf::Clock clockAttente_P2;
 
 	/* Variable de création des deux champions */
-	//int selecChamp_P1=-1,selecChamp_P2=-1;	variables destinées à la selection du champion
-	Personnage champion_P1(-1,fond);
-	Personnage champion_P2(-1,fond);
+	int selecChamp_P1=-1,selecChamp_P2=-1;	//variables destinées à la selection du champion
+	Personnage* champion_P1;
+	Personnage* champion_P2;
 
-	champion_P1=Ryu(-1,fond);
-	champion_P2=Dhalsim(1,fond);
+	/*Jotaro jo_P1(-1,fond);
+	Jotaro jo_P2(1,fond);
+
+	Dhalsim dh_P1(-1,fond);
+	Dhalsim dh_P2(1,fond);
+
+	Ryu ry_P1(-1,fond);
+	Ryu ry_P2(1,fond);*/
 
 	/* Création des sprites pour les effets */
 	sf::Sprite effet_P1;
@@ -104,12 +110,33 @@ int main()
 	            if (eventS.type == sf::Event::Closed)
 	                window.close();
                     menuSel.bouger(eventS,window);
-                    selecEcran = menuSel.validationPerso(eventS);
+                    selecEcran = menuSel.validationPerso(eventS,selecChamp_P1,selecChamp_P2);
 	        }
 
             window.clear();
             menuSel.draw(window);
 	        window.display();
+	        if(selecChamp_P1==0)
+	        {
+	        	champion_P1=new Jotaro(-1,fond);
+	        }else if(selecChamp_P1==1)
+	        {
+	        	champion_P1=new Dhalsim(-1,fond);
+	        }else if(selecChamp_P1==2)
+	        {
+	        	champion_P1=new Ryu(-1,fond);
+	        }
+
+	        if(selecChamp_P2==0)
+	        {
+	        	champion_P2= new Jotaro(1,fond);
+	        }else if(selecChamp_P2==1)
+	        {
+	        	champion_P2=new Dhalsim(1,fond);
+	        }else if(selecChamp_P2==2)
+	        {
+	        	champion_P2=new Ryu(1,fond);
+	        }
 
 
         }else if(selecEcran==3)
@@ -120,14 +147,13 @@ int main()
             window.display();
         }else if(selecEcran==2)	//lancement du combat
         {
-
         	/* lancement des animations de début de combat */
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
 				if(!apparitionsFinies_P1)
-					apparitionsFinies_P1=champion_P1.apparition(clockAnim_P1,effet_P1);
+					apparitionsFinies_P1=champion_P1->apparition(clockAnim_P1,effet_P1);
 				if(!apparitionsFinies_P2)
-					apparitionsFinies_P2=champion_P2.apparition(clockAnim_P2,effet_P2);
+					apparitionsFinies_P2=champion_P2->apparition(clockAnim_P2,effet_P2);
 			}
 			else
 			{
@@ -156,69 +182,69 @@ int main()
 				if(prendCoup_P1)
 				{
 					deplacementX_P1==0;deplacementY_P1==0;action_P1=-1;
-					actionFini_P1=champion_P1.prendCoup(clockAnim_P1,prendCoup_P1,effet_P1);
+					actionFini_P1=champion_P1->prendCoup(clockAnim_P1,prendCoup_P1,effet_P1);
 				}
 				else if(action_P1!=derniereAction_P1 && derniereAction_P1==0 && deplacementY_P1==0)
-					actionFini_P1=champion_P1.finGarde(clockAnim_P1);
+					actionFini_P1=champion_P1->finGarde(clockAnim_P1);
 				else if(etaitAccroupi_P1 && deplacementY_P1!=-1)
-					actionFini_P1=champion_P1.seLever(clockAnim_P1);
+					actionFini_P1=champion_P1->seLever(clockAnim_P1);
 				else if(deplacementX_P1==1 && deplacementY_P1==1)
 				{
-					if(champion_P1.getOrientation()==-1)
-						actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
+					if(champion_P1->getOrientation()==-1)
+						actionFini_P1=champion_P1->sauterAvant(clockAnim_P1,*champion_P2);
 					else
-						actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
+						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1);
 				}
 				else if(deplacementX_P1==-1 && deplacementY_P1==1)
 				{
-					if(champion_P1.getOrientation()==-1)
-						actionFini_P1=champion_P1.sauterArriere(clockAnim_P1);
+					if(champion_P1->getOrientation()==-1)
+						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1);
 					else
-						actionFini_P1=champion_P1.sauterAvant(clockAnim_P1,champion_P2);
+						actionFini_P1=champion_P1->sauterAvant(clockAnim_P1,*champion_P2);
 				}
 				else if(deplacementY_P1==1 && action_P1==2)
-					actionFini_P1=champion_P1.sautKick(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->sautKick(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(deplacementY_P1==1 && action_P1==1)
-					actionFini_P1=champion_P1.sautPunch(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->sautPunch(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(deplacementX_P1==1)
 				{
-					if(champion_P1.getOrientation()==-1)
-						champion_P1.avancer(clockAnim_P1,champion_P2);
+					if(champion_P1->getOrientation()==-1)
+						champion_P1->avancer(clockAnim_P1,*champion_P2);
 					else
-						champion_P1.reculer(clockAnim_P1);
+						champion_P1->reculer(clockAnim_P1);
 				}
 				else if(deplacementX_P1==-1)
 				{
-					if(champion_P1.getOrientation()==-1)
-						champion_P1.reculer(clockAnim_P1);
+					if(champion_P1->getOrientation()==-1)
+						champion_P1->reculer(clockAnim_P1);
 					else
-						champion_P1.avancer(clockAnim_P1,champion_P2);
+						champion_P1->avancer(clockAnim_P1,*champion_P2);
 				}
 				else if(deplacementY_P1==1)
-					actionFini_P1=champion_P1.sauter(clockAnim_P1,clockAttente_P1);
+					actionFini_P1=champion_P1->sauter(clockAnim_P1,clockAttente_P1);
 
 				else if(deplacementY_P1==-1)
-					champion_P1.accroupi(clockAnim_P1,action_P1==0);
+					champion_P1->accroupi(clockAnim_P1,action_P1==0);
 
 				else if(action_P1==0)
-					champion_P1.garde(clockAnim_P1);
+					champion_P1->garde(clockAnim_P1);
 
 				else if(action_P1==1)
-					actionFini_P1=champion_P1.punch(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->punch(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(action_P1==2)
-					actionFini_P1=champion_P1.kick(clockAnim_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->kick(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
 
 				else if(action_P1==3)
-					actionFini_P1=champion_P1.SP(clockAnim_P1,effet_P1,champion_P2.getHurtbox(),prendCoup_P2,joueur2,son_P1);
+					actionFini_P1=champion_P1->SP(clockAnim_P1,effet_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2,son_P1);
 
 				else
-					champion_P1.statique(clockAnim_P1,champion_P2);
+					champion_P1->statique(clockAnim_P1,*champion_P2);
 
 				if(deplacementY_P1!=-1)
-					champion_P1.resetCptAccroupi();
+					champion_P1->resetCptAccroupi();
 
 				if( !(action_P1!=derniereAction_P1 && derniereAction_P1==0) || actionFini_P1==true)
 					derniereAction_P1=action_P1;
@@ -231,68 +257,68 @@ int main()
 				if(prendCoup_P2)
 				{
 					deplacementX_P2==0;deplacementY_P2==0;action_P2=-1;
-					actionFini_P2=champion_P2.prendCoup(clockAnim_P2,prendCoup_P2,effet_P2);
+					actionFini_P2=champion_P2->prendCoup(clockAnim_P2,prendCoup_P2,effet_P2);
 				}
 				else if(derniereAction_P2!=action_P2 && derniereAction_P2==0 && deplacementY_P2==0)
-					actionFini_P2=champion_P2.finGarde(clockAnim_P2);
+					actionFini_P2=champion_P2->finGarde(clockAnim_P2);
 
 				else if(deplacementX_P2==1 && deplacementY_P2==1)
 				{
-					if(champion_P2.getOrientation()==1)
-						actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
+					if(champion_P2->getOrientation()==1)
+						actionFini_P2=champion_P2->sauterAvant(clockAnim_P2,*champion_P1);
 					else
-						actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
+						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2);
 				}
 				else if(deplacementX_P2==-1 && deplacementY_P2==1)
 				{
-					if(champion_P2.getOrientation()==1)
-						actionFini_P2=champion_P2.sauterArriere(clockAnim_P2);
+					if(champion_P2->getOrientation()==1)
+						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2);
 					else
-						actionFini_P2=champion_P2.sauterAvant(clockAnim_P2,champion_P1);
+						actionFini_P2=champion_P2->sauterAvant(clockAnim_P2,*champion_P1);
 				}
 				else if(deplacementY_P2==1 && action_P2==2)
-					actionFini_P2=champion_P2.sautKick(clockAnim_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->sautKick(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
 
 				else if(deplacementY_P2==1 && action_P2==1)
-					actionFini_P2=champion_P2.sautPunch(clockAnim_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->sautPunch(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
 
 				else if(deplacementX_P2==1)
 				{
-					if(champion_P2.getOrientation()==1)
-						champion_P2.avancer(clockAnim_P2,champion_P1);
+					if(champion_P2->getOrientation()==1)
+						champion_P2->avancer(clockAnim_P2,*champion_P1);
 					else
-						champion_P2.reculer(clockAnim_P2);
+						champion_P2->reculer(clockAnim_P2);
 				}
 				else if(deplacementX_P2==-1)
 				{
-					if(champion_P2.getOrientation()==1)
-						champion_P2.reculer(clockAnim_P2);
+					if(champion_P2->getOrientation()==1)
+						champion_P2->reculer(clockAnim_P2);
 					else
-						champion_P2.avancer(clockAnim_P2,champion_P1);
+						champion_P2->avancer(clockAnim_P2,*champion_P1);
 				}
 				else if(deplacementY_P2==1)
-					actionFini_P2=champion_P2.sauter(clockAnim_P2,clockAttente_P2);
+					actionFini_P2=champion_P2->sauter(clockAnim_P2,clockAttente_P2);
 
 				else if(deplacementY_P2==-1)
-					champion_P2.accroupi(clockAnim_P2,action_P2==0);
+					champion_P2->accroupi(clockAnim_P2,action_P2==0);
 
 				else if(action_P2==0)
-					champion_P2.garde(clockAnim_P2);
+					champion_P2->garde(clockAnim_P2);
 
 				else if(action_P2==1)
-					actionFini_P2=champion_P2.punch(clockAnim_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->punch(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
 
 				else if(action_P2==2)
-					actionFini_P2=champion_P2.kick(clockAnim_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->kick(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
 
 				else if(action_P2==3)
-					actionFini_P2=champion_P2.SP(clockAnim_P2,effet_P2,champion_P1.getHurtbox(),prendCoup_P1,joueur1,son_P2);
+					actionFini_P2=champion_P2->SP(clockAnim_P2,effet_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1,son_P2);
 
 				else
-					champion_P2.statique(clockAnim_P2,champion_P1);
+					champion_P2->statique(clockAnim_P2,*champion_P1);
 
 				if(deplacementY_P2!=-1)
-					champion_P2.resetCptAccroupi();
+					champion_P2->resetCptAccroupi();
 
 				if( !(action_P1!=derniereAction_P2 && derniereAction_P2==0) || actionFini_P2==true)
 					derniereAction_P2=action_P2;
@@ -311,6 +337,7 @@ int main()
 	        	selecEcran=0;
 	        	joueur1.resetPV();
 	        	joueur2.resetPV();
+	        	menuSel.reset();
 	        }	
 
 
@@ -321,12 +348,12 @@ int main()
 	        window.draw(joueur1.getBarrePV());
 	        window.draw(joueur2.getBarrePV());
 
-	        window.draw(champion_P1.getSprite());
+	        window.draw(champion_P1->getSprite());
 	        window.draw(effet_P1);
 	        //window.draw(champion_P1.getHurtbox());
 	        //window.draw(champion_P1.getHitbox());
 
-	        window.draw(champion_P2.getSprite());
+	        window.draw(champion_P2->getSprite());
 	        window.draw(effet_P2);
 	        //window.draw(champion_P2.getHurtbox());
 	        //window.draw(champion_P2.getHitbox());

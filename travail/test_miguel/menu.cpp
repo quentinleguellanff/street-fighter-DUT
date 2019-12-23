@@ -281,26 +281,117 @@ void MenuSelection::draw(sf::RenderWindow &window) {
         window.draw(annulerChoixJ2);
 }
 
+void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ1 = 1;
+        spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ1 = 2;
+        spriteP1.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 2:
+        etatPersoJ1 = 0;
+        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+        break;
+    }
+}
+
+void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ2 = 1;
+        spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ2 = 2;
+        spriteP2.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 2:
+        etatPersoJ2 = 0;
+        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
+        break;
+    }
+}
+
+void MenuSelection::persoPrecedent_P1(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ1 = 2;
+        spriteP1.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ1 = 0;
+        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+        break;
+    case 2:
+        etatPersoJ1 = 1;
+        spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    }
+}
+
+void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ2 = 2;
+        spriteP2.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ2 = 0;
+        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
+        break;
+    case 2:
+        etatPersoJ2 = 1;
+        spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    }
+}
+
 // Recupérer les intructions de l'utilisateur
 void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 {
     //Selection j1
-    if(choixJ1 == -1) {
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::D) && etatPersoJ1 == 0)
-        {
-            etatPersoJ1 = 1;
-            spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
-            spriteP1.setScale(sf::Vector2f(1.8,1.8));
-            spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
-        }
+    if(choixJ1 == -1) 
+    {
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+            persoSuivant_P1(etatPersoJ1,window);
 
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q) && etatPersoJ1 == 1)
-        {
-            etatPersoJ1 = 0;
-            spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-            spriteP1.setScale(sf::Vector2f(3.5,3.5));
-            spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
-        }
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
+            persoPrecedent_P1(etatPersoJ1,window);
 
         switch(etatPersoJ1)
         {
@@ -308,32 +399,27 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     break;
             case 1: nomPersoJ1.setString("Dhalsim");
                     break;
+            case 2: nomPersoJ1.setString("Ryu");
+                    break;
         }
     }
 
     //Selection j2
-    if(choixJ2 == -1) {
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right) && etatPersoJ2 == 0)
-        {
-            etatPersoJ2 = 1;
-            spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-            spriteP2.setScale(sf::Vector2f(-1.8,1.8));
-            spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
-        }
+    if(choixJ2 == -1) 
+    {
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
+            persoSuivant_P2(etatPersoJ2,window);
 
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
+            persoPrecedent_P2(etatPersoJ2,window);
 
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left) && etatPersoJ2 == 1)
-        {
-            etatPersoJ2 = 0;
-            spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
-            spriteP2.setScale(sf::Vector2f(-3.5,3.5));
-            spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
-        }
         switch(etatPersoJ2)
         {
             case 0: nomPersoJ2.setString("Jotaro");
                     break;
             case 1: nomPersoJ2.setString("Dhalsim");
+                    break;
+            case 2: nomPersoJ2.setString("Ryu");
                     break;
         }
     }
@@ -355,7 +441,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 }
 
 
-int MenuSelection::validationPerso(sf::Event event)
+int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
      if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
@@ -391,14 +477,24 @@ int MenuSelection::validationPerso(sf::Event event)
     }
     if(choixJ1 != -1 && choixJ2 != -1)
     {
-        //selecChamp_P1=etatPersoJ1;
-        //selecChamp_P2=etatPersoJ2;
+        selecChamp_P1=choixJ1;
+        selecChamp_P2=choixJ2;
         return 2;
     }
     else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
         return 0;
 
     else return 1;
+}
+
+void MenuSelection::reset()
+{
+    choixJ1=-1;choixJ2=-1;
+    etatPersoJ1=0;etatPersoJ2=1;
+    annulerChoixJ1.setString("");
+    annulerChoixJ2.setString("");
+    nomPersoJ1.setFillColor(sf::Color::White);
+    nomPersoJ2.setFillColor(sf::Color::White);
 }
 
 

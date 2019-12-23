@@ -2,43 +2,12 @@
 
 using namespace std;
 
-/*void Personnage::operator=(Dhalsim champ)
-{
-	this.SCALE=champ.SCALE;
-	this._orientation=champ._orientation;		
-	this._texture=champ._texture;	
-
-	this._tailleSprite=champ._tailleSprite;		
-	this._scene=champ._scene;					
-
-	this._hurtbox=champ._hurtbox;	
-	this._hitbox=champ._hitbox;		
-
-	this._posX=champ._posX;                    
-    this._posY=champ._posY;                    
-
-	int _cptAvancer;				
-	int _cptReculer;				
-	int _cptStatic;					
-	int _cptAccroupi;				
-
-	int _cptSauter;					
-
-	int _cptApparition;				
-	int _cptAction;					 
-	int _cptPrendCoup;
-	int _cptGarde;					
-
-	int _tabSP[25][4];				
-	int _indexTab;					
-	int _cptSP;						 
-	bool _SPChargee;				
-}*/
 
 sf::Sprite Personnage::getSprite()
 {
 	return _sprite;
 }
+
 
 void Personnage::setSprite(int n1, int n2, int i1, int i2)
 {
@@ -118,3 +87,4 @@ void Personnage::resetCptAccroupi()
 {
 	_cptAccroupi=0;
 }
+
