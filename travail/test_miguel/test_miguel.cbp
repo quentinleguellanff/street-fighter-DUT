@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="test_miguel" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/test_miguel" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-audio-d" />
+					<Add library="sfml-system-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/test_miguel" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="../../../SFML-2.5.1/include" />
+		</Compiler>
+		<Linker>
+			<Add directory="../../../SFML-2.5.1/lib" />
+		</Linker>
+		<Unit filename="IncludeManager.h" />
+		<Unit filename="MenuSelection/.gitkeep" />
+		<Unit filename="MenuSelection/atari.ttf" />
+		<Unit filename="MenuSelection/dhalsim.png" />
+		<Unit filename="OCRAEXT.TTF" />
+		<Unit filename="Player.cpp" />
+		<Unit filename="Player.h" />
+		<Unit filename="Scene.cpp" />
+		<Unit filename="Scene.h" />
+		<Unit filename="background/SdHUDAtlas.png" />
+		<Unit filename="background/futur_background.jpg" />
+		<Unit filename="background/menu.png" />
+		<Unit filename="background/ring_pixel.jpg" />
+		<Unit filename="background/ring_xenoverse.jpg" />
+		<Unit filename="background/ring_xenoverse_V2.jpg" />
+		<Unit filename="background/ruins_background.gif" />
+		<Unit filename="background/skulls_background.jpg" />
+		<Unit filename="bin/Debug/openal32.dll" />
+		<Unit filename="bin/Debug/sfml-audio-2.dll" />
+		<Unit filename="bin/Debug/sfml-audio-d-2.dll" />
+		<Unit filename="bin/Debug/sfml-graphics-2.dll" />
+		<Unit filename="bin/Debug/sfml-graphics-d-2.dll" />
+		<Unit filename="bin/Debug/sfml-network-2.dll" />
+		<Unit filename="bin/Debug/sfml-network-d-2.dll" />
+		<Unit filename="bin/Debug/sfml-system-2.dll" />
+		<Unit filename="bin/Debug/sfml-system-d-2.dll" />
+		<Unit filename="bin/Debug/sfml-window-2.dll" />
+		<Unit filename="bin/Debug/sfml-window-d-2.dll" />
+		<Unit filename="champions/Dhalsim.cpp" />
+		<Unit filename="champions/Jotaro.cpp" />
+		<Unit filename="champions/Personnage.cpp" />
+		<Unit filename="champions/Personnage.h" />
+		<Unit filename="champions/Ryu.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
+		<Unit filename="musique/.gitkeep" />
+		<Unit filename="musique/hadouken.ogg" />
+		<Unit filename="musique/jotaro_SP.ogg" />
+		<Unit filename="musique/musicBagarre.ogg" />
+		<Unit filename="sprites/Brolyspriteok.png" />
+		<Unit filename="sprites/Minotaur - Sprite Sheet.png" />
+		<Unit filename="sprites/clavier.png" />
+		<Unit filename="sprites/kameha.png" />
+		<Unit filename="sprites/menuSelection.png" />
+		<Unit filename="sprites/spriteMenu.png" />
+		<Unit filename="sprites/sprite_chunLi.png" />
+		<Unit filename="sprites/sprite_dhalsim.png" />
+		<Unit filename="sprites/sprite_hadoken.png" />
+		<Unit filename="sprites/sprite_ichigo.png" />
+		<Unit filename="sprites/sprite_jotaro.png" />
+		<Unit filename="sprites/sprite_kamehameha.png" />
+		<Unit filename="sprites/sprite_ken.png" />
+		<Unit filename="sprites/sprite_kirby.png" />
+		<Unit filename="sprites/sprite_mewtwo.png" />
+		<Unit filename="sprites/sprite_ryu.png" />
+		<Unit filename="sprites/sprite_sonic.png" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

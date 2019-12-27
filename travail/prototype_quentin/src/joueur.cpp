@@ -245,12 +245,12 @@ void Joueur::antiSpam(sf::Event& event){
 
 void Joueur::seretourner(sf::RectangleShape hurtboxEnnemi){
     if(_Broly.getorientation() == -1){
-        if(_Broly.gethurtbox().getPosition().x >= (hurtboxEnnemi.getPosition().x + hurtboxEnnemi.getGlobalBounds().width/2)){
+        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width/2 > (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
             _seretourner = true;
         }
     }
     if(_Broly.getorientation() == 1){
-        if(_Broly.gethurtbox().getPosition().x <= (hurtboxEnnemi.getPosition().x + hurtboxEnnemi.getGlobalBounds().width/2)){
+        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width/2 < (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
             _seretourner = true;
         }
     }
