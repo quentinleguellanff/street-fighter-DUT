@@ -52,7 +52,7 @@ public:
 
 	sf::RectangleShape getHurtbox();	//permet de récupérer la zone de prise de dégats notamment pour pouvoir l'afficher
 	sf::RectangleShape getHitbox();		//permet de récupérer la zone de mise de dégats notamment pour pouvoir l'afficher
-	void collisioncorps(Personnage&);	//permet de bloquer le fait que les deux personnages puis se croiser
+	void collision(Personnage&, int&);	//permet de bloquer le fait que les deux personnages puis se croiser
 	bool collisioncoup(Personnage&);		//permet de gérer la prise de coups
 
 	void keepInWalls();		//permet de maintenir les personnages entre les limites de la carte

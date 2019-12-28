@@ -233,6 +233,8 @@ void Dhalsim::statique(sf::Clock& clockAnim,Personnage& champEnnemi)
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 
     rotate(champEnnemi);
+    int n=0;
+    collision(champEnnemi,n);
     keepInWalls();
 }
 
@@ -273,7 +275,12 @@ void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
     int delai=70;
     int deplacement=40;
 	
-	if(timeAnim>delai)
+	collision(champEnnemi,deplacement);
+	
+	if(deplacement==0)
+    {
+    	statique(clockAnim,champEnnemi);
+    }else if(timeAnim>delai)
 	{
 	    switch (_cptAvancer)
 	    {
@@ -336,7 +343,7 @@ void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
 	    	break;
 	    }
 	}
-	collisioncorps(champEnnemi);
+	collision(champEnnemi,deplacement);
     _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY);
     rotate(champEnnemi);
@@ -1069,7 +1076,7 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 		    setSprite(24,3233,76,120);
 		    _posX-=10*SCALE*_orientation;
 
-		    bouleFeu.setPosition(0,0);
+		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
 			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 			break;
@@ -1093,7 +1100,7 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 			
 			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
 			bouleFeu.setScale(_orientation*SCALE,SCALE);
-			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/3));
+			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));
 			break;
 		}
 		_sprite.setPosition(_posX,_posY);
@@ -1142,6 +1149,8 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 		fini=true;
 		_cptAction=0;
 	}
+
+
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 

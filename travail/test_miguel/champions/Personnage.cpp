@@ -29,20 +29,15 @@ bool Personnage::collisioncoup(Personnage& ennemi){
     return _hitbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds());
 }
 
-void Personnage::collisioncorps(Personnage& ennemi)
+void Personnage::collision(Personnage& ennemi, int& deplacement)
 {
-    if(_hurtbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds()))
+    if( (_orientation==1 && _posX+_tailleSprite.x+deplacement >= ennemi.getPosX()-ennemi.getHurtbox().getGlobalBounds().width)
+              || (_orientation==-1 && _posX-_tailleSprite.x-deplacement <= ennemi.getPosX()+ennemi.getHurtbox().getGlobalBounds().width))
     {
-        if(_orientation==1)
-        {
-            _posX= ennemi.getHurtbox().getPosition().x - (ennemi.getHurtbox().getGlobalBounds().width) - _hurtbox.getGlobalBounds().width;
-        }else 
-        {
-            _posX= ennemi.getHurtbox().getPosition().x + (ennemi.getHurtbox().getGlobalBounds().width) + _hurtbox.getGlobalBounds().width;
-        }
+        deplacement=0;
     }
+        
     _sprite.setPosition(_posX,_posY);
-    ennemi.getSprite().setPosition(ennemi.getPosX(),ennemi.getPosY());
 }
 
 void Personnage::keepInWalls()
