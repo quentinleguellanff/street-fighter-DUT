@@ -17,6 +17,7 @@ class Broly
         int _cptAnimCoupPoing;
         int _cptanimprendcoup;
         int cptanimprendcoupbis;
+        int _cptTimePauseAnim;
         int _vsaut;
         float _vitesseX;
         bool _ok;
@@ -54,6 +55,7 @@ class Broly
         void collisionsaut(sf::RectangleShape hurtboxEnnemi);
         void deplacer(int vitesse);
         void retourner();
+        void pauseAnimation();
         virtual ~Broly();
 
 };

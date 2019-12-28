@@ -69,6 +69,7 @@ void Joueur::recupCommande()
         _avancegauche = sf::Keyboard::isKeyPressed(sf::Keyboard::Q);
         _couppoing = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
         _saut = sf::Keyboard::isKeyPressed(sf::Keyboard::Z);
+        _pause = sf::Keyboard::isKeyPressed(sf::Keyboard::N);
     }
     else
     {
@@ -76,6 +77,7 @@ void Joueur::recupCommande()
         _avancegauche = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
         _couppoing = sf::Keyboard::isKeyPressed(sf::Keyboard::M);
         _saut = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+        _pause = sf::Keyboard::isKeyPressed(sf::Keyboard::Space);
 
     }
 }
@@ -245,12 +247,12 @@ void Joueur::antiSpam(sf::Event& event){
 
 void Joueur::seretourner(sf::RectangleShape hurtboxEnnemi){
     if(_Broly.getorientation() == -1){
-        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width/2 > (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
+        if(_Broly.gethurtbox().getGlobalBounds().left  > (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
             _seretourner = true;
         }
     }
     if(_Broly.getorientation() == 1){
-        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width/2 < (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
+        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width < hurtboxEnnemi.getGlobalBounds().left){
             _seretourner = true;
         }
     }
@@ -293,6 +295,10 @@ bool Joueur::getEtat(){
         return _ensautgauche;
     else
         return _ensaut;
+}
+
+void Joueur::pauseAnim(){
+        _Broly.pauseAnimation();
 }
 
 Joueur::Joueur(){}

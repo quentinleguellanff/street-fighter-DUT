@@ -26,6 +26,7 @@ class Joueur
         bool _ensautdroite;
         bool _seretourner;
         bool _prendcoup;
+        bool _pause;
 
 
 
@@ -56,6 +57,7 @@ class Joueur
         sf::RectangleShape getBarreVie();
         Broly getBroly();
         bool getEtat();
+        void pauseAnim();
         sf::RectangleShape getHurtbox();
         sf::RectangleShape getHitbox();
 };

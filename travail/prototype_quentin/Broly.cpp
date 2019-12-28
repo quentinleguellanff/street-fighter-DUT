@@ -8,7 +8,7 @@ using namespace std;
 Broly::Broly(int Orientation)
 {
     _orientation = Orientation; // permet de définir l'orientation du personnage
-    if (!_Texture.loadFromFile("Brolyspriteok.png"))//load de la texture du personnage
+    if (!_Texture.loadFromFile("sprite/Brolyspriteok.png"))//load de la texture du personnage
     {
         cout << "erreur" << endl;
     }
@@ -25,6 +25,7 @@ Broly::Broly(int Orientation)
     _cptAnimCoupPoing = 0;
     _cptanimprendcoup = 0;
     _vitesseX = 0;
+    _cptTimePauseAnim = 0;
     _vsaut = -75;
     if(_orientation == -1)
     {
@@ -44,7 +45,7 @@ Broly::Broly(int Orientation)
 
 
     _hitbox.setScale(_scale*_orientation,_scale);
-    _hitbox.setFillColor(sf::Color(255,0,0,100));
+    _hitbox.setFillColor(sf::Color(255,0,0,255));
     _hitbox.setPosition(spriteBroly.getPosition().x, spriteBroly.getPosition().y+97*2);
     _hitbox.setSize(sf::Vector2f(23.f,21.f));
     cptanimprendcoupbis = 6;
@@ -217,6 +218,7 @@ bool Broly::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Render
         if(collisioncoup(hurtboxEnnemi))
         {
             touche = true;
+            window.draw(_hitbox);
         }
     }
     if(_cptAnimCoupPoing >= 5)
@@ -432,7 +434,7 @@ void Broly::collisionsaut(sf::RectangleShape hurtboxEnnemi)
             if(!(positiongauche + _vitesseX > positiondroiteennemi && positionbasse > positionhauteennemi)){
                 //on verifie si le perso cible dépasse l'autre si oui on le deplace à droite, sinon à gauche
                 if((positiondroite + _vitesseX >= positiondroiteennemi && positionbasse > positionhauteennemi && positiondroiteennemi < 1440 - hurtboxEnnemi.getGlobalBounds().width/2)
-                        || positiongauche < 0 && positiongaucheennemi  < _hurtbox.getGlobalBounds().width/2 && positionbasse > positionhauteennemi)
+                        || (positiongauche < 0 && positiongaucheennemi  < _hurtbox.getGlobalBounds().width/2 && positionbasse > positionhauteennemi))
                 {
                     deplacer(positiondroiteennemi - positiongauche + 15);
                     _vitesseX = 0;
@@ -449,7 +451,7 @@ void Broly::collisionsaut(sf::RectangleShape hurtboxEnnemi)
             //même chose mais avec une orientation différente
             if(!(positiondroite + _vitesseX < positiongaucheennemi && positionbasse > positionhauteennemi)){
                 if((positiongauche + _vitesseX <= positiongaucheennemi && positionbasse > positionhauteennemi && positiongaucheennemi > hurtboxEnnemi.getGlobalBounds().width/2)
-                        || positiondroite > 1440 && positiondroiteennemi > 1440 - _hurtbox.getGlobalBounds().width/2 && positionbasse > positionhauteennemi)
+                        || (positiondroite > 1440 && positiondroiteennemi > 1440 - _hurtbox.getGlobalBounds().width/2 && positionbasse > positionhauteennemi))
                 {
                     deplacer(-positiondroite+positiongaucheennemi - _vitesseX);
                 }
@@ -505,4 +507,14 @@ void Broly::retourner()
     _hurtbox.setPosition(spriteBroly.getPosition().x, spriteBroly.getPosition().y);
 }
 
-
+void Broly::pauseAnimation(){
+    sf::Time elapsed = _clockanim.getElapsedTime();
+    int time = elapsed.asMicroseconds();
+    if(time > 1000 && _cptTimePauseAnim < 5){
+        _clockanim.restart();
+        _clockmove.restart();
+        cout << time << endl;
+        _cptTimePauseAnim +=1;
+        cout << _cptTimePauseAnim << endl;
+    }
+}
