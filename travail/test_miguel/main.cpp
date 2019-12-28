@@ -72,7 +72,7 @@ int main()
     if (!musique.openFromFile("musique/musicBagarre.ogg")){
             std::cout<<"erreur musique";
     }
-    musique.setVolume(10.f) ;
+    musique.setVolume(0.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -193,20 +193,20 @@ int main()
 					if(champion_P1->getOrientation()==-1)
 						actionFini_P1=champion_P1->sauterAvant(clockAnim_P1,*champion_P2);
 					else
-						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1);
+						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1,*champion_P2);
 				}
 				else if(deplacementX_P1==-1 && deplacementY_P1==1)
 				{
 					if(champion_P1->getOrientation()==-1)
-						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1);
+						actionFini_P1=champion_P1->sauterArriere(clockAnim_P1,*champion_P2);
 					else
 						actionFini_P1=champion_P1->sauterAvant(clockAnim_P1,*champion_P2);
 				}
 				else if(deplacementY_P1==1 && action_P1==2)
-					actionFini_P1=champion_P1->sautKick(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->sautKick(clockAnim_P1,*champion_P2,prendCoup_P2,joueur2);
 
 				else if(deplacementY_P1==1 && action_P1==1)
-					actionFini_P1=champion_P1->sautPunch(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->sautPunch(clockAnim_P1,*champion_P2,prendCoup_P2,joueur2);
 
 				else if(deplacementX_P1==1)
 				{
@@ -223,7 +223,7 @@ int main()
 						champion_P1->avancer(clockAnim_P1,*champion_P2);
 				}
 				else if(deplacementY_P1==1)
-					actionFini_P1=champion_P1->sauter(clockAnim_P1,clockAttente_P1);
+					actionFini_P1=champion_P1->sauter(clockAnim_P1,clockAttente_P1,*champion_P2);
 
 				else if(deplacementY_P1==-1)
 					champion_P1->accroupi(clockAnim_P1,action_P1==0);
@@ -232,13 +232,13 @@ int main()
 					champion_P1->garde(clockAnim_P1);
 
 				else if(action_P1==1)
-					actionFini_P1=champion_P1->punch(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->punch(clockAnim_P1,*champion_P2,prendCoup_P2,joueur2);
 
 				else if(action_P1==2)
-					actionFini_P1=champion_P1->kick(clockAnim_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2);
+					actionFini_P1=champion_P1->kick(clockAnim_P1,*champion_P2,prendCoup_P2,joueur2);
 
 				else if(action_P1==3)
-					actionFini_P1=champion_P1->SP(clockAnim_P1,effet_P1,champion_P2->getHurtbox(),prendCoup_P2,joueur2,son_P1);
+					actionFini_P1=champion_P1->SP(clockAnim_P1,effet_P1,*champion_P2,prendCoup_P2,joueur2,son_P1);
 
 				else
 					champion_P1->statique(clockAnim_P1,*champion_P2);
@@ -267,20 +267,20 @@ int main()
 					if(champion_P2->getOrientation()==1)
 						actionFini_P2=champion_P2->sauterAvant(clockAnim_P2,*champion_P1);
 					else
-						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2);
+						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2,*champion_P1);
 				}
 				else if(deplacementX_P2==-1 && deplacementY_P2==1)
 				{
 					if(champion_P2->getOrientation()==1)
-						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2);
+						actionFini_P2=champion_P2->sauterArriere(clockAnim_P2,*champion_P1);
 					else
 						actionFini_P2=champion_P2->sauterAvant(clockAnim_P2,*champion_P1);
 				}
 				else if(deplacementY_P2==1 && action_P2==2)
-					actionFini_P2=champion_P2->sautKick(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->sautKick(clockAnim_P2,*champion_P1,prendCoup_P1,joueur1);
 
 				else if(deplacementY_P2==1 && action_P2==1)
-					actionFini_P2=champion_P2->sautPunch(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->sautPunch(clockAnim_P2,*champion_P1,prendCoup_P1,joueur1);
 
 				else if(deplacementX_P2==1)
 				{
@@ -297,7 +297,7 @@ int main()
 						champion_P2->avancer(clockAnim_P2,*champion_P1);
 				}
 				else if(deplacementY_P2==1)
-					actionFini_P2=champion_P2->sauter(clockAnim_P2,clockAttente_P2);
+					actionFini_P2=champion_P2->sauter(clockAnim_P2,clockAttente_P2,*champion_P1);
 
 				else if(deplacementY_P2==-1)
 					champion_P2->accroupi(clockAnim_P2,action_P2==0);
@@ -306,13 +306,13 @@ int main()
 					champion_P2->garde(clockAnim_P2);
 
 				else if(action_P2==1)
-					actionFini_P2=champion_P2->punch(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->punch(clockAnim_P2,*champion_P1,prendCoup_P1,joueur1);
 
 				else if(action_P2==2)
-					actionFini_P2=champion_P2->kick(clockAnim_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1);
+					actionFini_P2=champion_P2->kick(clockAnim_P2,*champion_P1,prendCoup_P1,joueur1);
 
 				else if(action_P2==3)
-					actionFini_P2=champion_P2->SP(clockAnim_P2,effet_P2,champion_P1->getHurtbox(),prendCoup_P1,joueur1,son_P2);
+					actionFini_P2=champion_P2->SP(clockAnim_P2,effet_P2,*champion_P1,prendCoup_P1,joueur1,son_P2);
 
 				else
 					champion_P2->statique(clockAnim_P2,*champion_P1);
@@ -350,13 +350,13 @@ int main()
 
 	        window.draw(champion_P1->getSprite());
 	        window.draw(effet_P1);
-	        //window.draw(champion_P1.getHurtbox());
-	        //window.draw(champion_P1.getHitbox());
+	        window.draw(champion_P1->getHurtbox());
+	        window.draw(champion_P1->getHitbox());
 
 	        window.draw(champion_P2->getSprite());
 	        window.draw(effet_P2);
-	        //window.draw(champion_P2.getHurtbox());
-	        //window.draw(champion_P2.getHitbox());
+	        window.draw(champion_P2->getHurtbox());
+	      	//window.draw(champion_P2->getHitbox());
 
 	        window.display();
 	    }else if(selecEcran==-1) //fermuture de la fenetre

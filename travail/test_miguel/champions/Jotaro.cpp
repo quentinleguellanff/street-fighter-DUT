@@ -593,13 +593,16 @@ void Jotaro::reculer(sf::Clock& clockAnim)
 	keepInWalls();
 }
 
-bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
+
+bool Jotaro::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente,Personnage& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=100;
     bool fini=false;
+
+    collisionsaut(ennemi,deplacement);
 
     if(_cptSauter==0)
     {
@@ -706,6 +709,9 @@ bool Jotaro::sauterAvant(sf::Clock& clockAnim,Personnage& ennemi)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=100,deplacementX=50*_orientation;
     bool fini=false;
+
+    collisionsaut(ennemi,deplacementX);
+
     if(_cptSauter==0)
     {
     	_cptSauter++;
@@ -805,13 +811,15 @@ bool Jotaro::sauterAvant(sf::Clock& clockAnim,Personnage& ennemi)
     return fini;
 }
 
-bool Jotaro::sauterArriere(sf::Clock& clockAnim)
+bool Jotaro::sauterArriere(sf::Clock& clockAnim,Personnage& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=100,deplacementX=70*_orientation;
     bool fini=false;
+
+    collisionsaut(ennemi,deplacementX);
 
     if(_cptSauter==0)
     {
@@ -1025,7 +1033,7 @@ bool Jotaro::seLever(sf::Clock& clockAnim)
    	return fini;
 }
 
-bool Jotaro::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::punch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1094,7 +1102,7 @@ bool Jotaro::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 		}
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(10);
@@ -1107,12 +1115,13 @@ bool Jotaro::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 	return fini;
 }
 
-bool Jotaro::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
-	return sauter(clockAnim,clockAnim);
+	return true;
+	//return sauter(clockAnim,clockAnim,ennemi);
 }
 
-bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	if(!_SPChargee)
 	{
@@ -1196,7 +1205,7 @@ bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShap
 		}
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(30);
@@ -1208,7 +1217,7 @@ bool Jotaro::punchSP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShap
 }
 
 
-bool Jotaro::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::kick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1293,7 +1302,7 @@ bool Jotaro::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& pr
 		}
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(15);
@@ -1306,7 +1315,7 @@ bool Jotaro::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& pr
 	return fini;	
 }
 
-bool Jotaro::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
     _cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1413,7 +1422,7 @@ bool Jotaro::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool
 	    }
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(15);
@@ -1427,7 +1436,7 @@ bool Jotaro::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool
 }
 
 
-bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
+bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
 {
 	if(!_SPChargee)
 	{
@@ -1518,7 +1527,7 @@ bool Jotaro::SP(sf::Clock& clockAnim,sf::Sprite& starPlat,sf::RectangleShape hur
 		}
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(50);

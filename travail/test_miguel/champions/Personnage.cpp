@@ -24,14 +24,25 @@ sf::RectangleShape Personnage::getHitbox()
 	return _hitbox;
 }
 
-bool Personnage::collisioncoup(sf::RectangleShape hurtboxEnnemi){
+bool Personnage::collisioncoup(Personnage& ennemi){
 
-    return _hitbox.getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
+    return _hitbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds());
 }
 
-bool Personnage::collisioncorps(sf::RectangleShape hurtboxEnnemi){
-
-    return _hurtbox.getGlobalBounds().intersects(hurtboxEnnemi.getGlobalBounds());
+void Personnage::collisioncorps(Personnage& ennemi)
+{
+    if(_hurtbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds()))
+    {
+        if(_orientation==1)
+        {
+            _posX= ennemi.getHurtbox().getPosition().x - (ennemi.getHurtbox().getGlobalBounds().width) - _hurtbox.getGlobalBounds().width;
+        }else 
+        {
+            _posX= ennemi.getHurtbox().getPosition().x + (ennemi.getHurtbox().getGlobalBounds().width) + _hurtbox.getGlobalBounds().width;
+        }
+    }
+    _sprite.setPosition(_posX,_posY);
+    ennemi.getSprite().setPosition(ennemi.getPosX(),ennemi.getPosY());
 }
 
 void Personnage::keepInWalls()
@@ -58,22 +69,21 @@ void Personnage::keepInWalls()
 
 void Personnage::rotate(Personnage& ennemi)
 {
-	if( (_sprite.getScale().x==SCALE && _posX> ennemi.getSprite().getPosition().x*0.9) || (_sprite.getScale().x==SCALE*-1 && _posX< ennemi.getSprite().getPosition().x*0.9) )
+	if( (_orientation==1 && _hurtbox.getPosition().x> ennemi.getHurtbox().getPosition().x) || (_orientation==-1 && _hurtbox.getPosition().x< ennemi.getHurtbox().getPosition().x) )
 	{
 		_orientation=_orientation*-1;
+        if(_orientation==-1)
+        {
+            _hurtbox.setScale(-1,1);
+            _hitbox.setScale(-1,1);
+        }else
+        {
+            _hurtbox.setScale(1,1);
+            _hitbox.setScale(1,1);
+        }
 		_posX=_posX-_tailleSprite.x*_orientation;
 		_sprite.setPosition(_posX,_posY);
 		_sprite.setScale(_orientation*SCALE,SCALE);
-	}
-
-	if(_orientation==-1)
-    {
-		_hurtbox.setScale(-1,1);
-		_hitbox.setScale(-1,1);
-	}else
-	{
-		_hurtbox.setScale(1,1);
-		_hitbox.setScale(1,1);
 	}
 }
 
@@ -82,9 +92,114 @@ int Personnage::getOrientation() const
 	return _orientation*-1;
 }
 
+void Personnage::setPosX(int n)
+{
+    _posX=n;
+}
+
+int Personnage::getPosX()
+{
+    return _posX;
+}
+
+void Personnage::setPosY(int n)
+{
+    _posY=n;
+}
+
+int Personnage::getPosY()
+{
+    return _posY;
+}
+
+
 
 void Personnage::resetCptAccroupi()
 {
 	_cptAccroupi=0;
 }
 
+void Personnage::collisionsaut(Personnage& ennemi,int& deplacement)
+{
+    if(_hurtbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds()))
+    {
+        float positionGauche = _hurtbox.getGlobalBounds().left;
+        float positionDroite = _hurtbox.getGlobalBounds().left + _hurtbox.getGlobalBounds().width;
+        float positionBasse = _hurtbox.getPosition().y + _hurtbox.getGlobalBounds().height;
+        float positionHaute = _hurtbox.getPosition().y;
+
+        float positionGaucheEnnemi = ennemi.getHurtbox().getGlobalBounds().left;
+        float positionDroiteEnnemi = ennemi.getHurtbox().getGlobalBounds().width + ennemi.getHurtbox().getGlobalBounds().left;
+        float positionHauteEnnemi = ennemi.getHurtbox().getPosition().y;
+        float positionBasseEnnemi = ennemi.getHurtbox().getPosition().y + ennemi.getHurtbox().getGlobalBounds().height;
+
+        /*
+            _scene.getBottom() est la position du sol
+            le perso verifie si l'autre perso est au sol ou en saut, le comportement est different en saut et au sol
+            normalement les personnages ne peuvent pas sortir de la fenetre, lorsqu'ils se croisent en saut leurs vitesses = 0,
+            un personnage qui saute et qui retombe sur un autre perso ira a sa droite ou à sa gauche en fonction de sa position en x
+            par rapport à l'autre personnage
+
+
+        */
+        //on verifie que le perso cible est le seul à être en saut
+        if(positionBasse < positionBasseEnnemi && positionBasseEnnemi >= _scene.getBottom())
+        {
+            if(_orientation == -1)
+            {
+                //on ne fait rien si il n'y a pas collision
+                if(!(positionGauche + deplacement > positionDroiteEnnemi && positionBasse > positionHauteEnnemi)){
+                    //on verifie si le perso cible dépasse l'autre si oui on le deplace à droite, sinon à gauche
+                    if((positionDroite + deplacement >= positionDroiteEnnemi && positionBasse > positionHauteEnnemi && positionDroiteEnnemi < _scene.getRightLimit() - ennemi.getHurtbox().getGlobalBounds().width/2)
+                            || positionGauche < 0 && positionGaucheEnnemi  < _hurtbox.getGlobalBounds().width/2 && positionBasse > positionHauteEnnemi)
+                    {
+                        _posX+=(positionDroiteEnnemi - positionGauche + 15);
+                        deplacement = 0;
+                    }
+                    else if(positionDroite + deplacement > positionGaucheEnnemi && positionBasse > positionHauteEnnemi)
+                    {
+                        _posX+=(-positionDroite + positionGaucheEnnemi - deplacement*2 - 15);
+                        deplacement = 0;
+                    }
+                }
+            }
+            else if(_orientation == 1)
+            {
+                //même chose mais avec une orientation différente
+                if(!(positionDroite + deplacement < positionGaucheEnnemi && positionBasse > positionHauteEnnemi)){
+                    if((positionGauche + deplacement <= positionGaucheEnnemi && positionBasse > positionHauteEnnemi && positionGaucheEnnemi > ennemi.getHurtbox().getGlobalBounds().width/2)
+                            || positionDroite > _scene.getRightLimit() && positionDroiteEnnemi > _scene.getRightLimit() - _hurtbox.getGlobalBounds().width/2 && positionBasse > positionHauteEnnemi)
+                    {
+                        _posX+=(-positionDroite+positionGaucheEnnemi - deplacement);
+                    }
+                    else if(positionGauche + deplacement < positionDroiteEnnemi && positionBasse > positionHauteEnnemi)
+                    {
+                        _posX+=(positionDroiteEnnemi - positionGauche - deplacement*2);
+                    }
+                }
+            }
+        }
+        //si les deux personnages sont en saut on les empêche de se confondre et on stoppe leur vitesse
+        else if(positionBasse < _scene.getBottom() && positionBasseEnnemi < _scene.getBottom())
+        {
+            if(_orientation == -1)
+            {
+                if(positionDroite + deplacement >= positionGaucheEnnemi)
+                {
+                    _posX+=(-deplacement);
+                    deplacement = 0;
+                }
+            }
+            else if(_orientation == 1)
+            {
+                if(positionGauche + deplacement <= positionDroiteEnnemi)
+                {
+                    _posX+=(-deplacement);
+                    deplacement = 0;
+                }
+            }
+        }
+        _sprite.setPosition(_posX,_posY);
+        keepInWalls();
+    }
+}
