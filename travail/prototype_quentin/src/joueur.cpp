@@ -276,6 +276,10 @@ sf::RectangleShape Joueur::getHitbox(){
     return _Broly.gethitbox();
 }
 
+int Joueur::getOrientation(){
+    return _Broly.getorientation();
+}
+
 void Joueur::setVitesseX(int vitesse){
     _Broly.setVitesseX(vitesse);
 }

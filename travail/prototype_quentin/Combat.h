@@ -14,7 +14,7 @@ class Combat
     public:
         Combat(Joueur& joueur1,Joueur& joueur2, sf::RectangleShape& sol);
         bool partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2);
-        bool hitGraphique(sf::RenderWindow&);
+        void hitGraphique(sf::RenderWindow&,bool&,Joueur&);
         virtual ~Combat();
 
     protected:
@@ -28,7 +28,8 @@ class Combat
         sf::Sprite _spritehitspark;
         sf::Sprite _spriteBackground;
         sf::Clock _clock;
-        bool hitspark;
+        bool hitspark1;
+        bool hitspark2;
         int _cptanim;
 
 };
