@@ -42,8 +42,9 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 }
 
 
-bool Dhalsim::prendCoup(sf::Clock& clockAnim,bool& enCours,sf::Sprite& effet)
+bool Dhalsim::prendCoup(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 {
+	*degats=-1;
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
@@ -83,7 +84,7 @@ bool Dhalsim::prendCoup(sf::Clock& clockAnim,bool& enCours,sf::Sprite& effet)
     		_cptPrendCoup=0;
     		setSprite(24,163,96,103);
     		fini=true;
-    		enCours=false;
+    		*degats=0;
     		break;
     	}
     }
@@ -748,7 +749,7 @@ void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
 }
 
 
-bool Dhalsim::punch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::punch(sf::Clock& clockAnim,Personnage& champEnnemi, int* degats)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -797,15 +798,14 @@ bool Dhalsim::punch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup
 
 	if(collisioncoup(champEnnemi))
 	{
-		prendCoup=true;
-		ennemi.setDegats(10);
+		*degats=10;
 	}
 
 	keepInWalls();
 	return fini;
 }
 
-bool Dhalsim::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi, int* degats)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -882,8 +882,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prend
 
 	if(collisioncoup(champEnnemi))
 	{
-		prendCoup=true;
-		ennemi.setDegats(10);
+		*degats=10;
 	}
 
     keepInWalls();
@@ -891,7 +890,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prend
 }
 
 
-bool Dhalsim::kick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::kick(sf::Clock& clockAnim,Personnage& champEnnemi, int* degats)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -952,15 +951,14 @@ bool Dhalsim::kick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup,
 
 	if(collisioncoup(champEnnemi))
 	{
-		prendCoup=true;
-		ennemi.setDegats(10);
+		*degats=10;
 	}
 
 	keepInWalls();
 	return fini;	
 }
 
-bool Dhalsim::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi,int directionY)
+bool Dhalsim::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi, int* degats,int directionY)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1048,8 +1046,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendC
 
 	if(collisioncoup(champEnnemi))
 	{
-		prendCoup=true;
-		ennemi.setDegats(10);
+		*degats=10;
 	}
 
     keepInWalls();
@@ -1058,7 +1055,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendC
 
 
 
-bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
+bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::Music& son)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1159,8 +1156,7 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 
 	if(collisioncoup(champEnnemi))
 	{
-		prendCoup=true;
-		ennemi.setDegats(30);
+		*degats=30;
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
 		_cptAction=0;
