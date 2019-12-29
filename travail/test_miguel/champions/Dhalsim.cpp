@@ -179,7 +179,7 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 	return fini;
 }
 
-void Dhalsim::statique(sf::Clock& clockAnim,Personnage& ennemi)
+void Dhalsim::statique(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -229,9 +229,13 @@ void Dhalsim::statique(sf::Clock& clockAnim,Personnage& ennemi)
 	    }
 	}
 
-    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.1);
-    _hurtbox.setSize(sf::Vector2f(60*SCALE,_tailleSprite.y*0.9));
-    rotate(ennemi);
+	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.4,_tailleSprite.y*0.9));
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+    rotate(champEnnemi);
+    int n=0;
+    collision(champEnnemi,n);
+    keepInWalls();
 }
 
 
@@ -262,7 +266,7 @@ bool Dhalsim::finGarde(sf::Clock& clockAnim)
     return fini;
 }
 
-void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& ennemi)
+void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
 	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
@@ -271,7 +275,12 @@ void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& ennemi)
     int delai=70;
     int deplacement=40;
 	
-	if(timeAnim>delai)
+	collision(champEnnemi,deplacement);
+	
+	if(deplacement==0)
+    {
+    	statique(clockAnim,champEnnemi);
+    }else if(timeAnim>delai)
 	{
 	    switch (_cptAvancer)
 	    {
@@ -334,10 +343,10 @@ void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& ennemi)
 	    	break;
 	    }
 	}
-
-    _hurtbox.setPosition(_posX,_posY);
-    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.7,_tailleSprite.y));
-    rotate(ennemi);
+	collision(champEnnemi,deplacement);
+    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y));
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY);
+    rotate(champEnnemi);
 	keepInWalls();
 }
 
@@ -415,17 +424,18 @@ void Dhalsim::reculer(sf::Clock& clockAnim)
 	    }
 	}
 
-    _hurtbox.setPosition(_posX,_posY);
-    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.7,_tailleSprite.y));
+    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y));
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY);
 	keepInWalls();
 }
 
-bool Dhalsim::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
+
+bool Dhalsim::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente,Personnage& champEnnemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacement=125;
+    int delai=70,deplacement=_scene.getBottom()/7;
     bool fini=false;
 
     if(_cptSauter==0)
@@ -433,84 +443,60 @@ bool Dhalsim::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
     	clockAttente.restart();
 	    _cptSauter++;
 	    setSprite(974,1705,50,126);
-	    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-	    _hurtbox.setPosition(_posX,_posY);
     }else if(_cptSauter==8)
     {
     	clockAnim.restart();
     	_cptSauter=0;
     	fini=true;
-    	_hurtbox.setPosition(_posX,_posY);
     }else if(timeAnim>delai)
     {
+	    collisionsaut(champEnnemi,deplacement);
 	    switch(_cptSauter)
 	    {
-	    case 0:
-	    	
-	    	break;
 	    case 1:
 		    clockAnim.restart();
 		    _cptSauter++;
 		    _posY-=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-
-		    _hurtbox.setPosition(_posX,_posY);
 	    	break;
 	    case 2:
 		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(1084,1705,57,126);
+		    setSprite(1084,1730,57,101);
 		    _posY-=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.8));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 3:
 		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(1148,1705,60,126);
+		    setSprite(1148,1744,60,87);
 		    _posY-=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.7));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 4:
 		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(1216,1705,65,126);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+		    setSprite(1216,1754,65,77);
 	    	break;
 	    case 5:
 		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(1148,1705,60,126);
+		    setSprite(1148,1744,60,87);
 		    _posY+=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.7));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 6:
 		    clockAnim.restart();
 		    _cptSauter++;
-		    setSprite(1084,1705,57,126);
+		    setSprite(1084,1730,57,101);
 		    _posY+=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.8));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 7:
 		    clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(974,1705,50,126);
 		    _posY+=deplacement;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.9));
-		    _hurtbox.setPosition(_posX,_posY);
 	    	break;
 	    }
+	    _sprite.setPosition(_posX,_posY);
+	    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
+		_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	}
 
     keepInWalls();
@@ -518,193 +504,201 @@ bool Dhalsim::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 }
 
 
-bool Dhalsim::sauterAvant(sf::Clock& clockAnim,Personnage& ennemi)
+bool Dhalsim::sauterAvant(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=30*_orientation;
+    int delai=70,deplacementY=_scene.getBottom()/7,deplacementX=50*_orientation;
     bool fini=false;
     
     if(timeAnim > delai)
     {
+    	collisionsaut(champEnnemi,deplacementX);
 	    switch(_cptSauter)
 	    {
 	    case 0:
 		    clockAnim.restart();
 		    _cptSauter++;
 			setSprite(108,1720,68,111);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-			_hurtbox.setPosition(_posX,_posY);
+
+			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 1:
 		    clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
     		_posX+=deplacementX;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setPosition(_posX,_posY);
+
+    		_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 2:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(254,1720,68,111);
+    		setSprite(254,1756,68,75);
     		_posX+=deplacementX*2;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 3:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(330,1720,80,111);
+    		setSprite(330,1785,80,46);
     		_posX+=deplacementX;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 4:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(418,1720,79,111);
+    		setSprite(418,1770,79,61);
     		_posX+=deplacementX;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 5:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(505,1720,57,111);
+    		setSprite(505,1770,57,61);
     		_posX+=deplacementX*4;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 6:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(570,1720,103,111);
+    		setSprite(570,1784,103,47);
     		_posX+=deplacementX*2;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 7:
 		    clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
     		_posX+=deplacementX;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-		    _hurtbox.setPosition(_posX,_posY);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
 	    	break;
 	    case 8:
 		    clockAnim.restart();
+		    setSprite(24,1720,82,111);
 		    _cptSauter=0;
-			setSprite(24,1720,82,111);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-			_hurtbox.setPosition(_posX,_posY);
 			fini=true;
+
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    }
+
+	    _sprite.setPosition(_posX,_posY);
 	}
 
-    rotate(ennemi);
+    rotate(champEnnemi);
     keepInWalls();
     return fini;
 }
 
-bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
+bool Dhalsim::sauterArriere(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70,deplacementY=150,deplacementX=30*_orientation;
+    int delai=70,deplacementY=_scene.getBottom()/7,deplacementX=50*_orientation;
     bool fini=false;
     
     if(timeAnim > delai)
     {
+	    collisionsaut(champEnnemi,deplacementX);
 	    switch(_cptSauter)
 	    {
 	    case 0:
 		    clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
-    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-    		_hurtbox.setPosition(_posX,_posY);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 1:
 		    clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
     		_posX-=deplacementX;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setPosition(_posX,_posY);
+
+    		_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 2:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(570,1720,103,111);
+    		setSprite(570,1784,103,47);
     		_posX-=deplacementX*2;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 3:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(505,1720,57,111);
+    		setSprite(505,1770,57,61);
     		_posX-=deplacementX;_posY-=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 4:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(418,1720,79,111);
+    		setSprite(418,1770,79,61);
     		_posX-=deplacementX;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 5:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(330,1720,80,111);
+    		setSprite(330,1785,80,46);
     		_posX-=deplacementX*4;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 6:
 		    clockAnim.restart();
 		    _cptSauter++;
-    		setSprite(254,1720,68,111);
+    		setSprite(254,1756,68,75);
     		_posX-=deplacementX*2;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.6));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.4);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.6));
+		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 	    	break;
 	    case 7:
 		    clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
     		_posX-=deplacementX;_posY+=deplacementY;
-		    _sprite.setPosition(_posX,_posY);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-		    _hurtbox.setPosition(_posX,_posY);
+
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 8:
 		    clockAnim.restart();
 		    _cptSauter=0;
 			setSprite(24,1720,82,111);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-			_hurtbox.setPosition(_posX,_posY);
 			fini=true;
+
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    }
+
+	    _sprite.setPosition(_posX,_posY);
 	}
 
     keepInWalls();
@@ -736,8 +730,8 @@ void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
     		clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(114,1424,61,95);
-    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y*0.7));
-    		_hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.3);
+    		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.9));
+    		_hurtbox.setPosition(_posX+_tailleSprite.x*0.1,_posY+_tailleSprite.y*0.1);
     	}
     }else
     {
@@ -754,7 +748,7 @@ void Dhalsim::accroupi(sf::Clock& clockAnim,bool garde)
 }
 
 
-bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::punch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -770,22 +764,19 @@ bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& 
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(24,419,82,117);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-		    _hurtbox.setPosition(_posX,_posY);
+		    
+		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
 		case 1:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(114,419,74,117);
-		    _hitbox.setSize(sf::Vector2f(16*SCALE,39*SCALE));
-		    _hitbox.setPosition(_posX+58*SCALE*_orientation,_posY+SCALE);
 			break;
 		case 2:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(197,419,108,117);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
-		    _hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.2);
 		    _hitbox.setSize(sf::Vector2f(40*SCALE,20*SCALE));
 		    _hitbox.setPosition(_posX+68*SCALE*_orientation,_posY+56*SCALE);
 			break;
@@ -799,14 +790,12 @@ bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& 
 		    clockAnim.restart();
 		    setSprite(429,419,75,117);
 		    fini=true;
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
-		    _hurtbox.setPosition(_posX,_posY);
 		    _hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		}
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(10);
@@ -816,7 +805,7 @@ bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& 
 	return fini;
 }
 
-bool Dhalsim::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::sautPunch(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -891,7 +880,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bo
 	    }
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(10);
@@ -902,7 +891,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bo
 }
 
 
-bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::kick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -918,26 +907,22 @@ bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(24,768,77,113);
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.95,_tailleSprite.y*0.9));
-    		_hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.1);
+		
+		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
 		case 1:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(109,768,56,113);
 		    _posX+= 18*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.95,_tailleSprite.y));
-    		_hurtbox.setPosition(_posX,_posY);
 			break;
 		case 2:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(173,768,126,113);
 		    _posX-=8*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.4,_tailleSprite.y*0.9));
-    		_hurtbox.setPosition(_posX,_posY+_tailleSprite.y*0.1);
+
     		_hitbox.setSize(sf::Vector2f(39*SCALE,22*SCALE));
 		    _hitbox.setPosition(_posX+87*SCALE*_orientation,_posY+51*SCALE);
 			break;
@@ -951,9 +936,7 @@ bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 		    clockAnim.restart();
 		    setSprite(437,768,56,113);
 		    _posX+=8*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
-			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.95,_tailleSprite.y));
-    		_hurtbox.setPosition(_posX,_posY);
+
     		_hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		case 5:
@@ -961,15 +944,13 @@ bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 		    clockAnim.restart();
 		    setSprite(501,768,77,113);
 		    _posX-=18*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
 		    fini=true;
-		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.95,_tailleSprite.y));
-    		_hurtbox.setPosition(_posX,_posY);
 			break;
 		}
+		_sprite.setPosition(_posX,_posY);
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(10);
@@ -979,7 +960,7 @@ bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 	return fini;	
 }
 
-bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
+bool Dhalsim::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1065,7 +1046,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,boo
 	    }
 	}
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(10);
@@ -1077,7 +1058,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,boo
 
 
 
-bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
+bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi,bool& prendCoup, Player& ennemi,sf::Music& son)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();
@@ -1094,33 +1075,35 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hu
 		    clockAnim.restart();
 		    setSprite(24,3233,76,120);
 		    _posX-=10*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
+
+		    bouleFeu.setPosition(10,10);
+		    bouleFeu.setTexture(_texture);
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 			break;
 		case 1:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(108,3233,81,120);
 		    _posX-=6*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
 			break;
 		case 2:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(197,3233,58,120);
 		    _posX+=28*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
 			break;
 		case 3:
 		    _cptAction ++;
 		    clockAnim.restart();
 		    setSprite(263,3233,92,120);
 		    _posX-=4*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);
+			
 			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
 			bouleFeu.setScale(_orientation*SCALE,SCALE);
-			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation),_posY+(_tailleSprite.y/3));
+			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));
 			break;
 		}
+		_sprite.setPosition(_posX,_posY);
 	}
 
 	if(_cptAction>=4 && _cptAction<8)
@@ -1166,13 +1149,15 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hu
 		fini=true;
 		_cptAction=0;
 	}
-	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x,_tailleSprite.y));
-    _hurtbox.setPosition(_posX,_posY);
+
+
+	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 
     _hitbox.setSize(sf::Vector2f(bouleFeu.getGlobalBounds().width,bouleFeu.getGlobalBounds().height));
 	_hitbox.setPosition(bouleFeu.getPosition().x,bouleFeu.getPosition().y);
 
-	if(collisioncoup(hurtboxEnnemi))
+	if(collisioncoup(champEnnemi))
 	{
 		prendCoup=true;
 		ennemi.setDegats(30);

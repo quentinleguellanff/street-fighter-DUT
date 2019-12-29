@@ -53,6 +53,7 @@ public:
 	void resetPV();				//reinitialisation des points de vie
 	void setDegats(int);		//inflige un nombre de dégats passés en arguments
 	sf::RectangleShape getBarrePV();	//renvoi la barre de vie pour permettre son affichage
+
 };
 
 #endif

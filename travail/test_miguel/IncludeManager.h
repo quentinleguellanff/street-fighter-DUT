@@ -5,7 +5,6 @@
 
 #include "Player.h"
 #include "Scene.h"
-
 #include "champions/Personnage.h"
 #include "menu.h"
 
