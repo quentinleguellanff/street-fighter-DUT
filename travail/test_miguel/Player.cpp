@@ -161,7 +161,7 @@ void Player::recuperationAttaquesP2()
 	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
 	{
 		bool punch=false,kick=false;
-		if (sf::Joystick::isConnected(0))   // Commandes pour manette
+		if (sf::Joystick::isConnected(1))   // Commandes pour manette
 		{
 			punch=sf::Joystick::isButtonPressed(0, 0);
 			kick=sf::Joystick::isButtonPressed(0, 1);
@@ -236,6 +236,84 @@ void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool
 		_action=-1;
 }
 
+/*void Player::lancerActions(Personnage& monPerso,Personnage& persoEnnemi,Player& jEnnemi)
+{
+	if(_prendCoup)
+	{
+		_posHorizontale==0;_posVerticale==0;_action=-1;
+		_actionFini=monPerso.prendCoup(_clockAnim,_prendCoup,_effet);
+	}
+	else if(_action!=_derniereAction && _derniereAction==0 && _posVerticale==0)
+		_actionFini=monPerso.finGarde(_clockAnim);
+	else if(_etaitAccroupi && _posVerticale!=-1)
+		_actionFini=monPerso.seLever(_clockAnim);
+	else if(_posHorizontale==1 && _posVerticale==1)
+	{
+		if(monPerso.getOrientation()==-1)
+			_actionFini=monPerso.sauterAvant(_clockAnim,*persoEnnemi);
+		else
+			_actionFini=monPerso.sauterArriere(_clockAnim,*persoEnnemi);
+	}
+	else if(_posHorizontale==-1 && _posVerticale==1)
+	{
+		if(monPerso.getOrientation()==-1)
+			_actionFini=monPerso.sauterArriere(_clockAnim,*persoEnnemi);
+		else
+			_actionFini=monPerso.sauterAvant(_clockAnim,*persoEnnemi);
+	}
+	else if(_posVerticale==1 && _action==2)
+	{
+		int n;
+		_actionFini=monPerso.sautKick(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi,n);
+	}
+	else if(_posVerticale==1 && _action==1)
+		_actionFini=monPerso.sautPunch(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
+
+	else if(_posHorizontale==1)
+	{
+		if(monPerso.getOrientation()==-1)
+			monPerso.avancer(_clockAnim,*persoEnnemi);
+		else
+			monPerso.reculer(_clockAnim);
+	}
+	else if(_posHorizontale==-1)
+	{
+		if(monPerso.getOrientation()==-1)
+			monPerso.reculer(_clockAnim);
+		else
+			monPerso.avancer(_clockAnim,*persoEnnemi);
+	}
+	else if(_posVerticale==1)
+		_actionFini=monPerso.sauter(_clockAnim,clockAttente,*persoEnnemi);
+
+	else if(_posVerticale==-1)
+		monPerso.accroupi(_clockAnim,_action==0);
+
+	else if(_action==0)
+		monPerso.garde(_clockAnim);
+
+	else if(_action==1)
+		_actionFini=monPerso.punch(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
+
+	else if(_action==2)
+		_actionFini=monPerso.kick(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
+
+	else if(_action==3)
+		_actionFini=monPerso.SP(_clockAnim,_effet,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi,son);
+
+	else
+		monPerso.statique(_clockAnim,*persoEnnemi);
+
+	if(_posVerticale!=-1)
+		monPerso.resetCptAccroupi();
+
+	if( !(_action!=_derniereAction && _derniereAction==0) || _actionFini==true)
+		_derniereAction=_action;
+
+	if(_actionFini==true)
+		_etaitAccroupi=(_posVerticale==-1);
+}*/
+
 
 int Player::getPosHorizontale()
 {
@@ -282,4 +360,9 @@ sf::RectangleShape Player::getBarrePV()
 		_barrePV.setSize(sf::Vector2f(0,50));
 
 	return _barrePV;
+}
+
+bool Player::getPrendCoup()
+{
+	return _prendCoup;
 }

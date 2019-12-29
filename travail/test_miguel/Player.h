@@ -15,6 +15,12 @@ private:
 	int _PV;			// points de vie du joueur
 	sf::RectangleShape _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
 
+	// attributs des joysticks permettant de diriger le champion
+	float joystick0_axisX;	
+	float joystick0_axisY;
+	float joystick1_axisX;
+	float joystick1_axisY;
+
 	void _resetAttributs();	//initialisation des attributs de position
 	int _posHorizontale;	//attribut de position horizontale
 	int _posVerticale;		//attribut de position verticale
@@ -27,11 +33,14 @@ private:
 		3 - SP
 	*/
 
-	// attributs des joysticks permettant de diriger le champion
-	float joystick0_axisX;	
-	float joystick0_axisY;
-	float joystick1_axisX;
-	float joystick1_axisY;
+	bool _prendCoup;
+	bool _apparitionsFini;
+	bool _actionFini;
+	bool _etaitAccroupi;
+	int _derniereAction;
+
+	sf::Clock _clockAnim;
+	sf::Sprite _effet;
 
 public:
 	Player(){};		//constructeur vide
@@ -45,6 +54,7 @@ public:
 
 	void gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere,bool garde, bool punch, bool kick, bool SP1);
 	// gestion de la superposition decommandes et de l'ordre d'importance de ces dernières
+	//void lancerActions(Personnage& monPerso,Personnage& persoEnnemi,Player& jEnnemi);
 
 	int getPosHorizontale();	//recupération de la position horizontale demandée
 	int getPosVerticale();		//recupération de la position verticale demandée
@@ -54,6 +64,7 @@ public:
 	void setDegats(int);		//inflige un nombre de dégats passés en arguments
 	sf::RectangleShape getBarrePV();	//renvoi la barre de vie pour permettre son affichage
 
+	bool getPrendCoup();
 };
 
 #endif

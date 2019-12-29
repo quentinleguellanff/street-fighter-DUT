@@ -1430,7 +1430,7 @@ bool Jotaro::kick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, 
 	return fini;	
 }
 
-bool Jotaro::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi)
+bool Jotaro::sautKick(sf::Clock& clockAnim,Personnage& champEnnemi,bool& prendCoup, Player& ennemi,int directionY)
 {
     _cptStatic=0;
 	sf::Time elapsed = clockAnim.getElapsedTime();

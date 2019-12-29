@@ -87,7 +87,7 @@ public:
 	virtual bool punchSP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&){return true;};	//animation de coup de poing spécial
 	virtual bool sautPunch(sf::Clock&,Personnage&,bool&,Player&){return true;};			//animation de coup de poing en saut
 	virtual bool kick(sf::Clock&,Personnage&,bool&,Player&){return true;};					//animation de coup de pied
-	virtual bool sautKick(sf::Clock&,Personnage&,bool&,Player&){return true;};				//animation de coup de pied en saut
+	virtual bool sautKick(sf::Clock&,Personnage&,bool&,Player&,int){return true;};				//animation de coup de pied en saut
 	virtual bool SP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&,sf::Music&){return true;};		//animation de coup spécial
 };
 
@@ -122,7 +122,7 @@ public:
 	bool punchSP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&) override;	//animation de coup de poing spécial
 	bool sautPunch(sf::Clock&,Personnage&,bool&,Player&) override;			//animation de coup de poing en saut
 	bool kick(sf::Clock&,Personnage&,bool&,Player&) override;					//animation de coup de pied
-	bool sautKick(sf::Clock&,Personnage&,bool&,Player&) override;				//animation de coup de pied en saut
+	bool sautKick(sf::Clock&,Personnage&,bool&,Player&,int) override;				//animation de coup de pied en saut
 	bool SP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
@@ -149,7 +149,7 @@ public:
 	virtual bool punch(sf::Clock&,Personnage&,bool&,Player&) override;				//animation de coup de poing
 	virtual bool sautPunch(sf::Clock&,Personnage&,bool&,Player&) override;			//animation de coup de poing en saut
 	virtual bool kick(sf::Clock&,Personnage&,bool&,Player&) override;					//animation de coup de pied
-	virtual bool sautKick(sf::Clock&,Personnage&,bool&,Player&) override;				//animation de coup de pied en saut
+	virtual bool sautKick(sf::Clock&,Personnage&,bool&,Player&,int) override;				//animation de coup de pied en saut
 	virtual bool SP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
@@ -176,7 +176,7 @@ public:
 	bool punch(sf::Clock&,Personnage&,bool&,Player&) override;				//animation de coup de poing
 	bool sautPunch(sf::Clock&,Personnage&,bool&,Player&) override;			//animation de coup de poing en saut
 	bool kick(sf::Clock&,Personnage&,bool&,Player&) override;					//animation de coup de pied
-	bool sautKick(sf::Clock&,Personnage&,bool&,Player&) override;				//animation de coup de pied en saut
+	bool sautKick(sf::Clock&,Personnage&,bool&,Player&,int) override;				//animation de coup de pied en saut
 	bool SP(sf::Clock&,sf::Sprite&,Personnage&,bool&,Player&,sf::Music&) override;		//animation de coup spécial
 };
 
