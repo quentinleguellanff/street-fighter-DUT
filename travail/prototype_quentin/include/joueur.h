@@ -52,6 +52,7 @@ class Joueur
         void saut(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi,bool ennemiensaut);
         void setVitesseX(int);
         int getVitesseX();
+        int getOrientation();
         void deplacer(int);
         void seretourner(sf::RectangleShape hurtboxEnnemi);
         sf::RectangleShape getBarreVie();

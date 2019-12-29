@@ -206,7 +206,7 @@ bool Broly::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Render
     }
     sf::Time elapsed = _clockanim.getElapsedTime();
     int timeanim = elapsed.asMilliseconds();
-    if(timeanim > 50)
+    if(timeanim > 30)
     {
         _cptAnimCoupPoing++;
         _clockanim.restart();

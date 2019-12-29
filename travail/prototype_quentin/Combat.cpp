@@ -5,6 +5,9 @@
 #include "Broly.h"
 #include "joueur.h"
 
+
+using namespace std;
+
 Combat::Combat(Joueur& joueur1, Joueur& joueur2,sf::RectangleShape& sol)
 {
     _joueur1 = joueur1;
@@ -14,7 +17,7 @@ Combat::Combat(Joueur& joueur1, Joueur& joueur2,sf::RectangleShape& sol)
         cout << "erreur de chargement de texture de la scene" << endl;
     }
 
-    if (!_Texturehitspark.loadFromFile("sprite/hitspark_SF3.png"))//load de la texture du personnage
+    if (!_Texturehitspark.loadFromFile("sprite/hitsparks.png"))//load de la texture du personnage
     {
         cout << "erreur de chargement de texture des effets visuels" << endl;
     }
@@ -22,10 +25,11 @@ Combat::Combat(Joueur& joueur1, Joueur& joueur2,sf::RectangleShape& sol)
     _spriteBackground.setScale(0.75,0.83);
      _spritehitspark.setTexture(_Texturehitspark);
      _spritehitspark.setTextureRect(sf::IntRect(0,22,103,96));
-     _spritehitspark.setScale(-1,1);
-     _spritehitspark.setScale(0.7,0.7);
+     //_spritehitspark.setScale(-1,1);
+     //_spritehitspark.setScale(0.9,0.9);
+    hitspark1 = false;
+    hitspark2 = false;
      _spritehitspark.setOrigin(_spritehitspark.getGlobalBounds().width,_spritehitspark.getPosition().y);
-     hitspark = false;
      _cptanim = 0;
 }
 
@@ -35,7 +39,6 @@ Combat::~Combat()
 }
 
 bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
-
             window.clear();
             sf::Event event;
             while (window.pollEvent(event))
@@ -76,52 +79,70 @@ bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
             window.draw(_joueur2.getBarreVie());
             //window.draw(_joueur1.getHurtbox());
             //window.draw(_joueur2.getHurtbox());
+            //window.draw(_joueur2.getHitbox());
+            cout << _joueur2.getHitbox().getPosition().x << endl;
             if(toucheJ1){
-                hitspark = true;
+                hitspark1 = true;
             }
-            if(hitspark){
-                hitspark = hitGraphique(window);
-                cout << "ok" << endl;
+            if(toucheJ2){
+                hitspark2 = true;
             }
-            else if(toucheJ2){
-                window.draw(_joueur1.getHitbox());
-            }
+            hitGraphique(window,hitspark1,_joueur2);
+            hitGraphique(window,hitspark2,_joueur1);
             window.display();
             return true;
 }
 
-bool Combat::hitGraphique(sf::RenderWindow& window){
-    _spritehitspark.setPosition(_joueur2.getHitbox().getPosition().x + _joueur2.getHitbox().getGlobalBounds().width/2,_joueur2.getHitbox().getPosition().y - _joueur2.getHitbox().getGlobalBounds().height );
-    sf::Time elapsed = _clock.getElapsedTime();
-    int timeanim = elapsed.asMilliseconds();
-    if(timeanim > 40)
-    {
-        _cptanim +=1;
-        _clock.restart();
-    }
-    if(_cptanim == 0){
-        _spritehitspark.setTextureRect(sf::IntRect(0,22,103,96));
-    }
-    else if(_cptanim == 1){
-        _spritehitspark.setTextureRect(sf::IntRect(0,22,103,96));
+void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueur){
+    if(hitspark){
+        int Orientation = joueur.getOrientation();
+        cout << Orientation << endl;
+        float positionHitboxX;
+        if(Orientation == 1){
+            _spritehitspark.setScale(-1,1);
+            positionHitboxX = joueur.getHitbox().getPosition().x - joueur.getHitbox().getGlobalBounds().width;
+        }
+        else if(Orientation == -1){
+            _spritehitspark.setScale(1,1);
+            positionHitboxX = joueur.getHitbox().getPosition().x + 286;
+        }
+        cout << positionHitboxX << endl;
+        //float positionHitboxX = _joueur2.getHitbox().getPosition().x - _joueur2.getHitbox().getGlobalBounds().width/2;
+        float positionHitboxY = joueur.getHitbox().getPosition().y - joueur.getHitbox().getGlobalBounds().height*1.5;
 
+
+        vector<vector<int>> tabTexture = {{},
+                                          {0,1,143,220},
+                                          {146,1,146,220},
+                                          {295,1,197,220},
+                                          {495,1,197,220},
+                                          {695,1,197,220},
+                                          {895,1,185,220}
+                                         };
+
+        vector<sf::Vector2f> tabPosition = {sf::Vector2f(positionHitboxX,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+10*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+20*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+5*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-40*Orientation,positionHitboxY),
+                                           };
+        sf::Time elapsed = _clock.getElapsedTime();
+        int timeanim = elapsed.asMilliseconds();
+        if(timeanim > 30)//30 bonne valeur
+        {
+            _cptanim +=1;
+            _clock.restart();
+        }
+        if(_cptanim >= 1 && _cptanim <= 6){
+            _spritehitspark.setTextureRect(sf::IntRect(tabTexture[_cptanim][0],tabTexture[_cptanim][1],tabTexture[_cptanim][2],tabTexture[_cptanim][3]));
+            _spritehitspark.setPosition(tabPosition[_cptanim]);
+            window.draw(_spritehitspark);
+        }
+        else if(_cptanim > 6){
+            _cptanim = 0;
+            hitspark = false;
+        }
     }
-    else if(_cptanim == 2){
-        _spritehitspark.setTextureRect(sf::IntRect(141,11,124,120));
-    }
-    else if(_cptanim == 3){
-        _spritehitspark.setTextureRect(sf::IntRect(304,3,151,136));
-    }
-    else if(_cptanim == 4){
-        _spritehitspark.setTextureRect(sf::IntRect(497,0,142,142));
-    }
-    else if(_cptanim == 5){
-        _spritehitspark.setTextureRect(sf::IntRect(678,35,148,93));
-    }
-    else{
-        _cptanim = 0;
-        return false;
-    }
-    window.draw(_spritehitspark);
-    return true;
 }
