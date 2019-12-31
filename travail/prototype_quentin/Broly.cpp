@@ -206,7 +206,7 @@ bool Broly::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Render
     }
     sf::Time elapsed = _clockanim.getElapsedTime();
     int timeanim = elapsed.asMilliseconds();
-    if(timeanim > 30)
+    if(timeanim > 40)
     {
         _cptAnimCoupPoing++;
         _clockanim.restart();
@@ -236,6 +236,7 @@ bool Broly::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Render
         spriteBroly.setTextureRect(sf::IntRect(2+_cptAnimCoupPoing*179, 2765,177,190));
     }
     window.draw(spriteBroly);
+    cout << _cptAnimCoupPoing << endl;
     return true;
 }
 
@@ -318,7 +319,7 @@ sf::RectangleShape Broly::gethitbox()
 void Broly::resetcoup()
 {
     int decalagex = -112*_orientation;
-    spriteBroly.setPosition(spriteBroly.getPosition().x-decalagex,spriteBroly.getPosition().y-20);
+    spriteBroly.setPosition(spriteBroly.getPosition().x-decalagex,spriteBroly.getPosition().y-10);
     _cptAnimCoupPoing = 0;
     _ok = false;
 }
@@ -505,6 +506,11 @@ void Broly::retourner()
     _hitbox.setScale(_scale*_orientation,_scale);
     spriteBroly.setPosition(positionBaseBroly);
     _hurtbox.setPosition(spriteBroly.getPosition().x, spriteBroly.getPosition().y);
+}
+
+void Broly::restartClock(){
+    _clockanim.restart();
+    _clockmove.restart();
 }
 
 void Broly::pauseAnimation(){

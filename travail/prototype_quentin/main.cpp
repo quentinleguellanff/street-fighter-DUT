@@ -5,6 +5,8 @@
 #include "joueur.h"
 #include "collisionmanager.h"
 #include "combat.h"
+#include "Personnage.h"
+#include "Ryu.h"
 
 using namespace std;
 
@@ -39,8 +41,15 @@ int main()
     //CREATION DE DEUX INSTANCES DE LA CLASSE BROLY
     Broly Brolytest(-1);
     Broly Brolytest2(1);
-    Joueur joueur1(1,Brolytest);
-    Joueur joueur2(2,Brolytest2);
+
+
+    Personnage* PersoJ1;
+    Personnage* PersoJ2;
+    PersoJ1 = new Ryu(1);
+    PersoJ2 = new Ryu(-1);
+
+    Joueur joueur1(1,Brolytest,PersoJ1);
+    Joueur joueur2(2,Brolytest2,PersoJ2);
 
     collisionmanager collision;
     Combat combat(joueur1,joueur2,sol);
@@ -49,6 +58,9 @@ int main()
     {
         if(combatEnCours){
             combat.partie(window,toucheJ1,toucheJ2);
+            //window.clear();
+            //PersoJ1->debout(window,joueur1.getHurtbox());
+            //window.display();
         }
         if(fincombat){
             window.clear();
