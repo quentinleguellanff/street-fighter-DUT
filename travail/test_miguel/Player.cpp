@@ -1,4 +1,5 @@
 #include "IncludeManager.h"
+#include "Player.h"
 #include <string>
 
 using namespace std;
@@ -7,6 +8,12 @@ Player::Player(int n,sf::RenderWindow& window)
 {
 	_numPlayer=n;
 	_PV=100;
+
+	_posHorizontale=0;
+	_posVerticale=0;
+	_action=-1;
+	_derniereAction=-1;
+	_actionFini=true;
 
 	_barrePV.setSize(sf::Vector2f(_PV*8,50));
 	if(n==1)
@@ -19,14 +26,31 @@ Player::Player(int n,sf::RenderWindow& window)
 	}
 }
 
+void Player::setChampion(Personnage* perso)
+{
+	_champion=perso;
+}
+
+Personnage* Player::getChampion()
+{
+	return _champion;
+}
+
+sf::Sprite Player::getEffet()
+{
+	return _effet;
+}
+
 void Player::_resetAttributs()
 {
 	_posHorizontale=0;
 	_posVerticale=0;
-	_action=0;
+	_action=-1;
+	_derniereAction=-1;
+	_actionFini=true;
 }
 
-void Player::recuperationCommandesP1()    // Commandes pour le player 1
+void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le player 1
 {
 	_resetAttributs();
 
@@ -71,13 +95,12 @@ void Player::recuperationCommandesP1()    // Commandes pour le player 1
 		avancer=sf::Keyboard::isKeyPressed(sf::Keyboard::D);  	// touche pour avancer:    D
 		saut=sf::Keyboard::isKeyPressed(sf::Keyboard::Z);	  	// touche pour sauter:     Z
 		accroupi=sf::Keyboard::isKeyPressed(sf::Keyboard::S);	// touche pour accroupir:  S
-		garde=sf::Keyboard::isKeyPressed(sf::Keyboard::C);	  	// touche pour protection: C   
 		punch=sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	// touche pour puncher:    A
 		kick=sf::Keyboard::isKeyPressed(sf::Keyboard::E);	  	// touche pour kicker:     E
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::R);		// touche pour spécial 1:  R
 	}
 	
-	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
+	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
 
 void Player::recuperationAttaquesP1()
@@ -102,7 +125,7 @@ void Player::recuperationAttaquesP1()
 }
 
 
-void Player::recuperationCommandesP2()    // Commandes pour le player 2
+void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le player 2
 {
 	_resetAttributs();
 
@@ -143,17 +166,16 @@ void Player::recuperationCommandesP2()    // Commandes pour le player 2
 			accroupi=true;
 	}else   // Commandes clavier au cas ou manette absent
 	{
-		reculer=sf::Keyboard::isKeyPressed(sf::Keyboard::Right);  	// touche pour reculer:    Right
-		avancer=sf::Keyboard::isKeyPressed(sf::Keyboard::Left);  	// touche pour avancer:    Left
+		avancer=sf::Keyboard::isKeyPressed(sf::Keyboard::Right);  	// touche pour reculer:    Right
+		reculer=sf::Keyboard::isKeyPressed(sf::Keyboard::Left);  	// touche pour avancer:    Left
 		saut=sf::Keyboard::isKeyPressed(sf::Keyboard::Up);	  		// touche pour sauter:     Up
 		accroupi=sf::Keyboard::isKeyPressed(sf::Keyboard::Down);	// touche pour accroupir:  Down
-		garde=sf::Keyboard::isKeyPressed(sf::Keyboard::O);	  		// touche pour protection: O   
 		punch=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  		// touche pour puncher:    P
 		kick=sf::Keyboard::isKeyPressed(sf::Keyboard::M);	  		// touche pour kicker:     M
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::L);			// touche pour spécial 1:  L
 
 	}
-	gestionDesCommandes(avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
+	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
 }
 
 void Player::recuperationAttaquesP2()
@@ -177,7 +199,7 @@ void Player::recuperationAttaquesP2()
 	}	
 }
 
-void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool garde, bool punch, bool kick, bool SP1 )
+void Player::gestionDesCommandes(Player& ennemi,bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere, bool garde, bool punch, bool kick, bool SP1 )
 {
 	if(punch && (avancer || reculer))
 	{
@@ -224,7 +246,7 @@ void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool
 	else 
 		_posVerticale=0;
 
-	if(garde)
+	if(ennemi.getAction()>0 && _posHorizontale==-1)
 		_action=0;
 	else if(punch)
 		_action=1;
@@ -236,93 +258,100 @@ void Player::gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool
 		_action=-1;
 }
 
-/*void Player::lancerActions(Personnage& monPerso,Personnage& persoEnnemi,Player& jEnnemi)
+bool Player::lancerApparition()
 {
-	if(_prendCoup)
+	return _champion->apparition(_clockAnim,_effet);
+}
+
+bool Player::lancerActions(Personnage& persoEnnemi,Player& jEnnemi)
+{
+	if(_prendCoup!=0)
 	{
-		_posHorizontale==0;_posVerticale==0;_action=-1;
-		_actionFini=monPerso.prendCoup(_clockAnim,_prendCoup,_effet);
+		if(_action==0)
+		{
+			_actionFini=_champion->parade(_clockAnim,&_prendCoup,_effet);
+		}else
+		{
+			if(_prendCoup>0)
+				setDegats(_prendCoup);
+			_posHorizontale==0;_posVerticale==0;_action=-1;
+			_actionFini=_champion->prendCoup(_clockAnim,&_prendCoup,_effet);
+		}
 	}
 	else if(_action!=_derniereAction && _derniereAction==0 && _posVerticale==0)
-		_actionFini=monPerso.finGarde(_clockAnim);
+		_actionFini=_champion->finGarde(_clockAnim);
 	else if(_etaitAccroupi && _posVerticale!=-1)
-		_actionFini=monPerso.seLever(_clockAnim);
+		_actionFini=_champion->seLever(_clockAnim);
 	else if(_posHorizontale==1 && _posVerticale==1)
 	{
-		if(monPerso.getOrientation()==-1)
-			_actionFini=monPerso.sauterAvant(_clockAnim,*persoEnnemi);
+		if(_champion->getOrientation()==-1)
+			_actionFini=_champion->sauterAvant(_clockAnim,persoEnnemi);
 		else
-			_actionFini=monPerso.sauterArriere(_clockAnim,*persoEnnemi);
+			_actionFini=_champion->sauterArriere(_clockAnim,persoEnnemi);
 	}
 	else if(_posHorizontale==-1 && _posVerticale==1)
 	{
-		if(monPerso.getOrientation()==-1)
-			_actionFini=monPerso.sauterArriere(_clockAnim,*persoEnnemi);
+		if(_champion->getOrientation()==-1)
+			_actionFini=_champion->sauterArriere(_clockAnim,persoEnnemi);
 		else
-			_actionFini=monPerso.sauterAvant(_clockAnim,*persoEnnemi);
+			_actionFini=_champion->sauterAvant(_clockAnim,persoEnnemi);
 	}
-	else if(_posVerticale==1 && _action==2)
-	{
-		int n;
-		_actionFini=monPerso.sautKick(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi,n);
-	}
-	else if(_posVerticale==1 && _action==1)
-		_actionFini=monPerso.sautPunch(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
-
+	
 	else if(_posHorizontale==1)
 	{
-		if(monPerso.getOrientation()==-1)
-			monPerso.avancer(_clockAnim,*persoEnnemi);
+		if(_champion->getOrientation()==-1)
+			_champion->avancer(_clockAnim,persoEnnemi);
 		else
-			monPerso.reculer(_clockAnim);
+			_champion->reculer(_clockAnim);
 	}
 	else if(_posHorizontale==-1)
 	{
-		if(monPerso.getOrientation()==-1)
-			monPerso.reculer(_clockAnim);
+		if(_champion->getOrientation()==-1)
+			_champion->reculer(_clockAnim);
 		else
-			monPerso.avancer(_clockAnim,*persoEnnemi);
+			_champion->avancer(_clockAnim,persoEnnemi);
 	}
 	else if(_posVerticale==1)
-		_actionFini=monPerso.sauter(_clockAnim,clockAttente,*persoEnnemi);
+		_actionFini=_champion->sauter(_clockAnim,_action,persoEnnemi,jEnnemi.getPrendCoup());
 
 	else if(_posVerticale==-1)
-		monPerso.accroupi(_clockAnim,_action==0);
+		_champion->accroupi(_clockAnim,_action==0);
 
 	else if(_action==0)
-		monPerso.garde(_clockAnim);
+		_champion->garde(_clockAnim);
 
 	else if(_action==1)
-		_actionFini=monPerso.punch(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
+		_actionFini=_champion->punch(_clockAnim,persoEnnemi,jEnnemi.getPrendCoup());
 
 	else if(_action==2)
-		_actionFini=monPerso.kick(_clockAnim,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi);
+		_actionFini=_champion->kick(_clockAnim,persoEnnemi,jEnnemi.getPrendCoup());
 
 	else if(_action==3)
-		_actionFini=monPerso.SP(_clockAnim,_effet,*persoEnnemi,jEnnemi.getPrendCoup(),jEnnemi,son);
+		_actionFini=_champion->SP(_clockAnim,_effet,persoEnnemi,jEnnemi.getPrendCoup(),son);
 
 	else
-		monPerso.statique(_clockAnim,*persoEnnemi);
+		_champion->statique(_clockAnim,persoEnnemi);
 
 	if(_posVerticale!=-1)
-		monPerso.resetCptAccroupi();
+		_champion->resetCptAccroupi();
 
 	if( !(_action!=_derniereAction && _derniereAction==0) || _actionFini==true)
 		_derniereAction=_action;
 
 	if(_actionFini==true)
 		_etaitAccroupi=(_posVerticale==-1);
-}*/
 
-
-int Player::getPosHorizontale()
-{
-	return _posHorizontale;
+	return _actionFini;
 }
 
-int Player::getPosVerticale()
+bool Player::finPartie()
 {
-	return _posVerticale;
+	_posVerticale=0;_posHorizontale=0;_action=-1;
+	_effet.setTextureRect(sf::IntRect(0,0,0,0));
+	if(_PV>0)
+		return _champion->victoire(_clockAnim,son);
+	else
+		return _champion->mort(_clockAnim);
 }
 
 int Player::getAction()
@@ -362,7 +391,12 @@ sf::RectangleShape Player::getBarrePV()
 	return _barrePV;
 }
 
-bool Player::getPrendCoup()
+int* Player::getPrendCoup()
 {
-	return _prendCoup;
+	return &_prendCoup;
+}
+
+void Player::setPrendCoup(int n)
+{
+	_prendCoup=n;
 }

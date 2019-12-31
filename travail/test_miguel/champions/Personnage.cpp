@@ -24,6 +24,12 @@ sf::RectangleShape Personnage::getHitbox()
 	return _hitbox;
 }
 
+sf::RectangleShape Personnage::getGardebox()
+{
+    return _gardebox;
+}
+
+
 bool Personnage::collisioncoup(Personnage& ennemi){
 
     return _hitbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds());
@@ -80,6 +86,11 @@ void Personnage::rotate(Personnage& ennemi)
 		_sprite.setPosition(_posX,_posY);
 		_sprite.setScale(_orientation*SCALE,SCALE);
 	}
+}
+
+bool Personnage::auSol()
+{
+    return(_posY+_tailleSprite.y>=_scene.getBottom()-5);
 }
 
 int Personnage::getOrientation() const
