@@ -52,25 +52,27 @@ public:
 
 	void setChampion(Personnage*);
 	Personnage* getChampion();
+	sf::Sprite getEffet();
 	
-	void recuperationCommandesP1();	//recuperation des commandes dans le cas du joueur 1
+	void recuperationCommandesP1(Player&);	//recuperation des commandes dans le cas du joueur 1
 	void recuperationAttaquesP1();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
 	
-	void recuperationCommandesP2();	//recuperation des commandes dans le cas du joueur 2
+	void recuperationCommandesP2(Player&);	//recuperation des commandes dans le cas du joueur 2
 	void recuperationAttaquesP2();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
 
-	void gestionDesCommandes(bool avancer, bool reculer, bool accroupi, bool saut, bool sautAvant, bool sautArriere,bool garde, bool punch, bool kick, bool SP1);
+	void gestionDesCommandes(Player&, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool);
 	// gestion de la superposition decommandes et de l'ordre d'importance de ces dernières
+
+	bool lancerApparition();
 	bool lancerActions(Personnage&,Player&);
 
-	int getPosHorizontale();	//recupération de la position horizontale demandée
-	int getPosVerticale();		//recupération de la position verticale demandée
-	int getAction();			//recupération de l'action demandée
+	bool finPartie();
 	int getPV();				//recupération des points de vie
 	void resetPV();				//reinitialisation des points de vie
 	void setDegats(int);		//inflige un nombre de dégats passés en arguments
 	sf::RectangleShape getBarrePV();	//renvoi la barre de vie pour permettre son affichage
 
+	int getAction();
 	int* getPrendCoup();
 	void setPrendCoup(int);
 };

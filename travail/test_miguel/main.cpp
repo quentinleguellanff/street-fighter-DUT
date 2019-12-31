@@ -22,10 +22,7 @@ int main()
 	Scene fond(window,1);
 
 	/* Création des horloges pour les animations */
-	sf::Clock clockAnim_P1;
-	sf::Clock clockAttente_P1;
-	sf::Clock clockAnim_P2;
-	sf::Clock clockAttente_P2;
+	sf::Clock clockAttente;
 
 	/* Variable de création des deux champions */
 	int selecChamp_P1=-1,selecChamp_P2=-1;	//variables destinées à la selection du champion
@@ -41,10 +38,7 @@ int main()
 	Player joueur2(2,window);
 
 	/* Création des variables pour les actions à effectuer */
-	bool apparitionsFinies_P1=false,apparitionsFinies_P2=false,actionFini_P1=true,actionFini_P2=true,etaitAccroupi_P1=false,etaitAccroupi_P2=false;
-	//int &prendCoup_P1=0,prendCoup_P2=0;
-	int deplacementX_P1, deplacementY_P1, action_P1, derniereAction_P1=-1;
-	int deplacementX_P2, deplacementY_P2, action_P2, derniereAction_P2=-1;
+	bool apparitionsFinies_P1=false,apparitionsFinies_P2=false,actionFini_P1=true,actionFini_P2=true,animationFin_P1=false,animationFin_P2=false;
 
 	/* Déclarations pour le menu */
 	int selecEcran=0;
@@ -68,23 +62,12 @@ int main()
     musique.play();
     musique.setLoop(true);
 
-    /* Effets musicaux champions */
-    sf::Music son_P1;
-    sf::Music son_P2;
 
 	/* Ouverture de la fenetre */
 	while(window.isOpen())
 	{
 		window.clear();
 		sf::Event event;
-
-		/* initialisation des timers pour permettre entre la demande du saut et de l'attaque en l'air */
-		sf::Time elapsedAttente_P1 = clockAttente_P1.getElapsedTime();
-    	int timeAttente_P1 = elapsedAttente_P1.asMilliseconds();
-
-    	sf::Time elapsedAttente_P2 = clockAttente_P2.getElapsedTime();
-    	int timeAttente_P2 = elapsedAttente_P2.asMilliseconds();
-
 
     	if (selecEcran==0)	//menu principal
     	{
@@ -150,27 +133,42 @@ int main()
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
 				if(!apparitionsFinies_P1)
-					apparitionsFinies_P1=champion_P1->apparition(clockAnim_P1,effet_P1);
+					apparitionsFinies_P1=joueur1.lancerApparition();
 				if(!apparitionsFinies_P2)
-					apparitionsFinies_P2=champion_P2->apparition(clockAnim_P2,effet_P2);
-			}
-			else
+					apparitionsFinies_P2=joueur2.lancerApparition();
+			}else if((joueur1.getPV()<=0 || joueur2.getPV()<=0) && joueur1.getChampion()->auSol() && joueur2.getChampion()->auSol()) 
+	        {
+	        	if(animationFin_P1==false)
+	        		animationFin_P1=joueur1.finPartie();
+	        	if(animationFin_P2==false)
+	        		animationFin_P2=joueur2.finPartie();
+
+
+	        	if(animationFin_P1==true && animationFin_P2==true)
+	        	{
+	        		clockAttente.restart();
+		        	apparitionsFinies_P1=false;apparitionsFinies_P2=false;
+		        	animationFin_P1=false;animationFin_P2=false;
+		        	selecEcran=0;
+		        	joueur1.resetPV();
+		        	joueur2.resetPV();
+		        	menuSel.reset();
+		        }
+	        }else
 			{
 				/* Récuperation des actions à effectuer */
 				if(actionFini_P1)
 				{
-					joueur1.recuperationCommandesP1();
-					deplacementX_P1=joueur1.getPosHorizontale();deplacementY_P1=joueur1.getPosVerticale();action_P1=joueur1.getAction();
-				}else if(actionFini_P1==false && timeAttente_P1<150)
+					joueur1.recuperationCommandesP1(joueur2);
+				}else if(actionFini_P1==false)
 				{
 					joueur1.recuperationAttaquesP1();
 					//action_P1=joueur1.getAction();
 				}
 				if(actionFini_P2)
 				{
-					joueur2.recuperationCommandesP2();
-					deplacementX_P2=joueur2.getPosHorizontale();deplacementY_P2=joueur2.getPosVerticale();action_P2=joueur2.getAction();
-				}else if(actionFini_P2==false && timeAttente_P2<150)
+					joueur2.recuperationCommandesP2(joueur1);
+				}else if(actionFini_P2==false)
 				{
 					joueur2.recuperationAttaquesP2();
 					//action_P2=joueur2.getAction();
@@ -193,15 +191,7 @@ int main()
 	                window.close();
 	        }
 
-	        /* renvoi sur le menu principal car fin de partie */
-	        /*if(actionFini_P1 && actionFini_P2 && (joueur1.getPV()<=0 || joueur2.getPV()<=0)) 
-	        {
-	        	apparitionsFinies_P1=false;apparitionsFinies_P2=false;
-	        	selecEcran=0;
-	        	joueur1.resetPV();
-	        	joueur2.resetPV();
-	        	menuSel.reset();
-	        }	*/
+	        
 
 
 	        /* affichage des élements graphiques */
@@ -212,13 +202,14 @@ int main()
 	        window.draw(joueur2.getBarrePV());
 
 	        window.draw(joueur1.getChampion()->getSprite());
-	        window.draw(effet_P1);
-	        window.draw(joueur1.getChampion()->getHurtbox());
-	        window.draw(joueur1.getChampion()->getHitbox());
+	        window.draw(joueur1.getEffet());
+	        //window.draw(joueur1.getChampion()->getHurtbox());
+	        //window.draw(joueur1.getChampion()->getHitbox());
+	    	//window.draw(joueur1.getChampion()->getGardebox());
 
 	        window.draw(joueur2.getChampion()->getSprite());
-	        window.draw(effet_P2);
-	        window.draw(joueur2.getChampion()->getHurtbox());
+	        window.draw(joueur2.getEffet());
+	        //window.draw(joueur2.getChampion()->getHurtbox());
 	      	//window.draw(champion_P2->getHitbox());
 
 	        window.display();
