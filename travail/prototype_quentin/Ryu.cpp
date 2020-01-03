@@ -88,7 +88,7 @@ void Ryu::avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
     //setSprite(5,634,63,96);
     _vitesseX = 15 * _orientation;
     //collision(hurtboxEnnemi);
-    if(timeMove > 20){
+    if(timeMove > 30){
          //ResteDansFenetre();
         _spritePerso.setPosition(_spritePerso.getPosition().x+15,_spritePerso.getPosition().y);
         _clockmove.restart();
@@ -96,7 +96,7 @@ void Ryu::avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
 
     int delai=70;
     int deplacement=60;
-    if(timeAnim>20)
+    if(timeAnim>80)
 	{
 	    switch (_cptanimavancer)
 	    {
@@ -126,10 +126,10 @@ void Ryu::avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
 		    setSprite(296,634,54,96);
 	    	break;
 	    case 5:
-		    _cptanimavancer =0;
-		    _clockanim.restart();
-		    setSprite(428,634,63,96);
-	    	break;
+            _cptanimavancer = 0;
+            _clockanim.restart();
+            setSprite(364,634,56,93);
+            break;
 	    }
 	}
 
