@@ -98,7 +98,7 @@ public :
     void bouger(sf::Event,sf::RenderWindow&);
     int validationPerso(sf::Event event,int&,int&);
 
-    void reset();
+    void reset(sf::RenderWindow&);
 };
 
 class MenuCommandes {

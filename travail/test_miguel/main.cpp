@@ -143,16 +143,18 @@ int main()
 	        	if(animationFin_P2==false)
 	        		animationFin_P2=joueur2.finPartie();
 
-
 	        	if(animationFin_P1==true && animationFin_P2==true)
 	        	{
 	        		clockAttente.restart();
 		        	apparitionsFinies_P1=false;apparitionsFinies_P2=false;
 		        	animationFin_P1=false;animationFin_P2=false;
+		        	actionFini_P1=true;actionFini_P2=true;
 		        	selecEcran=0;
 		        	joueur1.resetPV();
+		        	joueur1.getChampion()->resetHitbox();
 		        	joueur2.resetPV();
-		        	menuSel.reset();
+		        	joueur2.getChampion()->resetHitbox();
+		        	menuSel.reset(window);
 		        }
 	        }else
 			{
@@ -163,25 +165,25 @@ int main()
 				}else if(actionFini_P1==false)
 				{
 					joueur1.recuperationAttaquesP1();
-					//action_P1=joueur1.getAction();
 				}
+
+
 				if(actionFini_P2)
 				{
 					joueur2.recuperationCommandesP2(joueur1);
 				}else if(actionFini_P2==false)
 				{
 					joueur2.recuperationAttaquesP2();
-					//action_P2=joueur2.getAction();
 				}
 
 				/* Lancement des animations Player 1*/
 
-				actionFini_P1=joueur1.lancerActions(*champion_P2,joueur2);
+				actionFini_P1=joueur1.lancerActions(joueur2);
 			
 
 				/* Lancement des animations Player 2*/
 
-				actionFini_P2=joueur2.lancerActions(*champion_P1,joueur1);
+				actionFini_P2=joueur2.lancerActions(joueur1);
 			}
 
 			/* Gestion de la fermeture de la fenetre */
@@ -203,14 +205,15 @@ int main()
 
 	        window.draw(joueur1.getChampion()->getSprite());
 	        window.draw(joueur1.getEffet());
-	        //window.draw(joueur1.getChampion()->getHurtbox());
-	        //window.draw(joueur1.getChampion()->getHitbox());
-	    	//window.draw(joueur1.getChampion()->getGardebox());
+	        window.draw(joueur1.getChampion()->getHurtbox());
+	        window.draw(joueur1.getChampion()->getHitbox());
+	    	window.draw(joueur1.getChampion()->getGardebox());
 
 	        window.draw(joueur2.getChampion()->getSprite());
 	        window.draw(joueur2.getEffet());
-	        //window.draw(joueur2.getChampion()->getHurtbox());
-	      	//window.draw(champion_P2->getHitbox());
+	        window.draw(joueur2.getChampion()->getHurtbox());
+	      	window.draw(joueur2.getChampion()->getHitbox());
+	      	window.draw(joueur2.getChampion()->getGardebox());
 
 	        window.display();
 	    }else if(selecEcran==-1) //fermuture de la fenetre

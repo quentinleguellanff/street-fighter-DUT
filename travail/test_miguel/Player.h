@@ -12,7 +12,6 @@
 class Player
 {
 private:
-	int _numPlayer;		// numéro du joueur (1 ou 2)
 	Personnage* _champion;
 	int _PV;			// points de vie du joueur
 	sf::RectangleShape _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
@@ -27,7 +26,7 @@ private:
 	int _posHorizontale;	//attribut de position horizontale
 	int _posVerticale;		//attribut de position verticale
 	int _action;			//attribut déterminant l'action à effectuer
-	/* 	relation int-action
+	/* 	relation entier - action effectuée
 	   -1 - rien
 	    0 - garde
 		1 - punch
@@ -64,7 +63,7 @@ public:
 	// gestion de la superposition decommandes et de l'ordre d'importance de ces dernières
 
 	bool lancerApparition();
-	bool lancerActions(Personnage&,Player&);
+	bool lancerActions(Player&);
 
 	bool finPartie();
 	int getPV();				//recupération des points de vie

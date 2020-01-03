@@ -6,7 +6,6 @@ using namespace std;
 
 Player::Player(int n,sf::RenderWindow& window)
 {
-	_numPlayer=n;
 	_PV=100;
 
 	_posHorizontale=0;
@@ -16,6 +15,7 @@ Player::Player(int n,sf::RenderWindow& window)
 	_actionFini=true;
 
 	_barrePV.setSize(sf::Vector2f(_PV*8,50));
+
 	if(n==1)
 	{
 		_barrePV.setPosition(sf::Vector2f(20,20));
@@ -48,6 +48,7 @@ void Player::_resetAttributs()
 	_action=-1;
 	_derniereAction=-1;
 	_actionFini=true;
+	_prendCoup=0;
 }
 
 void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le player 1
@@ -246,7 +247,7 @@ void Player::gestionDesCommandes(Player& ennemi,bool avancer, bool reculer, bool
 	else 
 		_posVerticale=0;
 
-	if(ennemi.getAction()>0 && _posHorizontale==-1)
+	if(ennemi.getAction()>0 && _champion->getOrientation()==_posHorizontale)
 		_action=0;
 	else if(punch)
 		_action=1;
@@ -263,7 +264,7 @@ bool Player::lancerApparition()
 	return _champion->apparition(_clockAnim,_effet);
 }
 
-bool Player::lancerActions(Personnage& persoEnnemi,Player& jEnnemi)
+bool Player::lancerActions(Player& jEnnemi)
 {
 	if(_prendCoup!=0)
 	{
@@ -278,59 +279,64 @@ bool Player::lancerActions(Personnage& persoEnnemi,Player& jEnnemi)
 			_actionFini=_champion->prendCoup(_clockAnim,&_prendCoup,_effet);
 		}
 	}
+
 	else if(_action!=_derniereAction && _derniereAction==0 && _posVerticale==0)
 		_actionFini=_champion->finGarde(_clockAnim);
 	else if(_etaitAccroupi && _posVerticale!=-1)
 		_actionFini=_champion->seLever(_clockAnim);
-	else if(_posHorizontale==1 && _posVerticale==1)
-	{
-		if(_champion->getOrientation()==-1)
-			_actionFini=_champion->sauterAvant(_clockAnim,persoEnnemi);
-		else
-			_actionFini=_champion->sauterArriere(_clockAnim,persoEnnemi);
-	}
-	else if(_posHorizontale==-1 && _posVerticale==1)
-	{
-		if(_champion->getOrientation()==-1)
-			_actionFini=_champion->sauterArriere(_clockAnim,persoEnnemi);
-		else
-			_actionFini=_champion->sauterAvant(_clockAnim,persoEnnemi);
-	}
-	
-	else if(_posHorizontale==1)
-	{
-		if(_champion->getOrientation()==-1)
-			_champion->avancer(_clockAnim,persoEnnemi);
-		else
-			_champion->reculer(_clockAnim);
-	}
-	else if(_posHorizontale==-1)
-	{
-		if(_champion->getOrientation()==-1)
-			_champion->reculer(_clockAnim);
-		else
-			_champion->avancer(_clockAnim,persoEnnemi);
-	}
-	else if(_posVerticale==1)
-		_actionFini=_champion->sauter(_clockAnim,_action,persoEnnemi,jEnnemi.getPrendCoup());
-
-	else if(_posVerticale==-1)
-		_champion->accroupi(_clockAnim,_action==0);
 
 	else if(_action==0)
 		_champion->garde(_clockAnim);
 
 	else if(_action==1)
-		_actionFini=_champion->punch(_clockAnim,persoEnnemi,jEnnemi.getPrendCoup());
+		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
 
 	else if(_action==2)
-		_actionFini=_champion->kick(_clockAnim,persoEnnemi,jEnnemi.getPrendCoup());
+		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
 
 	else if(_action==3)
-		_actionFini=_champion->SP(_clockAnim,_effet,persoEnnemi,jEnnemi.getPrendCoup(),son);
+		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son);
+
+	else if(_posHorizontale==1 && _posVerticale==1)
+	{
+		if(_champion->getOrientation()==-1)
+			_actionFini=_champion->sauterAvant(_clockAnim,*jEnnemi.getChampion());
+		else
+			_actionFini=_champion->sauterArriere(_clockAnim,*jEnnemi.getChampion());
+	}
+
+	else if(_posHorizontale==-1 && _posVerticale==1)
+	{
+		if(_champion->getOrientation()==-1)
+			_actionFini=_champion->sauterArriere(_clockAnim,*jEnnemi.getChampion());
+		else
+			_actionFini=_champion->sauterAvant(_clockAnim,*jEnnemi.getChampion());
+	}
+	
+	else if(_posHorizontale==1)
+	{
+		if(_champion->getOrientation()==-1)
+			_champion->avancer(_clockAnim,*jEnnemi.getChampion());
+		else
+			_champion->reculer(_clockAnim);
+	}
+
+	else if(_posHorizontale==-1)
+	{
+		if(_champion->getOrientation()==-1)
+			_champion->reculer(_clockAnim);
+		else
+			_champion->avancer(_clockAnim,*jEnnemi.getChampion());
+	}
+
+	else if(_posVerticale==1)
+		_actionFini=_champion->sauter(_clockAnim,_action,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+
+	else if(_posVerticale==-1)
+		_champion->accroupi(_clockAnim,_action==0);
 
 	else
-		_champion->statique(_clockAnim,persoEnnemi);
+		_champion->statique(_clockAnim,*jEnnemi.getChampion());
 
 	if(_posVerticale!=-1)
 		_champion->resetCptAccroupi();

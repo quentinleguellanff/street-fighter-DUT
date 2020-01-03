@@ -159,11 +159,10 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 		}
 
 		if(_cptApparition<6)
-		{
 			_posX-=deplacementX*_orientation;
-			_posY=_scene.getBottom()-_tailleSprite.y;
-			_sprite.setPosition(_posX,_posY);
-		}
+		_posY=_scene.getBottom()-_tailleSprite.y;
+		_sprite.setPosition(_posX,_posY);
+
 	}
 
 	if(_cptApparition==6 && timeAnim>2000)
@@ -173,13 +172,13 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 		fini=true;
 	}
 
+
 	keepInWalls();
 	return fini;
 }
 
 bool Dhalsim::parade(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 {
-	*degats=0;
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
@@ -187,20 +186,28 @@ bool Dhalsim::parade(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
+    int delai=120;
 
     if(_cptPrendCoup==0)
     {
-    	setSprite(24,4996,85,100);
+    	//setSprite(24,4996,85,100);
     	_cptPrendCoup++;
-    	_posX-=50*SCALE*_orientation;
+    	_posX-=25*SCALE*_orientation;
     }else if(timeAnim > delai)
     {
-		clockAnim.restart();
-		_cptPrendCoup=0;
-		fini=true;
+		if(_cptPrendCoup==1)
+		{
+			clockAnim.restart();
+			_cptPrendCoup++;
+    		_posX-=25*SCALE*_orientation;
+		}else{
+			clockAnim.restart();
+			_cptPrendCoup=0;
+			fini=true;
+			*degats=0;
+		}
     }
-	
+
     _sprite.setPosition(_posX,_posY);
     keepInWalls();
     return fini;
@@ -415,8 +422,10 @@ void Dhalsim::garde(sf::Clock& clockAnim)
     {
     	clockAnim.restart();
     	setSprite(125,4747,63,100);
+    	_gardebox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y));
+    	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY);
     }
-    _hurtbox.setSize(sf::Vector2f(0,0));
+
 }
 
 bool Dhalsim::finGarde(sf::Clock& clockAnim)
@@ -433,7 +442,6 @@ bool Dhalsim::finGarde(sf::Clock& clockAnim)
 
 void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
-	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();

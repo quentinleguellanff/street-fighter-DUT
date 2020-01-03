@@ -487,7 +487,7 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
     else return 1;
 }
 
-void MenuSelection::reset()
+void MenuSelection::reset(sf::RenderWindow& window)
 {
     choixJ1=-1;choixJ2=-1;
     etatPersoJ1=0;etatPersoJ2=1;
@@ -495,6 +495,14 @@ void MenuSelection::reset()
     annulerChoixJ2.setString("");
     nomPersoJ1.setFillColor(sf::Color::White);
     nomPersoJ2.setFillColor(sf::Color::White);
+
+    spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+    spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+    spriteP1.setScale(sf::Vector2f(3.5,3.5));
+
+    spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+    spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+    spriteP2.setScale(sf::Vector2f(-1.8,1.8));
 }
 
 
