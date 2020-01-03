@@ -53,6 +53,10 @@
 		<Unit filename="Broly.h" />
 		<Unit filename="Combat.cpp" />
 		<Unit filename="Combat.h" />
+		<Unit filename="Personnage.cpp" />
+		<Unit filename="Personnage.h" />
+		<Unit filename="Ryu.cpp" />
+		<Unit filename="Ryu.h" />
 		<Unit filename="collisionmanager.cpp" />
 		<Unit filename="collisionmanager.h" />
 		<Unit filename="include/joueur.h" />

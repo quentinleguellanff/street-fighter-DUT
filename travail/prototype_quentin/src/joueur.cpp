@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Joueur::Joueur(int i,Broly& broly)
+Joueur::Joueur(int i,Broly& broly,Personnage* Perso)
 {
 
     _prendcoup = false;
@@ -21,6 +21,7 @@ Joueur::Joueur(int i,Broly& broly)
     _numero = i;
     _nbPointVie = 500;
     _barreVie.setFillColor(sf::Color(0,0,255,150));
+    _personnage = Perso;
     if(_numero == 1)
     {
         _barreVie.setPosition(20.f, 20.f); //positionne la barre de vie
@@ -131,8 +132,8 @@ void Joueur::statique(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi)
     if(!_avancedroite && !_avancegauche && !_ensaut && !_attaque && !_prendcoup && !_ensautgauche && !_ensautdroite)
     {
         _Broly.debout(window,hurtboxEnnemi);
+        _personnage->debout(window,hurtboxEnnemi);
         seretourner(hurtboxEnnemi);
-        //_Broly.deplacer(1);
     }
     else if(_avancedroite && _avancegauche && !_prendcoup && !_ensaut && !_ensautgauche && !_ensautdroite && !_attaque)
     {
@@ -148,6 +149,7 @@ void Joueur::avancedroite(sf::RenderWindow& window,sf::RectangleShape hurtboxEnn
         if(_Broly.getorientation()== -1){
             _Broly.avancer(window,hurtboxEnnemi);
             seretourner(hurtboxEnnemi);
+            _personnage->avancer(window,hurtboxEnnemi);
         }
         else{
             _Broly.reculer(window);
@@ -182,7 +184,12 @@ void Joueur::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Rende
     if(_attaque)
     {
         _peutsauter = false;
-        _attaque = _Broly.coupDePoing(hurtboxEnnemi,touche,window);
+        if(_prendcoup){
+            _attaque = false;
+            _Broly.resetcoup();
+        }else{
+            _attaque = _Broly.coupDePoing(hurtboxEnnemi,touche,window);
+        }
         if(_prendcoup){
             _attaque = false;
             _Broly.resetcoup();
@@ -302,7 +309,11 @@ bool Joueur::getEtat(){
 }
 
 void Joueur::pauseAnim(){
-        _Broly.pauseAnimation();
+    _Broly.pauseAnimation();
+}
+
+void Joueur::restartClockPerso(){
+    _Broly.restartClock();
 }
 
 Joueur::Joueur(){}

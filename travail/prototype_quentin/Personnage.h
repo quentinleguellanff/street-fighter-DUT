@@ -1,64 +1,58 @@
-#ifndef BROLY_H
-#define BROLY_H
+#ifndef PERSONNAGE_H
+#define PERSONNAGE_H
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
 
-
-class Broly
+class Personnage
 {
-    private:
+    protected:
         int _orientation;
         sf::Texture _Texture;
-        int _scale;
+        float _scale;
         int _cptanimstatic;
         int _cptanimavancer;
         int _cptanimjump;
         int _cptAnimCoupPoing;
         int _cptanimprendcoup;
-        int cptanimprendcoupbis;
+        int _cptanimprendcoupbis;
         int _cptTimePauseAnim;
         int _vsaut;
         float _vitesseX;
         bool _ok;
+        float _posY;
+        float _posX;
 
-        sf::Sprite spriteBroly;
+        sf::Sprite _spritePerso;
         sf::RectangleShape _hurtbox;
         sf::RectangleShape _hitbox;
         sf::Clock _clockanim;
         sf::Clock _clockmove;
-
-
-
+        sf::Vector2f _tailleSprite;
 
     public:
-        Broly();
-        Broly(int);
-        void debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
-        void avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
-        void reculer(sf::RenderWindow& window);
-        bool sauter(sf::RenderWindow& window,int direction,bool ennemiensaut,sf::RectangleShape hurtboxEnnemi);
-        bool coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::RenderWindow& window);
+        Personnage();
+        Personnage(int);
+        virtual ~Personnage();
         int getorientation();
         bool collisioncoup(sf::RectangleShape hurtboxEnnemi);
         bool collisioncorps(sf::RectangleShape hurtboxEnnemi);
-        void prendcoup(bool& touche,sf::RenderWindow& window);
         sf::RectangleShape gethurtbox();
         sf::RectangleShape gethitbox();
         void resetcoup();
-        void restartPrendcoup();
         void ResteDansFenetre();
         void setVitesseX(int);
         int getVitesseX();
-        void collisionPersonnage(sf::RectangleShape hurtboxEnnemi);
         void collision(sf::RectangleShape hurtboxEnnemi);
         void collisionsaut(sf::RectangleShape hurtboxEnnemi);
         void deplacer(int vitesse);
         void retourner();
-        void pauseAnimation();
-        void restartClock();
-        virtual ~Broly();
+        void restartPrendcoup();
+        void setSprite(int,int,int,int);
+        sf::Sprite getSprite();
 
+        virtual void debout(sf::RenderWindow&,sf::RectangleShape){}
+        virtual void avancer(sf::RenderWindow&,sf::RectangleShape){}
 };
 
-#endif // BROLY_H
+#endif // PERSONNAGE_H

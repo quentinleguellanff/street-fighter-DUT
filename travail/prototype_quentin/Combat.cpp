@@ -77,10 +77,10 @@ bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
             //window.draw(_sol);
             window.draw(_joueur1.getBarreVie());
             window.draw(_joueur2.getBarreVie());
-            //window.draw(_joueur1.getHurtbox());
-            //window.draw(_joueur2.getHurtbox());
+            window.draw(_joueur1.getHurtbox());
+            window.draw(_joueur2.getHurtbox());
             //window.draw(_joueur2.getHitbox());
-            cout << _joueur2.getHitbox().getPosition().x << endl;
+            //cout << _joueur2.getHitbox().getPosition().x << endl;
             if(toucheJ1){
                 hitspark1 = true;
             }
@@ -96,7 +96,7 @@ bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
 void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueur){
     if(hitspark){
         int Orientation = joueur.getOrientation();
-        cout << Orientation << endl;
+        //cout << Orientation << endl;
         float positionHitboxX;
         if(Orientation == 1){
             _spritehitspark.setScale(-1,1);
@@ -106,7 +106,7 @@ void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueu
             _spritehitspark.setScale(1,1);
             positionHitboxX = joueur.getHitbox().getPosition().x + 286;
         }
-        cout << positionHitboxX << endl;
+        //cout << positionHitboxX << endl;
         //float positionHitboxX = _joueur2.getHitbox().getPosition().x - _joueur2.getHitbox().getGlobalBounds().width/2;
         float positionHitboxY = joueur.getHitbox().getPosition().y - joueur.getHitbox().getGlobalBounds().height*1.5;
 

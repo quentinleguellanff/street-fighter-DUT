@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include "Broly.h"
+#include "Personnage.h"
 
 class Joueur
 {
@@ -29,7 +30,7 @@ class Joueur
         bool _pause;
 
 
-
+        Personnage* _personnage;
         Broly _Broly;
         sf::RectangleShape _barreVie;
         sf::Clock _clockjoueur;
@@ -38,7 +39,7 @@ class Joueur
     public:
 
         Joueur();
-        Joueur(int i,Broly& broly);
+        Joueur(int i,Broly& broly,Personnage*);
         virtual ~Joueur();
 
         void prendDegats();
@@ -59,6 +60,7 @@ class Joueur
         Broly getBroly();
         bool getEtat();
         void pauseAnim();
+        void restartClockPerso();
         sf::RectangleShape getHurtbox();
         sf::RectangleShape getHitbox();
 };
