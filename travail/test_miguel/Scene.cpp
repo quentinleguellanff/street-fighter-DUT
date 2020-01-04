@@ -19,6 +19,7 @@ void Scene::chargementXenoverse()
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
 	}
+
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
@@ -62,4 +63,13 @@ int Scene::getRightLimit() const
 sf::RectangleShape Scene::getSol() const
 {
 	return _solScene;
+}
+
+void Scene::lancerMusique(sf::Music& sonScene)
+{
+	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }

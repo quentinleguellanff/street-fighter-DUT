@@ -144,7 +144,7 @@ bool Jotaro::mort(sf::Clock& clockAnim)
 {
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=100;
+    int delai=100,deplacementX=_scene.getRightLimit()/12;
     bool fini=false;
     _hitbox.setSize(sf::Vector2f(0,0));
 
@@ -162,67 +162,49 @@ bool Jotaro::mort(sf::Clock& clockAnim)
 	    case 1:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(723,6363,90,92);
+		    setSprite(160,5836,148,80);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 2:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(826,6349,132,83);
+		    setSprite(475,5830,148,68);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 3:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(969,6361,99,87);
+		    setSprite(1204,6384,124,68);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 4:
-		    _cptApparition ++;
-		    clockAnim.restart();
-		    setSprite(1081,6368,107,83);
-	    	break;
-	    case 5:
-		    _cptApparition ++;
-		    clockAnim.restart();
-		    setSprite(1204,6384,124,68);
-	    	break;
-	    case 6:
-		    _cptApparition ++;
-		    clockAnim.restart();
-		    setSprite(1341,6391,140,60);
-		    break;
-	    case 7:
-		    _cptApparition++;
-		    clockAnim.restart();
-		    setSprite(1491,6407,153,44);
-	    	break;
-	    case 8:
-		    _cptApparition++;
-		    clockAnim.restart();
-		    setSprite(1656,6391,139,57);
-	    	break;
-	    case 9:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(1806,6405,137,44);
 	    	break;
-	    case 10:
+	    case 5:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(1955,6417,140,35);
 	    	break;
-	    case 11:
+	    case 6:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(2106,6424,144,28);
 	    	break;
-	    case 12:
+	    case 7:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(2264,6425,143,27);
 	    	break;
 	    }
+
+	    if(_cptApparition>3)
+	    	_posY=_scene.getBottom()-_tailleSprite.y;
+		_sprite.setPosition(_posX,_posY);
 	}
 
-	if(_cptApparition==13 && timeAnim>2000)
+	if(_cptApparition==8 && timeAnim>2000)
 	{
 		clockAnim.restart();
 		_cptApparition=0;

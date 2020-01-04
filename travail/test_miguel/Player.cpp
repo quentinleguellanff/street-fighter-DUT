@@ -26,9 +26,16 @@ Player::Player(int n,sf::RenderWindow& window)
 	}
 }
 
+void Player::resetPlayer()
+{
+	_resetAttributs();
+	_prendCoup=0;
+}
+
 void Player::setChampion(Personnage* perso)
 {
 	_champion=perso;
+	resetPlayer();
 }
 
 Personnage* Player::getChampion()
@@ -48,7 +55,6 @@ void Player::_resetAttributs()
 	_action=-1;
 	_derniereAction=-1;
 	_actionFini=true;
-	_prendCoup=0;
 }
 
 void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le player 1
@@ -100,8 +106,8 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 		kick=sf::Keyboard::isKeyPressed(sf::Keyboard::E);	  	// touche pour kicker:     E
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::R);		// touche pour spécial 1:  R
 	}
-	
-	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
+
+	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);
 }
 
 void Player::recuperationAttaquesP1()
@@ -176,7 +182,8 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 		SP1=sf::Keyboard::isKeyPressed(sf::Keyboard::L);			// touche pour spécial 1:  L
 
 	}
-	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);	
+	
+	gestionDesCommandes(ennemi,avancer,reculer,accroupi,saut,sautAvant,sautArriere,garde,punch,kick,SP1);
 }
 
 void Player::recuperationAttaquesP2()
@@ -405,4 +412,9 @@ int* Player::getPrendCoup()
 void Player::setPrendCoup(int n)
 {
 	_prendCoup=n;
+}
+
+int Player::getPC()
+{
+	return _prendCoup;
 }

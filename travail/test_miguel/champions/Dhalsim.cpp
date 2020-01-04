@@ -63,6 +63,10 @@ bool Dhalsim::victoire(sf::Clock& clockAnim,sf::Music& son)
 			setSprite(24,5634,50,126);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
+
+			if (!son.openFromFile("musique/Dhalsim/dhalsim_victoire.ogg"))
+		        std::cout<<"erreur musique";
+			son.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -113,9 +117,9 @@ bool Dhalsim::victoire(sf::Clock& clockAnim,sf::Music& son)
 
 bool Dhalsim::mort(sf::Clock& clockAnim)
 {
-		sf::Time elapsed = clockAnim.getElapsedTime();
+	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=100,deplacementX=_scene.getRightLimit()/30;
+    int delai=100,deplacementX=_scene.getRightLimit()/15;
     bool fini=false;
     _hitbox.setSize(sf::Vector2f(0,0));
 
@@ -123,34 +127,31 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 	{
 	    switch (_cptApparition)
 	    {
-	    case 0:	
+	    case 0:
 		    _cptApparition ++;
 		    clockAnim.restart();
-			setSprite(24,5112,70,111);
-
-			_hurtbox.setSize(sf::Vector2f(0,0));
+		    setSprite(102,5112,90,111);
+		    _hurtbox.setSize(sf::Vector2f(0,0));
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 1:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(102,5112,90,111);
+		    setSprite(200,5112,93,111);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 2:
-		    _cptApparition ++;
+		    _cptApparition++;
 		    clockAnim.restart();
-		    setSprite(200,5112,93,111);
+		    setSprite(301,5112,130,111);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 3:
 		    _cptApparition++;
 		    clockAnim.restart();
-		    setSprite(301,5112,130,111);
-	    	break;
-	    case 4:
-		    _cptApparition++;
-		    clockAnim.restart();
 		    setSprite(439,5112,127,111);
 	    	break;
-	    case 5:
+	    case 4:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(300,5328,141,39);
@@ -158,14 +159,13 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 	    
 		}
 
-		if(_cptApparition<6)
-			_posX-=deplacementX*_orientation;
-		_posY=_scene.getBottom()-_tailleSprite.y;
+		if(_cptApparition >=3)
+			_posY=_scene.getBottom()-_tailleSprite.y;
 		_sprite.setPosition(_posX,_posY);
 
 	}
 
-	if(_cptApparition==6 && timeAnim>2000)
+	if(_cptApparition==5 && timeAnim>2000)
 	{
 		clockAnim.restart();
 		_cptApparition=0;
@@ -1244,6 +1244,10 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 		    clockAnim.restart();
 		    setSprite(24,3233,76,120);
 		    _posX-=10*SCALE*_orientation;
+
+		    if (!son.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
+		        std::cout<<"erreur musique";
+			son.play();
 
 		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);

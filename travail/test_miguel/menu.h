@@ -4,13 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace std ;
 const int nbcase=3;
 
 class MenuPrincipal {
 private:
-
     int _selection;
     sf::Font font;
     sf::Texture textureCase;
@@ -26,6 +26,8 @@ private:
     float joystick0_axisX;
     float joystick0_axisY;
     sf::Clock clockAttente;
+
+    sf::Music _effetSon;
 public:
 
     MenuPrincipal (float width, float height);
@@ -84,6 +86,8 @@ private:
     int etatPersoJ2 = 1;
     int choixJ1 = -1;
     int choixJ2 = -1;
+
+    sf::Music _effetSon;
 
 public :
     MenuSelection(sf::RenderWindow&);

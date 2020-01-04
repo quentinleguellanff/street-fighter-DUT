@@ -2,6 +2,7 @@
 #include "Player.h"
 
 #include <iostream>
+#include <thread>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -38,7 +39,7 @@ int main()
 	Player joueur2(2,window);
 
 	/* Création des variables pour les actions à effectuer */
-	bool apparitionsFinies_P1=false,apparitionsFinies_P2=false,actionFini_P1=true,actionFini_P2=true,animationFin_P1=false,animationFin_P2=false;
+	bool apparitionsFinies_P1=false,apparitionsFinies_P2=false,actionFini_P1=true,actionFini_P2=true,animationFinLancee=false,animationFin_P1=false,animationFin_P2=false;
 
 	/* Déclarations pour le menu */
 	int selecEcran=0;
@@ -55,10 +56,10 @@ int main()
 
     /* Musique */
 	sf::Music musique;
-    if (!musique.openFromFile("musique/musicBagarre.ogg")){
-            std::cout<<"erreur musique";
+    if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
+        std::cout<<"erreur musique";
     }
-    musique.setVolume(0.f) ;
+    musique.setVolume(50.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -76,6 +77,15 @@ int main()
 
 	        menuPrinc.draw(window);
 	        window.display();
+	        
+	        if(selecEcran==1)
+	        {
+	        	if (!musique.openFromFile("musique/theme_menu_perso.ogg")){
+                    std::cout<<"erreur musique";
+	            }
+	            musique.play();
+	            musique.setLoop(true);
+	        }
         }
 
         else if(selecEcran==1) //menu de selection des personnages
@@ -120,6 +130,18 @@ int main()
 	        	joueur2.setChampion(champion_P2);
 	        }
 
+	        if(selecEcran==0)
+	        {
+	        	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
+                    std::cout<<"erreur musique";
+	            }
+	            musique.play();
+	            musique.setLoop(true);
+
+	        }else if(selecEcran==2)
+	        {
+	        	fond.lancerMusique(musique);
+	        }
 
         }else if(selecEcran==3)
         {
@@ -136,8 +158,9 @@ int main()
 					apparitionsFinies_P1=joueur1.lancerApparition();
 				if(!apparitionsFinies_P2)
 					apparitionsFinies_P2=joueur2.lancerApparition();
-			}else if((joueur1.getPV()<=0 || joueur2.getPV()<=0) && joueur1.getChampion()->auSol() && joueur2.getChampion()->auSol()) 
+			}else if( (joueur1.getPV()<=0 || joueur2.getPV()<=0) && ( ( joueur1.getChampion()->auSol() && joueur2.getChampion()->auSol() ) || animationFinLancee ) )
 	        {
+	        	animationFinLancee=true;
 	        	if(animationFin_P1==false)
 	        		animationFin_P1=joueur1.finPartie();
 	        	if(animationFin_P2==false)
@@ -147,7 +170,7 @@ int main()
 	        	{
 	        		clockAttente.restart();
 		        	apparitionsFinies_P1=false;apparitionsFinies_P2=false;
-		        	animationFin_P1=false;animationFin_P2=false;
+		        	animationFin_P1=false;animationFin_P2=false;animationFinLancee=false;
 		        	actionFini_P1=true;actionFini_P2=true;
 		        	selecEcran=0;
 		        	joueur1.resetPV();
@@ -155,6 +178,13 @@ int main()
 		        	joueur2.resetPV();
 		        	joueur2.getChampion()->resetHitbox();
 		        	menuSel.reset(window);
+
+		        	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
+				        std::cout<<"erreur musique";
+				    }
+				    musique.setVolume(50.f) ;
+				    musique.play();
+				    musique.setLoop(true);
 		        }
 	        }else
 			{
@@ -177,13 +207,16 @@ int main()
 				}
 
 				/* Lancement des animations Player 1*/
-
+				
 				actionFini_P1=joueur1.lancerActions(joueur2);
-			
-
+				//thread t1([&]() { actionFini_P1=joueur1.lancerActions(joueur2); });
+				
 				/* Lancement des animations Player 2*/
-
+				
 				actionFini_P2=joueur2.lancerActions(joueur1);
+				/*thread t2([&]() { actionFini_P2=joueur2.lancerActions(joueur1); });
+				t1.join();
+				t2.join();*/
 			}
 
 			/* Gestion de la fermeture de la fenetre */
@@ -198,22 +231,21 @@ int main()
 
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
-	        //window.draw(fond.getSol());
 
 	        window.draw(joueur1.getBarrePV());
 	        window.draw(joueur2.getBarrePV());
 
 	        window.draw(joueur1.getChampion()->getSprite());
 	        window.draw(joueur1.getEffet());
-	        window.draw(joueur1.getChampion()->getHurtbox());
-	        window.draw(joueur1.getChampion()->getHitbox());
-	    	window.draw(joueur1.getChampion()->getGardebox());
+	        //window.draw(joueur1.getChampion()->getHurtbox());
+	        //window.draw(joueur1.getChampion()->getHitbox());
+	    	//window.draw(joueur1.getChampion()->getGardebox());
 
 	        window.draw(joueur2.getChampion()->getSprite());
 	        window.draw(joueur2.getEffet());
-	        window.draw(joueur2.getChampion()->getHurtbox());
-	      	window.draw(joueur2.getChampion()->getHitbox());
-	      	window.draw(joueur2.getChampion()->getGardebox());
+	        //window.draw(joueur2.getChampion()->getHurtbox());
+	      	//window.draw(joueur2.getChampion()->getHitbox());
+	      	//window.draw(joueur2.getChampion()->getGardebox());
 
 	        window.display();
 	    }else if(selecEcran==-1) //fermuture de la fenetre

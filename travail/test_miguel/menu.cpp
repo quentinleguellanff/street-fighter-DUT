@@ -117,45 +117,58 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &wi
     }else
     {
         while (window.pollEvent(event))
-            {
-                switch ( event.type ){
+        {
+            switch ( event.type ){
 
-                case sf::Event::Closed:
-                        window.close( );
-                        break;
-                case sf::Event::KeyReleased:
-                    switch (event.key.code){
-                    case sf::Keyboard::Z:
-                      peutmonter = true;
-                      break;
-                    case sf::Keyboard::S:
-                        peutdescendre=true;
-                        break;}
-                }
+            case sf::Event::Closed:
+                    window.close( );
+                    break;
+            case sf::Event::KeyReleased:
+                switch (event.key.code){
+                case sf::Keyboard::Z:
+                  peutmonter = true;
+                  break;
+                case sf::Keyboard::S:
+                    peutdescendre=true;
+                    break;}
             }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                    if(peutmonter){
-                        moveUp();
-                        peutmonter = false;
-                    }
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                    if(peutdescendre){
-                        moveDown();
-                        peutdescendre = false;
-                    }
-                }
-
-
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            if(peutmonter){
+                moveUp();
+                peutmonter = false;
+            }
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            if(peutdescendre){
+                moveDown();
+                peutdescendre = false;
+            }
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
+        {
             selecEcran=1;
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
 
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+        {
             selecEcran=3;
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
 
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
+        {
+            if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
             window.close();
-                }
+        }   
+    }
 
 }
 
@@ -458,6 +471,10 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
              annulerChoixJ1.setStyle(sf::Text::Italic);
              annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
 
+            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
      }
 
     //Validation du choix de personage pour Joueur 2
@@ -474,6 +491,11 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
             annulerChoixJ2.setFillColor(sf::Color::White);
             annulerChoixJ2.setStyle(sf::Text::Italic);
             annulerChoixJ2.setPosition(sf::Vector2f(1000,hauteurTexte+15));
+
+            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
     }
     if(choixJ1 != -1 && choixJ2 != -1)
     {
@@ -482,7 +504,13 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
         return 2;
     }
     else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
+    {
+        if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
+                std::cout<<"erreur musique";
+        }
+        _effetSon.play();
         return 0;
+    }
 
     else return 1;
 }
@@ -491,10 +519,14 @@ void MenuSelection::reset(sf::RenderWindow& window)
 {
     choixJ1=-1;choixJ2=-1;
     etatPersoJ1=0;etatPersoJ2=1;
+
     annulerChoixJ1.setString("");
     annulerChoixJ2.setString("");
+
     nomPersoJ1.setFillColor(sf::Color::White);
+    nomPersoJ1.setString("Jotaro");
     nomPersoJ2.setFillColor(sf::Color::White);
+    nomPersoJ2.setString("Dhalsim");
 
     spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
     spriteP1.setTextureRect(sf::IntRect(26,27,109,127));

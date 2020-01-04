@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 class Player
 {
@@ -49,6 +50,8 @@ public:
 	Player(){};		//constructeur vide
 	Player(int,sf::RenderWindow&);	//constructeur de Player
 
+	void resetPlayer();
+
 	void setChampion(Personnage*);
 	Personnage* getChampion();
 	sf::Sprite getEffet();
@@ -74,6 +77,8 @@ public:
 	int getAction();
 	int* getPrendCoup();
 	void setPrendCoup(int);
+
+	int getPC();
 };
 
 #endif
