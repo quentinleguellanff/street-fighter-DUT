@@ -48,7 +48,7 @@ bool Ryu::victoire(sf::Clock& clockAnim,sf::Music& son)
 {
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
+    int delai=150;
     bool fini=false;
     _hitbox.setSize(sf::Vector2f(0,0));
 
@@ -57,58 +57,71 @@ bool Ryu::victoire(sf::Clock& clockAnim,sf::Music& son)
 	    switch (_cptApparition)
 	    {
 	    case 0:	
-		    cout<<"wesh"<<endl;
 		    _cptApparition ++;
 		    clockAnim.restart();
-			setSprite(5,5254,63,89);
+			setSprite(420,5374,67,94);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
+
+			if (!son.openFromFile("musique/Ryu/ryu_victoire.ogg"))
+		        std::cout<<"erreur musique";
+			son.play();
 	    	break;
 	    case 1:
-	    	cout<<"coucou"<<endl;
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(75,5251,60,92);
+		    setSprite(977,5374,67,94);
 	    	break;
 	    case 2:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(144,5244,62,99);
+		    setSprite(1115,5374,67,94);
 	    	break;
 	    case 3:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(213,5225,62,118);
+		    setSprite(1253,5374,67,94);
 	    	break;
 	    case 4:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(280,5248,67,95);
+		    setSprite(1391,5374,67,94);
 	    	break;
 	    case 5:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(350,5249,67,94);
+		    setSprite(1529,5374,67,94);
 	    	break;
 	    case 6:
-		    _cptApparition++;
+		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(420,5634,67,94);
-		    break;
+		    setSprite(1667,5374,67,94);
+	    	break;
+	    case 7:
+		    _cptApparition ++;
+		    clockAnim.restart();
+		    setSprite(1834,5374,116,94);
+		    _posX-=49*SCALE*_orientation;
+	    	break;
+	    case 8:
+		    _cptApparition ++;
+		    clockAnim.restart();
+		    setSprite(2364,5374,67,94);
+		    _posX+=49*SCALE*_orientation;
+	    	break;
 		}
 
 		_posY=_scene.getBottom()-_tailleSprite.y;
 		_sprite.setPosition(_posX,_posY);
 	}
 
-	if(_cptApparition==7 && timeAnim>2000)
+	if(_cptApparition==9 && timeAnim>1000)
 	{
 		clockAnim.restart();
 		_cptApparition=0;
 		fini=true;
 	}
 
-	keepInWalls();
 	return fini;
 }
 
@@ -116,7 +129,7 @@ bool Ryu::mort(sf::Clock& clockAnim)
 {
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=100;
+    int delai=100,deplacementX=_scene.getRightLimit()/12;
     bool fini=false;
     _hitbox.setSize(sf::Vector2f(0,0));
 
@@ -135,17 +148,24 @@ bool Ryu::mort(sf::Clock& clockAnim)
 		    _cptApparition ++;
 		    clockAnim.restart();
 		    setSprite(1,4965,80,77);
+
+		    _posX-=deplacementX*_orientation;
+		    _posY-=11*SCALE;
 	    	break;
 	    case 2:
 		    _cptApparition ++;
 		    clockAnim.restart();
 		    setSprite(82,4961,105,44);
+
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 3:
 		    _cptApparition ++;
 		    clockAnim.restart();
 		    setSprite(188,4975,73,65);
-	    	break;
+
+		    _posX-=deplacementX*_orientation;
+		    break;
 	    case 4:
 		    _cptApparition ++;
 		    clockAnim.restart();
@@ -156,28 +176,25 @@ bool Ryu::mort(sf::Clock& clockAnim)
 		    clockAnim.restart();
 		    setSprite(399,5024,125,41);
 	    	break;
-	    case 6:
-		    _cptApparition++;
-		    clockAnim.restart();
-		    setSprite(526,5004,124,53);
-		    break;
-		case 7:
+		case 6:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(651,5025,123,41);
 		    break;
-		case 8:
+		case 7:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(775,5024,133,34);
 		    break;
 		}
 
-		_posY=_scene.getBottom()-_tailleSprite.y;
+		if(_cptApparition >=4)
+			_posY=_scene.getBottom()-_tailleSprite.y;
+
 		_sprite.setPosition(_posX,_posY);
 	}
 
-	if(_cptApparition==9 && timeAnim>2000)
+	if(_cptApparition==8 && timeAnim>2000)
 	{
 		clockAnim.restart();
 		_cptApparition=0;
@@ -198,7 +215,7 @@ bool Ryu::parade(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
+    int delai=120;
 
     if(_cptPrendCoup==0)
     {
@@ -337,7 +354,6 @@ bool Ryu::apparition(sf::Clock& clockAnim,sf::Sprite& inutile)
 		    setSprite(589,225,61,104);
 			break;
 		case 9:
-			cout<<"on est passé ici"<<endl;
 		    _cptApparition=0;
 		    clockAnim.restart();
 		    setSprite(654,225,68,104);
@@ -354,7 +370,6 @@ void Ryu::statique(sf::Clock& clockAnim,Personnage& champEnnemi)
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
-    
     if(timeAnim>delai)
     {
 	    switch (_cptStatic)
@@ -415,12 +430,11 @@ void Ryu::garde(sf::Clock& clockAnim)
     {
     	clockAnim.restart();
     	setSprite(3,4658,65,92);
-    	_gardebox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y*0.4));
-    	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY+_tailleSprite.y*0.1);
+    	_gardebox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y));
+    	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY);
     }
     _posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
-    //_hurtbox.setSize(sf::Vector2f(0,0));
     keepInWalls();
 }
 
@@ -962,6 +976,7 @@ bool Ryu::punch(sf::Clock& clockAnim,Personnage& champEnnemi,int* degats)
 	{
 		*degats=10;
 	}
+
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
 	keepInWalls();
@@ -1180,7 +1195,7 @@ bool Ryu::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi,i
 	    switch (_cptAction)
 		{
 		case 0:
-			if (!son.openFromFile("musique/hadouken.ogg"))
+			if (!son.openFromFile("musique/Ryu/hadouken.ogg"))
 		        std::cout<<"erreur musique";
 		    son.play();
 

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 class Scene
 {
@@ -27,13 +28,14 @@ public:
 	Scene(sf::RenderWindow&, int);
 	sf::Sprite getSprite() const;	// Renvoi la scene
 
+	void lancerMusique(sf::Music&);
+
 	// Permet de dessiner les limites de la map	& gerer les positions limites
 	int getBottom() const;
 	int getLeftLimit() const;
 	int getRightLimit() const;
 
 	sf::RectangleShape getSol() const;
-
 };
 
 #endif

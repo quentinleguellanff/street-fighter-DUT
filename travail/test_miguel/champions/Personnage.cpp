@@ -24,6 +24,11 @@ sf::RectangleShape Personnage::getHitbox()
 	return _hitbox;
 }
 
+void Personnage::resetHitbox()
+{
+    _hitbox.setSize(sf::Vector2f(0,0));
+}
+
 sf::RectangleShape Personnage::getGardebox()
 {
     return _gardebox;
@@ -37,8 +42,8 @@ bool Personnage::collisioncoup(Personnage& ennemi){
 
 void Personnage::collision(Personnage& ennemi, int& deplacement)
 {
-    if( (_orientation==1 && _posX+_tailleSprite.x+deplacement >= ennemi.getPosX()-ennemi.getHurtbox().getGlobalBounds().width)
-              || (_orientation==-1 && _posX-_tailleSprite.x-deplacement <= ennemi.getPosX()+ennemi.getHurtbox().getGlobalBounds().width))
+    if( (_orientation==1 && _posX+_tailleSprite.x+deplacement*2 >= ennemi.getPosX()-ennemi.getHurtbox().getGlobalBounds().width)
+              || (_orientation==-1 && _posX-_tailleSprite.x-deplacement*2 <= ennemi.getPosX()+ennemi.getHurtbox().getGlobalBounds().width))
     {
         deplacement=0;
     }
@@ -70,9 +75,9 @@ void Personnage::keepInWalls()
 
 void Personnage::rotate(Personnage& ennemi)
 {
-	if( (_orientation==1 && _hurtbox.getPosition().x> ennemi.getHurtbox().getPosition().x) || (_orientation==-1 && _hurtbox.getPosition().x< ennemi.getHurtbox().getPosition().x) )
+	if( (_orientation==1 && _hurtbox.getPosition().x > ennemi.getHurtbox().getPosition().x) || (_orientation==-1 && _hurtbox.getPosition().x< ennemi.getHurtbox().getPosition().x) )
 	{
-		_orientation=_orientation*-1;
+        _orientation=_orientation*-1;
         if(_orientation==-1)
         {
             _hurtbox.setScale(-1,1);

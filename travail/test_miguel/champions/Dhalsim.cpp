@@ -63,6 +63,10 @@ bool Dhalsim::victoire(sf::Clock& clockAnim,sf::Music& son)
 			setSprite(24,5634,50,126);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
+
+			if (!son.openFromFile("musique/Dhalsim/dhalsim_victoire.ogg"))
+		        std::cout<<"erreur musique";
+			son.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -113,9 +117,9 @@ bool Dhalsim::victoire(sf::Clock& clockAnim,sf::Music& son)
 
 bool Dhalsim::mort(sf::Clock& clockAnim)
 {
-		sf::Time elapsed = clockAnim.getElapsedTime();
+	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=100,deplacementX=_scene.getRightLimit()/30;
+    int delai=100,deplacementX=_scene.getRightLimit()/15;
     bool fini=false;
     _hitbox.setSize(sf::Vector2f(0,0));
 
@@ -123,34 +127,31 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 	{
 	    switch (_cptApparition)
 	    {
-	    case 0:	
+	    case 0:
 		    _cptApparition ++;
 		    clockAnim.restart();
-			setSprite(24,5112,70,111);
-
-			_hurtbox.setSize(sf::Vector2f(0,0));
+		    setSprite(102,5112,90,111);
+		    _hurtbox.setSize(sf::Vector2f(0,0));
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 1:
 		    _cptApparition ++;
 		    clockAnim.restart();
-		    setSprite(102,5112,90,111);
+		    setSprite(200,5112,93,111);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 2:
-		    _cptApparition ++;
+		    _cptApparition++;
 		    clockAnim.restart();
-		    setSprite(200,5112,93,111);
+		    setSprite(301,5112,130,111);
+		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 3:
 		    _cptApparition++;
 		    clockAnim.restart();
-		    setSprite(301,5112,130,111);
-	    	break;
-	    case 4:
-		    _cptApparition++;
-		    clockAnim.restart();
 		    setSprite(439,5112,127,111);
 	    	break;
-	    case 5:
+	    case 4:
 		    _cptApparition++;
 		    clockAnim.restart();
 		    setSprite(300,5328,141,39);
@@ -158,20 +159,19 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 	    
 		}
 
-		if(_cptApparition<6)
-		{
-			_posX-=deplacementX*_orientation;
+		if(_cptApparition >=3)
 			_posY=_scene.getBottom()-_tailleSprite.y;
-			_sprite.setPosition(_posX,_posY);
-		}
+		_sprite.setPosition(_posX,_posY);
+
 	}
 
-	if(_cptApparition==6 && timeAnim>2000)
+	if(_cptApparition==5 && timeAnim>2000)
 	{
 		clockAnim.restart();
 		_cptApparition=0;
 		fini=true;
 	}
+
 
 	keepInWalls();
 	return fini;
@@ -179,7 +179,6 @@ bool Dhalsim::mort(sf::Clock& clockAnim)
 
 bool Dhalsim::parade(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 {
-	*degats=0;
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
@@ -187,20 +186,28 @@ bool Dhalsim::parade(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
 
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
+    int delai=120;
 
     if(_cptPrendCoup==0)
     {
-    	setSprite(24,4996,85,100);
+    	//setSprite(24,4996,85,100);
     	_cptPrendCoup++;
-    	_posX-=50*SCALE*_orientation;
+    	_posX-=25*SCALE*_orientation;
     }else if(timeAnim > delai)
     {
-		clockAnim.restart();
-		_cptPrendCoup=0;
-		fini=true;
+		if(_cptPrendCoup==1)
+		{
+			clockAnim.restart();
+			_cptPrendCoup++;
+    		_posX-=25*SCALE*_orientation;
+		}else{
+			clockAnim.restart();
+			_cptPrendCoup=0;
+			fini=true;
+			*degats=0;
+		}
     }
-	
+
     _sprite.setPosition(_posX,_posY);
     keepInWalls();
     return fini;
@@ -415,8 +422,10 @@ void Dhalsim::garde(sf::Clock& clockAnim)
     {
     	clockAnim.restart();
     	setSprite(125,4747,63,100);
+    	_gardebox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y));
+    	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY);
     }
-    _hurtbox.setSize(sf::Vector2f(0,0));
+
 }
 
 bool Dhalsim::finGarde(sf::Clock& clockAnim)
@@ -433,7 +442,6 @@ bool Dhalsim::finGarde(sf::Clock& clockAnim)
 
 void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
 {
-	_cptStatic=0;
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1236,6 +1244,10 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnne
 		    clockAnim.restart();
 		    setSprite(24,3233,76,120);
 		    _posX-=10*SCALE*_orientation;
+
+		    if (!son.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
+		        std::cout<<"erreur musique";
+			son.play();
 
 		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
