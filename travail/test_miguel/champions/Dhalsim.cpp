@@ -223,6 +223,8 @@ bool Dhalsim::prendCoup(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     _hurtbox.setSize(sf::Vector2f(0,0));
+    _gardebox.setSize(sf::Vector2f(0,0));
+    
     if(timeAnim > delai)
     {
     	switch(_cptPrendCoup)
@@ -403,6 +405,7 @@ void Dhalsim::statique(sf::Clock& clockAnim,Personnage& champEnnemi)
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.4,_tailleSprite.y*0.9));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+	_gardebox.setSize(sf::Vector2f(0,0));
 
     rotate(champEnnemi);
     int n=0;
@@ -426,18 +429,6 @@ void Dhalsim::garde(sf::Clock& clockAnim)
     	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY);
     }
 
-}
-
-bool Dhalsim::finGarde(sf::Clock& clockAnim)
-{
-	bool fini=false;
-	sf::Time elapsed = clockAnim.getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
-    setSprite(24,4996,85,100);
-    if(timeAnim>delai*3)
-    	fini=true;
-    return fini;
 }
 
 void Dhalsim::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
@@ -596,7 +587,7 @@ void Dhalsim::reculer(sf::Clock& clockAnim)
 	    	break;
 	    }
 	}
-
+	_gardebox.setSize(sf::Vector2f(0,0));
     _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY);
 	keepInWalls();

@@ -78,23 +78,23 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 			sautAvant=false;
 			sautArriere=false;
 		}
-		else if( (joystick0_axisX > 40) && (joystick0_axisY < 45 && joystick0_axisY > -25) )
+		else if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55) )
 			avancer=true;
-		else if( (joystick0_axisX < -40) && (joystick0_axisY < 45 && joystick0_axisY > -25) )
+		else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40) )
 			reculer=true;
-		else if( (joystick0_axisX>-40 && joystick0_axisX<40) && (joystick0_axisY<-40) )
+		else if( (joystick0_axisX>-80 && joystick0_axisX<80) && (joystick0_axisY<-40) )
 			saut=true;
-		else if( (joystick0_axisX<=95 && joystick0_axisX>=40) && (joystick0_axisY<-40) )
+		else if( (joystick0_axisX<=95 && joystick0_axisX>=80) && (joystick0_axisY<-55) )
 		{
 			saut=true;
 			avancer=true;
 		}	
-		else if( (joystick0_axisX>=-95 && joystick0_axisX<=-40) && (joystick0_axisY<-40) )
+		else if( (joystick0_axisX>=-95 && joystick0_axisX<=-80) && (joystick0_axisY<-40) )
 		{
 			saut=true;
 			reculer=true;
 		}
-		else if( (joystick0_axisX>-40 && joystick0_axisX<40) && (joystick0_axisY>40) )
+		else if( (joystick0_axisX>-80 && joystick0_axisX<80) && (joystick0_axisY>40) )
 			accroupi=true;
 	}else   // Commandes clavier au cas ou manette absent
 	{
@@ -140,8 +140,8 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 
 	if (sf::Joystick::isConnected(1))   // Commandes pour manette
 	{
-		punch=sf::Joystick::isButtonPressed(0, 0);   // touche pour puncher: A
-		kick=sf::Joystick::isButtonPressed(0, 1);	 // touche pour kicker:  B
+		punch=sf::Joystick::isButtonPressed(1, 0);   // touche pour puncher: A
+		kick=sf::Joystick::isButtonPressed(1, 1);	 // touche pour kicker:  B
 		joystick1_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
 		joystick1_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 		//cout<<"x : "<<joystick1_axisX<<"\t y : "<<joystick1_axisY<<endl;
@@ -153,23 +153,23 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 			sautAvant=false;
 			sautArriere=false;
 		}
-		else if( (joystick1_axisX > 40) && (joystick1_axisY < 45 && joystick1_axisY > -25) )
-			reculer=true;
-		else if( (joystick1_axisX < -40) && (joystick1_axisY < 45 && joystick1_axisY > -25) )
+		else if( (joystick1_axisX > 40) && (joystick1_axisY < 70 && joystick1_axisY > -55) )
 			avancer=true;
-		else if( (joystick1_axisX>-40 && joystick1_axisX<40) && (joystick1_axisY<-40) )
+		else if( (joystick1_axisX < -40) && (joystick1_axisY < 70 && joystick1_axisY > -40) )
+			reculer=true;
+		else if( (joystick1_axisX>-80 && joystick1_axisX<80) && (joystick1_axisY<-40) )
 			saut=true;
-		else if( (joystick1_axisX<=95 && joystick1_axisX>=40) && (joystick1_axisY<-40) )
+		else if( (joystick1_axisX<=95 && joystick1_axisX>=80) && (joystick1_axisY<-55) )
 		{
 			saut=true;
-			reculer=true;
+			avancer=true;
 		}	
-		else if( (joystick0_axisX>=-95 && joystick0_axisX<=-40) && (joystick0_axisY<-40) )
+		else if( (joystick1_axisX>=-95 && joystick1_axisX<=-80) && (joystick1_axisY<-40) )
 		{
 			saut=true;
-			avancer=true;
+			reculer=true;
 		}
-		else if( (joystick0_axisX>-40 && joystick0_axisX<40) && (joystick0_axisY>40) )
+		else if( (joystick1_axisX>-80 && joystick1_axisX<80) && (joystick1_axisY>40) )
 			accroupi=true;
 	}else   // Commandes clavier au cas ou manette absent
 	{
@@ -287,8 +287,6 @@ bool Player::lancerActions(Player& jEnnemi)
 		}
 	}
 
-	else if(_action!=_derniereAction && _derniereAction==0 && _posVerticale==0)
-		_actionFini=_champion->finGarde(_clockAnim);
 	else if(_etaitAccroupi && _posVerticale!=-1)
 		_actionFini=_champion->seLever(_clockAnim);
 

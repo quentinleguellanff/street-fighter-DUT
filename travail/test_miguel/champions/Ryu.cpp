@@ -253,6 +253,8 @@ bool Ryu::prendCoup(sf::Clock& clockAnim,int* degats,sf::Sprite& effet)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     _hurtbox.setSize(sf::Vector2f(0,0));
+    _gardebox.setSize(sf::Vector2f(0,0));
+
     if(timeAnim > delai)
     {
     	switch(_cptPrendCoup)
@@ -411,6 +413,7 @@ void Ryu::statique(sf::Clock& clockAnim,Personnage& champEnnemi)
 
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
    	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
+   	_gardebox.setSize(sf::Vector2f(0,0));
 	
 	int n=0;
 	collision(champEnnemi,n);
@@ -436,20 +439,6 @@ void Ryu::garde(sf::Clock& clockAnim)
     _posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
     keepInWalls();
-}
-
-bool Ryu::finGarde(sf::Clock& clockAnim)
-{
-	bool fini=false;
-	sf::Time elapsed = clockAnim.getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
-    int delai=70;
-    setSprite(5,538,63,89);
-    _gardebox.setSize(sf::Vector2f(0,0));
-    if(timeAnim>delai*3)
-    	fini=true;
-    keepInWalls();
-    return fini;
 }
 
 void Ryu::avancer(sf::Clock& clockAnim,Personnage& champEnnemi)
@@ -567,6 +556,8 @@ void Ryu::reculer(sf::Clock& clockAnim)
 	_sprite.setPosition(_posX,_posY);
     _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
     _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
+    _gardebox.setSize(sf::Vector2f(0,0));
+    
 	keepInWalls();
 }
 

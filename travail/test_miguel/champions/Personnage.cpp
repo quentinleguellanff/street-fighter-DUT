@@ -69,7 +69,6 @@ void Personnage::keepInWalls()
 	if(_posY+_tailleSprite.y>_scene.getBottom())
 			_posY=_scene.getBottom()-_tailleSprite.y;
 	_sprite.setPosition(sf::Vector2f(_posX,_posY ));
-
 }
 
 

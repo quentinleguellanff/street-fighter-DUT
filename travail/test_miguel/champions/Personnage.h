@@ -78,7 +78,6 @@ public:
 
 	virtual void statique(sf::Clock&,Personnage&){};	//animation au repos
 	virtual void garde(sf::Clock&){};			//animation de garde debout				--> gestion de la garde à faire
-	virtual bool finGarde(sf::Clock&){return true;};		//animation de fin de garde
 	virtual void avancer(sf::Clock&,Personnage&){};		//animation de marche vers l'avant
 	virtual void reculer(sf::Clock&){};		//animation de marche vers l'arrière
 
@@ -121,7 +120,6 @@ public:
 
 	void statique(sf::Clock&,Personnage&) override;	//animation au repos
 	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
-	bool finGarde(sf::Clock&) override;		//animation de fin de garde
 	void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
 	void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
 
@@ -154,7 +152,6 @@ public:
 
 	void statique(sf::Clock&,Personnage&) override;	//animation au repos
 	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
-	bool finGarde(sf::Clock&) override;		//animation de fin de garde
 	void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
 	void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
 
@@ -185,7 +182,6 @@ public:
 
 	void statique(sf::Clock&,Personnage&) override;	//animation au repos
 	void garde(sf::Clock&) override;			//animation de garde debout				--> gestion de la garde à faire
-	bool finGarde(sf::Clock&) override;		//animation de fin de garde
 	void avancer(sf::Clock&,Personnage&) override;		//animation de marche vers l'avant
 	void reculer(sf::Clock&) override;		//animation de marche vers l'arrière
 
