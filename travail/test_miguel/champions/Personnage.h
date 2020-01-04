@@ -4,6 +4,7 @@
 #include "../IncludeManager.h"
 
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -39,11 +40,7 @@ protected:
 	int _cptAction;					//compteur pour les animations de type attaques 
 	int _cptPrendCoup;
 	int _cptGarde;					//compteur pour l'animation de garde debout
-
-	int _tabSP[25][4];				//tableau pour stocker les coordonnées des sprites pour les animations spéciales (SP)
-	int _indexTab;					//index permettant de remplir le tableau
-	int _cptSP;						//compteur pour les effets sur les animations spéciales 
-	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
+	int _cptSP;						//compteur pour les effets sur les animations spéciales
 public:
 	Personnage(){};		//constructeur vide
 
@@ -103,6 +100,12 @@ public:
 
 class Jotaro : public Personnage
 {
+private:
+	std::vector<std::vector<int> > _tabSP{};
+	//int _tabSP[25][4];				//tableau pour stocker les coordonnées des sprites pour les animations spéciales (SP)
+	//int _indexTab;					//index permettant de remplir le tableau 
+	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
+
 public:
 	Jotaro(){};		//constructeur vide
 	Jotaro(int,const Scene&);	//constructeur du champion

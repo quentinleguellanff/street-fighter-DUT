@@ -7,8 +7,7 @@ Jotaro::Jotaro(int orientation,const Scene& s)
 	SCALE=3.7;
 	_orientation=-orientation;
 	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;_cptSP=0;_indexTab=0;
-	_cptPrendCoup=0;
+	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;_cptSP=0;_cptPrendCoup=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_jotaro.png"))
 	{
@@ -51,23 +50,22 @@ Jotaro::Jotaro(int orientation,const Scene& s)
 
 void Jotaro::ajouterTexture(int n1, int n2, int i1, int i2)
 {
-	_tabSP[_indexTab][0]=n1;
-	_tabSP[_indexTab][1]=n2;
-	_tabSP[_indexTab][2]=i1;
-	_tabSP[_indexTab][3]=i2;
-	_indexTab++;
+	vector<int> temp{};
+	temp.push_back(n1);
+	temp.push_back(n2);
+	temp.push_back(i1);
+	temp.push_back(i2);
+
+	_tabSP.push_back(temp);
+	
 }
 
 void Jotaro::resetTexture()
 {
-	for(int i=0;i<=25;i++)
+	while(!_tabSP.empty())
 	{
-		_tabSP[i][0]=0;
-		_tabSP[i][1]=0;
-		_tabSP[i][2]=0;
-		_tabSP[i][3]=0;
+		_tabSP.pop_back();
 	}
-	_indexTab=0;
 }
 
 bool Jotaro::victoire(sf::Clock& clockAnim,sf::Music& son)
@@ -406,7 +404,7 @@ bool Jotaro::apparition(sf::Clock& clockAnim,sf::Sprite& starPlat)
     {
     	clockAnim.restart();
     	_cptApparition++;
-		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptApparition-10][0],_tabSP[_cptApparition-10][1],_tabSP[_cptApparition-10][2],_tabSP[_cptApparition-10][3]));
+		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptApparition-11][0],_tabSP[_cptApparition-11][1],_tabSP[_cptApparition-11][2],_tabSP[_cptApparition-11][3]));
 		if(_cptApparition==34)
 		{
 			fini=true;
