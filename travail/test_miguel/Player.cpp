@@ -293,15 +293,6 @@ bool Player::lancerActions(Player& jEnnemi)
 	else if(_action==0)
 		_champion->garde(_clockAnim);
 
-	else if(_action==1)
-		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
-
-	else if(_action==2)
-		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
-
-	else if(_action==3)
-		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son);
-
 	else if(_posHorizontale==1 && _posVerticale==1)
 	{
 		if(_champion->getOrientation()==-1)
@@ -339,6 +330,15 @@ bool Player::lancerActions(Player& jEnnemi)
 
 	else if(_posVerticale==-1)
 		_champion->accroupi(_clockAnim,_action==0);
+
+	else if(_action==1)
+		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+
+	else if(_action==2)
+		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+
+	else if(_action==3)
+		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son);
 
 	else
 		_champion->statique(_clockAnim,*jEnnemi.getChampion());
