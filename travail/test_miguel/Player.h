@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <iostream>
-#include <string>
+#include <vector>
 #include "IncludeManager.h"
 
 #include <SFML/Graphics.hpp>
@@ -17,13 +17,20 @@ private:
 	int _PV;			// points de vie du joueur
 	sf::RectangleShape _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
 
+	int _energie;
+	std::vector<sf::RectangleShape> _barresEnergie;
+
 	// attributs des joysticks permettant de diriger le champion
 	float joystick0_axisX;	
 	float joystick0_axisY;
+	float joystick0_axisZ;	
+	float joystick0_axisR;
+
 	float joystick1_axisX;
 	float joystick1_axisY;
+	float joystick1_axisZ;	
+	float joystick1_axisR;
 
-	void _resetAttributs();	//initialisation des attributs de position
 	int _posHorizontale;	//attribut de position horizontale
 	int _posVerticale;		//attribut de position verticale
 	int _action;			//attribut déterminant l'action à effectuer
@@ -31,8 +38,10 @@ private:
 	   -1 - rien
 	    0 - garde
 		1 - punch
-		2 - kick
-		3 - SP
+		2 - punchSP
+		3 - kick
+		4 - kickSP
+		5 - SP
 	*/
 
 	int _prendCoup;
@@ -41,8 +50,12 @@ private:
 	bool _etaitAccroupi;
 	int _derniereAction;
 
-	sf::Clock _clockAnim;
-	sf::Clock _clockAttente;
+	std::vector<bool> _tabActions;
+	/* 0-avancer | 1-reculer | 2-accroupi | 3-saut | 4-sautAvant | 5-sautArriere | 6-garde | 7-punch | 8-punchSP | 9-kick | 10-kickSP | 11-SP */
+
+	std::vector<sf::Clock> _clockAnim;
+	/* 0-clock pour les sprites | 1-clock pour le deplacement */
+
 	sf::Sprite _effet;
 	sf::Music son;
 
@@ -51,6 +64,7 @@ public:
 	Player(int,sf::RenderWindow&);	//constructeur de Player
 
 	void resetPlayer();
+	void resetAttributs();	//initialisation des attributs de position
 
 	void setChampion(Personnage*);
 	Personnage* getChampion();
@@ -62,7 +76,7 @@ public:
 	void recuperationCommandesP2(Player&);	//recuperation des commandes dans le cas du joueur 2
 	void recuperationAttaquesP2();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
 
-	void gestionDesCommandes(Player&, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool);
+	void gestionDesCommandes(Player&);
 	// gestion de la superposition decommandes et de l'ordre d'importance de ces dernières
 
 	bool lancerApparition();
@@ -73,6 +87,7 @@ public:
 	void resetPV();				//reinitialisation des points de vie
 	void setDegats(int);		//inflige un nombre de dégats passés en arguments
 	sf::RectangleShape getBarrePV();	//renvoi la barre de vie pour permettre son affichage
+	void afficherEnergie(sf::RenderWindow&);
 
 	int getAction();
 	int* getPrendCoup();

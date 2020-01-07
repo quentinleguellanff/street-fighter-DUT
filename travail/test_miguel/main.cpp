@@ -59,7 +59,7 @@ int main()
     if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
-    musique.setVolume(50.f) ;
+    musique.setVolume(00.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -233,7 +233,10 @@ int main()
 	        window.draw(fond.getSprite());
 
 	        window.draw(joueur1.getBarrePV());
+	        joueur1.afficherEnergie(window);
+
 	        window.draw(joueur2.getBarrePV());
+	        joueur2.afficherEnergie(window);
 
 	        window.draw(joueur1.getChampion()->getSprite());
 	        window.draw(joueur1.getEffet());

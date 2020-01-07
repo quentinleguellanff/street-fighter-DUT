@@ -72,5 +72,5 @@ void Scene::lancerMusique(sf::Music& sonScene)
     }
     sonScene.play();
     sonScene.setLoop(true);
-    sonScene.setVolume(50.f);
+    sonScene.setVolume(00.f);
 }
