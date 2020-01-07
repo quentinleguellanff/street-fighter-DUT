@@ -1,12 +1,13 @@
 #include "Personnage.h"
 
-Personnage::Personnage(int)
+Personnage::Personnage(int,sf::RectangleShape&)
 {
 }
 
 Personnage::Personnage()
 {
     _hurtbox.setFillColor(sf::Color(0,0,255,100));
+    _hitbox.setFillColor(sf::Color(255,0,0,100));
 }
 
 Personnage::~Personnage()
@@ -73,7 +74,8 @@ int Personnage::getVitesseX()
 
 void Personnage::deplacer(int vitesse)
 {
-    _spritePerso.move(vitesse,0.f);
+    //_spritePerso.move(vitesse,0.f);
+    _spritePerso.setPosition(_spritePerso.getPosition().x+vitesse,_spritePerso.getPosition().y);
 }
 
 void Personnage::ResteDansFenetre()
@@ -111,7 +113,7 @@ void Personnage::collision(sf::RectangleShape hurtboxEnnemi)
     // collision debout
     if(positionbasse == positionbasseennemi)
     {
-        if(_orientation == -1)
+        if(_orientation == 1)
         {
             if(positiondroite + _vitesseX >= positiongaucheennemi)
             {

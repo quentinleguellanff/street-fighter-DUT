@@ -119,7 +119,7 @@ void Joueur::saut(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi,bool
         }
     }
     if(_ensaut){
-        if(!_Broly.sauter(window,0,ennemiensaut,hurtboxEnnemi)){
+        if(!_personnage->sauter(window,hurtboxEnnemi)){
             _ensaut = false;
             seretourner(hurtboxEnnemi);
             _peutsauter = true;
@@ -131,29 +131,36 @@ void Joueur::statique(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi)
 {
     if(!_avancedroite && !_avancegauche && !_ensaut && !_attaque && !_prendcoup && !_ensautgauche && !_ensautdroite)
     {
-        _Broly.debout(window,hurtboxEnnemi);
+        //_Broly.debout(window,hurtboxEnnemi);
         _personnage->debout(window,hurtboxEnnemi);
-        seretourner(hurtboxEnnemi);
+        //seretourner(hurtboxEnnemi);
     }
     else if(_avancedroite && _avancegauche && !_prendcoup && !_ensaut && !_ensautgauche && !_ensautdroite && !_attaque)
     {
-        _Broly.debout(window,hurtboxEnnemi);
-        seretourner(hurtboxEnnemi);
+        //_Broly.debout(window,hurtboxEnnemi);
+        _personnage->debout(window,hurtboxEnnemi);
+        //seretourner(hurtboxEnnemi);
     }
 }
 
 void Joueur::avancedroite(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi)
 {
     if(_avancedroite && !_avancegauche && !_saut && !_attaque && !_prendcoup && !_ensaut && !_ensautgauche && !_ensautdroite)
-    {
+    {/*
         if(_Broly.getorientation()== -1){
             _Broly.avancer(window,hurtboxEnnemi);
             seretourner(hurtboxEnnemi);
-            _personnage->avancer(window,hurtboxEnnemi);
         }
         else{
             _Broly.reculer(window);
             seretourner(hurtboxEnnemi);
+        }
+    */
+        if(_personnage->getorientation() == 1){
+            _personnage->avancer(window,hurtboxEnnemi);
+        }
+        else{
+            _personnage->reculer(window);
         }
     }
 }
@@ -161,14 +168,23 @@ void Joueur::avancedroite(sf::RenderWindow& window,sf::RectangleShape hurtboxEnn
 void Joueur::avancegauche(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi)
 {
     if(!_avancedroite && _avancegauche && !_saut && !_attaque && !_prendcoup && !_ensaut && !_ensautgauche && !_ensautdroite)
-    {
+    {/*
         if(_Broly.getorientation()== -1){
             _Broly.reculer(window);
             seretourner(hurtboxEnnemi);
+            _personnage->avancer(window,hurtboxEnnemi);
         }
         else{
             _Broly.avancer(window,hurtboxEnnemi);
+            _personnage->reculer(window);
             seretourner(hurtboxEnnemi);
+        }
+        */
+        if(_personnage->getorientation() == -1){
+            _personnage->avancer(window,hurtboxEnnemi);
+        }
+        else{
+            _personnage->reculer(window);
         }
     }
 }
@@ -188,7 +204,8 @@ void Joueur::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Rende
             _attaque = false;
             _Broly.resetcoup();
         }else{
-            _attaque = _Broly.coupDePoing(hurtboxEnnemi,touche,window);
+            //_attaque = _Broly.coupDePoing(hurtboxEnnemi,touche,window);
+            _attaque = _personnage->coupDePoing(hurtboxEnnemi,touche,window);
         }
         if(_prendcoup){
             _attaque = false;
@@ -196,9 +213,11 @@ void Joueur::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Rende
         }
         if(!_attaque && !_couppoing)
         {
+            _personnage->debout(window,hurtboxEnnemi);
             _peutcoup = true;
         }
         if(!_attaque){
+            _personnage->debout(window,hurtboxEnnemi);
             _peutsauter = true;
         }
     }
@@ -213,7 +232,8 @@ void Joueur::prendCoup(bool& touche,sf::RenderWindow& window){
     if(_prendcoup){
         sf::Time elapsed = _clockjoueur.getElapsedTime();
         int delai = elapsed.asMilliseconds();
-        _Broly.prendcoup(_prendcoup,window);
+        //_Broly.prendcoup(_prendcoup,window);
+        _personnage->prendCoup(_prendcoup,window);
         if(delai > 100){
             if(touche){
                 _cpttouche += 1;
@@ -276,11 +296,11 @@ Broly Joueur::getBroly()
 
 sf::RectangleShape Joueur::getHurtbox()
 {
-    return _Broly.gethurtbox();
+    return _personnage->gethurtbox();
 }
 
 sf::RectangleShape Joueur::getHitbox(){
-    return _Broly.gethitbox();
+    return _personnage->gethitbox();
 }
 
 int Joueur::getOrientation(){

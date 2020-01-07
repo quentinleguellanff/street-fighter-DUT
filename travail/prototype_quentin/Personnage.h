@@ -29,10 +29,11 @@ class Personnage
         sf::Clock _clockanim;
         sf::Clock _clockmove;
         sf::Vector2f _tailleSprite;
+        sf::RectangleShape _sol;
 
     public:
         Personnage();
-        Personnage(int);
+        Personnage(int,sf::RectangleShape&);
         virtual ~Personnage();
         int getorientation();
         bool collisioncoup(sf::RectangleShape hurtboxEnnemi);
@@ -53,6 +54,10 @@ class Personnage
 
         virtual void debout(sf::RenderWindow&,sf::RectangleShape){}
         virtual void avancer(sf::RenderWindow&,sf::RectangleShape){}
+        virtual void reculer(sf::RenderWindow&){}
+        virtual bool coupDePoing(sf::RectangleShape,bool&,sf::RenderWindow&){return true;}
+        virtual void prendCoup(bool&,sf::RenderWindow&){}
+        virtual bool sauter(sf::RenderWindow&,sf::RectangleShape){return true;}
 };
 
 #endif // PERSONNAGE_H

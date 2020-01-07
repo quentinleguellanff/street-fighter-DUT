@@ -7,7 +7,7 @@ using namespace std;
 
 Broly::Broly(int Orientation)
 {
-    _orientation = Orientation; // permet de définir l'orientation du personnage
+    _orientation = -Orientation; // permet de définir l'orientation du personnage
     if (!_Texture.loadFromFile("sprite/Brolyspriteok.png"))//load de la texture du personnage
     {
         cout << "erreur" << endl;
@@ -236,7 +236,7 @@ bool Broly::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Render
         spriteBroly.setTextureRect(sf::IntRect(2+_cptAnimCoupPoing*179, 2765,177,190));
     }
     window.draw(spriteBroly);
-    cout << _cptAnimCoupPoing << endl;
+    //cout << _cptAnimCoupPoing << endl;
     return true;
 }
 
@@ -379,7 +379,7 @@ void Broly::collision(sf::RectangleShape hurtboxEnnemi)
     float positionbasseennemi = hurtboxEnnemi.getPosition().y + hurtboxEnnemi.getGlobalBounds().height;
     float positionhauteennemi = hurtboxEnnemi.getPosition().y;
 
-    cout << positionbasse << endl;
+    //cout << positionbasse << endl;
     // collision debout
     if(positionbasse == positionbasseennemi)
     {
