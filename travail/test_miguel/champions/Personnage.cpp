@@ -163,12 +163,12 @@ void Personnage::collisionsaut(Personnage& ennemi,int& deplacement)
                     if((positionDroite + deplacement >= positionDroiteEnnemi && positionBasse > positionHauteEnnemi && positionDroiteEnnemi < _scene.getRightLimit() - ennemi.getHurtbox().getGlobalBounds().width/2)
                             || positionGauche < 0 && positionGaucheEnnemi  < _hurtbox.getGlobalBounds().width/2 && positionBasse > positionHauteEnnemi)
                     {
-                        _posX+=(positionDroiteEnnemi - positionGauche + 15);
+                        _posX+=(positionDroiteEnnemi - positionGauche + 15*SCALE);
                         deplacement = 0;
                     }
                     else if(positionDroite + deplacement > positionGaucheEnnemi && positionBasse > positionHauteEnnemi)
                     {
-                        _posX+=(-positionDroite + positionGaucheEnnemi - deplacement*2 - 15);
+                        _posX+=(-positionDroite + positionGaucheEnnemi - deplacement*2 - 15*SCALE);
                         deplacement = 0;
                     }
                 }
