@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "IncludeManager.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -41,6 +42,10 @@ public:
 class MenuSelection {
 private:
 
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
+    sf::Texture textureVS;
+    sf::Sprite spriteVS;
     sf::Font fontMenu;
 
     //texte : sélection des personnages
@@ -90,23 +95,52 @@ public :
     void draw(sf::RenderWindow &window);
     void bouger(sf::Event,sf::RenderWindow&);
     int validationPerso(sf::Event event);
+    void initValidationPerso();
 };
 
 class MenuCommandes {
     private:
-    sf::Texture textureManette;
-    sf::Texture textureClavier;
-    sf::Sprite spriteCommandes[2];
-    sf::Vector2f position;
-    sf::Font fontCommandes;
-    sf::Text retour;
-    sf::Texture menuFond;
-    sf::Sprite spriteFond;
+        sf::Texture texturej1;
+        sf::Texture texturej2;
+        sf::Sprite spriteCommandes[2];
+        sf::Vector2f position;
+        sf::Font fontCommandes;
+        sf::Text retour;
+        sf::Text j1;
+        sf::Text j2;
+        sf::Texture menuFond;
+        sf::Sprite spriteFond;
+        sf::RectangleShape ligneDelim;
 
     public:
-        MenuCommandes(float width, float height);
+        MenuCommandes(sf::RenderWindow&);
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
 };
 
+class MenuBackground {
+    private:
+        int selection;
+        sf::Texture bg[6];
+        sf::Sprite spritebg[6];
+        sf::RectangleShape rect[6];
+        sf::Vector2f position;
+        sf::Font fontBackground;
+        sf::Text retour;
+        sf::Text titre;
+        sf::Texture menuFond;
+        sf::Sprite spriteFond;
+
+    public:
+        MenuBackground(sf::RenderWindow&);
+        void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m);
+        void draw(sf::RenderWindow &window);
+        void bouger(sf::Event,sf::RenderWindow &window);
+        void moveRight();
+        void moveLeft();
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j);
+
+
+      };
 #endif // MENU_H
