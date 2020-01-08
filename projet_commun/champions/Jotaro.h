@@ -33,17 +33,17 @@ private:
 	int _cptSauter;					//compteur pour les animations de saut
 
 	int _cptApparition;				//compteur pour l'animation de début de combat
-	int _cptAction;					//compteur pour les animations de type attaques 
+	int _cptAction;					//compteur pour les animations de type attaques
 	int _cptPrendCoup;
 	int _cptGarde;					//compteur pour l'animation de garde debout
 
 	int _tabSP[25][4];				//tableau pour stocker les coordonnées des sprites pour les animations spéciales (SP)
 	int _indexTab;					//index permettant de remplir le tableau
-	int _cptSP;						//compteur pour les effets sur les animations spéciales 
+	int _cptSP;						//compteur pour les effets sur les animations spéciales
 	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
 public:
 	Jotaro(){};		//constructeur vide
-	Jotaro(int,const Scene&);	//constructeur du champion
+	void setTout(int,const Scene&);	//constructeur du champion
 
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
 	sf::Sprite getSprite() const;	//recupérer le sprite du personnage pour l'afficher
@@ -58,7 +58,7 @@ public:
 
 	void keepInWalls();		//permet de maintenir les personnages entre les limites de la carte
 	int getOrientation() const;		//récupérer l'orientation du personnage
-	
+
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(const sf::Sprite&);		//gère la rotation des personnages quand ils se dépassent
 	bool prendCoup(sf::Clock&,bool&,sf::Sprite&);	//animation de prise de coup
@@ -82,7 +82,7 @@ public:
 	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&);					//animation de coup de pied
 	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&);				//animation de coup de pied en saut
 	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&);		//animation de coup spécial
-	
+
 };
 
 #endif
