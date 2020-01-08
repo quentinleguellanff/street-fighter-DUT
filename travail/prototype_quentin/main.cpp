@@ -16,7 +16,7 @@ int main()
     const int LARGEUR = 1440;
     sf::RenderWindow window(sf::VideoMode(LARGEUR,LONGUEUR), "prototype");
     window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(120);
     window.setVerticalSyncEnabled(true);
 
     bool combatEnCours = true;
@@ -45,13 +45,12 @@ int main()
 
     Personnage* PersoJ1;
     Personnage* PersoJ2;
-    PersoJ1 = new Ryu(1);
-    PersoJ2 = new Ryu(-1);
+    PersoJ1 = new Ryu(1,sol);
+    PersoJ2 = new Ryu(-1,sol);
 
     Joueur joueur1(1,Brolytest,PersoJ1);
     Joueur joueur2(2,Brolytest2,PersoJ2);
 
-    collisionmanager collision;
     Combat combat(joueur1,joueur2,sol);
 
     while (window.isOpen())

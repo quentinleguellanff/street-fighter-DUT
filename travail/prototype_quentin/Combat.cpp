@@ -58,14 +58,14 @@ bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
             _joueur1.saut(window,_joueur2.getHurtbox(),_joueur2.getEtat());
             _joueur2.saut(window,_joueur1.getHurtbox(),_joueur1.getEtat());
 
-            _joueur1.statique(window,_joueur2.getHurtbox());
-            _joueur2.statique(window,_joueur1.getHurtbox());
-
             _joueur1.avancedroite(window,_joueur2.getHurtbox());
             _joueur2.avancedroite(window,_joueur1.getHurtbox());
 
             _joueur1.avancegauche(window,_joueur2.getHurtbox());
             _joueur2.avancegauche(window,_joueur1.getHurtbox());
+
+            _joueur1.statique(window,_joueur2.getHurtbox());
+            _joueur2.statique(window,_joueur1.getHurtbox());
 
             _joueur1.prendCoup(toucheJ1,window);
             _joueur2.prendCoup(toucheJ2,window);
@@ -77,8 +77,8 @@ bool Combat::partie(sf::RenderWindow& window,bool& toucheJ1, bool& toucheJ2){
             //window.draw(_sol);
             window.draw(_joueur1.getBarreVie());
             window.draw(_joueur2.getBarreVie());
-            window.draw(_joueur1.getHurtbox());
-            window.draw(_joueur2.getHurtbox());
+            //window.draw(_joueur1.getHurtbox());
+            //window.draw(_joueur2.getHurtbox());
             //window.draw(_joueur2.getHitbox());
             //cout << _joueur2.getHitbox().getPosition().x << endl;
             if(toucheJ1){
@@ -98,11 +98,11 @@ void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueu
         int Orientation = joueur.getOrientation();
         //cout << Orientation << endl;
         float positionHitboxX;
-        if(Orientation == 1){
+        if(Orientation == -1){
             _spritehitspark.setScale(-1,1);
             positionHitboxX = joueur.getHitbox().getPosition().x - joueur.getHitbox().getGlobalBounds().width;
         }
-        else if(Orientation == -1){
+        else if(Orientation == 1){
             _spritehitspark.setScale(1,1);
             positionHitboxX = joueur.getHitbox().getPosition().x + 286;
         }
