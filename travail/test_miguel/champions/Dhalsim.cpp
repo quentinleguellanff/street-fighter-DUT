@@ -17,6 +17,9 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 	_sprite.scale(_orientation*SCALE,SCALE);
 	setSprite(24,32,51,115);
 
+	_icone.setTexture(_texture);
+	_icone.setTextureRect(sf::IntRect(990,6490,97,104));
+
 	if(_orientation==1)
 		_posX=100.f;
 	else
@@ -44,6 +47,7 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 		_hitbox.setScale(-1,1);
 	}
 }
+
 
 bool Dhalsim::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 {
@@ -982,6 +986,9 @@ bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	keepInWalls();
@@ -1035,6 +1042,9 @@ bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
     keepInWalls();
@@ -1127,9 +1137,11 @@ bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Pers
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
-	keepInWalls();
 	return fini;
 }
 
@@ -1195,6 +1207,9 @@ bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	keepInWalls();
@@ -1247,6 +1262,9 @@ bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 	
     keepInWalls();
@@ -1330,9 +1348,11 @@ bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, 
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
-	keepInWalls();
 	return fini;
 }
 
@@ -1442,6 +1462,10 @@ bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personna
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=30;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
+
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
 		_cptAction=0;

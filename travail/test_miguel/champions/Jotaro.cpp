@@ -24,7 +24,10 @@ Jotaro::Jotaro(int orientation,const Scene& s)
 
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	_sprite.setPosition(_posX,_posY);
-	keepInWalls();
+
+	_icone.setTexture(_texture);
+	_icone.setTextureRect(sf::IntRect(3081,7499,115,104));
+
 
 	_hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);
@@ -44,8 +47,6 @@ Jotaro::Jotaro(int orientation,const Scene& s)
 		_hitbox.setScale(-1,1);
 	}
 }
-
-
 
 
 void Jotaro::ajouterTexture(int n1, int n2, int i1, int i2)
@@ -1339,6 +1340,9 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	_sprite.setPosition(_posX,_posY);
@@ -1444,6 +1448,9 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=20;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	return fini;
@@ -1541,6 +1548,9 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=15;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
     _sprite.setPosition(_posX,_posY);
@@ -1594,6 +1604,9 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 	
     keepInWalls();
@@ -1674,6 +1687,9 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	keepInWalls();
@@ -1775,7 +1791,10 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=50;
+		*degats=20;
+
+		if(champEnnemi.getPosX()==_scene.getRightLimit())
+			_posX-=25*SCALE*_orientation;
 	}
 
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);

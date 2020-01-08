@@ -14,6 +14,12 @@ void Personnage::setSprite(int n1, int n2, int i1, int i2)
 	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
 	_sprite.setTextureRect(sf::IntRect(n1, n2,i1,i2));
 }
+
+sf::Sprite Personnage::getIcone()
+{
+    return _icone;
+}
+
 sf::RectangleShape Personnage::getHurtbox()
 {
 	return _hurtbox;
@@ -35,8 +41,8 @@ sf::RectangleShape Personnage::getGardebox()
 }
 
 
-bool Personnage::collisioncoup(Personnage& ennemi){
-
+bool Personnage::collisioncoup(Personnage& ennemi)
+{
     return _hitbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds());
 }
 

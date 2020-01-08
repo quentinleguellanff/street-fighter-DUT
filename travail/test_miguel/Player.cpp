@@ -8,7 +8,7 @@ using namespace std;
 Player::Player(int n,sf::RenderWindow& window)
 {
 	_PV=100;
-	_energie=10;
+	_energie=0;
 
 	for(int i=0;i<2;i++)
 	{
@@ -25,38 +25,48 @@ Player::Player(int n,sf::RenderWindow& window)
 	for(int i=0;i<=11;i++)
 		_tabActions.push_back(false);
 
-
-	_barrePV.setSize(sf::Vector2f(_PV*8,50));
-
-	if(n==1)
+	if (!_textureBI.loadFromFile("background/lifeBar_V2.png"))
 	{
-		_barrePV.setPosition(sf::Vector2f(20,20));
-	}else
-	{
-		_barrePV.setScale(-1,1);
-		_barrePV.setPosition(sf::Vector2f(window.getSize().x-20,20));
+	    std::cout<<"Erreur au chargement du sprite";
 	}
+	_barreInfos.setTexture(_textureBI);
 
-
-	for(int i=0;i<4;i++)
+	for(int i=0;i<2;i++)
 	{
 		sf::RectangleShape temp;
-		_barresEnergie.push_back(temp);
+		_barrePV.push_back(temp);
+		_barreEnergie.push_back(temp);
 	}
+
+	_barrePV[0].setSize(sf::Vector2f(_PV*7.15,40));
+	_barreEnergie[0].setSize(sf::Vector2f(276,40));
+	_barrePV[0].setFillColor(sf::Color(90,37,37));
+	_barreEnergie[0].setFillColor(sf::Color(210,254,254));
+
+	_barreEnergie[1].setFillColor(sf::Color(10,255,255));
 
 	if(n==1)
 	{
-		_barresEnergie[0].setPosition(sf::Vector2f(20,window.getSize().y-50));
-		for(int i=1;i<4;i++)
-			_barresEnergie[i].setPosition(sf::Vector2f(_barresEnergie[i-1].getPosition().x+55*2,window.getSize().y-50));
+		_barreInfos.setPosition(sf::Vector2f(0,10));
+
+		for(int i=0;i<2;i++)
+		{
+			_barrePV[i].setPosition(sf::Vector2f(177,19));
+			_barreEnergie[i].setPosition(sf::Vector2f(177,63));
+		}
 	}else
 	{
-		for(int i=0;i<4;i++)
-			_barresEnergie[i].setScale(-1,1);
+		_barreInfos.scale(-1,1);
+		_barreInfos.setPosition(sf::Vector2f(window.getSize().x,10));
 
-		_barresEnergie[0].setPosition(sf::Vector2f(window.getSize().x-20,window.getSize().y-50));
-		for(int i=1;i<4;i++)
-			_barresEnergie[i].setPosition(sf::Vector2f(_barresEnergie[i-1].getPosition().x-55*2,window.getSize().y-50));
+		for(int i=0;i<2;i++)
+		{
+			_barrePV[i].scale(-1,1);
+			_barrePV[i].setPosition(sf::Vector2f(window.getSize().x-177,18));
+			_barreEnergie[i].scale(-1,1);
+			_barreEnergie[i].setPosition(sf::Vector2f(window.getSize().x-177,63));
+		}
+	
 	}
 }
 
@@ -82,6 +92,18 @@ void Player::setChampion(Personnage* perso)
 {
 	_champion=perso;
 	resetPlayer();
+
+	if(_barreInfos.getScale().x==1)
+	{
+		_portrait=_champion->getIcone();
+		_portrait.setPosition(0,10);
+	}else
+	{
+		
+		_portrait=_champion->getIcone();
+		_portrait.setPosition(_barreInfos.getPosition().x,10);
+		_portrait.scale(-1,1);
+	}
 }
 
 Personnage* Player::getChampion()
@@ -452,7 +474,7 @@ void Player::setDegats(int degats)
 
 sf::RectangleShape Player::getBarrePV()
 {
-	if(_PV>66)
+	/*if(_PV>66)
 		_barrePV.setFillColor(sf::Color(0,250,0));
 	else if(_PV>33)
 		_barrePV.setFillColor(sf::Color(255,165,0));
@@ -462,14 +484,14 @@ sf::RectangleShape Player::getBarrePV()
 	if(_PV>0)
 		_barrePV.setSize(sf::Vector2f(_PV*8,50));
 	else
-		_barrePV.setSize(sf::Vector2f(0,50));
+		_barrePV.setSize(sf::Vector2f(0,50));*/
 
-	return _barrePV;
+	return _barrePV[0];
 }
 
 void Player::afficherEnergie(sf::RenderWindow& window)
 {
-	if(_energie==100)
+	/*if(_energie==100)
 	{
 		for(int i=0;i<4;i++)
 		{
@@ -520,10 +542,31 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		_barresEnergie[1].setSize(sf::Vector2f(49*2,30));
 		_barresEnergie[2].setSize(sf::Vector2f(49*2,30));
 		_barresEnergie[3].setSize(sf::Vector2f((_energie-74)*4,30));
-	}
+	}*/
+	if(_PV>66)
+		_barrePV[1].setFillColor(sf::Color(0,250,0));
+	else if(_PV>33)
+		_barrePV[1].setFillColor(sf::Color(255,165,0));
+	else 
+		_barrePV[1].setFillColor(sf::Color(255,0,0));
 
-	for(int i=0;i<4;i++)
-		window.draw(_barresEnergie[i]);
+	if(_PV<0)
+		_PV=0;
+	_barrePV[1].setSize(sf::Vector2f(_PV*7.15,38));
+		
+	if(_energie<0)
+		_energie=0;
+	_barreEnergie[1].setSize(sf::Vector2f(_energie*2.76,38));
+
+
+	for(int i=0;i<2;i++)
+	{
+		window.draw(_barrePV[i]);
+		window.draw(_barreEnergie[i]);
+	}
+	
+	window.draw(_barreInfos);
+	window.draw(_portrait);
 }
 
 

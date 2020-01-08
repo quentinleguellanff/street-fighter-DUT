@@ -14,11 +14,15 @@ class Player
 {
 private:
 	Personnage* _champion;
+
+	sf::Sprite _portrait;
+	sf::Sprite _barreInfos;
+	sf::Texture _textureBI;
 	int _PV;			// points de vie du joueur
-	sf::RectangleShape _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
+	std::vector<sf::RectangleShape> _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
 
 	int _energie;
-	std::vector<sf::RectangleShape> _barresEnergie;
+	std::vector<sf::RectangleShape> _barreEnergie;
 
 	// attributs des joysticks permettant de diriger le champion
 	float joystick0_axisX;	

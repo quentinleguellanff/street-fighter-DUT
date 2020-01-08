@@ -18,6 +18,7 @@ protected:
 	int _orientation;		//orientation du personnage (-1 : personnage à gauche)
 	sf::Texture _texture;	//texture du personnage
 	sf::Sprite _sprite;
+	sf::Sprite _icone;
 
 	sf::Vector2f _tailleSprite;		//taille du personnage sous la forme d'un vector de float à 2 dimensions
 	Scene _scene;					//la scene sur laquelle se passe le combat
@@ -43,9 +44,11 @@ protected:
 	int _cptSP;						//compteur pour les effets sur les animations spéciales
 public:
 	Personnage(){};		//constructeur vide
+	~Personnage(){};
 
 	sf::Sprite getSprite();
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
+	sf::Sprite getIcone();
 
 	sf::RectangleShape getHurtbox();	//permet de récupérer la zone de prise de dégats
 	sf::RectangleShape getHitbox();		//permet de récupérer la zone de mise de dégats
@@ -61,9 +64,6 @@ public:
 	int getPosX();
 	void setPosY(int);
 	int getPosY();
-
-	virtual void ajouterTexture(int,int,int,int){};	//permet de remplir le tableau _tabSP
-	virtual void resetTexture(){};		//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
 	
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
@@ -108,8 +108,8 @@ public:
 	Jotaro(){};		
 	Jotaro(int,const Scene&);
 
-	void ajouterTexture(int,int,int,int) override;
-	void resetTexture() override;	
+	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
+	void resetTexture();	//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
 
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
 	bool mort(std::vector<sf::Clock>& clockAnim) override;
@@ -173,8 +173,8 @@ public:
 class Ryu : public Personnage
 {
 public:
-	Ryu(){};	//constructeur vide
-	Ryu(int,const Scene&);		//constructeur du champion
+	Ryu(){};
+	Ryu(int,const Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;

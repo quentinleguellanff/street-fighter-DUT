@@ -16,6 +16,9 @@ Ryu::Ryu(int orientation,const Scene& s)
 	_sprite.setTexture(_texture);
 	_sprite.scale(_orientation*SCALE,SCALE);
 
+	_icone.setTexture(_texture);
+	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
+
 	if(_orientation==1)
 		_posX=100.f;
 	else
@@ -43,6 +46,7 @@ Ryu::Ryu(int orientation,const Scene& s)
 		_hitbox.setScale(-1,1);
 	}
 }
+
 
 bool Ryu::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 {
@@ -1038,6 +1042,8 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
 	
     if(timeAnim > delaiAnim)
     {
+		collisionsaut(champEnnemi,deplacement);
+
 		switch (_cptAction)
 		{
 		case 0:
@@ -1096,16 +1102,32 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
 			}
 			break;
 		case 5:
-		    _cptAction=0;
+		    _cptAction++;
 		    clockAnim[0].restart();
 		    setSprite(380,3779,63,99);
-		    fini=true;
+
 		    _posY=_scene.getBottom()-_tailleSprite.y;
-		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
-   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			break;
+		case 6:
+		    _cptAction=0;
+		    clockAnim[0].restart();
+		    setSprite(2,433,66,98);
+		    fini=true;
+
+		    _posY=_scene.getBottom()-_tailleSprite.y;
+		    break;
 		}
+
+		if( (_orientation==1 && _posX+_tailleSprite.x >= champEnnemi.getPosX()-champEnnemi.getHurtbox().getGlobalBounds().width)
+              || (_orientation==-1 && _posX-_tailleSprite.x <= champEnnemi.getPosX()+champEnnemi.getHurtbox().getGlobalBounds().width) )
+	    {
+	        _posX=champEnnemi.getPosX()-(champEnnemi.getHurtbox().getGlobalBounds().width+_tailleSprite.x+deplacement)*_orientation;
+	    }
+
 		_sprite.setPosition(_posX,_posY);
+
+		_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+   		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 	}
 
 	if(collisioncoup(champEnnemi))
@@ -1116,7 +1138,6 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
 			_posX-=25*SCALE*_orientation;
 	}
 
-	collisionsaut(champEnnemi,deplacement);
 	keepInWalls();
 	return fini;
 }

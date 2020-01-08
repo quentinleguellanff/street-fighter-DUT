@@ -14,13 +14,13 @@ Scene::Scene(sf::RenderWindow& w,int n)
 
 void Scene::chargementXenoverse()
 {
-	if(!_textureScene.loadFromFile("background/ring_xenoverse_V2.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
+	if(!_textureScene.loadFromFile("background/japan_background.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
 	}
 
-	_hauteurSol=75.f;
+	_hauteurSol=190.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -72,5 +72,5 @@ void Scene::lancerMusique(sf::Music& sonScene)
     }
     sonScene.play();
     sonScene.setLoop(true);
-    sonScene.setVolume(00.f);
+    sonScene.setVolume(0.f);
 }

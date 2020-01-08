@@ -15,8 +15,8 @@ int main()
 	/* Gestion de la fenetre */
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(),"la Bagarre",sf::Style::Fullscreen);
-	window.setVerticalSyncEnabled(true);
-	window.setFramerateLimit(60);
+	//window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(100);
 	window.setMouseCursorVisible(0);
 
 	/* Création de la scene */
@@ -59,7 +59,7 @@ int main()
     if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
-    musique.setVolume(00.f) ;
+    musique.setVolume(0.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -232,10 +232,10 @@ int main()
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
 
-	        window.draw(joueur1.getBarrePV());
+	        //window.draw(joueur1.getBarrePV());
 	        joueur1.afficherEnergie(window);
 
-	        window.draw(joueur2.getBarrePV());
+	        //window.draw(joueur2.getBarrePV());
 	        joueur2.afficherEnergie(window);
 
 	        window.draw(joueur1.getChampion()->getSprite());
