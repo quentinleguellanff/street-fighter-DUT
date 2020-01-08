@@ -17,8 +17,9 @@ int main()
 	window.setFramerateLimit(60);
 	window.setMouseCursorVisible(0);
 
+
 	/* Création de la scene */
-	Scene fond(window,1);
+	Scene fond(window/*,1*/);
 
 	/* Création des horloges pour les animations */
 	sf::Clock clockAnim_P1;
@@ -28,8 +29,8 @@ int main()
 
 	/* Variable de création des deux champions */
 	//int selecChamp_P1=-1,selecChamp_P2=-1;	variables destinées à la selection du champion
-	Jotaro champion_P1(-1,fond);
-	Dhalsim champion_P2(1,fond);
+	Jotaro champion_P1;//(-1,fond);
+	Dhalsim champion_P2;//(1,fond);
 
 	/* Création des sprites pour les effets */
 	sf::Sprite effet_P1;
@@ -56,14 +57,15 @@ int main()
     sf::Event eventS;
 
     /* Déclaration menu commandes */
-    MenuCommandes menuCommandes(window.getSize().x,window.getSize().x);
+    MenuCommandes menuCommandes(window);
+    MenuBackground menuBackground(window);
 
     /* Musique */
 	sf::Music musique;
     if (!musique.openFromFile("musique/musicBagarre.ogg")){
             std::cout<<"erreur musique";
     }
-    musique.setVolume(1.f) ;
+    //musique.setVolume(1.f) ;
     musique.play();
     musique.setLoop(true);
 
@@ -104,14 +106,26 @@ int main()
             menuSel.draw(window);
 	        window.display();
 
-
-        }else if(selecEcran==3)
+        }
+        else if(selecEcran==3)
         {
             while (window.pollEvent(event))
                 menuCommandes.retourMenu(selecEcran,event);
-            menuCommandes.draw(window);
-            window.display();
-        }else if(selecEcran==2)	//lancement du combat
+                menuCommandes.draw(window);
+                window.display();
+        }
+
+        else if (selecEcran==4)
+        {
+            while (window.pollEvent(event)){
+                menuBackground.retourMenu2(selecEcran,event, menuSel);
+                menuBackground.bouger(event, window);
+                menuBackground.selectionner(event, window, selecEcran, fond, champion_P2, champion_P1);}
+                menuBackground.draw(window);
+                window.display();
+
+        }
+        else if(selecEcran==2)	//lancement du combat
         {
 
         	/* lancement des animations de début de combat */
@@ -309,20 +323,20 @@ int main()
 
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
-	        window.draw(fond.getSol());
+	        //window.draw(fond.getSol());
 
 	        window.draw(joueur1.getBarrePV());
 	        window.draw(joueur2.getBarrePV());
 
 	        window.draw(champion_P1);
 	        window.draw(effet_P1);
-	        window.draw(champion_P1.getHurtbox());
+	        //window.draw(champion_P1.getHurtbox());
 	        //window.draw(champion_P1.getHitbox());
 
 	        window.draw(champion_P2);
 	        window.draw(effet_P2);
 	        //window.draw(champion_P2.getHurtbox());
-	        window.draw(champion_P2.getHitbox());
+	        //window.draw(champion_P2.getHitbox());
 
 	        window.display();
 	    }else if(selecEcran==-1) //fermuture de la fenetre
