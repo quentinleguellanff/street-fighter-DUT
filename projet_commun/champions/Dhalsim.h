@@ -34,11 +34,11 @@ private:
 	int _cptSauter;					//compteur pour les animations de saut
 
 	int _cptApparition;				//compteur pour l'animation de début de combat
-	int _cptAction;					//compteur pour les animations de type attaques 
+	int _cptAction;					//compteur pour les animations de type attaques
 
 public:
 	Dhalsim(){};	//constructeur vide
-	Dhalsim(int,const Scene&);		//constructeur du champion
+	void setTout(int,const Scene&);		//constructeur du champion
 
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
 	sf::Sprite getSprite() const;			//recupérer le sprite du personnage pour l'afficher
@@ -53,7 +53,7 @@ public:
 
 	void keepInWalls();		//permet de maintenir les personnages entre les limites de la carte
 	int getOrientation() const;		//récupérer l'orientation du personnage
-	
+
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(const sf::Sprite&);		//gère la rotation des personnages quand ils se dépassent
 	bool prendCoup(sf::Clock&,bool&);	//animation de prise de coup
@@ -77,7 +77,7 @@ public:
 	bool kick(sf::Clock&,sf::RectangleShape,bool&,Player&);					//animation de coup de pied
 	bool sautKick(sf::Clock&,sf::RectangleShape,bool&,Player&);				//animation de coup de pied en saut
 	bool SP(sf::Clock&,sf::Sprite&,sf::RectangleShape,bool&,Player&);		//animation de coup spécial
-	
+
 };
 
 #endif
