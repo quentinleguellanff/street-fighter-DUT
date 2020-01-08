@@ -20,11 +20,16 @@ private:
 	int _limiteSol;
 	int _largeurWindow;
 
-	void chargementXenoverse();
+
 
 public:
+    void chargementXenoverse();
+	void chargementFutur();
+	void chargementToit();
+	void chargementSkulls();
+	void chargementBrazil(sf::RenderWindow& window);
 	Scene(){};
-	Scene(sf::RenderWindow&, int);
+	Scene(sf::RenderWindow&/*, int*/);
 	sf::Sprite getSprite() const;	// Renvoi la scene
 
 	// Permet de dessiner les limites de la map	& gerer les positions limites
