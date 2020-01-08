@@ -1,8 +1,10 @@
 #include "../IncludeManager.h"
 
+
 using namespace std;
 
-Dhalsim::Dhalsim(int orientation,const Scene& s)
+
+void Dhalsim::setTout(int orientation, const Scene& s)
 {
 	_orientation=-orientation;
 	_scene=s;
@@ -32,14 +34,13 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
     _hitbox.setFillColor(sf::Color(255,255,255,0));
     _hitbox.setOutlineColor(sf::Color::Red);
     _hitbox.setOutlineThickness(4);
-    
+
     if(_orientation==-1)
     {
 		_hurtbox.setScale(-1,1);
 		_hitbox.setScale(-1,1);
 	}
 }
-
 void Dhalsim::setSprite(int n1, int n2, int i1, int i2)
 {
 	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
@@ -74,13 +75,13 @@ void Dhalsim::keepInWalls()
 		if(_posX-_tailleSprite.x<_scene.getLeftLimit())
 			_posX=_scene.getLeftLimit()+_tailleSprite.x;
 		else if(_posX>_scene.getRightLimit())
-			_posX=_scene.getRightLimit();   
+			_posX=_scene.getRightLimit();
 	}else if(_orientation==1)
 	{
 		if(_posX<_scene.getLeftLimit())
 			_posX=_scene.getLeftLimit();
 		else if(_posX+_tailleSprite.x>_scene.getRightLimit())
-			_posX=_scene.getRightLimit()-_tailleSprite.x;   
+			_posX=_scene.getRightLimit()-_tailleSprite.x;
 	}
 	if(_posY+_tailleSprite.y>_scene.getBottom())
 			_posY=_scene.getBottom()-_tailleSprite.y;
@@ -179,7 +180,7 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
     int timeAnim = elapsed.asMilliseconds();
     bool fini=false;
     int delai=200;
-    
+
    	if(_cptApparition==0)
    	{
    		bandeau.setTexture(_texture);
@@ -205,7 +206,7 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 		    clockAnim.restart();
 		    setSprite(143,32,53,115);
 		    _posX-=1*SCALE*_orientation;
-			setPosition(_posX,_posY);    
+			setPosition(_posX,_posY);
 			break;
 		case 3:
 		    _cptApparition +=1;
@@ -254,7 +255,7 @@ bool Dhalsim::apparition(sf::Clock& clockAnim,sf::Sprite& bandeau)
 		fini=true;
 	}
 
-	
+
 	return fini;
 }
 
@@ -263,7 +264,7 @@ void Dhalsim::statique(sf::Clock& clockAnim,const sf::Sprite& ennemi)
     sf::Time elapsed = clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=150;
-    
+
     if(timeAnim>delai)
     {
 	    switch (_cptStatic)
@@ -349,7 +350,7 @@ void Dhalsim::avancer(sf::Clock& clockAnim,const sf::Sprite& ennemi)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     int deplacement=40;
-	
+
 	if(timeAnim>delai)
 	{
 	    switch (_cptAvancer)
@@ -429,7 +430,7 @@ void Dhalsim::reculer(sf::Clock& clockAnim)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     int deplacement=40;
-    
+
     if(timeAnim > delai)
     {
 	    switch (_cptReculer)
@@ -525,7 +526,7 @@ bool Dhalsim::sauter(sf::Clock& clockAnim,sf::Clock& clockAttente)
 	    switch(_cptSauter)
 	    {
 	    case 0:
-	    	
+
 	    	break;
 	    case 1:
 		    clockAnim.restart();
@@ -604,7 +605,7 @@ bool Dhalsim::sauterAvant(sf::Clock& clockAnim,const sf::Sprite& ennemi)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=150,deplacementX=30*_orientation;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    switch(_cptSauter)
@@ -701,7 +702,7 @@ bool Dhalsim::sauterArriere(sf::Clock& clockAnim)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=150,deplacementX=30*_orientation;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    switch(_cptSauter)
@@ -840,7 +841,7 @@ bool Dhalsim::punch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& 
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
-	
+
     if(timeAnim > delai)
     {
 		switch (_cptAction)
@@ -902,7 +903,7 @@ bool Dhalsim::sautPunch(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bo
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=125;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    switch(_cptSauter)
@@ -1055,7 +1056,7 @@ bool Dhalsim::kick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& p
 	}
 
 	keepInWalls();
-	return fini;	
+	return fini;
 }
 
 bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,bool& prendCoup, Player& ennemi)
@@ -1065,7 +1066,7 @@ bool Dhalsim::sautKick(sf::Clock& clockAnim,sf::RectangleShape hurtboxEnnemi,boo
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=125;
     bool fini=false;
-    
+
     if(timeAnim>delai)
     {
 	    switch(_cptSauter)
@@ -1163,7 +1164,7 @@ bool Dhalsim::SP(sf::Clock& clockAnim,sf::Sprite& bouleFeu,sf::RectangleShape hu
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    switch (_cptAction)
