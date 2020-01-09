@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 class Scene
 {
@@ -20,25 +21,26 @@ private:
 	int _limiteSol;
 	int _largeurWindow;
 
-
-
 public:
-    void chargementXenoverse();
+	Scene(){};
+	Scene(sf::RenderWindow&, int);
+
+	void chargementXenoverse();
 	void chargementFutur();
 	void chargementToit();
 	void chargementSkulls();
 	void chargementBrazil(sf::RenderWindow& window);
-	Scene(){};
-	Scene(sf::RenderWindow&/*, int*/);
-	sf::Sprite getSprite() const;	// Renvoi la scene
+	
 
+	void lancerMusique(sf::Music&);
+
+	sf::Sprite getSprite() const;	// Renvoi la scene
 	// Permet de dessiner les limites de la map	& gerer les positions limites
 	int getBottom() const;
 	int getLeftLimit() const;
 	int getRightLimit() const;
 
 	sf::RectangleShape getSol() const;
-
 };
 
 #endif

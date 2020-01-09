@@ -1,1 +1,0 @@
-g++ -c Player.cpp Player.h menu.cpp menu.h main.cpp Scene.h Scene.cpp champions/Personnage.cpp champions/Ryu.cpp champions/Jotaro.cpp champions/Dhalsim.cpp champions/Personnage.h && g++ main.o Scene.o menu.o Player.o Personnage.o Jotaro.o Ryu.o Dhalsim.o -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio && ./sfml-app && rm *.o *.h.gch sfml-app champions/*.h.gch

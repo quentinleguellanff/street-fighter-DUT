@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "IncludeManager.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -43,6 +45,9 @@ public:
 class MenuSelection {
 private:
 
+    sf::Texture textureVS;
+    sf::Sprite spriteVS;
+
     sf::Font fontMenu;
 
     //texte : sélection des personnages
@@ -58,9 +63,6 @@ private:
     sf::Text nomPersoJ1;
     //texte : Joueur 2
     sf::Text nomPersoJ2;
-
-    //délimitation entre la zone de selection j1 et j2
-    sf::RectangleShape ligneDelim;//(sf::Vector2f(5, 700));
 
     //texte : annuler choix J1
     sf::Text annulerChoixJ1;
@@ -120,6 +122,32 @@ class MenuCommandes {
         MenuCommandes();
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
+};
+
+class MenuBackground {
+    private:
+        int selection;
+        sf::Texture bg[6];
+        sf::Sprite spritebg[6];
+        sf::RectangleShape rect[6];
+        sf::Vector2f position;
+        sf::Font fontBackground;
+        sf::Text retour;
+        sf::Text titre;
+        sf::Texture menuFond;
+        sf::Sprite spriteFond;
+
+    public:
+        MenuBackground(sf::RenderWindow&);
+        void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
+        void draw(sf::RenderWindow &window);
+        void bouger(sf::Event,sf::RenderWindow &window);
+        void moveRight();
+        void moveLeft();
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s);
+
+
 };
 
 #endif // MENU_H

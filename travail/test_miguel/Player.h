@@ -22,6 +22,8 @@ private:
 	std::vector<sf::RectangleShape> _barrePV;	// barre de vie graphique du joueur sous la forme d'un rectangle
 
 	int _energie;
+	int _sauvegardeEnergie;
+	sf::Clock _clockPasAssez;
 	std::vector<sf::RectangleShape> _barreEnergie;
 
 	// attributs des joysticks permettant de diriger le champion
@@ -56,6 +58,8 @@ private:
 
 	std::vector<bool> _tabActions;
 	/* 0-avancer | 1-reculer | 2-accroupi | 3-saut | 4-sautAvant | 5-sautArriere | 6-garde | 7-punch | 8-punchSP | 9-kick | 10-kickSP | 11-SP */
+	std::vector<bool> _tabPeutAction;
+	/* 0-peutPunch / 1-peutPunchSP / 2-peutKick / 3-peutKickSP / 4-peutSp */
 
 	std::vector<sf::Clock> _clockAnim;
 	/* 0-clock pour les sprites | 1-clock pour le deplacement */
@@ -73,10 +77,14 @@ public:
 	void setChampion(Personnage*);
 	Personnage* getChampion();
 	sf::Sprite getEffet();
+
+	void recuperationAttaqueLancee();
 	
+	void peutAttaquerP1(sf::Event&, sf::RenderWindow&);
 	void recuperationCommandesP1(Player&);	//recuperation des commandes dans le cas du joueur 1
 	void recuperationAttaquesP1();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
 	
+	void peutAttaquerP2(sf::Event&, sf::RenderWindow&);
 	void recuperationCommandesP2(Player&);	//recuperation des commandes dans le cas du joueur 2
 	void recuperationAttaquesP2();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
 

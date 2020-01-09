@@ -2,16 +2,17 @@
 #define MENU_H
 
 #include "IncludeManager.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace std ;
 const int nbcase=3;
 
 class MenuPrincipal {
 private:
-
     int _selection;
     sf::Font font;
     sf::Texture textureCase;
@@ -27,6 +28,8 @@ private:
     float joystick0_axisX;
     float joystick0_axisY;
     sf::Clock clockAttente;
+
+    sf::Music _effetSon;
 public:
 
     MenuPrincipal (float width, float height);
@@ -42,10 +45,9 @@ public:
 class MenuSelection {
 private:
 
-    sf::Texture menuFond;
-    sf::Sprite spriteFond;
     sf::Texture textureVS;
     sf::Sprite spriteVS;
+
     sf::Font fontMenu;
 
     //texte : sélection des personnages
@@ -61,9 +63,6 @@ private:
     sf::Text nomPersoJ1;
     //texte : Joueur 2
     sf::Text nomPersoJ2;
-
-    //délimitation entre la zone de selection j1 et j2
-    sf::RectangleShape ligneDelim;//(sf::Vector2f(5, 700));
 
     //texte : annuler choix J1
     sf::Text annulerChoixJ1;
@@ -90,30 +89,37 @@ private:
     int choixJ1 = -1;
     int choixJ2 = -1;
 
+    sf::Music _effetSon;
+
 public :
     MenuSelection(sf::RenderWindow&);
     void draw(sf::RenderWindow &window);
+
+    void persoSuivant_P1(int&,sf::RenderWindow&);
+    void persoPrecedent_P1(int&,sf::RenderWindow&);
+
+    void persoSuivant_P2(int&,sf::RenderWindow&);
+    void persoPrecedent_P2(int&,sf::RenderWindow&);
+
     void bouger(sf::Event,sf::RenderWindow&);
-    int validationPerso(sf::Event event);
-    void initValidationPerso();
+    int validationPerso(sf::Event event,int&,int&);
+
+    void reset(sf::RenderWindow&);
 };
 
 class MenuCommandes {
     private:
-        sf::Texture texturej1;
-        sf::Texture texturej2;
-        sf::Sprite spriteCommandes[2];
-        sf::Vector2f position;
-        sf::Font fontCommandes;
-        sf::Text retour;
-        sf::Text j1;
-        sf::Text j2;
-        sf::Texture menuFond;
-        sf::Sprite spriteFond;
-        sf::RectangleShape ligneDelim;
+    sf::Texture textureManette;
+    sf::Texture textureClavier;
+    sf::Sprite spriteCommandes[2];
+    sf::Vector2f position;
+    sf::Font fontCommandes;
+    sf::Text retour;
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
 
     public:
-        MenuCommandes(sf::RenderWindow&);
+        MenuCommandes();
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
 };
@@ -133,14 +139,15 @@ class MenuBackground {
 
     public:
         MenuBackground(sf::RenderWindow&);
-        void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m);
+        void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
         void draw(sf::RenderWindow &window);
         void bouger(sf::Event,sf::RenderWindow &window);
         void moveRight();
         void moveLeft();
-        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j);
-        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j);
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s);
 
 
-      };
+};
+
 #endif // MENU_H

@@ -2,18 +2,14 @@
 
 using namespace std;
 
-Scene::Scene(sf::RenderWindow& w/*int n*/)
+Scene::Scene(sf::RenderWindow& w,int n)
 {
 	_tailleWindow=w.getSize();
-/*	switch (n) // Début de Gestionnaire de map
+	switch (n) // Début de Gestionnaire de map
 	{
-		case 2:
+		case 1:
 			chargementXenoverse();
-        case 1:
-            chargementFutur();
-        case 0:
-            chargementRussie();
-	}*/
+	}
 }
 
 void Scene::chargementXenoverse()
@@ -22,7 +18,9 @@ void Scene::chargementXenoverse()
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+		//_spriteScene.scale(0.83,0.83);
 	}
+
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
@@ -36,15 +34,10 @@ void Scene::chargementXenoverse()
 	_wallLeft.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallLeft.setPosition(0.f, 0.f);
 	_wallLeft.setFillColor(sf::Color(50,250,60,1));
-
+	
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
-}
-
-sf::Sprite Scene::getSprite() const
-{
-	return _spriteScene;
 }
 
 void Scene::chargementFutur()
@@ -149,6 +142,13 @@ void Scene::chargementSkulls()
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
 }
+
+sf::Sprite Scene::getSprite() const
+{
+	return _spriteScene;
+}
+
+
 int Scene::getBottom() const
 {
 	return _limiteSol;
@@ -167,4 +167,14 @@ int Scene::getRightLimit() const
 sf::RectangleShape Scene::getSol() const
 {
 	return _solScene;
+}
+
+void Scene::lancerMusique(sf::Music& sonScene)
+{
+	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
+    sonScene.setVolume(0.f);
 }

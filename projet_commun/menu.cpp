@@ -1,6 +1,5 @@
 #include <iostream>
-#include"menu.h"
-#include "IncludeManager.h"
+#include "menu.h"
 
 using namespace std;
 
@@ -10,7 +9,7 @@ MenuPrincipal::MenuPrincipal(float width,float height){
         std::cout<<"erreur police";
     }
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -27,7 +26,7 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     titre.setFillColor(sf::Color::White);
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(120);
-    titre.setPosition(sf::Vector2f(width/3.2,height/21.6));
+    titre.setPosition(sf::Vector2f(600,50));
 
 
 
@@ -38,35 +37,35 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     }
     textureCase.setSmooth(true);
 
-    spriteMenu[0].setPosition(sf::Vector2f(width/2.74,height/3.08));
+    spriteMenu[0].setPosition(sf::Vector2f(700,350));
     spriteMenu[0].setTexture(textureCase);
     spriteMenu[0].setTextureRect(sf::IntRect(13, 12, 779, 180));
     spriteMenu[0].setScale(0.7f, 0.7f);
 
-    spriteMenu[1].setPosition(sf::Vector2f(width/2.74,height/1.86));
+    spriteMenu[1].setPosition(sf::Vector2f(700,580));
     spriteMenu[1].setTexture(textureCase);
     spriteMenu[1].setTextureRect(sf::IntRect(10, 337, 779, 180));
     spriteMenu[1].setScale(0.7f, 0.7f);
 
-    spriteMenu[2].setPosition(sf::Vector2f(width/2.74,height/1.33));
+    spriteMenu[2].setPosition(sf::Vector2f(700,810));
     spriteMenu[2].setTexture(textureCase);
     spriteMenu[2].setTextureRect(sf::IntRect(10,656, 779, 180));
     spriteMenu[2].setScale(0.7f, 0.7f);
 
-    spriteMenu[3].setPosition(sf::Vector2f(width/2.9,height/3.10));
+    spriteMenu[3].setPosition(sf::Vector2f(700,350));
     spriteMenu[3].setTexture(textureCase);
     spriteMenu[3].setTextureRect(sf::IntRect(816, 12, 779, 180));
-    spriteMenu[3].setScale(0.8f, 0.8f);
+    spriteMenu[3].setScale(0.7f, 0.7f);
 
-    spriteMenu[4].setPosition(sf::Vector2f(width/2.9,height/1.88));
+    spriteMenu[4].setPosition(sf::Vector2f(700,580));
     spriteMenu[4].setTexture(textureCase);
     spriteMenu[4].setTextureRect(sf::IntRect(816, 337, 779, 180));
-    spriteMenu[4].setScale(0.8f, 0.8f);
+    spriteMenu[4].setScale(0.7f, 0.7f);
 
-    spriteMenu[5].setPosition(sf::Vector2f(width/2.9,height/1.35));
+    spriteMenu[5].setPosition(sf::Vector2f(700,810));
     spriteMenu[5].setTexture(textureCase);
     spriteMenu[5].setTextureRect(sf::IntRect(816,656, 779, 180));
-    spriteMenu[5].setScale(0.8f, 0.8f);
+    spriteMenu[5].setScale(0.7f, 0.7f);
 
 // Les sprites des cases utilisées à l'ouverture du menu
 
@@ -118,45 +117,58 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &wi
     }else
     {
         while (window.pollEvent(event))
-            {
-                switch ( event.type ){
+        {
+            switch ( event.type ){
 
-                case sf::Event::Closed:
-                        window.close( );
-                        break;
-                case sf::Event::KeyReleased:
-                    switch (event.key.code){
-                    case sf::Keyboard::Z:
-                      peutmonter = true;
-                      break;
-                    case sf::Keyboard::S:
-                        peutdescendre=true;
-                        break;}
-                }
+            case sf::Event::Closed:
+                    window.close( );
+                    break;
+            case sf::Event::KeyReleased:
+                switch (event.key.code){
+                case sf::Keyboard::Z:
+                  peutmonter = true;
+                  break;
+                case sf::Keyboard::S:
+                    peutdescendre=true;
+                    break;}
             }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                    if(peutmonter){
-                        moveUp();
-                        peutmonter = false;
-                    }
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                    if(peutdescendre){
-                        moveDown();
-                        peutdescendre = false;
-                    }
-                }
-
-
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            if(peutmonter){
+                moveUp();
+                peutmonter = false;
+            }
+        }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            if(peutdescendre){
+                moveDown();
+                peutdescendre = false;
+            }
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
+        {
             selecEcran=1;
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
 
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+        {
             selecEcran=3;
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
 
-        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
+        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
+        {
+            if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
             window.close();
-                }
+        }   
+    }
 
 }
 
@@ -199,24 +211,16 @@ void MenuPrincipal::moveDown()
 
 MenuSelection::MenuSelection(sf::RenderWindow& window)
 {
-
-    if(!menuFond.loadFromFile("background/menu.jpg")){
-        std::cout<<"erreur fond"<<endl;
-    }
-
-    spriteFond.setTexture(menuFond);
-
     hauteurPerso=window.getSize().y*0.8;
     hauteurTexte=window.getSize().y*0.83;
 
-    if (!textureVS.loadFromFile("sprites/VS.png"))
+    if (!textureVS.loadFromFile("background/VS.png"))
     {
         cout << "ERREUR : chargement d'image VS" << endl;
     }
     spriteVS.setTexture(textureVS);
     spriteVS.setPosition(sf::Vector2f(window.getSize().x*0.44,window.getSize().y*0.42));
     spriteVS.setTextureRect(sf::IntRect(0,0,324,277));
-
 
     if (!fontMenu.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -245,11 +249,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setCharacterSize(50);
         titre.setFillColor(sf::Color::White);
         titre.setStyle(sf::Text::Bold);
-        titre.setPosition(sf::Vector2f(window.getSize().x/2.66,window.getSize().y/21.6));
-
-        //ligne delim
-        ligneDelim.setSize(sf::Vector2f(5, 600));
-        ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
+        titre.setPosition(sf::Vector2f(720,50));
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -286,11 +286,9 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
 }
 
 void MenuSelection::draw(sf::RenderWindow &window) {
-        window.draw(spriteFond);
         window.draw(titre);
         window.draw(j1);
         window.draw(j2);
-        //window.draw(ligneDelim);
         window.draw(spriteVS);
         window.draw(spriteP1);
         window.draw(spriteP2);
@@ -300,26 +298,117 @@ void MenuSelection::draw(sf::RenderWindow &window) {
         window.draw(annulerChoixJ2);
 }
 
+void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ1 = 1;
+        spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ1 = 2;
+        spriteP1.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 2:
+        etatPersoJ1 = 0;
+        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+        break;
+    }
+}
+
+void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ2 = 1;
+        spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ2 = 2;
+        spriteP2.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 2:
+        etatPersoJ2 = 0;
+        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
+        break;
+    }
+}
+
+void MenuSelection::persoPrecedent_P1(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ1 = 2;
+        spriteP1.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ1 = 0;
+        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+        break;
+    case 2:
+        etatPersoJ1 = 1;
+        spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
+        break;
+    }
+}
+
+void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
+{
+    switch(etatPerso)
+    {
+    case 0:
+        etatPersoJ2 = 2;
+        spriteP2.setTextureRect(sf::IntRect(367,25,123,245));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    case 1:
+        etatPersoJ2 = 0;
+        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
+        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
+        break;
+    case 2:
+        etatPersoJ2 = 1;
+        spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+        break;
+    }
+}
+
 // Recupérer les intructions de l'utilisateur
 void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 {
     //Selection j1
-    if(choixJ1 == -1) {
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::D) && etatPersoJ1 == 0)
-        {
-            etatPersoJ1 = 1;
-            spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
-            spriteP1.setScale(sf::Vector2f(1.8,1.8));
-            spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
-        }
+    if(choixJ1 == -1) 
+    {
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+            persoSuivant_P1(etatPersoJ1,window);
 
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q) && etatPersoJ1 == 1)
-        {
-            etatPersoJ1 = 0;
-            spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-            spriteP1.setScale(sf::Vector2f(3.5,3.5));
-            spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
-        }
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
+            persoPrecedent_P1(etatPersoJ1,window);
 
         switch(etatPersoJ1)
         {
@@ -327,32 +416,27 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     break;
             case 1: nomPersoJ1.setString("Dhalsim");
                     break;
+            case 2: nomPersoJ1.setString("Ryu");
+                    break;
         }
     }
 
     //Selection j2
-    if(choixJ2 == -1) {
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right) && etatPersoJ2 == 0)
-        {
-            etatPersoJ2 = 1;
-            spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-            spriteP2.setScale(sf::Vector2f(-1.8,1.8));
-            spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
-        }
+    if(choixJ2 == -1) 
+    {
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
+            persoSuivant_P2(etatPersoJ2,window);
 
+        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
+            persoPrecedent_P2(etatPersoJ2,window);
 
-        if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left) && etatPersoJ2 == 1)
-        {
-            etatPersoJ2 = 0;
-            spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
-            spriteP2.setScale(sf::Vector2f(-3.5,3.5));
-            spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
-        }
         switch(etatPersoJ2)
         {
             case 0: nomPersoJ2.setString("Jotaro");
                     break;
             case 1: nomPersoJ2.setString("Dhalsim");
+                    break;
+            case 2: nomPersoJ2.setString("Ryu");
                     break;
         }
     }
@@ -373,12 +457,8 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     }
 }
 
-void MenuSelection::initValidationPerso(){
-    choixJ2 = -1;
-    nomPersoJ2.setFillColor(sf::Color::White);
-    annulerChoixJ2.setString("");}
 
-int MenuSelection::validationPerso(sf::Event event)
+int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
      if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
@@ -395,6 +475,10 @@ int MenuSelection::validationPerso(sf::Event event)
              annulerChoixJ1.setStyle(sf::Text::Italic);
              annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
 
+            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
      }
 
     //Validation du choix de personage pour Joueur 2
@@ -411,91 +495,107 @@ int MenuSelection::validationPerso(sf::Event event)
             annulerChoixJ2.setFillColor(sf::Color::White);
             annulerChoixJ2.setStyle(sf::Text::Italic);
             annulerChoixJ2.setPosition(sf::Vector2f(1000,hauteurTexte+15));
+
+            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                    std::cout<<"erreur musique";
+            }
+            _effetSon.play();
     }
     if(choixJ1 != -1 && choixJ2 != -1)
     {
-        //selecChamp_P1=etatPersoJ1;
-        //selecChamp_P2=etatPersoJ2;
+        selecChamp_P1=choixJ1;
+        selecChamp_P2=choixJ2;
         return 4;
     }
     else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
+    {
+        if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
+                std::cout<<"erreur musique";
+        }
+        _effetSon.play();
         return 0;
+    }
 
     else return 1;
 }
 
-
-MenuCommandes::MenuCommandes(sf::RenderWindow& window)
+void MenuSelection::reset(sf::RenderWindow& window)
 {
+    choixJ1=-1;choixJ2=-1;
+    etatPersoJ1=0;etatPersoJ2=1;
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    annulerChoixJ1.setString("");
+    annulerChoixJ2.setString("");
+
+    nomPersoJ1.setFillColor(sf::Color::White);
+    nomPersoJ1.setString("Jotaro");
+    nomPersoJ2.setFillColor(sf::Color::White);
+    nomPersoJ2.setString("Dhalsim");
+
+    spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
+    spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
+    spriteP1.setScale(sf::Vector2f(3.5,3.5));
+
+    spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
+    spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+    spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+}
+
+
+MenuCommandes::MenuCommandes() 
+{
+    if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
     }
 
     spriteFond.setTexture(menuFond);
 
-    if (!fontCommandes.loadFromFile("MenuSelection/atari.ttf"))
+    if (!fontCommandes.loadFromFile("OCRAEXT.ttf"))
     {
-        cout << "ERREUR : chargement de police atari.ttf" << endl;
+        cout << "ERREUR : chargement de police ocr.ttf" << endl;
     }
-    if(!texturej1.loadFromFile("sprites/commandej1.png")) {
+    /*if(!textureManette.loadFromFile("sprites/manette.png")) {
         std::cout<<"erreur manette";
-    }
-    if(!texturej2.loadFromFile("sprites/commandej2.png")) {
+    }*/
+    if(!textureClavier.loadFromFile("sprites/clavier.png")) {
         std::cout<<"erreur clavier";
     }
-    j1.setFont(fontCommandes);
-    j1.setString("Joueur 1");
-    j1.setCharacterSize(50);
-    j1.setFillColor(sf::Color(255,0,0));
-    j1.setPosition(sf::Vector2f(100,100));
-
-    j2.setFont(fontCommandes);
-    j2.setString("Joueur 2");
-    j2.setCharacterSize(50);
-    j2.setFillColor(sf::Color(255,0,0));
-    j2.setPosition(sf::Vector2f(1000,100));
 
 
-    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.2, window.getSize().y*0.2));
-    spriteCommandes[0].setTexture(texturej1);
-    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0, 515, 515));
-
-    spriteCommandes[1].setPosition(sf::Vector2f(window.getSize().x*0.55, window.getSize().y*0.2));
-    spriteCommandes[1].setTexture(texturej2);
-    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0, 679, 415));
+    spriteCommandes[0].setPosition(sf::Vector2f(300,150));
+    spriteCommandes[0].setTexture(textureClavier);
+    spriteCommandes[0].setTextureRect(sf::IntRect(0, 5, 1350, 700));
 
     retour.setFont(fontCommandes);
     retour.setString("Appuyez sur echap pour revenir au menu");
-    retour.setCharacterSize(30);
+    retour.setCharacterSize(20);
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
-    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
-
-    //ligne delim
-    ligneDelim.setSize(sf::Vector2f(5, 600));
-    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
+    retour.setPosition(sf::Vector2f(750,900));
 }
-void MenuCommandes::retourMenu(int& selecEcran,sf::Event event){
-if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
-    selecEcran=0;}
-    return;
+void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
+{
+    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
+        selecEcran=0;
+    }else if (sf::Joystick::isConnected(0))
+    {
+        if(sf::Joystick::isButtonPressed(0, 1))
+            selecEcran=0;
+    }
 }
-void MenuCommandes::draw(sf::RenderWindow &window){
+void MenuCommandes::draw(sf::RenderWindow &window)
+{
         window.draw(spriteFond);
         window.draw(spriteCommandes[0]);
-        window.draw(spriteCommandes[1]);
         window.draw(retour);
-        window.draw(j1);
-        window.draw(j2);
-        window.draw(ligneDelim);
-    }
+}
 
-MenuBackground::MenuBackground(sf::RenderWindow& window){
+MenuBackground::MenuBackground(sf::RenderWindow& window)
+{
 
     selection=0;
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -506,7 +606,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window){
         cout << "ERREUR : chargement de police atari.ttf" << endl;
     }
     if(!bg[0].loadFromFile("background/toit.png")) {
-        std::cout<<"erreur fond feu";
+        std::cout<<"erreur fond toit";
     }
     if(!bg[1].loadFromFile("background/futur.jpg")) {
         std::cout<<"erreur fond futur";
@@ -515,10 +615,10 @@ MenuBackground::MenuBackground(sf::RenderWindow& window){
         std::cout<<"erreur fond xenorverse";
     }
     if(!bg[3].loadFromFile("background/skulls.jpg")) {
-        std::cout<<"erreur fond xenorverse";
+        std::cout<<"erreur fond skulls";
     }
     if(!bg[4].loadFromFile("background/brazil.jpg")) {
-        std::cout<<"erreur fond xenorverse";
+        std::cout<<"erreur fond brazil";
     }
 
     spritebg[0].setTexture(bg[0]);
@@ -568,7 +668,8 @@ MenuBackground::MenuBackground(sf::RenderWindow& window){
 
 }
 
-void MenuBackground::draw(sf::RenderWindow& window){
+void MenuBackground::draw(sf::RenderWindow& window)
+{
         window.draw(spriteFond);
         window.draw(rect[selection]);
         window.draw(spritebg[0]);
@@ -580,77 +681,96 @@ void MenuBackground::draw(sf::RenderWindow& window){
         window.draw(titre);
     }
 
-void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& m){
-if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
-    selecEcran=1;
-    m.initValidationPerso();
+void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& m,sf::RenderWindow& window)
+{
+    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    {
+        selecEcran=1;
+        m.reset(window);
     }
     return;
 }
 
-void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window){
+void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
+{
     bool peutGauche = true, peutDroite = true;
 
     while (window.pollEvent(event))
+    {
+        switch ( event.type )
+        {
+        case sf::Event::KeyReleased:
+            switch (event.key.code)
             {
-                switch ( event.type ){
-
-                case sf::Event::KeyReleased:
-                    switch (event.key.code){
-                    case sf::Keyboard::Right:
-                      peutDroite = true;
-                      break;
-                    case sf::Keyboard::Left:
-                        peutGauche=true;
-                        break;}
-                }
+            case sf::Keyboard::Right:
+              peutDroite = true;
+              break;
+            case sf::Keyboard::Left:
+                peutGauche=true;
+                break;
             }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                    if(peutDroite){
-                        moveRight();
-                        peutDroite = false;
-                    }
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-                    if(peutGauche){
-                        moveLeft();
-                        peutGauche = false;
-                    }
-                }
+        }
+    }
+    
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        if(peutDroite)
+        {
+            moveRight();
+            peutDroite = false;
+        }
+    }
+    
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        if(peutGauche)
+        {
+            moveLeft();
+            peutGauche = false;
+        }
+    }
 }
 
-void MenuBackground::moveRight(){
-    if (selection<4) {
-            selection=selection+1;
-}
+void MenuBackground::moveRight()
+{
+    if (selection<4) 
+    {
+        selection=selection+1;
+    }
 }
 
 void MenuBackground::moveLeft(){
-    if (selection>0){
-            selection=selection-1;
+    if (selection>0)
+    {
+        selection=selection-1;
     }
 
 }
-void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j){
+void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s/*, Dhalsim& d, Jotaro& j*/)
+{
     bool go = true;
     while (window.pollEvent(event))
-            {
-                if(sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter){
-                    go=true;
-                    break;
-                }
-            }
+    {
+        if(sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter)
+        {
+            go=true;
+            break;
+        }
+    }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)){
-                    if(go){
-                        valider(window, selecEcran, s , d, j);
-                        go = false;
-                    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    {
+        if(go)
+        {
+            valider(window, selecEcran,s);
+            go = false;
+        }
     }
 
 }
 
-void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s, Dhalsim& d, Jotaro& j){
+void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s/*, Dhalsim& d, Jotaro& j*/)
+{
        if (selection==0)
             s.chargementToit();
         if (selection==1)
@@ -662,7 +782,7 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==4)
             s.chargementBrazil(window);
         selecEcran=2;
-        j.setTout(-1,s);
-        d.setTout(1,s);
+        //j.setTout(-1,s);
+        //d.setTout(1,s);
 
-    }
+}

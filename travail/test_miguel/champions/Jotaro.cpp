@@ -251,7 +251,7 @@ bool Jotaro::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& ef
     return fini;
 }
 
-bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet)
+bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
@@ -272,6 +272,8 @@ bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite&
     		_posX-=11*SCALE*_orientation;
     		_posY+=9*SCALE;
     		_gardebox.setSize(sf::Vector2f(0,0));
+
+    		energie+=5;
     		break;
     	case 1:
     		clockAnim[0].restart();
@@ -748,7 +750,7 @@ void Jotaro::reculer(std::vector<sf::Clock>& clockAnim)
 }
 
 
-bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats)
+bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -761,9 +763,9 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
     	bool enAttaque=false;
 
 		if(lancerAttaque==1)
-			enAttaque=sautPunch(clockAnim,champEnnemi,degats);
+			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
     	else if(lancerAttaque==2) 		
-    		enAttaque=sautKick(clockAnim,champEnnemi,degats);
+    		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
 
     	if(enAttaque)
     	{
@@ -1265,7 +1267,7 @@ bool Jotaro::seLever(std::vector<sf::Clock>& clockAnim)
    	return fini;
 }
 
-bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -1340,6 +1342,7 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1350,13 +1353,16 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	return fini;
 }
 
-bool Jotaro::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Jotaro::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
-	return sautKick(clockAnim,champEnnemi,degats);
+	return sautKick(clockAnim,champEnnemi,degats,energie);
 }
 
-bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son)
+bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	if(!_SPChargee)
 	{
 		ajouterTexture(1751,4643,112,128);ajouterTexture(1870,4643,108,128);ajouterTexture(2157,4643,161,128);ajouterTexture(2467,4643,127,128);
@@ -1424,6 +1430,8 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 			    clockAnim[0].restart();
 			    fini=true;
 			    _SPChargee=false;
+
+			    energie-=25;
 			    resetTexture();
 			break;
 		}
@@ -1457,7 +1465,7 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 }
 
 
-bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -1548,6 +1556,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=15;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1558,7 +1567,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 	return fini;	
 }
 
-bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1604,6 +1613,7 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1613,8 +1623,11 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
     return fini;
 }
 
-bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1673,6 +1686,7 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 			    fini=true;
 
 			    _hitbox.setSize(sf::Vector2f(0,0));
+			    energie-=25;
 			}
 			break;
 		}
@@ -1697,8 +1711,11 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 }
 
 
-bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son)
+bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
+	if(energie<50)
+		return true;
+
 	if(!_SPChargee)
 	{
 		ajouterTexture(671,3724,100,135);ajouterTexture(875,3724,142,135);ajouterTexture(1025,3724,185,135);ajouterTexture(1219,3724,169,135);
@@ -1781,6 +1798,7 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 				_cptAction=0; 
 				starPlat.setTextureRect(sf::IntRect(0,0,0,0));
 				_cptSP=0;
+				energie-=50;
 				resetTexture();
 			}else
 			{
@@ -1791,7 +1809,7 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=20;
+		*degats=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;

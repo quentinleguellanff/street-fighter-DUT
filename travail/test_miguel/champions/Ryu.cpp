@@ -257,7 +257,7 @@ bool Ryu::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet
 }
 
 
-bool Ryu::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet)
+bool Ryu::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
@@ -279,6 +279,8 @@ bool Ryu::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& ef
     		setSprite(1,4859,69,92);
     		_posX-=1*SCALE*_orientation;
     		_posY+=6*SCALE;
+
+    		energie+=5;
     		break;
     	case 1:
     		clockAnim[0].restart();
@@ -385,7 +387,7 @@ void Ryu::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 {
     sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delaiAnim=70;
+    int delaiAnim=50;
     if(timeAnim>delaiAnim)
     {
 	    switch (_cptStatic)
@@ -583,7 +585,7 @@ void Ryu::reculer(std::vector<sf::Clock>& clockAnim)
 }
 
 
-bool Ryu::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats)
+bool Ryu::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -596,9 +598,9 @@ bool Ryu::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage
     	bool enAttaque=false;
 
 		if(lancerAttaque==1)
-			enAttaque=sautPunch(clockAnim,champEnnemi,degats);
+			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
     	else if(lancerAttaque==2) 		
-    		enAttaque=sautKick(clockAnim,champEnnemi,degats);
+    		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
 
     	if(enAttaque)
     	{
@@ -918,12 +920,12 @@ void Ryu::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
 }
 
 
-bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delaiAnim=70;
+    int delaiAnim=60;
     bool fini=false;
 	
     if(timeAnim > delaiAnim)
@@ -963,7 +965,8 @@ bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* d
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=5;
+		energie+=10;
 		
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -975,12 +978,12 @@ bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* d
 	return fini;
 }
 
-bool Ryu::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Ryu::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delaiAnim=70,deplacement=125;
+    int delaiAnim=60,deplacement=125;
     bool fini=false;
     
     if(timeAnim>delaiAnim)
@@ -1021,7 +1024,8 @@ bool Ryu::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,in
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=5;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1031,8 +1035,11 @@ bool Ryu::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,in
     return fini;
 }
 
-bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son)
+bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1113,6 +1120,7 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
 		    clockAnim[0].restart();
 		    setSprite(2,433,66,98);
 		    fini=true;
+		    energie-=25;
 
 		    _posY=_scene.getBottom()-_tailleSprite.y;
 		    break;
@@ -1142,7 +1150,7 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
 	return fini;
 }
 
-bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -1194,6 +1202,7 @@ bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* de
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1204,11 +1213,11 @@ bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* de
 	return fini;	
 }
 
-bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delaiAnim=100,deplacement=_scene.getBottom()/6;
+    int delaiAnim=60,deplacement=_scene.getBottom()/6;
     bool fini=false;
     
 	if(timeAnim>delaiAnim)
@@ -1250,6 +1259,7 @@ bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1259,8 +1269,11 @@ bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int
     return fini;
 }
 
-bool Ryu::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Ryu::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1322,6 +1335,7 @@ bool Ryu::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int*
 		    clockAnim[0].restart();
 		    setSprite(538,3057,63,89);
 		    fini=true;
+		    energie-=25;
 		    _posY=_scene.getBottom()-_tailleSprite.y;
 			break;
 		}
@@ -1341,8 +1355,14 @@ bool Ryu::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int*
 	return fini;
 }
 
-bool Ryu::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music& son)
+bool Ryu::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music& son,int& energie)
 {
+	if(energie<50)
+	{
+		energie=-100;
+		return true;
+	}
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1439,6 +1459,7 @@ bool Ryu::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& 
 	{
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
+		energie-=50;
 		_cptAction=0;
 	}
 
@@ -1447,6 +1468,7 @@ bool Ryu::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& 
 		*degats=30;
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
+		energie-=50;
 		_cptAction=0;
 	}
 

@@ -24,6 +24,8 @@ Player::Player(int n,sf::RenderWindow& window)
 
 	for(int i=0;i<=11;i++)
 		_tabActions.push_back(false);
+	for(int i=0;i<=4;i++)
+		_tabPeutAction.push_back(true);
 
 	if (!_textureBI.loadFromFile("background/lifeBar_V2.png"))
 	{
@@ -74,6 +76,8 @@ void Player::resetPlayer()
 {
 	resetAttributs();
 	_prendCoup=0;
+	_energie=0;
+	_PV=100;
 }
 
 void Player::resetAttributs()
@@ -116,6 +120,71 @@ sf::Sprite Player::getEffet()
 	return _effet;
 }
 
+void Player::recuperationAttaqueLancee()
+{
+	for(int i=7;i<_tabActions.size();i++)
+	{
+		if(_tabActions[i]==true)
+			_tabPeutAction[i-7]=false;
+	}
+}
+
+void Player::peutAttaquerP1(sf::Event& event, sf::RenderWindow& window)
+{
+    if (sf::Joystick::isConnected(0))   // Commandes pour manette
+	{
+        if(event.type==sf::Event::JoystickButtonReleased && event.joystickButton.joystickId==0 )
+        {
+            switch (event.joystickButton.button)
+            {
+            case 0:
+              	_tabPeutAction[2] = true;
+              	break;
+            case 1:
+              	_tabPeutAction[2] = true;
+              	break;
+            case 2:
+                _tabPeutAction[0] = true;
+                _tabPeutAction[4] = true;
+                break;
+            case 3:
+              	_tabPeutAction[0] = true;
+              	_tabPeutAction[4] = true;
+              	break;
+            case 4:
+            	_tabPeutAction[1] = true;
+            	break;
+            case 5:
+            	_tabPeutAction[1] = true;
+            	break; 
+            }
+
+            if(event.joystickMove.axis==sf::Joystick::Z || event.joystickMove.axis==sf::Joystick::R)
+            {
+            	if(event.joystickMove.position<10)
+            		_tabPeutAction[3] = true;
+            }
+
+        }
+    }else
+    {
+    	if(event.type==sf::Event::KeyReleased )
+        {
+            switch (event.key.code)
+            {
+            case sf::Keyboard::A :
+              	_tabPeutAction[0] = true;
+              	break;
+            case sf::Keyboard::E :
+                _tabPeutAction[2]=true;
+                break;
+            case sf::Keyboard::R :
+              	_tabPeutAction[4] = true;
+              	break;
+            }
+        }
+    }
+}
 
 void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le player 1
 {
@@ -124,16 +193,16 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 	if (sf::Joystick::isConnected(0))   // Commandes pour manette
 	{
 		/* gestion des attaques */
-		_tabActions[9] =(sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(0, 1));
-		_tabActions[7] =(sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3));   // touche pour mettre un coup de poing
+		_tabActions[9] =( (sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(0, 1) ) && _tabPeutAction[2]);
+		_tabActions[7] =( (sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3) ) && _tabPeutAction[0]);   // touche pour mettre un coup de poing
 		
-		joystick0_axisZ =sf::Joystick::getAxisPosition(0, sf::Joystick::Z);   // touche pour super punch
+		joystick0_axisZ =sf::Joystick::getAxisPosition(0, sf::Joystick::Z);   // touche pour super kick
 		joystick0_axisR =sf::Joystick::getAxisPosition(0, sf::Joystick::R);	 // touche pour super kick
-		_tabActions[10] =joystick0_axisZ > 40 || joystick0_axisR>40;
+		_tabActions[10] =( (joystick0_axisZ > 40 || joystick0_axisR>40)  && _tabPeutAction[3]);
 
-		_tabActions[8]=(sf::Joystick::isButtonPressed(0, 4) || sf::Joystick::isButtonPressed(0, 5));
+		_tabActions[8]=( (sf::Joystick::isButtonPressed(0, 4) || sf::Joystick::isButtonPressed(0, 5))  && _tabPeutAction[1]);
 
-		if( ( (joystick0_axisX > 40 || joystick0_axisX < -40) && joystick0_axisY > 40) &&  (sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3)) )
+		if( ( (joystick0_axisX > 40 || joystick0_axisX < -40) && joystick0_axisY > 40) &&  (sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3)) && _tabPeutAction[4] )
 			_tabActions[11] =true;
 
 		/* gestion des deplacements */
@@ -165,11 +234,11 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 		_tabActions[0] =sf::Keyboard::isKeyPressed(sf::Keyboard::D);  	// touche pour avancer:    D
 		_tabActions[3] =sf::Keyboard::isKeyPressed(sf::Keyboard::Z);	  	// touche pour sauter:     Z
 		_tabActions[2] =sf::Keyboard::isKeyPressed(sf::Keyboard::S);	// touche pour accroupir:  S
-		_tabActions[7] =sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	// touche pour puncher:    A
-		_tabActions[9] =sf::Keyboard::isKeyPressed(sf::Keyboard::E);	  	// touche pour kicker:     E
-		_tabActions[11] =sf::Keyboard::isKeyPressed(sf::Keyboard::R);		// touche pour spécial 1:  R
+		_tabActions[7] =( sf::Keyboard::isKeyPressed(sf::Keyboard::A) && _tabPeutAction[0]);	  	// touche pour puncher:    A
+		_tabActions[9] =( sf::Keyboard::isKeyPressed(sf::Keyboard::E) && _tabPeutAction[2]);	  	// touche pour kicker:     E
+		_tabActions[11]=( sf::Keyboard::isKeyPressed(sf::Keyboard::R) && _tabPeutAction[4]);		// touche pour spécial 1:  R
 	}
-
+	recuperationAttaqueLancee();
 	gestionDesCommandes(ennemi);
 }
 
@@ -193,6 +262,63 @@ void Player::recuperationAttaquesP1()
 	}	
 }
 
+
+void Player::peutAttaquerP2(sf::Event& event, sf::RenderWindow& window)
+{
+    if (sf::Joystick::isConnected(0))   // Commandes pour manette
+	{
+        if(event.type==sf::Event::JoystickButtonReleased && event.joystickButton.joystickId==1 )
+        {
+            switch (event.joystickButton.button)
+            {
+            case 0:
+              	_tabPeutAction[2] = true;
+              	break;
+            case 1:
+              	_tabPeutAction[2] = true;
+              	break;
+            case 2:
+                _tabPeutAction[0] = true;
+                _tabPeutAction[4] = true;
+                break;
+            case 3:
+              	_tabPeutAction[0] = true;
+              	_tabPeutAction[4] = true;
+              	break;
+            case 4:
+            	_tabPeutAction[1] = true;
+            	break;
+            case 5:
+            	_tabPeutAction[1] = true;
+            	break; 
+            }
+
+            if(event.joystickMove.axis==sf::Joystick::Z || event.joystickMove.axis==sf::Joystick::R)
+            {
+            	if(event.joystickMove.position<10)
+            		_tabPeutAction[3] = true;
+            }
+
+        }
+    }else
+    {
+    	if(event.type==sf::Event::KeyReleased )
+        {
+            switch (event.key.code)
+            {
+            case sf::Keyboard::P :
+              	_tabPeutAction[0] = true;
+              	break;
+            case sf::Keyboard::M :
+                _tabPeutAction[2]=true;
+                break;
+            case sf::Keyboard::L :
+              	_tabPeutAction[4] = true;
+              	break;
+            }
+        }
+    }
+}
 
 void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le player 2
 {
@@ -364,7 +490,7 @@ bool Player::lancerActions(Player& jEnnemi)
 			if(_prendCoup>0)
 				setDegats(_prendCoup);
 			_posHorizontale==0;_posVerticale==0;_action=-1;
-			_actionFini=_champion->prendCoup(_clockAnim,&_prendCoup,_effet);
+			_actionFini=_champion->prendCoup(_clockAnim,&_prendCoup,_effet,_energie);
 		}
 	}
 
@@ -407,25 +533,25 @@ bool Player::lancerActions(Player& jEnnemi)
 	}
 
 	else if(_posVerticale==1)
-		_actionFini=_champion->sauter(_clockAnim,_action,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+		_actionFini=_champion->sauter(_clockAnim,_action,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_posVerticale==-1)
 		_champion->accroupi(_clockAnim,_action==0);
 
 	else if(_action==1)
-		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==2)
-		_actionFini=_champion->punchSP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son);
+		_actionFini=_champion->punchSP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
 
 	else if(_action==3)
-		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==4)
-		_actionFini=_champion->kickSP(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup());
+		_actionFini=_champion->kickSP(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==5)
-		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son);
+		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
 
 	else
 		_champion->statique(_clockAnim,*jEnnemi.getChampion());
@@ -491,58 +617,8 @@ sf::RectangleShape Player::getBarrePV()
 
 void Player::afficherEnergie(sf::RenderWindow& window)
 {
-	/*if(_energie==100)
-	{
-		for(int i=0;i<4;i++)
-		{
-			_barresEnergie[i].setOutlineColor(sf::Color(0,250,0));
-			_barresEnergie[i].setFillColor(sf::Color(10,255,255));
-		}
-	}else if(_energie>50)
-	{
-		for(int i=0;i<4;i++)
-		{
-			_barresEnergie[i].setOutlineColor(sf::Color(15,5,107));
-			_barresEnergie[i].setFillColor(sf::Color(10,255,255));
-		}
-	}else
-	{
-		for(int i=0;i<4;i++)
-		{
-			_barresEnergie[i].setOutlineThickness(2.f);
-			_barresEnergie[i].setOutlineColor(sf::Color(15,5,107));
-			_barresEnergie[i].setFillColor(sf::Color(18,164,202));
-		}
-	}
+	/* gestion de la barre de points de vie */
 
-	if(_energie<25)
-	{
-		_barresEnergie[0].setSize(sf::Vector2f(_energie*4,30));
-		for(int i=1;i<4;i++)
-		{
-			_barresEnergie[i].setSize(sf::Vector2f(49*2,30));
-			_barresEnergie[i].setFillColor(sf::Color(0,0,0,0));
-		}
-	}else if(_energie<50)
-	{
-		_barresEnergie[0].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[1].setSize(sf::Vector2f((_energie-24)*4,30));
-		for(int i=2;i<4;i++)
-			_barresEnergie[i].setSize(sf::Vector2f(0,0));
-	}else if(_energie<75)
-	{
-		_barresEnergie[0].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[1].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[2].setSize(sf::Vector2f((_energie-49)*4,30));
-	
-		_barresEnergie[3].setSize(sf::Vector2f(0,0));
-	}else
-	{
-		_barresEnergie[0].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[1].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[2].setSize(sf::Vector2f(49*2,30));
-		_barresEnergie[3].setSize(sf::Vector2f((_energie-74)*4,30));
-	}*/
 	if(_PV>66)
 		_barrePV[1].setFillColor(sf::Color(0,250,0));
 	else if(_PV>33)
@@ -554,10 +630,31 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		_PV=0;
 	_barrePV[1].setSize(sf::Vector2f(_PV*7.15,38));
 		
-	if(_energie<0)
-		_energie=0;
+	/* gestion de la barre d'energie */
+
+	sf::Time elapsed = _clockPasAssez.getElapsedTime();
+    int timePA = elapsed.asMilliseconds();
+
+    if(timePA>200)
+		_barreEnergie[0].setFillColor(sf::Color(210,254,254));
+
+	if(_energie>=0 && _energie<=100)
+		_sauvegardeEnergie=_energie;
+
+	if(_energie==-100)
+	{
+		_energie=_sauvegardeEnergie;
+		_barreEnergie[0].setFillColor(sf::Color(255,30,30));
+		_clockPasAssez.restart();
+	}
+	/*else if(_energie<0)
+		_energie=0;*/
+	else if(_energie>100)
+		_energie=100;
+
 	_barreEnergie[1].setSize(sf::Vector2f(_energie*2.76,38));
 
+	/* affichage des barres */
 
 	for(int i=0;i<2;i++)
 	{

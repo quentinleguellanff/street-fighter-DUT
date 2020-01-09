@@ -49,10 +49,12 @@ int main()
 
     /* Déclaration menu selection */
     MenuSelection menuSel(window);
-    sf::Event eventS;
 
     /* Déclaration menu commandes */
     MenuCommandes menuCommandes;
+
+    /* Déclaration menu sélection scene */
+    MenuBackground menuBackground(window);
 
     /* Musique */
 	sf::Music musique;
@@ -90,12 +92,12 @@ int main()
 
         else if(selecEcran==1) //menu de selection des personnages
         {
-            while (window.pollEvent(eventS))
+            while (window.pollEvent(event))
 	        {
-	            if (eventS.type == sf::Event::Closed)
+	            if (event.type == sf::Event::Closed)
 	                window.close();
-                    menuSel.bouger(eventS,window);
-                    selecEcran = menuSel.validationPerso(eventS,selecChamp_P1,selecChamp_P2);
+                    menuSel.bouger(event,window);
+                    selecEcran = menuSel.validationPerso(event,selecChamp_P1,selecChamp_P2);
 	        }
 
             window.clear();
@@ -149,8 +151,30 @@ int main()
                 menuCommandes.retourMenu(selecEcran,event);
             menuCommandes.draw(window);
             window.display();
+        }else if (selecEcran==4)
+        {
+            while (window.pollEvent(event))
+            {
+                menuBackground.retourMenu2(selecEcran,event, menuSel,window);
+                menuBackground.bouger(event, window);
+                menuBackground.selectionner(event, window, selecEcran, fond/*, champion_P2, champion_P1*/);
+            }
+    
+            menuBackground.draw(window);
+            window.display();
+
         }else if(selecEcran==2)	//lancement du combat
         {
+        	/* Gestion de la fermeture de la fenetre */
+			while (window.pollEvent(event))
+	        {
+	            if (event.type == sf::Event::Closed)
+	                window.close();
+
+	            joueur1.peutAttaquerP1(event,window);
+	            joueur2.peutAttaquerP2(event,window);
+	        }
+
         	/* lancement des animations de début de combat */
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
@@ -173,9 +197,7 @@ int main()
 		        	animationFin_P1=false;animationFin_P2=false;animationFinLancee=false;
 		        	actionFini_P1=true;actionFini_P2=true;
 		        	selecEcran=0;
-		        	joueur1.resetPV();
 		        	joueur1.getChampion()->resetHitbox();
-		        	joueur2.resetPV();
 		        	joueur2.getChampion()->resetHitbox();
 		        	menuSel.reset(window);
 
@@ -206,25 +228,15 @@ int main()
 					joueur2.recuperationAttaquesP2();
 				}
 
-				/* Lancement des animations Player 1*/
-				
+				/* Lancement des animations Player 1*/	
 				actionFini_P1=joueur1.lancerActions(joueur2);
-				//thread t1([&]() { actionFini_P1=joueur1.lancerActions(joueur2); });
 				
-				/* Lancement des animations Player 2*/
-				
+				/* Lancement des animations Player 2*/	
 				actionFini_P2=joueur2.lancerActions(joueur1);
-				/*thread t2([&]() { actionFini_P2=joueur2.lancerActions(joueur1); });
-				t1.join();
-				t2.join();*/
+				
 			}
 
-			/* Gestion de la fermeture de la fenetre */
-			while (window.pollEvent(event))
-	        {
-	            if (event.type == sf::Event::Closed)
-	                window.close();
-	        }
+			
 
 	        
 
@@ -232,10 +244,7 @@ int main()
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
 
-	        //window.draw(joueur1.getBarrePV());
 	        joueur1.afficherEnergie(window);
-
-	        //window.draw(joueur2.getBarrePV());
 	        joueur2.afficherEnergie(window);
 
 	        window.draw(joueur1.getChampion()->getSprite());

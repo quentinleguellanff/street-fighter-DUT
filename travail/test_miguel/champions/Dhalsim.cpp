@@ -217,7 +217,7 @@ bool Dhalsim::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& e
     return fini;
 }
 
-bool Dhalsim::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet)
+bool Dhalsim::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
@@ -238,6 +238,8 @@ bool Dhalsim::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite
     		_cptPrendCoup++;
     		setSprite(24,4996,85,100);
     		_posX-=10*SCALE*_orientation;
+
+    		energie+=5;
     		break;
     	case 1:
     		clockAnim[0].restart();
@@ -599,7 +601,7 @@ void Dhalsim::reculer(std::vector<sf::Clock>& clockAnim)
 }
 
 
-bool Dhalsim::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats)
+bool Dhalsim::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -612,9 +614,9 @@ bool Dhalsim::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Person
     	bool enAttaque=false;
 
 		if(lancerAttaque==1)
-			enAttaque=sautPunch(clockAnim,champEnnemi,degats);
+			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
     	else if(lancerAttaque==2) 		
-    		enAttaque=sautKick(clockAnim,champEnnemi,degats);
+    		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
 
     	if(enAttaque)
     	{
@@ -936,7 +938,7 @@ void Dhalsim::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
 }
 
 
-bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -986,6 +988,7 @@ bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -995,7 +998,7 @@ bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 	return fini;
 }
 
-bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats)
+bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
@@ -1041,7 +1044,8 @@ bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=5;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1051,8 +1055,11 @@ bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
     return fini;
 }
 
-bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son)
+bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1127,6 +1134,7 @@ bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Pers
 		    clockAnim[0].restart();
 		    setSprite(24,163,96,103);
 		    fini=true;
+		    energie-=25;
 		    _posX+=2*SCALE*_orientation;
 			break;
 		}
@@ -1145,12 +1153,12 @@ bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Pers
 	return fini;
 }
 
-bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=50;
+    int delai=55;
     bool fini=false;
 
     if(timeAnim > delai)
@@ -1206,7 +1214,8 @@ bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=8;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1216,7 +1225,7 @@ bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	return fini;	
 }
 
-bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1262,6 +1271,7 @@ bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
 	if(collisioncoup(champEnnemi))
 	{
 		*degats=10;
+		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
@@ -1271,8 +1281,11 @@ bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
     return fini;
 }
 
-bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats)
+bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
 {
+	if(energie<25)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1338,6 +1351,7 @@ bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, 
 		    clockAnim[0].restart();
 		    setSprite(24,163,96,103);
 		    fini=true;
+		    energie-=25;
 		    _posX+=2*SCALE*_orientation;
 			break;
 		}
@@ -1356,8 +1370,11 @@ bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, 
 	return fini;
 }
 
-bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::Music& son)
+bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
+	if(energie<50)
+		return true;
+
 	_cptStatic=0;
 	sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -1449,6 +1466,7 @@ bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personna
 	{
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
+		energie-=50;
 		_cptAction=0;
 	}
 
@@ -1468,6 +1486,7 @@ bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personna
 
 		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 		fini=true;
+		energie-=50;
 		_cptAction=0;
 	}
 
