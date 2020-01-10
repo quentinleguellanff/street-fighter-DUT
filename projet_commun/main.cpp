@@ -41,7 +41,7 @@ int main()
 
 
 	///sprite affichage ready, fight
-	  sf::Texture readyF;
+	sf::Texture readyF;
     sf::Sprite readyFight;
 
     if(!readyF.loadFromFile("background/SdHUDAtlas.png")) {
@@ -63,7 +63,9 @@ int main()
     sf::Event eventS;
 
     /* Déclaration menu commandes */
-    MenuCommandes menuCommandes;
+    MenuCommandes menuCommandes(window);
+
+    MenuBackground menuBackground(window);
 
     /* Musique */
 	sf::Music musique;
@@ -160,8 +162,30 @@ int main()
                 menuCommandes.retourMenu(selecEcran,event);
             menuCommandes.draw(window);
             window.display();
+        }else if (selecEcran==4)
+        {
+            while (window.pollEvent(event))
+            {
+                menuBackground.retourMenu2(selecEcran,event, menuSel,window);
+                menuBackground.bouger(event, window);
+                menuBackground.selectionner(event, window, selecEcran, fond/*, champion_P2, champion_P1*/);
+            }
+    
+            menuBackground.draw(window);
+            window.display();
+
         }else if(selecEcran==2)	//lancement du combat
         {
+        	/* Gestion de la fermeture de la fenetre */
+			while (window.pollEvent(event))
+	        {
+	            if (event.type == sf::Event::Closed)
+	                window.close();
+
+	            joueur1.peutAttaquerP1(event,window);
+	            joueur2.peutAttaquerP2(event,window);
+	        }
+
         	/* lancement des animations de début de combat */
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
