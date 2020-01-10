@@ -252,18 +252,13 @@ int main()
 				{
 					joueur2.recuperationAttaquesP2();
 				}
+				
+				/* Lancement des animations Player 2*/
+				actionFini_P2=joueur2.lancerActions(joueur1);
 
 				/* Lancement des animations Player 1*/
-
-				actionFini_P1=joueur1.lancerActions(joueur2);
-				//thread t1([&]() { actionFini_P1=joueur1.lancerActions(joueur2); });
-
-				/* Lancement des animations Player 2*/
-
-				actionFini_P2=joueur2.lancerActions(joueur1);
-				/*thread t2([&]() { actionFini_P2=joueur2.lancerActions(joueur1); });
-				t1.join();
-				t2.join();*/
+				actionFini_P1=joueur1.lancerActions(joueur2);	
+				
 			}
 
 			/* Gestion de la fermeture de la fenetre */
@@ -273,16 +268,11 @@ int main()
 	                window.close();
 	        }
 
-
-
-
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
 
-	        window.draw(joueur1.getBarrePV());
 	        joueur1.afficherEnergie(window);
 
-	        window.draw(joueur2.getBarrePV());
 	        joueur2.afficherEnergie(window);
 
 	        window.draw(joueur1.getChampion()->getSprite());

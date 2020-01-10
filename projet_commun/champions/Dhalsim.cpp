@@ -353,6 +353,7 @@ bool Dhalsim::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& bandeau)
 		bandeau.setTextureRect(sf::IntRect(0,0,0,0));
 		_cptApparition=0;
 		fini=true;
+		_sprite.setPosition(_posX,_posY);
 	}
 
 	
@@ -373,8 +374,6 @@ void Dhalsim::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
 		    _cptStatic ++;
 		    clockAnim[0].restart();
     		setSprite(24,163,96,103);
-    		_posY=_scene.getBottom()-_tailleSprite.y;
-			_sprite.setPosition(_posX,_posY);
 	    	break;
 	    case 1:
 		    _cptStatic ++;
@@ -407,12 +406,16 @@ void Dhalsim::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
 		    setSprite(638,163,91,103);
 	    	break;
 	    }
+	    _posY=_scene.getBottom()-_tailleSprite.y;
+		_sprite.setPosition(_posX,_posY);
 	}
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.4,_tailleSprite.y*0.9));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	_hitbox.setSize(sf::Vector2f(0,0));
 	_gardebox.setSize(sf::Vector2f(0,0));
+
+	_sprite.setPosition(_posX,_posY);
 
     rotate(champEnnemi);
     int n=0;

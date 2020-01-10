@@ -475,8 +475,9 @@ void Jotaro::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 	    	break;
 	    }
 	    _posY=_scene.getBottom()-_tailleSprite.y;
-	    _sprite.setPosition(_posX,_posY);
+    	_sprite.setPosition(_posX,_posY);
 	}
+	
 
     _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
    	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
