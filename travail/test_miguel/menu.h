@@ -109,17 +109,21 @@ public :
 
 class MenuCommandes {
     private:
-    sf::Texture textureManette;
-    sf::Texture textureClavier;
+    sf::Texture texturej1;
+    sf::Texture texturej2;
     sf::Sprite spriteCommandes[2];
     sf::Vector2f position;
     sf::Font fontCommandes;
     sf::Text retour;
+    sf::Text j1;
+    sf::Text j2;
     sf::Texture menuFond;
     sf::Sprite spriteFond;
+    sf::RectangleShape ligneDelim;
+
 
     public:
-        MenuCommandes();
+        MenuCommandes(sf::RenderWindow&);
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
 };

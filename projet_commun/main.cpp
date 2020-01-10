@@ -51,7 +51,7 @@ int main()
     MenuSelection menuSel(window);
 
     /* Déclaration menu commandes */
-    MenuCommandes menuCommandes;
+    MenuCommandes menuCommandes(window);
 
     /* Déclaration menu sélection scene */
     MenuBackground menuBackground(window);

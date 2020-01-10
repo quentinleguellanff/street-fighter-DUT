@@ -542,52 +542,73 @@ void MenuSelection::reset(sf::RenderWindow& window)
 }
 
 
-MenuCommandes::MenuCommandes() 
+MenuCommandes::MenuCommandes(sf::RenderWindow& window)
 {
+
     if(!menuFond.loadFromFile("background/menu.png")){
         std::cout<<"erreur fond"<<endl;
     }
 
     spriteFond.setTexture(menuFond);
 
-    if (!fontCommandes.loadFromFile("OCRAEXT.ttf"))
+    if (!fontCommandes.loadFromFile("MenuSelection/atari.ttf"))
     {
-        cout << "ERREUR : chargement de police ocr.ttf" << endl;
+        cout << "ERREUR : chargement de police atari.ttf" << endl;
     }
-    /*if(!textureManette.loadFromFile("sprites/manette.png")) {
+    if(!texturej1.loadFromFile("sprites/commandej1.png")) {
         std::cout<<"erreur manette";
-    }*/
-    if(!textureClavier.loadFromFile("sprites/clavier.png")) {
+    }
+    if(!texturej2.loadFromFile("sprites/commandej2.png")) {
         std::cout<<"erreur clavier";
     }
+    j1.setFont(fontCommandes);
+    j1.setString("Joueur 1");
+    j1.setCharacterSize(50);
+    j1.setFillColor(sf::Color(255,0,0));
+    j1.setPosition(sf::Vector2f(100,100));
+
+    j2.setFont(fontCommandes);
+    j2.setString("Joueur 2");
+    j2.setCharacterSize(50);
+    j2.setFillColor(sf::Color(255,0,0));
+    j2.setPosition(sf::Vector2f(1000,100));
 
 
-    spriteCommandes[0].setPosition(sf::Vector2f(300,150));
-    spriteCommandes[0].setTexture(textureClavier);
-    spriteCommandes[0].setTextureRect(sf::IntRect(0, 5, 1350, 700));
+    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.2, window.getSize().y*0.2));
+    spriteCommandes[0].setTexture(texturej1);
+    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0, 515, 515));
+
+    spriteCommandes[1].setPosition(sf::Vector2f(window.getSize().x*0.55, window.getSize().y*0.2));
+    spriteCommandes[1].setTexture(texturej2);
+    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0, 679, 415));
 
     retour.setFont(fontCommandes);
     retour.setString("Appuyez sur echap pour revenir au menu");
-    retour.setCharacterSize(20);
+    retour.setCharacterSize(30);
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
-    retour.setPosition(sf::Vector2f(750,900));
+    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
+
+    //ligne delim
+    ligneDelim.setSize(sf::Vector2f(5, 600));
+    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
 }
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
 {
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape){
-        selecEcran=0;
-    }else if (sf::Joystick::isConnected(0))
+    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
     {
-        if(sf::Joystick::isButtonPressed(0, 1))
-            selecEcran=0;
+        selecEcran=0;
     }
 }
 void MenuCommandes::draw(sf::RenderWindow &window)
 {
-        window.draw(spriteFond);
-        window.draw(spriteCommandes[0]);
-        window.draw(retour);
+    window.draw(spriteFond);
+    window.draw(spriteCommandes[0]);
+    window.draw(spriteCommandes[1]);
+    window.draw(retour);
+    window.draw(j1);
+    window.draw(j2);
+    window.draw(ligneDelim);
 }
 
 MenuBackground::MenuBackground(sf::RenderWindow& window)
