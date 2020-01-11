@@ -109,15 +109,12 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
 
     if(selecChamp_P1==0)
     {
-    	cout<<endl<<"1"<<endl;
     	champion_P1=new Jotaro(-1,scene);
     }else if(selecChamp_P1==1)
     {
-    	cout<<endl<<"2"<<endl;
     	champion_P1=new Dhalsim(-1,scene);
     }else if(selecChamp_P1==2)
     {
-    	cout<<endl<<"3"<<endl;
     	champion_P1=new Ryu(-1,scene);
     }
 
@@ -209,22 +206,7 @@ void GestionFenetre::combat(sf::Event& event)
 
     	if(_tabActionCombat[5]==true && _tabActionCombat[6]==true)
     	{
-        	_tabActionCombat[0]=false;_tabActionCombat[1]=false;
-        	_tabActionCombat[5]=false;_tabActionCombat[6]=false;_tabActionCombat[4]=false;
-        	_tabActionCombat[2]=true;_tabActionCombat[3]=true;
-        	selecEcran=0;
-        	joueur1->resetPV();
-        	joueur1->getChampion()->resetHitbox();
-        	joueur2->resetPV();
-        	joueur2->getChampion()->resetHitbox();
-        	menuSel->reset(window);
-
-        	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
-		        std::cout<<"erreur musique";
-		    }
-		    musique.setVolume(50.f) ;
-		    musique.play();
-		    musique.setLoop(true);
+        	finCombat();
         }
     }else
 	{
@@ -282,4 +264,27 @@ void GestionFenetre::affichageCombat()
 
     window.draw(readyFight);
     window.display();
+}
+
+void GestionFenetre::finCombat()
+{
+	for(int i=0;i<=6;i++)
+    {
+    	_tabActionCombat[i]=false;
+    }
+    _tabActionCombat[2]=true;_tabActionCombat[3]=true;
+
+	selecEcran=0;
+	joueur1->resetPV();
+	joueur1->getChampion()->resetHitbox();
+	joueur2->resetPV();
+	joueur2->getChampion()->resetHitbox();
+	menuSel->reset(window);
+
+	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
+        std::cout<<"erreur musique";
+    }
+    musique.setVolume(50.f) ;
+    musique.play();
+    musique.setLoop(true);
 }

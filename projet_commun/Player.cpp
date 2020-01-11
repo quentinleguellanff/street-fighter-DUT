@@ -645,7 +645,6 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		window.draw(_barreEnergie[i]);
 	}
 	
-	window.draw(_effet);
 	window.draw(_barreInfos);
 	window.draw(_portrait);
 }
@@ -653,10 +652,10 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 void Player::affichageChampion(sf::RenderWindow& window)
 {
     window.draw(_champion->getSprite());
-    window.draw(getEffet());
-    //window.draw(_champion->getHurtbox());
-    //window.draw(_champion->getHitbox());
-	//window.draw(_champion->getGardebox());
+    window.draw(_effet);
+    window.draw(_champion->getHurtbox());
+    window.draw(_champion->getHitbox());
+	window.draw(_champion->getGardebox());
 }
 
 
