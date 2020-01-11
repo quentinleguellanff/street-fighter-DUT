@@ -80,8 +80,9 @@ void Personnage::keepInWalls()
 
 void Personnage::rotate(Personnage& ennemi)
 {
-	if( (_orientation==1 && _hurtbox.getPosition().x > ennemi.getHurtbox().getPosition().x) || (_orientation==-1 && _hurtbox.getPosition().x< ennemi.getHurtbox().getPosition().x) )
+    if( (_orientation==1 && _hurtbox.getPosition().x > ennemi.getHurtbox().getPosition().x) || (_orientation==-1 && _hurtbox.getPosition().x< ennemi.getHurtbox().getPosition().x) )
 	{
+        //cout<<"_orientation :\t"<<_orientation<<endl<<"moi.x :\t"<<_hurtbox.getPosition().x<<endl<<"lui.x :\t"<<ennemi.getHurtbox().getPosition().x<<endl;
         _orientation=_orientation*-1;
         if(_orientation==-1)
         {

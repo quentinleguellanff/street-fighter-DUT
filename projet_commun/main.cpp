@@ -41,7 +41,7 @@ int main()
 
 
 	///sprite affichage ready, fight
-	  sf::Texture readyF;
+	sf::Texture readyF;
     sf::Sprite readyFight;
 
     if(!readyF.loadFromFile("background/SdHUDAtlas.png")) {
@@ -63,7 +63,9 @@ int main()
     sf::Event eventS;
 
     /* Déclaration menu commandes */
-    MenuCommandes menuCommandes;
+    MenuCommandes menuCommandes(window);
+
+    MenuBackground menuBackground(window);
 
     /* Musique */
 	sf::Music musique;
@@ -160,8 +162,30 @@ int main()
                 menuCommandes.retourMenu(selecEcran,event);
             menuCommandes.draw(window);
             window.display();
+        }else if (selecEcran==4)
+        {
+            while (window.pollEvent(event))
+            {
+                menuBackground.retourMenu2(selecEcran,event, menuSel,window);
+                menuBackground.bouger(event, window);
+                menuBackground.selectionner(event, window, selecEcran, fond/*, champion_P2, champion_P1*/);
+            }
+    
+            menuBackground.draw(window);
+            window.display();
+
         }else if(selecEcran==2)	//lancement du combat
         {
+        	/* Gestion de la fermeture de la fenetre */
+			while (window.pollEvent(event))
+	        {
+	            if (event.type == sf::Event::Closed)
+	                window.close();
+
+	            joueur1.peutAttaquerP1(event,window);
+	            joueur2.peutAttaquerP2(event,window);
+	        }
+
         	/* lancement des animations de début de combat */
 			if(!apparitionsFinies_P1 || !apparitionsFinies_P2)
 			{
@@ -228,18 +252,13 @@ int main()
 				{
 					joueur2.recuperationAttaquesP2();
 				}
+				
+				/* Lancement des animations Player 2*/
+				actionFini_P2=joueur2.lancerActions(joueur1);
 
 				/* Lancement des animations Player 1*/
-
-				actionFini_P1=joueur1.lancerActions(joueur2);
-				//thread t1([&]() { actionFini_P1=joueur1.lancerActions(joueur2); });
-
-				/* Lancement des animations Player 2*/
-
-				actionFini_P2=joueur2.lancerActions(joueur1);
-				/*thread t2([&]() { actionFini_P2=joueur2.lancerActions(joueur1); });
-				t1.join();
-				t2.join();*/
+				actionFini_P1=joueur1.lancerActions(joueur2);	
+				
 			}
 
 			/* Gestion de la fermeture de la fenetre */
@@ -249,16 +268,11 @@ int main()
 	                window.close();
 	        }
 
-
-
-
 	        /* affichage des élements graphiques */
 	        window.draw(fond.getSprite());
 
-	        window.draw(joueur1.getBarrePV());
 	        joueur1.afficherEnergie(window);
 
-	        window.draw(joueur2.getBarrePV());
 	        joueur2.afficherEnergie(window);
 
 	        window.draw(joueur1.getChampion()->getSprite());
