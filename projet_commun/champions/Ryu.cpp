@@ -2,12 +2,11 @@
 
 using namespace std;
 
-Ryu::Ryu(int orientation,const Scene& s)
+Ryu::Ryu(int orientation)
 {
-	SCALE=4.2;
+    SCALE=4.2;
 	_orientation=-orientation;
-	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
+    _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_ryu.png"))
 	{
@@ -18,17 +17,7 @@ Ryu::Ryu(int orientation,const Scene& s)
 
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
-
-	if(_orientation==1)
-		_posX=100.f;
-	else
-		_posX=_scene.getRightLimit()-100.f;
-
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	_sprite.setPosition(_posX,_posY);
-	keepInWalls();
-
-	_hurtbox.setFillColor(sf::Color(255,255,255,0));
+    _hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);
     _hurtbox.setOutlineThickness(4);
 
@@ -39,7 +28,23 @@ Ryu::Ryu(int orientation,const Scene& s)
     _gardebox.setFillColor(sf::Color(255,255,255,0));
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
-    
+}
+void Ryu::setTout(const Scene& s)
+{
+
+	_scene=s;
+
+	if(_orientation==1)
+		_posX=100.f;
+	else
+		_posX=_scene.getRightLimit()-100.f;
+
+	_posY=_scene.getBottom()-_tailleSprite.y;
+	_sprite.setPosition(_posX,_posY);
+	keepInWalls();
+
+
+
     if(_orientation==-1)
     {
 		_hurtbox.setScale(-1,1);
@@ -60,7 +65,7 @@ bool Ryu::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 	{
 	    switch (_cptApparition)
 	    {
-	    case 0:	
+	    case 0:
 		    _cptApparition ++;
 		    clockAnim[0].restart();
 			setSprite(420,5374,67,94);
@@ -141,7 +146,7 @@ bool Ryu::mort(std::vector<sf::Clock>& clockAnim)
 	{
 	    switch (_cptApparition)
 	    {
-	    case 0:	
+	    case 0:
 		    _cptApparition ++;
 		    clockAnim[0].restart();
 			setSprite(1,4763,65,87);
@@ -322,7 +327,7 @@ bool Ryu::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile)
     int timeAnim = elapsed.asMilliseconds();
     bool fini=false;
     int delaiAnim=200;
-    
+
    	if(_cptApparition==0)
    	{
 		setSprite(9,225,61,104);
@@ -431,7 +436,7 @@ void Ryu::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
    	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
    	_hitbox.setSize(sf::Vector2f(0,0));
    	_gardebox.setSize(sf::Vector2f(0,0));
-	
+
 	int n=0;
 	collision(champEnnemi,n);
     rotate(champEnnemi);
@@ -468,7 +473,7 @@ void Ryu::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
     int deplacement=60;
 
     collision(champEnnemi,deplacement);
-	
+
 	if(deplacement==0)
     {
     	statique(clockAnim,champEnnemi);
@@ -520,9 +525,9 @@ void Ryu::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 	    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 
 	}
-	
+
     rotate(champEnnemi);
-    
+
 	keepInWalls();
 }
 
@@ -535,7 +540,7 @@ void Ryu::reculer(std::vector<sf::Clock>& clockAnim)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     int deplacement=45;
-    
+
     if(timeAnim > delai)
     {
 	    switch (_cptReculer)
@@ -578,9 +583,9 @@ void Ryu::reculer(std::vector<sf::Clock>& clockAnim)
     	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 
 	}
-	
+
     _gardebox.setSize(sf::Vector2f(0,0));
-    
+
 	keepInWalls();
 }
 
@@ -599,7 +604,7 @@ bool Ryu::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage
 
 		if(lancerAttaque==1)
 			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
-    	else if(lancerAttaque==2) 		
+    	else if(lancerAttaque==2)
     		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
 
     	if(enAttaque)
@@ -668,7 +673,7 @@ bool Ryu::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage
 		}
 	}
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
-	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 
 	_sprite.setPosition(_posX,_posY);
     keepInWalls();
@@ -684,8 +689,8 @@ bool Ryu::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
     int delaiAnim=70,deplacementY=_scene.getBottom()/6,deplacementX=50*_orientation;
     bool fini=false;
 
-    
-    
+
+
     if(timeAnim > delaiAnim)
     {
 	    collisionsaut(champEnnemi,deplacementX);
@@ -760,7 +765,7 @@ bool Ryu::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
     		_posX+=deplacementX;_posY+=deplacementY;
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
-			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 8:
 		    clockAnim[0].restart();
@@ -790,7 +795,7 @@ bool Ryu::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
     int delaiAnim=70,deplacementY=150,deplacementX=40*_orientation;
     bool fini=false;
 
-    
+
     if(timeAnim > delaiAnim)
     {
 	    collisionsaut(champEnnemi,deplacementX);
@@ -863,7 +868,7 @@ bool Ryu::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
 		    _cptSauter++;
     		setSprite(515,806,62,116);
     		_posX-=deplacementX;_posY+=deplacementY;
-		    
+
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
 		    _hurtbox.setPosition(_posX,_posY);
 	    	break;
@@ -896,7 +901,7 @@ void Ryu::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
     		clockAnim[0].restart();
     		_cptAccroupi++;
     		setSprite(73,555,62,72);
-			
+
 			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
 			_hurtbox.setPosition(_posX,_posY);
     	}
@@ -927,7 +932,7 @@ bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* d
     int timeAnim = elapsed.asMilliseconds();
     int delaiAnim=60;
     bool fini=false;
-	
+
     if(timeAnim > delaiAnim)
     {
 		switch (_cptAction)
@@ -938,7 +943,7 @@ bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* d
 		    setSprite(3,1319,74,94);
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
-			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
 		case 1:
 		    _cptAction ++;
@@ -967,7 +972,7 @@ bool Ryu::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* d
 	{
 		*degats=5;
 		energie+=10;
-		
+
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
 	}
@@ -985,7 +990,7 @@ bool Ryu::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,in
     int timeAnim = elapsed.asMilliseconds();
     int delaiAnim=60,deplacement=125;
     bool fini=false;
-    
+
     if(timeAnim>delaiAnim)
     {
 	    switch(_cptAction)
@@ -1046,7 +1051,7 @@ bool Ryu::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Personna
     int delaiAnim=50,deplacement=_tailleSprite.x/2;
     bool fini=false;
 
-	
+
     if(timeAnim > delaiAnim)
     {
 		collisionsaut(champEnnemi,deplacement);
@@ -1168,7 +1173,7 @@ bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* de
 		    setSprite(497,2559,67,94);
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
-			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1210,7 +1215,7 @@ bool Ryu::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* de
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
 	keepInWalls();
-	return fini;	
+	return fini;
 }
 
 bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
@@ -1219,7 +1224,7 @@ bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int
     int timeAnim = elapsed.asMilliseconds();
     int delaiAnim=60,deplacement=_scene.getBottom()/6;
     bool fini=false;
-    
+
 	if(timeAnim>delaiAnim)
     {
 	    switch(_cptAction)
@@ -1264,7 +1269,7 @@ bool Ryu::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
 	}
-	
+
     keepInWalls();
     return fini;
 }
@@ -1279,7 +1284,7 @@ bool Ryu::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int*
     int timeAnim = elapsed.asMilliseconds();
     int delaiAnim=70,deplacementY=_scene.getBottom()/7,deplacementX=50*_orientation;
     bool fini=false;
-	
+
     if(timeAnim > delaiAnim)
     {
 		switch (_cptAction)
@@ -1473,12 +1478,12 @@ bool Ryu::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personnage& 
 	}
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
-	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 
     _hitbox.setSize(sf::Vector2f(bouleFeu.getGlobalBounds().width,bouleFeu.getGlobalBounds().height));
 	_hitbox.setPosition(bouleFeu.getPosition().x,bouleFeu.getPosition().y);
 
-	
+
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
 	keepInWalls();

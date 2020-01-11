@@ -2,12 +2,11 @@
 
 using namespace std;
 
-Dhalsim::Dhalsim(int orientation,const Scene& s)
+Dhalsim::Dhalsim(int orientation)
 {
-	SCALE=4;
+    SCALE=4;
 	_orientation=-orientation;
-	_scene=s;
-	_cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
+    _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
 
 	if (!_texture.loadFromFile("sprites/sprite_dhalsim.png"))
 	{
@@ -20,15 +19,6 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(990,6490,97,104));
 
-	if(_orientation==1)
-		_posX=100.f;
-	else
-		_posX=_scene.getRightLimit()-100.f;
-
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	_sprite.setPosition(_posX,_posY);
-	keepInWalls();
-
 	_hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);
     _hurtbox.setOutlineThickness(4);
@@ -40,7 +30,22 @@ Dhalsim::Dhalsim(int orientation,const Scene& s)
     _gardebox.setFillColor(sf::Color(255,255,255,0));
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
-    
+}
+void Dhalsim::setTout(const Scene& s)
+{
+	_scene=s;
+
+
+	if(_orientation==1)
+		_posX=100.f;
+	else
+		_posX=_scene.getRightLimit()-100.f;
+
+	_posY=_scene.getBottom()-_tailleSprite.y;
+	_sprite.setPosition(_posX,_posY);
+	keepInWalls();
+
+
     if(_orientation==-1)
     {
 		_hurtbox.setScale(-1,1);
@@ -61,7 +66,7 @@ bool Dhalsim::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 	{
 	    switch (_cptApparition)
 	    {
-	    case 0:	
+	    case 0:
 		    _cptApparition ++;
 		    clockAnim[0].restart();
 			setSprite(24,5634,50,126);
@@ -160,7 +165,7 @@ bool Dhalsim::mort(std::vector<sf::Clock>& clockAnim)
 		    clockAnim[0].restart();
 		    setSprite(300,5328,141,39);
 	    	break;
-	    
+
 		}
 
 		if(_cptApparition >=3)
@@ -228,7 +233,7 @@ bool Dhalsim::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite
     int delai=70;
     _hurtbox.setSize(sf::Vector2f(0,0));
     _gardebox.setSize(sf::Vector2f(0,0));
-    
+
     if(timeAnim > delai)
     {
     	switch(_cptPrendCoup)
@@ -280,7 +285,7 @@ bool Dhalsim::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& bandeau)
     int timeAnim = elapsed.asMilliseconds();
     bool fini=false;
     int delai=200;
-    
+
    	if(_cptApparition==0)
    	{
    		bandeau.setTexture(_texture);
@@ -306,7 +311,7 @@ bool Dhalsim::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& bandeau)
 		    clockAnim[0].restart();
 		    setSprite(143,32,53,115);
 		    _posX-=1*SCALE*_orientation;
-			_sprite.setPosition(_posX,_posY);    
+			_sprite.setPosition(_posX,_posY);
 			break;
 		case 3:
 		    _cptApparition ++;
@@ -356,7 +361,7 @@ bool Dhalsim::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& bandeau)
 		_sprite.setPosition(_posX,_posY);
 	}
 
-	
+
 	return fini;
 }
 
@@ -365,7 +370,7 @@ void Dhalsim::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
     sf::Time elapsed = clockAnim[0].getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=150;
-    
+
     if(timeAnim>delai)
     {
 	    switch (_cptStatic)
@@ -448,9 +453,9 @@ void Dhalsim::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     int deplacement=40;
-	
+
 	collision(champEnnemi,deplacement);
-	
+
 	if(deplacement==0)
     {
     	statique(clockAnim,champEnnemi);
@@ -533,7 +538,7 @@ void Dhalsim::reculer(std::vector<sf::Clock>& clockAnim)
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     int deplacement=40;
-    
+
     if(timeAnim > delai)
     {
 	    switch (_cptReculer)
@@ -618,7 +623,7 @@ bool Dhalsim::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Person
 
 		if(lancerAttaque==1)
 			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
-    	else if(lancerAttaque==2) 		
+    	else if(lancerAttaque==2)
     		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
 
     	if(enAttaque)
@@ -627,7 +632,7 @@ bool Dhalsim::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Person
     		if(_cptSauter<4)
     			_cptSauter=7-_cptSauter;
     	}
-    	
+
     }else
     {
 
@@ -704,7 +709,7 @@ bool Dhalsim::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnn
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=_scene.getBottom()/7,deplacementX=50*_orientation;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
     	collisionsaut(champEnnemi,deplacementX);
@@ -778,7 +783,7 @@ bool Dhalsim::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnn
     		_posX+=deplacementX;_posY+=deplacementY;
 
     		_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
-			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);	
+			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 	    	break;
 	    case 8:
 		    clockAnim[0].restart();
@@ -805,7 +810,7 @@ bool Dhalsim::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champE
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=_scene.getBottom()/7,deplacementX=50*_orientation;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    collisionsaut(champEnnemi,deplacementX);
@@ -948,7 +953,7 @@ bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
-	
+
     if(timeAnim > delai)
     {
 		switch (_cptAction)
@@ -957,7 +962,7 @@ bool Dhalsim::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 		    _cptAction ++;
 		    clockAnim[0].restart();
 		    setSprite(24,419,82,117);
-		    
+
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
@@ -1008,7 +1013,7 @@ bool Dhalsim::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnem
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=125;
     bool fini=false;
-    
+
     if(timeAnim>delai)
     {
 	    switch(_cptAction)
@@ -1068,7 +1073,7 @@ bool Dhalsim::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& inutile,Pers
     int timeAnim = elapsed.asMilliseconds();
     int delai=30;
     bool fini=false;
-	
+
     if(timeAnim > delai)
     {
 		switch (_cptAction)
@@ -1172,7 +1177,7 @@ bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 		    _cptAction ++;
 		    clockAnim[0].restart();
 		    setSprite(24,768,77,113);
-		
+
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
@@ -1225,7 +1230,7 @@ bool Dhalsim::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	}
 
 	keepInWalls();
-	return fini;	
+	return fini;
 }
 
 bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
@@ -1234,7 +1239,7 @@ bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
     int timeAnim = elapsed.asMilliseconds();
     int delai=80,deplacement=_scene.getBottom()/6;
     bool fini=false;
-    
+
 	if(timeAnim>delai)
     {
 	    switch(_cptAction)
@@ -1279,7 +1284,7 @@ bool Dhalsim::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*SCALE*_orientation;
 	}
-	
+
     keepInWalls();
     return fini;
 }
@@ -1294,7 +1299,7 @@ bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, 
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
-	
+
     if(timeAnim > delai)
     {
 		switch (_cptAction)
@@ -1331,7 +1336,7 @@ bool Dhalsim::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, 
 			break;
 		case 5:
 		    if(timeAnim>delai*2)
-			{	
+			{
 		    	_cptAction++;
 			    clockAnim[0].restart();
 			    setSprite(652,1173,126,105);
@@ -1383,7 +1388,7 @@ bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personna
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
-    
+
     if(timeAnim > delai)
     {
 	    switch (_cptAction)
@@ -1419,7 +1424,7 @@ bool Dhalsim::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& bouleFeu,Personna
 		    clockAnim[0].restart();
 		    setSprite(263,3233,92,120);
 		    _posX-=4*SCALE*_orientation;
-			
+
 			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
 			bouleFeu.setScale(_orientation*SCALE,SCALE);
 			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));

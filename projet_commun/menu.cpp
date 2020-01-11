@@ -26,7 +26,7 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     titre.setFillColor(sf::Color::White);
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(120);
-    titre.setPosition(sf::Vector2f(600,50));
+    titre.setPosition(sf::Vector2f(width/3.2,height/21.6));
 
 
 
@@ -37,35 +37,35 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     }
     textureCase.setSmooth(true);
 
-    spriteMenu[0].setPosition(sf::Vector2f(700,350));
+    spriteMenu[0].setPosition(sf::Vector2f(width/2.74,height/3.08));
     spriteMenu[0].setTexture(textureCase);
     spriteMenu[0].setTextureRect(sf::IntRect(13, 12, 779, 180));
     spriteMenu[0].setScale(0.7f, 0.7f);
 
-    spriteMenu[1].setPosition(sf::Vector2f(700,580));
+    spriteMenu[1].setPosition(sf::Vector2f(width/2.74,height/1.86));
     spriteMenu[1].setTexture(textureCase);
     spriteMenu[1].setTextureRect(sf::IntRect(10, 337, 779, 180));
     spriteMenu[1].setScale(0.7f, 0.7f);
 
-    spriteMenu[2].setPosition(sf::Vector2f(700,810));
+    spriteMenu[2].setPosition(sf::Vector2f(width/2.74,height/1.33));
     spriteMenu[2].setTexture(textureCase);
     spriteMenu[2].setTextureRect(sf::IntRect(10,656, 779, 180));
     spriteMenu[2].setScale(0.7f, 0.7f);
 
-    spriteMenu[3].setPosition(sf::Vector2f(700,350));
+    spriteMenu[3].setPosition(sf::Vector2f(width/2.9,height/3.10));
     spriteMenu[3].setTexture(textureCase);
     spriteMenu[3].setTextureRect(sf::IntRect(816, 12, 779, 180));
-    spriteMenu[3].setScale(0.7f, 0.7f);
+    spriteMenu[3].setScale(0.8f, 0.8f);
 
-    spriteMenu[4].setPosition(sf::Vector2f(700,580));
+    spriteMenu[4].setPosition(sf::Vector2f(width/2.9,height/1.88));
     spriteMenu[4].setTexture(textureCase);
     spriteMenu[4].setTextureRect(sf::IntRect(816, 337, 779, 180));
-    spriteMenu[4].setScale(0.7f, 0.7f);
+    spriteMenu[4].setScale(0.8f, 0.8f);
 
-    spriteMenu[5].setPosition(sf::Vector2f(700,810));
+    spriteMenu[5].setPosition(sf::Vector2f(width/2.9,height/1.35));
     spriteMenu[5].setTexture(textureCase);
     spriteMenu[5].setTextureRect(sf::IntRect(816,656, 779, 180));
-    spriteMenu[5].setScale(0.7f, 0.7f);
+    spriteMenu[5].setScale(0.8f, 0.8f);
 
 // Les sprites des cases utilisées à l'ouverture du menu
 
@@ -167,7 +167,7 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
             }
             _effetSon.play();
             window.close();
-        }   
+        }
     }
 
 }
@@ -402,7 +402,7 @@ void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
 void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 {
     //Selection j1
-    if(choixJ1 == -1) 
+    if(choixJ1 == -1)
     {
         if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
             persoSuivant_P1(etatPersoJ1,window);
@@ -422,7 +422,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     }
 
     //Selection j2
-    if(choixJ2 == -1) 
+    if(choixJ2 == -1)
     {
         if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
             persoSuivant_P2(etatPersoJ2,window);
@@ -651,7 +651,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     spritebg[1].setScale(0.2f,0.2f);
 
     spritebg[2].setTexture(bg[2]);
-    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.7,window.getSize().y*0.7));
+    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.7,window.getSize().y*0.3));
     spritebg[2].setScale(0.2f,0.2f);
 
     spritebg[3].setTexture(bg[3]);
@@ -732,7 +732,7 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             }
         }
     }
-    
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         if(peutDroite)
@@ -741,7 +741,7 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             peutDroite = false;
         }
     }
-    
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if(peutGauche)
@@ -754,7 +754,7 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
 
 void MenuBackground::moveRight()
 {
-    if (selection<4) 
+    if (selection<4)
     {
         selection=selection+1;
     }
@@ -767,7 +767,7 @@ void MenuBackground::moveLeft(){
     }
 
 }
-void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s/*, Dhalsim& d, Jotaro& j*/)
+void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s, Personnage* p1, Personnage* p2)
 {
     bool go = true;
     while (window.pollEvent(event))
@@ -783,14 +783,14 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
     {
         if(go)
         {
-            valider(window, selecEcran,s);
+            valider(window, selecEcran, s, p1, p2);
             go = false;
         }
     }
 
 }
 
-void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s/*, Dhalsim& d, Jotaro& j*/)
+void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s, Personnage* p1, Personnage* p2)
 {
        if (selection==0)
             s.chargementToit();
@@ -803,7 +803,9 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==4)
             s.chargementBrazil(window);
         selecEcran=2;
-        //j.setTout(-1,s);
-        //d.setTout(1,s);
+        _p1=p1;
+        _p1->setTout(s);
+        _p2=p2;
+        _p2->setTout(s);
 
 }

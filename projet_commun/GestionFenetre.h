@@ -73,6 +73,7 @@ public:
 	void gestionSelecScene(sf::Event&);
 
 	void combat(sf::Event&);
+	void finCombat();
 	void affichageCombat();
 };
 

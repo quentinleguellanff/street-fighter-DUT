@@ -4,7 +4,7 @@ using namespace std;
 
 GestionFenetre::GestionFenetre()
 {
-	
+
 	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
@@ -23,7 +23,7 @@ GestionFenetre::GestionFenetre()
     }
 
     joueur1= new Player(1,window);
-    joueur2= new Player(2,window); 
+    joueur2= new Player(2,window);
 
     selecChamp_P1=-1;
     selecChamp_P2=-1;
@@ -36,14 +36,14 @@ GestionFenetre::GestionFenetre()
     if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
-    musique.setVolume(0.f) ;
+    //musique.setVolume(1.f) ;
     musique.play();
     musique.setLoop(true);
 }
 
 sf::RenderWindow& GestionFenetre::returnWindow()
 {
-	
+
 	return window;
 }
 
@@ -109,27 +109,24 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
 
     if(selecChamp_P1==0)
     {
-    	cout<<endl<<"1"<<endl;
-    	champion_P1=new Jotaro(-1,scene);
+    	champion_P1=new Jotaro(-1);
     }else if(selecChamp_P1==1)
     {
-    	cout<<endl<<"2"<<endl;
-    	champion_P1=new Dhalsim(-1,scene);
+    	champion_P1=new Dhalsim(-1);
     }else if(selecChamp_P1==2)
     {
-    	cout<<endl<<"3"<<endl;
-    	champion_P1=new Ryu(-1,scene);
+    	champion_P1=new Ryu(-1);
     }
 
     if(selecChamp_P2==0)
     {
-    	champion_P2= new Jotaro(1,scene);
+    	champion_P2= new Jotaro(1);
     }else if(selecChamp_P2==1)
     {
-    	champion_P2=new Dhalsim(1,scene);
+    	champion_P2=new Dhalsim(1);
     }else if(selecChamp_P2==2)
     {
-    	champion_P2=new Ryu(1,scene);
+    	champion_P2=new Ryu(1);
     }
 
     if(selecChamp_P1!=-1 && selecChamp_P2!=-1)
@@ -166,7 +163,7 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
     {
         menuBackground->retourMenu2(selecEcran,event, *menuSel,window);
         menuBackground->bouger(event, window);
-        menuBackground->selectionner(event, window, selecEcran, scene);
+        menuBackground->selectionner(event, window, selecEcran, scene, champion_P1, champion_P2);
     }
 
     menuBackground->draw(window);
@@ -209,22 +206,7 @@ void GestionFenetre::combat(sf::Event& event)
 
     	if(_tabActionCombat[5]==true && _tabActionCombat[6]==true)
     	{
-        	_tabActionCombat[0]=false;_tabActionCombat[1]=false;
-        	_tabActionCombat[5]=false;_tabActionCombat[6]=false;_tabActionCombat[4]=false;
-        	_tabActionCombat[2]=true;_tabActionCombat[3]=true;
-        	selecEcran=0;
-        	joueur1->resetPV();
-        	joueur1->getChampion()->resetHitbox();
-        	joueur2->resetPV();
-        	joueur2->getChampion()->resetHitbox();
-        	menuSel->reset(window);
-
-        	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
-		        std::cout<<"erreur musique";
-		    }
-		    musique.setVolume(50.f) ;
-		    musique.play();
-		    musique.setLoop(true);
+        	finCombat();
         }
     }else
 	{
@@ -250,13 +232,13 @@ void GestionFenetre::combat(sf::Event& event)
 		{
 			joueur2->recuperationAttaquesP2();
 		}
-		
+
 		/* Lancement des animations Player 2*/
 		_tabActionCombat[3]=joueur2->lancerActions(*joueur1);
 
 		/* Lancement des animations Player 1*/
-		_tabActionCombat[2]=joueur1->lancerActions(*joueur2);	
-		
+		_tabActionCombat[2]=joueur1->lancerActions(*joueur2);
+
 	}
 
 	/* Gestion de la fermeture de la fenetre */
@@ -282,4 +264,27 @@ void GestionFenetre::affichageCombat()
 
     window.draw(readyFight);
     window.display();
+}
+
+void GestionFenetre::finCombat()
+{
+	for(int i=0;i<=6;i++)
+    {
+    	_tabActionCombat[i]=false;
+    }
+    _tabActionCombat[2]=true;_tabActionCombat[3]=true;
+
+	selecEcran=0;
+	joueur1->resetPV();
+	joueur1->getChampion()->resetHitbox();
+	joueur2->resetPV();
+	joueur2->getChampion()->resetHitbox();
+	menuSel->reset(window);
+
+	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
+        std::cout<<"erreur musique";
+    }
+    musique.setVolume(50.f) ;
+    musique.play();
+    musique.setLoop(true);
 }

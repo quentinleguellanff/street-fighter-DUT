@@ -2,6 +2,26 @@
 
 using namespace std;
 
+void Personnage::setTout(const Scene& s){
+    	_scene=s;
+
+
+	if(_orientation==1)
+		_posX=100.f;
+	else
+		_posX=_scene.getRightLimit()-100.f;
+
+	_posY=_scene.getBottom()-_tailleSprite.y;
+	_sprite.setPosition(_posX,_posY);
+	keepInWalls();
+
+
+    if(_orientation==-1)
+    {
+		_hurtbox.setScale(-1,1);
+		_hitbox.setScale(-1,1);
+	}
+}
 
 sf::Sprite Personnage::getSprite()
 {
@@ -53,7 +73,7 @@ void Personnage::collision(Personnage& ennemi, int& deplacement)
     {
         deplacement=0;
     }
-        
+
     _sprite.setPosition(_posX,_posY);
 }
 
@@ -64,13 +84,13 @@ void Personnage::keepInWalls()
 		if(_posX-_tailleSprite.x<_scene.getLeftLimit())
 			_posX=_scene.getLeftLimit()+_tailleSprite.x;
 		else if(_posX>_scene.getRightLimit())
-			_posX=_scene.getRightLimit();   
+			_posX=_scene.getRightLimit();
 	}else if(_orientation==1)
 	{
 		if(_posX<_scene.getLeftLimit())
 			_posX=_scene.getLeftLimit();
 		else if(_posX+_tailleSprite.x>_scene.getRightLimit())
-			_posX=_scene.getRightLimit()-_tailleSprite.x;   
+			_posX=_scene.getRightLimit()-_tailleSprite.x;
 	}
 	if(_posY+_tailleSprite.y>_scene.getBottom())
 			_posY=_scene.getBottom()-_tailleSprite.y;
