@@ -218,24 +218,10 @@ void Personnage::collisionsaut(sf::RectangleShape hurtboxEnnemi)
 void Personnage::retourner()
 {
     _orientation = -_orientation;
-    sf::Vector2f positionBasePerso = _spritePerso.getPosition();
-
-    if(_orientation == -1)
-    {
-        _spritePerso.setOrigin(_spritePerso.getLocalBounds().width, 0.f);
-        _hitbox.setOrigin(_spritePerso.getLocalBounds().width,0.f);
-        _hurtbox.setOrigin(_spritePerso.getLocalBounds().width,0.f);
-    }
-    else
-    {
-        _spritePerso.setOrigin(0.f,0.f);
-        _hitbox.setOrigin(0.f,0.f);
-        _hurtbox.setOrigin(0.f,0.f);
-    }
     _spritePerso.setScale(_scale*_orientation,_scale);
-    _hurtbox.setScale(_scale*_orientation,_scale);
+    _hurtbox.setScale(_orientation,1);
     _hitbox.setScale(_scale*_orientation,_scale);
-    _spritePerso.setPosition(positionBasePerso);
+    _spritePerso.setPosition(_spritePerso.getPosition().x-_spritePerso.getGlobalBounds().width*_orientation,_spritePerso.getPosition().y);
     _hurtbox.setPosition(_spritePerso.getPosition().x, _spritePerso.getPosition().y);
 }
 

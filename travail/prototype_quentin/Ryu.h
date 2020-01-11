@@ -16,6 +16,8 @@ class Ryu : public Personnage
         bool coupDePoing(sf::RectangleShape,bool&,sf::RenderWindow&) override;
         void prendCoup(bool&,sf::RenderWindow&) override;
         bool sauter(sf::RenderWindow&,sf::RectangleShape) override;
+        bool sauterAvancer(sf::RenderWindow&,sf::RectangleShape) override;
+        bool sauterArriere(sf::RenderWindow&,sf::RectangleShape) override;
 
     protected:
 

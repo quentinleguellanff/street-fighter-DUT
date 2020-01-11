@@ -105,18 +105,47 @@ void Joueur::saut(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi,bool
         _peutsauter = false;
     }
     if(_ensautdroite){
-        if(!_Broly.sauter(window,1,ennemiensaut,hurtboxEnnemi)){
+        /*if(!_Broly.sauter(window,1,ennemiensaut,hurtboxEnnemi)){
             _ensautdroite = false;
             seretourner(hurtboxEnnemi);
             _peutsauter = true;
+        }*/
+        if(_personnage->getorientation() == 1){
+            if(!_personnage->sauterAvancer(window,hurtboxEnnemi)){
+                _ensautdroite = false;
+                _peutsauter = true;
+                seretourner(hurtboxEnnemi);
+            }
+        }
+        else{
+            if(!_personnage->sauterArriere(window,hurtboxEnnemi)){
+                _ensautdroite = false;
+                _peutsauter = true;
+                seretourner(hurtboxEnnemi);
+            }
         }
     }
     if(_ensautgauche){
-        if(!_Broly.sauter(window,-1,ennemiensaut,hurtboxEnnemi)){
+        /*if(!_Broly.sauter(window,-1,ennemiensaut,hurtboxEnnemi)){
             _ensautgauche = false;
             seretourner(hurtboxEnnemi);
             _peutsauter = true;
+        }*/
+        if(_personnage->getorientation() == 1){
+            if(!_personnage->sauterArriere(window,hurtboxEnnemi)){
+                _ensautgauche = false;
+                _peutsauter = true;
+                seretourner(hurtboxEnnemi);
+            }
         }
+        else{
+            if(!_personnage->sauterAvancer(window,hurtboxEnnemi)){
+                _ensautgauche = false;
+                _peutsauter = true;
+                seretourner(hurtboxEnnemi);
+            }
+        }
+
     }
     if(_ensaut){
         if(!_personnage->sauter(window,hurtboxEnnemi)){
@@ -133,13 +162,13 @@ void Joueur::statique(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi)
     {
         //_Broly.debout(window,hurtboxEnnemi);
         _personnage->debout(window,hurtboxEnnemi);
-        //seretourner(hurtboxEnnemi);
+        seretourner(hurtboxEnnemi);
     }
     else if(_avancedroite && _avancegauche && !_prendcoup && !_ensaut && !_ensautgauche && !_ensautdroite && !_attaque)
     {
         //_Broly.debout(window,hurtboxEnnemi);
         _personnage->debout(window,hurtboxEnnemi);
-        //seretourner(hurtboxEnnemi);
+        seretourner(hurtboxEnnemi);
     }
 }
 
@@ -158,9 +187,11 @@ void Joueur::avancedroite(sf::RenderWindow& window,sf::RectangleShape hurtboxEnn
     */
         if(_personnage->getorientation() == 1){
             _personnage->avancer(window,hurtboxEnnemi);
+            seretourner(hurtboxEnnemi);
         }
         else{
             _personnage->reculer(window);
+            seretourner(hurtboxEnnemi);
         }
     }
 }
@@ -182,9 +213,11 @@ void Joueur::avancegauche(sf::RenderWindow& window,sf::RectangleShape hurtboxEnn
         */
         if(_personnage->getorientation() == -1){
             _personnage->avancer(window,hurtboxEnnemi);
+            seretourner(hurtboxEnnemi);
         }
         else{
             _personnage->reculer(window);
+            seretourner(hurtboxEnnemi);
         }
     }
 }
@@ -243,7 +276,7 @@ void Joueur::prendCoup(bool& touche,sf::RenderWindow& window){
         }
         if(_cpttouche == 2){
             //restart animation prendcoup
-            _Broly.restartPrendcoup();
+            _personnage->restartPrendcoup();
             prendDegats();
             _cpttouche = 0;
         }
@@ -273,18 +306,18 @@ void Joueur::antiSpam(sf::Event& event){
 }
 
 void Joueur::seretourner(sf::RectangleShape hurtboxEnnemi){
-    if(_Broly.getorientation() == -1){
-        if(_Broly.gethurtbox().getGlobalBounds().left  > (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
+    if(_personnage->getorientation() == 1){
+        if(_personnage->gethurtbox().getGlobalBounds().left  > (hurtboxEnnemi.getGlobalBounds().left + hurtboxEnnemi.getGlobalBounds().width)){
             _seretourner = true;
         }
     }
-    if(_Broly.getorientation() == 1){
-        if(_Broly.gethurtbox().getGlobalBounds().left + _Broly.gethurtbox().getGlobalBounds().width < hurtboxEnnemi.getGlobalBounds().left){
+    if(_personnage->getorientation() == -1){
+        if(_personnage->gethurtbox().getGlobalBounds().left + _personnage->gethurtbox().getGlobalBounds().width < hurtboxEnnemi.getGlobalBounds().left){
             _seretourner = true;
         }
     }
     if(_seretourner){
-        _Broly.retourner();
+        _personnage->retourner();
         _seretourner = false;
     }
 }

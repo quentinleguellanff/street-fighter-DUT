@@ -14,13 +14,12 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-DSFML_STATIC" />
-					<Add directory="C:/Program Files (x86)/SFML-2.5.1/include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-system-d" />
-					<Add directory="C:/Program Files (x86)/SFML-2.5.1/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -35,15 +34,18 @@
 					<Add option="-s" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
 					<Add library="sfml-system" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="../../../SFML-2.5.1/include" />
 		</Compiler>
-		<Unit filename="GestionFenetre.cpp" />
-		<Unit filename="GestionFenetre.h" />
+		<Linker>
+			<Add directory="../../../SFML-2.5.1/lib" />
+		</Linker>
 		<Unit filename="IncludeManager.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h" />

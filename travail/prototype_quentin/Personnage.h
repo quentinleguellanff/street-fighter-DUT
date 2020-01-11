@@ -58,6 +58,8 @@ class Personnage
         virtual bool coupDePoing(sf::RectangleShape,bool&,sf::RenderWindow&){return true;}
         virtual void prendCoup(bool&,sf::RenderWindow&){}
         virtual bool sauter(sf::RenderWindow&,sf::RectangleShape){return true;}
+        virtual bool sauterAvancer(sf::RenderWindow&,sf::RectangleShape){return true;}
+        virtual bool sauterArriere(sf::RenderWindow&,sf::RectangleShape){return true;}
 };
 
 #endif // PERSONNAGE_H
