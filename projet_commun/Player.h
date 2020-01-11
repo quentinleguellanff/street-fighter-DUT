@@ -98,8 +98,9 @@ public:
 	int getPV();				//recupération des points de vie
 	void resetPV();				//reinitialisation des points de vie
 	void setDegats(int);		//inflige un nombre de dégats passés en arguments
-	sf::RectangleShape getBarrePV();	//renvoi la barre de vie pour permettre son affichage
+
 	void afficherEnergie(sf::RenderWindow&);
+	void affichageChampion(sf::RenderWindow&);
 
 	int getAction();
 	int* getPrendCoup();

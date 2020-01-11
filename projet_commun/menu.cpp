@@ -90,7 +90,7 @@ void MenuPrincipal::draw(sf::RenderWindow &window){
     }
 
 // Recupérer les intructions de l'utilisateur
-void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow &window)
+void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& window)
 {
     bool peutmonter = true, peutdescendre = true;
     if (sf::Joystick::isConnected(0))

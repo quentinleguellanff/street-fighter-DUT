@@ -598,23 +598,6 @@ void Player::setDegats(int degats)
 	_PV-=degats;
 }
 
-sf::RectangleShape Player::getBarrePV()
-{
-	/*if(_PV>66)
-		_barrePV.setFillColor(sf::Color(0,250,0));
-	else if(_PV>33)
-		_barrePV.setFillColor(sf::Color(255,165,0));
-	else 
-		_barrePV.setFillColor(sf::Color(255,0,0));
-
-	if(_PV>0)
-		_barrePV.setSize(sf::Vector2f(_PV*8,50));
-	else
-		_barrePV.setSize(sf::Vector2f(0,50));*/
-
-	return _barrePV[0];
-}
-
 void Player::afficherEnergie(sf::RenderWindow& window)
 {
 	/* gestion de la barre de points de vie */
@@ -662,8 +645,18 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		window.draw(_barreEnergie[i]);
 	}
 	
+	window.draw(_effet);
 	window.draw(_barreInfos);
 	window.draw(_portrait);
+}
+
+void Player::affichageChampion(sf::RenderWindow& window)
+{
+    window.draw(_champion->getSprite());
+    window.draw(getEffet());
+    //window.draw(_champion->getHurtbox());
+    //window.draw(_champion->getHitbox());
+	//window.draw(_champion->getGardebox());
 }
 
 

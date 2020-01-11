@@ -2,14 +2,9 @@
 
 using namespace std;
 
-Scene::Scene(sf::RenderWindow& w,int n)
+Scene::Scene(sf::RenderWindow& w)
 {
 	_tailleWindow=w.getSize();
-	switch (n) // Début de Gestionnaire de map
-	{
-		case 1:
-			chargementXenoverse();
-	}
 }
 
 void Scene::chargementXenoverse()
