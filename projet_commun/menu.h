@@ -132,6 +132,8 @@ class MenuCommandes {
 
 class MenuBackground {
     private:
+        Personnage* _p1;
+        Personnage* _p2;
         int selection;
         sf::Texture bg[6];
         sf::Sprite spritebg[6];
@@ -151,8 +153,8 @@ class MenuBackground {
         void bouger(sf::Event,sf::RenderWindow &window);
         void moveRight();
         void moveLeft();
-        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s);
-        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s);
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s, Personnage* p1, Personnage* p2);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s, Personnage*, Personnage*);
 
 
 };

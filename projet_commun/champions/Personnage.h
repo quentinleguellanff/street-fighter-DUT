@@ -38,14 +38,14 @@ protected:
 	int _cptSauter;					//compteur pour les animations de saut
 
 	int _cptApparition;				//compteur pour l'animation de début de combat
-	int _cptAction;					//compteur pour les animations de type attaques 
+	int _cptAction;					//compteur pour les animations de type attaques
 	int _cptPrendCoup;
 	int _cptGarde;					//compteur pour l'animation de garde debout
 	int _cptSP;						//compteur pour les effets sur les animations spéciales
 public:
 	Personnage(){};		//constructeur vide
 	~Personnage(){};
-
+    void setTout(const Scene&);
 	sf::Sprite getSprite();
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
 	sf::Sprite getIcone();
@@ -64,7 +64,7 @@ public:
 	int getPosX();
 	void setPosY(int);
 	int getPosY();
-	
+
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
 	bool auSol();
@@ -105,8 +105,9 @@ private:
 	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
 
 public:
-	Jotaro(){};		
-	Jotaro(int,const Scene&);
+    Jotaro(){};
+	Jotaro(int);
+    void setTout(const Scene& s);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
@@ -123,49 +124,50 @@ public:
 	void avancer(std::vector<sf::Clock>&,Personnage&) override;
 	void reculer(std::vector<sf::Clock>&) override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;		
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;	
+	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
+	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
 	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
 	void accroupi(std::vector<sf::Clock>&,bool) override;
 	bool seLever(std::vector<sf::Clock>& clockAnim) override;
 
-	
+
 	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
-	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;		
+	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 
-	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;	
+	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 };
 
 class Dhalsim : public Personnage
 {
 public:
-	Dhalsim(){};	
-	Dhalsim(int,const Scene&);	
+	Dhalsim(){};
+	Dhalsim(int);
+	void setTout(const Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
 	bool mort(std::vector<sf::Clock>& clockAnim) override;
-	
+
 	bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&) override;
 	bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&) override;
 
 	void statique(std::vector<sf::Clock>&,Personnage&) override;
 	void garde(std::vector<sf::Clock>&) override;
-	void avancer(std::vector<sf::Clock>&,Personnage&) override;	
+	void avancer(std::vector<sf::Clock>&,Personnage&) override;
 	void reculer(std::vector<sf::Clock>&) override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;		
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;	
+	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
+	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
 	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
 	void accroupi(std::vector<sf::Clock>&,bool) override;
 
-	
-	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;	
+
+	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
@@ -180,31 +182,32 @@ class Ryu : public Personnage
 {
 public:
 	Ryu(){};
-	Ryu(int,const Scene&);
+	Ryu(int);
+	void setTout(const Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
 	bool mort(std::vector<sf::Clock>& clockAnim) override;
-	
+
 	bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&) override;
 	bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&) override;
 
-	void statique(std::vector<sf::Clock>&,Personnage&) override;	
-	void garde(std::vector<sf::Clock>&) override;		
-	void avancer(std::vector<sf::Clock>&,Personnage&) override;	
-	void reculer(std::vector<sf::Clock>&) override;	
+	void statique(std::vector<sf::Clock>&,Personnage&) override;
+	void garde(std::vector<sf::Clock>&) override;
+	void avancer(std::vector<sf::Clock>&,Personnage&) override;
+	void reculer(std::vector<sf::Clock>&) override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;		
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;		
-	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;	
-	void accroupi(std::vector<sf::Clock>&,bool) override;		
+	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
+	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
+	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
+	void accroupi(std::vector<sf::Clock>&,bool) override;
 
-	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;			
-	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;		
+	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
+	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
-	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;					
-	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;				
+	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
+	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 	bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
 
 	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
