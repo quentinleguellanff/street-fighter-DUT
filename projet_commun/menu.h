@@ -31,12 +31,12 @@ private:
 
     sf::Music _effetSon;
 public:
-
+    MenuPrincipal();
     MenuPrincipal (float width, float height);
     ~MenuPrincipal();
 
-    void draw(sf::RenderWindow &window);
-    void bouger(int&,sf::Event, sf::RenderWindow &window);
+    void draw(sf::RenderWindow& window);
+    void bouger(int&,sf::Event, sf::RenderWindow& window);
     void moveUp();
     void moveDown();
     };
@@ -92,6 +92,7 @@ private:
     sf::Music _effetSon;
 
 public :
+    MenuSelection();
     MenuSelection(sf::RenderWindow&);
     void draw(sf::RenderWindow &window);
 
@@ -123,6 +124,7 @@ class MenuCommandes {
 
 
     public:
+        MenuCommandes();
         MenuCommandes(sf::RenderWindow&);
         void retourMenu(int& selecEcran,sf::Event event);
         void draw(sf::RenderWindow &window);
@@ -142,6 +144,7 @@ class MenuBackground {
         sf::Sprite spriteFond;
 
     public:
+        MenuBackground();
         MenuBackground(sf::RenderWindow&);
         void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
         void draw(sf::RenderWindow &window);

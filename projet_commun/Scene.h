@@ -23,7 +23,7 @@ private:
 
 public:
 	Scene(){};
-	Scene(sf::RenderWindow&, int);
+	Scene(sf::RenderWindow&);
 
 	void chargementXenoverse();
 	void chargementFutur();
