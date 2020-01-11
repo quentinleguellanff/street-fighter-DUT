@@ -467,64 +467,62 @@ void Ryu::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 {
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
+	sf::Time elapsed1 = clockAnim[0].getElapsedTime();
+    int timeAnim = elapsed1.asMilliseconds();
+    sf::Time elapsed2 = clockAnim[1].getElapsedTime();
+    int timeMove = elapsed2.asMilliseconds();
     int delai=70;
-    int deplacement=60;
+    int deplacement=12;
 
     collision(champEnnemi,deplacement);
+    if(_cptAvancer > 5){
+        _cptAvancer = 0;
+    }
 
 	if(deplacement==0)
     {
     	statique(clockAnim,champEnnemi);
-    }else if(timeAnim>delai)
-	{
-	    switch (_cptAvancer)
-	    {
-	    case 0:
-	    	_cptStatic=0;
-		    _cptAvancer ++;
-		    clockAnim[0].restart();
-    		setSprite(5,634,63,96);
-    		_posX+=_orientation*deplacement;
-	    	break;
-	    case 1:
-		    _cptAvancer ++;
-		    clockAnim[0].restart();
-		    setSprite(70,634,69,96);
-		    _posX+=_orientation*deplacement;
-	    	break;
-	    case 2:
-		    _cptAvancer ++;
-		    clockAnim[0].restart();
-		    setSprite(144,634,68,96);
-		    _posX+=_orientation*deplacement;
-	    	break;
-	    case 3:
-		    _cptAvancer ++;
-		    clockAnim[0].restart();
-		    setSprite(222,634,59,96);
-		    _posX+=_orientation*deplacement;
-	    	break;
-	    case 4:
-		    _cptAvancer ++;
-		    clockAnim[0].restart();
-		    setSprite(296,634,54,96);
-		    _posX+=_orientation*deplacement;
-	    	break;
-	    case 5:
-		    _cptAvancer =0;
-		    clockAnim[0].restart();
-		    setSprite(428,634,63,96);
-		    _posX+=_orientation*deplacement;
-	    	break;
-	    }
+    }
 
-	    _sprite.setPosition(_posX,_posY);
-	    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
-	    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
+    if(timeMove > 10){
+        if(_cptAvancer < 6){
+            _posX= _posX+deplacement*_orientation;
+	        clockAnim[1].restart();
+        }
+    }
+    if(timeAnim>50){
+        _cptAvancer ++;
+        clockAnim[0].restart();
+    }
+    switch (_cptAvancer)
+    {
+    case 0:
+        if(timeAnim>20){
+            _cptAvancer ++;
+            clockAnim[0].restart();
+        }
+        setSprite(-3,634,72,96);
+        break;
+    case 1:
+        setSprite(70,634,69,96);
+        break;
+    case 2:
+        setSprite(143,634,69,96);
+        break;
+    case 3:
+        setSprite(212,634,68,96);
+        break;
+    case 4:
+        setSprite(281,634,69,96);
+        break;
+    case 5:
+        setSprite(350,634,71,96);
+        break;
+    }
 
-	}
+    _sprite.setPosition(_posX,_posY);
+    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 
     rotate(champEnnemi);
 

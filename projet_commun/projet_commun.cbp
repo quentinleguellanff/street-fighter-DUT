@@ -19,6 +19,7 @@
 				<Linker>
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-system-d" />
 					<Add directory="C:/Program Files (x86)/SFML-2.5.1/lib" />
 				</Linker>
@@ -35,13 +36,18 @@
 					<Add option="-s" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
 					<Add library="sfml-system" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="../../SFML-2.5.1/include" />
 		</Compiler>
+		<Linker>
+			<Add directory="../../SFML-2.5.1/lib" />
+		</Linker>
 		<Unit filename="GestionFenetre.cpp" />
 		<Unit filename="GestionFenetre.h" />
 		<Unit filename="IncludeManager.h" />
