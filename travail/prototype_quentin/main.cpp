@@ -17,7 +17,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(LARGEUR,LONGUEUR), "prototype");
     window.setKeyRepeatEnabled(false);
     window.setFramerateLimit(120);
-    window.setVerticalSyncEnabled(true);
+    //window.setVerticalSyncEnabled(true);
 
     bool combatEnCours = true;
     bool fincombat = false;

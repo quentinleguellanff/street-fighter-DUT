@@ -26,7 +26,7 @@ Ryu::Ryu(int orientation,sf::RectangleShape& sol)
     _cptAnimCoupPoing = 0;
     _cptanimprendcoup = 0;
     _cptanimjump = 0;
-    _vsaut = -75;
+    _vsaut = -40;
     setSprite(2,433,66,98);
     if(orientation == 1){
         _spritePerso.setPosition(20.f,_sol.getPosition().y-_spritePerso.getGlobalBounds().height);
@@ -45,7 +45,7 @@ void Ryu::debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
     _cptanimjump = 0;
     sf::Time elapsed = _clockanim.getElapsedTime();
     int timeanim = elapsed.asMilliseconds();
-    if(timeanim > 70)
+    if(timeanim > 100)
     {
         _cptanimstatic++;
         _clockanim.restart();
@@ -86,14 +86,15 @@ void Ryu::avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
     }
 	sf::Time elapsed1 = _clockanim.getElapsedTime();
     int timeAnim = elapsed1.asMilliseconds();
+    cout << timeAnim << endl;
 
     sf::Time elapsed2 = _clockmove.getElapsedTime();
     int timeMove = elapsed2.asMilliseconds();
     //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
-    _vitesseX = 30 * _orientation;
+    _vitesseX = 12 * _orientation;
     ResteDansFenetre();
     collision(hurtboxEnnemi);
-    if(timeMove > 20){
+    if(timeMove > 10){
 
          switch (_cptanimavancer)
 	    {
@@ -192,7 +193,7 @@ void Ryu::reculer(sf::RenderWindow& window){
     sf::Time elapsed2 = _clockmove.getElapsedTime();
     int timeMove = elapsed2.asMilliseconds();
     _spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
-    _vitesseX = -15 * _orientation;
+    _vitesseX = -20 * _orientation;
     ResteDansFenetre();
     if(timeMove > 20){
          switch (_cptanimavancer)
@@ -353,73 +354,80 @@ void Ryu::prendCoup(bool& touche, sf::RenderWindow& window){
 }
 
 bool Ryu::sauter(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
-    int v_grav = 6;
+    float v_grav = 1.7;
     _vitesseX = 20;
     sf::Time elapsed = _clockanim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     sf::Time elapsed2 = _clockmove.getElapsedTime();
     int timeMove = elapsed2.asMilliseconds();
 
-    if(timeMove > 20){
+    if(timeMove > 10){
         _vsaut += v_grav;
         _spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y+_vsaut);
         _clockmove.restart();
     }
-    if(timeAnim > 80){
-	    switch (_cptanimjump)
-	    {
-            case 0:
-		    _cptanimjump ++;
-		    _clockanim.restart();
-    		setSprite(651,829,63,89);
-    		//_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y+23);
-	    	break;
-	    case 1:
-		    _cptanimjump ++;
-            setSprite(714,818,70,108);
-		    _clockanim.restart();
-		    //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y-50);
-	    	break;
-	    case 2:
+    if(timeAnim > 100){
+        if(_cptanimjump < 6)
+            _cptanimjump++;
+        _clockanim.restart();
+    }
+    switch (_cptanimjump)
+    {
+        case 0:
+            if(timeAnim > 20){
+                 _cptanimjump ++;
+                 _clockanim.restart();
+            }
+        //_cptanimjump ++;
+        //_clockanim.restart();
+        setSprite(651,829,63,89);
+        //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y+23);
+        break;
+    case 1:
+        //_cptanimjump ++;
+        setSprite(714,818,70,108);
+        //_clockanim.restart();
+        //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y-50);
+        break;
+    case 2:
+        //_cptanimjump ++;
+        setSprite(791,775,64,88);
+        //_clockanim.restart();
+        break;
+    case 3:
+        _cptanimjump ++;
+        setSprite(861,748,61,70);
+        //_clockanim.restart();
+        break;
+    case 4:
+        //_cptanimjump ++;
+        setSprite(925,739,61,65);
+        //_clockanim.restart();
+        break;
+    case 5:
+        //_cptanimjump ++;
+        setSprite(1000,750,64,86);
+        //_clockanim.restart();
+        break;
+    case 6:
+        //_cptanimjump ++;
+        setSprite(1071,765,62,115);
+        //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
+       // _clockanim.restart();
+        cout << _spritePerso.getPosition().y + _spritePerso.getGlobalBounds().height + _vsaut << endl;
+        cout << _vsaut << endl;
+        if(_spritePerso.getPosition().y + _spritePerso.getGlobalBounds().height + _vsaut >= _sol.getPosition().y){
             _cptanimjump ++;
-    		setSprite(791,775,64,88);
-		    _clockanim.restart();
-	    	break;
-        case 3:
-		    _cptanimjump ++;
-            setSprite(861,748,61,70);
-		    _clockanim.restart();
-	    	break;
-        case 4:
-		    _cptanimjump ++;
-            setSprite(925,739,61,65);
-		    _clockanim.restart();
-	    	break;
-        case 5:
-		    _cptanimjump ++;
-            setSprite(1000,750,64,86);
-		    _clockanim.restart();
-	    	break;
-        case 6:
-            _cptanimjump ++;
-            setSprite(1071,765,62,115);
-            //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
-		    _clockanim.restart();
-		    cout << _spritePerso.getPosition().y + _spritePerso.getGlobalBounds().height + _vsaut << endl;
-		    cout << _vsaut << endl;
-		    //if(_spritePerso.getPosition().y + _spritePerso.getGlobalBounds().height + _vsaut*5 >= _sol.getPosition().y){
-            //    _cptanimjump ++;
-		    //}
-	    	break;
-        case 7:
-		    _cptanimjump =0;
-		    setSprite(2,433,66,98);
-		    _spritePerso.setPosition(_spritePerso.getPosition().x,_sol.getPosition().y-_spritePerso.getGlobalBounds().height);
-		    _clockanim.restart();
-            _vsaut = -75;
-		    return false;
-	    	break;
-	    }
+        }
+        break;
+    case 7:
+        _cptanimjump =0;
+        setSprite(2,433,66,98);
+        _spritePerso.setPosition(_spritePerso.getPosition().x,_sol.getPosition().y-_spritePerso.getGlobalBounds().height);
+        //_clockanim.restart();
+        _vsaut = -40;
+        return false;
+        break;
     }
     window.draw(_spritePerso);
     return true;

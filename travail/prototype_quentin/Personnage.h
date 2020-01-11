@@ -17,7 +17,7 @@ class Personnage
         int _cptanimprendcoup;
         int _cptanimprendcoupbis;
         int _cptTimePauseAnim;
-        int _vsaut;
+        float _vsaut;
         float _vitesseX;
         bool _ok;
         float _posY;

@@ -104,7 +104,7 @@ void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueu
         }
         else if(Orientation == 1){
             _spritehitspark.setScale(1,1);
-            positionHitboxX = joueur.getHitbox().getPosition().x + 286;
+            positionHitboxX = joueur.getHitbox().getGlobalBounds().left +  joueur.getHitbox().getGlobalBounds().width; //+ 286;
         }
         //cout << positionHitboxX << endl;
         //float positionHitboxX = _joueur2.getHitbox().getPosition().x - _joueur2.getHitbox().getGlobalBounds().width/2;
@@ -122,15 +122,15 @@ void Combat::hitGraphique(sf::RenderWindow& window, bool& hitspark,Joueur& joueu
 
         vector<sf::Vector2f> tabPosition = {sf::Vector2f(positionHitboxX,positionHitboxY),
                                             sf::Vector2f(positionHitboxX,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+10*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+20*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+5*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-10*Orientation,positionHitboxY),
                                             sf::Vector2f(positionHitboxX-40*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-20*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-5*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
                                            };
         sf::Time elapsed = _clock.getElapsedTime();
         int timeanim = elapsed.asMilliseconds();
-        if(timeanim > 30)//30 bonne valeur
+        if(timeanim > 15)//30 bonne valeur
         {
             _cptanim +=1;
             _clock.restart();
