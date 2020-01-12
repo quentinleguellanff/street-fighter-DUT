@@ -45,7 +45,7 @@ protected:
 public:
 	Personnage(){};		//constructeur vide
 	~Personnage(){};
-    void setTout(const Scene&);
+    void setScene(const Scene&);
 	sf::Sprite getSprite();
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
 	sf::Sprite getIcone();
@@ -106,8 +106,7 @@ private:
 
 public:
     Jotaro(){};
-	Jotaro(int);
-    void setTout(const Scene& s);
+	Jotaro(int,Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
@@ -146,8 +145,7 @@ class Dhalsim : public Personnage
 {
 public:
 	Dhalsim(){};
-	Dhalsim(int);
-	void setTout(const Scene&);
+	Dhalsim(int,Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
@@ -182,8 +180,7 @@ class Ryu : public Personnage
 {
 public:
 	Ryu(){};
-	Ryu(int);
-	void setTout(const Scene&);
+	Ryu(int,Scene&);
 
 	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
 	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;

@@ -767,7 +767,7 @@ void MenuBackground::moveLeft(){
     }
 
 }
-void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s, Personnage* p1, Personnage* p2)
+void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s)
 {
     bool go = true;
     while (window.pollEvent(event))
@@ -783,14 +783,14 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
     {
         if(go)
         {
-            valider(window, selecEcran, s, p1, p2);
+            valider(window, selecEcran, s);
             go = false;
         }
     }
 
 }
 
-void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s, Personnage* p1, Personnage* p2)
+void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s)
 {
        if (selection==0)
             s.chargementToit();
@@ -803,9 +803,4 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==4)
             s.chargementBrazil(window);
         selecEcran=2;
-        _p1=p1;
-        _p1->setTout(s);
-        _p2=p2;
-        _p2->setTout(s);
-
 }

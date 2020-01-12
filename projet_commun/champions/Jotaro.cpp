@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Jotaro::Jotaro(int orientation)
+Jotaro::Jotaro(int orientation,Scene& s)
 {
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;_cptSP=0;_cptPrendCoup=0;
     SCALE=3.7;
@@ -29,27 +29,8 @@ Jotaro::Jotaro(int orientation)
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
 
-}
-void Jotaro::setTout(const Scene& s)
-{
-	_scene=s;
+    setScene(s);
 
-
-	if(_orientation==1)
-		_posX=100.f;
-	else
-		_posX=_scene.getRightLimit()-100.f;
-
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	_sprite.setPosition(_posX,_posY);
-	keepInWalls();
-
-
-    if(_orientation==-1)
-    {
-		_hurtbox.setScale(-1,1);
-		_hitbox.setScale(-1,1);
-	}
 }
 
 

@@ -2,8 +2,8 @@
 
 using namespace std;
 
-void Personnage::setTout(const Scene& s){
-    	_scene=s;
+void Personnage::setScene(const Scene& s){
+    _scene=s;
 
 
 	if(_orientation==1)

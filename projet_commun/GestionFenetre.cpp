@@ -107,7 +107,7 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
     menuSel->draw(window);
     window.display();
 
-    if(selecChamp_P1==0)
+    /*if(selecChamp_P1==0)
     {
     	champion_P1=new Jotaro(-1);
     }else if(selecChamp_P1==1)
@@ -133,7 +133,7 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
     {
     	joueur1->setChampion(champion_P1);
     	joueur2->setChampion(champion_P2);
-    }
+    }*/
 
     if(selecEcran==0)
     {
@@ -163,8 +163,40 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
     {
         menuBackground->retourMenu2(selecEcran,event, *menuSel,window);
         menuBackground->bouger(event, window);
-        menuBackground->selectionner(event, window, selecEcran, scene, champion_P1, champion_P2);
+        menuBackground->selectionner(event, window, selecEcran, scene);
     }
+
+    if(selecEcran==2)
+    {
+        if(selecChamp_P1==0)
+        {
+            champion_P1=new Jotaro(-1,scene);
+        }else if(selecChamp_P1==1)
+        {
+            champion_P1=new Dhalsim(-1,scene);
+        }else if(selecChamp_P1==2)
+        {
+            champion_P1=new Ryu(-1,scene);
+        }
+
+        if(selecChamp_P2==0)
+        {
+            champion_P2= new Jotaro(1,scene);
+        }else if(selecChamp_P2==1)
+        {
+            champion_P2=new Dhalsim(1,scene);
+        }else if(selecChamp_P2==2)
+        {
+            champion_P2=new Ryu(1,scene);
+        }
+
+        if(selecChamp_P1!=-1 && selecChamp_P2!=-1)
+        {
+            joueur1->setChampion(champion_P1);
+            joueur2->setChampion(champion_P2);
+        }
+    }
+    
 
     menuBackground->draw(window);
     window.display();

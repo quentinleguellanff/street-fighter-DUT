@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Ryu::Ryu(int orientation)
+Ryu::Ryu(int orientation,Scene& s)
 {
     SCALE=4.2;
 	_orientation=-orientation;
@@ -28,28 +28,8 @@ Ryu::Ryu(int orientation)
     _gardebox.setFillColor(sf::Color(255,255,255,0));
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
-}
-void Ryu::setTout(const Scene& s)
-{
 
-	_scene=s;
-
-	if(_orientation==1)
-		_posX=100.f;
-	else
-		_posX=_scene.getRightLimit()-100.f;
-
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	_sprite.setPosition(_posX,_posY);
-	keepInWalls();
-
-
-
-    if(_orientation==-1)
-    {
-		_hurtbox.setScale(-1,1);
-		_hitbox.setScale(-1,1);
-	}
+    setScene(s);
 }
 
 
