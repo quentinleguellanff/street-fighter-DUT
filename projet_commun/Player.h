@@ -27,14 +27,14 @@ private:
 	std::vector<sf::RectangleShape> _barreEnergie;
 
 	// attributs des joysticks permettant de diriger le champion
-	float joystick0_axisX;	
+	float joystick0_axisX;
 	float joystick0_axisY;
-	float joystick0_axisZ;	
+	float joystick0_axisZ;
 	float joystick0_axisR;
 
 	float joystick1_axisX;
 	float joystick1_axisY;
-	float joystick1_axisZ;	
+	float joystick1_axisZ;
 	float joystick1_axisR;
 
 	int _posHorizontale;	//attribut de position horizontale
@@ -61,7 +61,7 @@ private:
 	std::vector<bool> _tabPeutAction;
 	/* 0-peutPunch / 1-peutPunchSP / 2-peutKick / 3-peutKickSP / 4-peutSp */
 
-	std::vector<sf::Clock> _clockAnim;
+	//std::vector<sf::Clock> _clockAnim;
 	/* 0-clock pour les sprites | 1-clock pour le deplacement */
 
 	sf::Sprite _effet;
@@ -79,11 +79,11 @@ public:
 	sf::Sprite getEffet();
 
 	void recuperationAttaqueLancee();
-	
+
 	void peutAttaquerP1(sf::Event&, sf::RenderWindow&);
 	void recuperationCommandesP1(Player&);	//recuperation des commandes dans le cas du joueur 1
 	void recuperationAttaquesP1();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air
-	
+
 	void peutAttaquerP2(sf::Event&, sf::RenderWindow&);
 	void recuperationCommandesP2(Player&);	//recuperation des commandes dans le cas du joueur 2
 	void recuperationAttaquesP2();	//recuperation d'une demande de coup de point ou pied dans le cas ou le joueur est en l'air

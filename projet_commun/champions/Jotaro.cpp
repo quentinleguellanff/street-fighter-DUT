@@ -54,9 +54,9 @@ void Jotaro::resetTexture()
 	}
 }
 
-bool Jotaro::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
+bool Jotaro::victoire(sf::Music& son)
 {
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
@@ -68,7 +68,7 @@ bool Jotaro::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 	    {
 	    case 0:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(21,6791,82,117);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
@@ -79,32 +79,32 @@ bool Jotaro::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 	    	break;
 	    case 1:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(114,6791,74,117);
 	    	break;
 	    case 2:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(200,6793,63,115);
 	    	break;
 	    case 3:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(276,6793,70,115);
 	    	break;
 	    case 4:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(356,6793,73,115);
 	    	break;
 	    case 5:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(441,6793,67,115);
 	    	break;
 	    case 6:
 		    _cptApparition++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(521,6793,61,116);
 		    break;
 		}
@@ -115,7 +115,7 @@ bool Jotaro::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 
 	if(_cptApparition==7 && timeAnim>4000)
 	{
-		clockAnim[0].restart();
+		_clockAnim.restart();
 		_cptApparition=0;
 		fini=true;
 	}
@@ -124,9 +124,9 @@ bool Jotaro::victoire(std::vector<sf::Clock>& clockAnim,sf::Music& son)
 	return fini;
 }
 
-bool Jotaro::mort(std::vector<sf::Clock>& clockAnim)
+bool Jotaro::mort()
 {
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=100,deplacementX=_scene.getRightLimit()/12;
     bool fini=false;
@@ -138,47 +138,47 @@ bool Jotaro::mort(std::vector<sf::Clock>& clockAnim)
 	    {
 	    case 0:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(617,6355,91,96);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 	    	break;
 	    case 1:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(160,5836,148,80);
 		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 2:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(475,5830,148,68);
 		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 3:
 		    _cptApparition ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1204,6384,124,68);
 		    _posX-=deplacementX*_orientation;
 	    	break;
 	    case 4:
 		    _cptApparition++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1806,6405,137,44);
 	    	break;
 	    case 5:
 		    _cptApparition++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1955,6417,140,35);
 	    	break;
 	    case 6:
 		    _cptApparition++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2106,6424,144,28);
 	    	break;
 	    case 7:
 		    _cptApparition++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2264,6425,143,27);
 	    	break;
 	    }
@@ -190,7 +190,7 @@ bool Jotaro::mort(std::vector<sf::Clock>& clockAnim)
 
 	if(_cptApparition==8 && timeAnim>2000)
 	{
-		clockAnim[0].restart();
+		_clockAnim.restart();
 		_cptApparition=0;
 		fini=true;
 	}
@@ -199,14 +199,14 @@ bool Jotaro::mort(std::vector<sf::Clock>& clockAnim)
 	return fini;
 }
 
-bool Jotaro::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet)
+bool Jotaro::parade(int* degats,sf::Sprite& effet)
 {
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;_cptGarde=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
 	_hurtbox.setSize(sf::Vector2f(0,0));
 
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=120;
 
@@ -220,11 +220,11 @@ bool Jotaro::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& ef
     {
 		if(_cptPrendCoup==1)
 		{
-			clockAnim[0].restart();
+			_clockAnim.restart();
 			_cptPrendCoup++;
     		_posX-=25*SCALE*_orientation;
 		}else{
-			clockAnim[0].restart();
+			_clockAnim.restart();
 			_cptPrendCoup=0;
 			fini=true;
 			*degats=0;
@@ -236,13 +236,13 @@ bool Jotaro::parade(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& ef
     return fini;
 }
 
-bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite& effet,int& energie)
+bool Jotaro::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     _hurtbox.setSize(sf::Vector2f(0,0));
@@ -251,7 +251,7 @@ bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite&
     	switch(_cptPrendCoup)
     	{
     	case 0:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(1168,5354,89,108);
     		_posX-=11*SCALE*_orientation;
@@ -261,25 +261,25 @@ bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite&
     		energie+=5;
     		break;
     	case 1:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(1269,5354,111,108);
     		_posX-=10*SCALE*_orientation;
     		break;
     	case 2:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(1858,5371,123,88);
     		_posY+=20*SCALE;
     		_posX-=10*SCALE*_orientation;
     		break;
     	case 3:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(1391,5354,88,108);
     		break;
     	case 4:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptPrendCoup=0;
     		setSprite(4,6,64,117);
     		fini=true;
@@ -294,7 +294,7 @@ bool Jotaro::prendCoup(std::vector<sf::Clock>& clockAnim,int* degats,sf::Sprite&
 
 
 
-bool Jotaro::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat)
+bool Jotaro::apparition(sf::Sprite& starPlat)
 {
 	if(!_SPChargee)
 	{
@@ -306,7 +306,7 @@ bool Jotaro::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat)
 		ajouterTexture(4170,3724,175,135);ajouterTexture(4354,3724,174,135);ajouterTexture(4536,3724,171,135);ajouterTexture(4714,3724,155,135);
 		_SPChargee=true;
 	}
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=120;
     bool fini =false;
@@ -316,68 +316,68 @@ bool Jotaro::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat)
     	switch(_cptApparition)
     	{
     	case 0:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(18,1403,82,134);
     		_posX-=18*SCALE*_orientation;
     		break;
     	case 1:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(112,1403,87,134);
     		_posX-=2*SCALE*_orientation;
     		break;
     	case 2:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(209,1403,101,134);
     		_posX-=2*SCALE*_orientation;
     		break;
     	case 3:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(318,1403,101,134);
 
     		break;
     	case 4:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(428,1403,157,134);
     		break;
     	case 5:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(597,1403,137,134);
     		_posX+=21*SCALE*_orientation;
     		break;
     	case 6:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(748,1403,132,134);
     		break;
     	case 7:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(892,1403,127,134);
     		break;
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(1030,1403,121,134);
     		break;
     	case 8:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(1168,1403,120,134);
     		_posX+=1*SCALE*_orientation;
     		break;
     	case 9:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(1030,1403,121,134);
     		_posX-=1*SCALE*_orientation;
     		break;
     	case 10:
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptApparition++;
     		setSprite(3050,4837,69,117);
     		_posY+=17*SCALE;
@@ -391,7 +391,7 @@ bool Jotaro::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat)
     }
     else if(_cptApparition>10 && timeAnim>delai/3)
     {
-    	clockAnim[0].restart();
+    	_clockAnim.restart();
     	_cptApparition++;
 		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptApparition-11][0],_tabSP[_cptApparition-11][1],_tabSP[_cptApparition-11][2],_tabSP[_cptApparition-11][3]));
 		if(_cptApparition==34)
@@ -408,9 +408,9 @@ bool Jotaro::apparition(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat)
     return fini;
 }
 
-void Jotaro::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
+void Jotaro::statique(Personnage& champEnnemi)
 {
-    sf::Time elapsed = clockAnim[0].getElapsedTime();
+    sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=120;
 
@@ -420,42 +420,42 @@ void Jotaro::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 	    {
 	    case 0:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(4,6,64,117);
 	    	break;
 	    case 1:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(80,6,64,117);
 	    	break;
 	    case 2:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(155,6,64,117);
 	    	break;
 	    case 3:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(232,6,66,117);
 	    	break;
 	    case 4:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(310,6,69,117);
 	    	break;
 	    case 5:
 		    _cptStatic ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(390,6,67,117);
 	    	break;
 	    case 6:
 		    _cptStatic++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(467,6,64,117);
 		    break;
 	    case 7:
 		    _cptStatic=0;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(541,6,64,117);
 	    	break;
 	    }
@@ -476,15 +476,15 @@ void Jotaro::statique(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 }
 
 
-void Jotaro::garde(std::vector<sf::Clock>& clockAnim)
+void Jotaro::garde()
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     if(timeAnim>delai)
     {
-    	clockAnim[0].restart();
+    	_clockAnim.restart();
     	setSprite(269,4991,108,125);
 
     	if(_gardebox.getSize()==sf::Vector2f(0,0))
@@ -499,10 +499,10 @@ void Jotaro::garde(std::vector<sf::Clock>& clockAnim)
    	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 }
 
-void Jotaro::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
+void Jotaro::avancer(Personnage& champEnnemi)
 {
 	_posY=_scene.getBottom()-_tailleSprite.y;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=60;
     int deplacement=45;
@@ -511,7 +511,7 @@ void Jotaro::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 
 	if(deplacement==0)
     {
-    	statique(clockAnim,champEnnemi);
+    	statique(champEnnemi);
     }else if(timeAnim>delai)
     {
 	    switch (_cptAvancer)
@@ -519,92 +519,92 @@ void Jotaro::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 	    case 0:
 
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(4,858,67,115);
 			_posX+=_orientation*deplacement;
 	    	break;
 	    case 1:
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(92,858,59,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 2:
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(174,858,47,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 3:
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(247,858,48,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 4:
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(316,858,53,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 5:
 		    _cptAvancer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(387,858,70,115);
 		    _posX+=_orientation*deplacement;
 
 	    	break;
 	    case 6:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(473,858,77,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 7:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(564,858,72,115);
 		    _posX+=_orientation*deplacement;
 	    	break;
 	    case 8:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(658,858,69,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 9:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(746,858,62,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 10:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(825,858,47,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 11:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(897,858,52,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 12:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(961,858,58,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 13:
 		    _cptAvancer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1124,858,76,115);
 		    _posX+=_orientation*deplacement;
 			break;
 		case 14:
 		    _cptAvancer=0;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1209,858,72,115);
 		    _posX+=_orientation*deplacement;
 			break;
@@ -619,10 +619,10 @@ void Jotaro::avancer(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
 }
 
 
-void Jotaro::reculer(std::vector<sf::Clock>& clockAnim)
+void Jotaro::reculer()
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=60, deplacement=30;
     if(timeAnim>delai)
@@ -631,97 +631,97 @@ void Jotaro::reculer(std::vector<sf::Clock>& clockAnim)
 		{
 		case 0:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(1413,858,76,115);
 			_posX-=_orientation*deplacement;
 			break;
 		case 1:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1499,858,75,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 2:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1583,858,58,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 3:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(1656,858,52,115);
 			_posX-=_orientation*deplacement;
 			break;
 		case 4:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(1723,858,46,115);
 			_posX-=_orientation*deplacement;
 			break;
 		case 5:
 		    _cptReculer ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1782,858,59,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 6:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(1854,858,59,115);
 			_posX-=_orientation*deplacement;
 			break;
 		case 7:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(1931,858,72,115);
 			_posX-=_orientation*deplacement;
 			break;
 		case 8:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2016,858,77,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 9:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2105,858,70,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 10:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2186,858,53,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 11:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2253,858,48,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 12:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2314,858,47,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 13:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2374,858,56,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 14:
 		    _cptReculer++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2443,858,67,115);
 		    _posX-=_orientation*deplacement;
 			break;
 		case 15:
 		    _cptReculer=0;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2523,858,72,115);
 		    _posX-=_orientation*deplacement;
 			break;
@@ -736,10 +736,10 @@ void Jotaro::reculer(std::vector<sf::Clock>& clockAnim)
 }
 
 
-bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
+bool Jotaro::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=_scene.getBottom()/11;
     bool fini=false;
@@ -749,9 +749,9 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
     	bool enAttaque=false;
 
 		if(lancerAttaque==1)
-			enAttaque=sautPunch(clockAnim,champEnnemi,degats,energie);
+			enAttaque=sautPunch(champEnnemi,degats,energie);
     	else if(lancerAttaque==2)
-    		enAttaque=sautKick(clockAnim,champEnnemi,degats,energie);
+    		enAttaque=sautKick(champEnnemi,degats,energie);
 
     	if(enAttaque)
     	{
@@ -779,7 +779,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 			switch(_cptSauter)
 		    {
 		    case 1:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(109,1137,57,127);
 			    _posX+=25*SCALE*_orientation;
@@ -788,7 +788,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 		    	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 		    	break;
 		    case 2:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(183,1143,90,117);
 			    _posX-=13*SCALE*_orientation;
@@ -797,7 +797,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 			    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 		    	break;
 		    case 3:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(281,1147,88,99);
 			    _posY-=deplacement;
@@ -806,7 +806,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 		    	break;
 		    case 4:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(383,1145,80,83);
 			    _posY-=deplacement;
@@ -815,7 +815,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 		    	break;
 		    case 5:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(480,1142,85,79);
 
@@ -823,7 +823,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.65,_tailleSprite.y*0.5));
 		    	break;
 		    case 6:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(576,1124,99,112);
 			    _posX-=8*SCALE*_orientation;
@@ -833,7 +833,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 		    	break;
 		    case 7:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(682,1114,101,142);
 			    _posY+=deplacement;
@@ -842,7 +842,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 		    	break;
 		    case 8:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    _cptSauter++;
 			    setSprite(682,1114,101,142);
 			    _posY+=deplacement;
@@ -851,7 +851,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 		    	break;
 		    case 9:
-		    	clockAnim[0].restart();
+		    	_clockAnim.restart();
 		    	_cptSauter++;
 		    	setSprite(793,1121,111,138);
 			    _posY+=deplacement;
@@ -860,7 +860,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 		    	break;
 		    case 10:
-		    	clockAnim[0].restart();
+		    	_clockAnim.restart();
 		    	_cptSauter++;
 		    	setSprite(914,1111,125,153);
 			    _posY+=deplacement;
@@ -869,7 +869,7 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 	   			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 				break;
 			case 11:
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 				setSprite(4,6,64,117);
 			    _posX+=23*SCALE*_orientation;
 			    _cptSauter=0;
@@ -887,10 +887,10 @@ bool Jotaro::sauter(std::vector<sf::Clock>& clockAnim,int& lancerAttaque,Personn
 }
 
 
-bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
+bool Jotaro::sauterAvant(Personnage& champEnnemi)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=_scene.getBottom()/9,deplacementX=80*_orientation;
     bool fini=false;
@@ -910,7 +910,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
 	    switch(_cptSauter)
 	    {
 	    case 1:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(109,1111,57,153);
 		    _posY-=deplacementY;
@@ -919,7 +919,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 2:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(183,1111,90,153);
 		    _posY-=deplacementY;
@@ -928,7 +928,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 3:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(281,1111,88,153);
 		    _posY-=deplacementY;
@@ -938,7 +938,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 	    	break;
 	    case 4:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(383,1111,80,153);
 		    _posY-=deplacementY;
@@ -948,7 +948,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 5:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(480,1111,85,153);
 
@@ -956,7 +956,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.65,_tailleSprite.y*0.5));
 	    	break;
 	    case 6:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(576,1111,99,153);
 		    _posY+=deplacementY;
@@ -966,7 +966,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 7:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(682,1111,101,153);
 		    _posY+=deplacementY;
@@ -976,7 +976,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 8:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptSauter++;
 	    	setSprite(793,1111,111,153);
 		    _posY+=deplacementY;
@@ -986,7 +986,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 	    	break;
 	    case 9:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptSauter++;
 	    	setSprite(914,1111,125,153);
 		    _posY+=deplacementY;
@@ -996,7 +996,7 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 			break;
 		case 10:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(4,6,64,117);
 		    _posX+=23*SCALE*_orientation;
 		    _cptSauter=0;
@@ -1012,10 +1012,10 @@ bool Jotaro::sauterAvant(std::vector<sf::Clock>& clockAnim,Personnage& champEnne
     return fini;
 }
 
-bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi)
+bool Jotaro::sauterArriere(Personnage& champEnnemi)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacementY=_scene.getBottom()/9,deplacementX=70*_orientation;
     bool fini=false;
@@ -1035,7 +1035,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
 	    switch(_cptSauter)
 	    {
 	    case 1:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(109,1111,57,153);
 		    _posY-=deplacementY;
@@ -1044,7 +1044,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 2:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(183,1111,90,153);
 		    _posY-=deplacementY;
@@ -1053,7 +1053,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.3);
 	    	break;
 	    case 3:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(281,1111,88,153);
 		    _posY-=deplacementY;
@@ -1063,7 +1063,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 	    	break;
 	    case 4:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(383,1111,80,153);
 		    _posY-=deplacementY;
@@ -1073,7 +1073,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 5:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(480,1111,85,153);
 
@@ -1081,7 +1081,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.65,_tailleSprite.y*0.5));
 	    	break;
 	    case 6:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(576,1111,99,153);
 		    _posY+=deplacementY;
@@ -1091,7 +1091,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 7:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    _cptSauter++;
 		    setSprite(682,1111,101,153);
 		    _posY+=deplacementY;
@@ -1101,7 +1101,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.5));
 	    	break;
 	    case 8:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptSauter++;
 	    	setSprite(793,1111,111,153);
 		    _posY+=deplacementY;
@@ -1111,7 +1111,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 	    	break;
 	    case 9:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptSauter++;
 	    	setSprite(914,1111,125,153);
 		    _posY+=deplacementY;
@@ -1121,7 +1121,7 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
    			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.6));
 			break;
 		case 10:
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			setSprite(4,6,64,117);
 		    _posX+=23*SCALE*_orientation;
 		    _cptSauter=0;
@@ -1137,47 +1137,47 @@ bool Jotaro::sauterArriere(std::vector<sf::Clock>& clockAnim,Personnage& champEn
     return fini;
 }
 
-void Jotaro::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
+void Jotaro::accroupi(bool garde)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     if(timeAnim>delai)
     {
 	    if(_cptAccroupi==0)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(914,743,97,102);
     		_posY=_scene.getBottom()-_tailleSprite.y;
     		_posX-=25*SCALE;
 	    }else if(_cptAccroupi==1)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(1026,743,91,102);
     		_posX+=14*SCALE;
 	    }else if(_cptAccroupi==2)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(1128,743,104,102);
 	    }else if(_cptAccroupi==3)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(1245,743,89,102);
     		_posX+=4*SCALE;
 	    }else if(_cptAccroupi==4)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		_cptAccroupi++;
     		setSprite(1348,743,95,102);
     		_posX-=3*SCALE;
 	    }else if(_cptAccroupi==5)
 	    {
-    		clockAnim[0].restart();
+    		_clockAnim.restart();
     		if(garde==true)
 	    	{
 	    		setSprite(1783,5033,131,83);
@@ -1189,7 +1189,7 @@ void Jotaro::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
     		}
 	    }else
 	    {
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
     		if(garde==true)
 	    	{
 	    		setSprite(1922,5033,112,83);
@@ -1202,11 +1202,11 @@ void Jotaro::accroupi(std::vector<sf::Clock>& clockAnim,bool garde)
     _sprite.setPosition(_posX,_posY);
 }
 
-bool Jotaro::seLever(std::vector<sf::Clock>& clockAnim)
+bool Jotaro::seLever()
 {
 	_cptAccroupi=0;
 	bool fini=false;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     if(timeAnim>delai)
@@ -1214,31 +1214,31 @@ bool Jotaro::seLever(std::vector<sf::Clock>& clockAnim)
 	    switch(_cptAction)
 	    {
 	    case 0:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptAction++;
 	    	setSprite(2186,725,90,118);
 	    	_posX+=1*SCALE*_orientation;
 	    	break;
 	    case 1:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptAction++;
 	    	setSprite(2290,725,90,118);
 	    	_posX-=1*SCALE*_orientation;
 	    	break;
 	    case 2:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptAction++;
 	    	setSprite(2392,725,71,118);
 	    	_posX+=12*SCALE*_orientation;
 	    	break;
 	    case 3:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptAction++;
 	    	setSprite(2471,725,76,118);
 	    	_posX-=6*SCALE*_orientation;
 	    	break;
 	    case 4:
-	    	clockAnim[0].restart();
+	    	_clockAnim.restart();
 	    	_cptAction=0;
 	    	setSprite(4,6,64,117);
 	    	_posX+=6*SCALE*_orientation;
@@ -1253,10 +1253,10 @@ bool Jotaro::seLever(std::vector<sf::Clock>& clockAnim)
    	return fini;
 }
 
-bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
+bool Jotaro::punch(Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
@@ -1266,7 +1266,7 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 		{
 		case 0:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(6,2106,88,115);
 
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -1274,51 +1274,51 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 			break;
 		case 1:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(102,2106,117,115);
 			break;
 		case 2:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(227,2106,119,115);
 			break;
 		case 3:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(359,2106,152,115);
 		    _hitbox.setSize(sf::Vector2f(49*SCALE,23*SCALE));
 		    _hitbox.setPosition(_posX+_tailleSprite.x*0.66*_orientation,_posY+18*SCALE);
 			break;
 		case 4:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(519,2106,110,114);
 		    _posY+=2*SCALE*_orientation;
 		    _hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		case 5:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(637,2106,134,114);
 			break;
 		case 6:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(776,2106,132,114);
 			break;
 		case 7:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(915,2106,107,114);
 			break;
 		case 8:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1031,2106,71,115);
 			break;
 		case 9:
 		    _cptAction =0;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(4,6,64,117);
 		    fini=true;
 			break;
@@ -1339,12 +1339,12 @@ bool Jotaro::punch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, in
 	return fini;
 }
 
-bool Jotaro::sautPunch(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,int* degats,int& energie)
+bool Jotaro::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 {
-	return sautKick(clockAnim,champEnnemi,degats,energie);
+	return sautKick(champEnnemi,degats,energie);
 }
 
-bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Jotaro::punchSP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<25)
 		return true;
@@ -1356,7 +1356,7 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 		_SPChargee=true;
 	}
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
@@ -1366,7 +1366,7 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 		{
 		case 0:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(13,4649,76,117);
 
 			    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -1378,42 +1378,42 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 			break;
 		case 1:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(101,4649,122,117);
 			break;
 		case 2:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(228,4649,118,117);
 			break;
 		case 3:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(357,4649,113,117);
 			break;
 		case 4:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(477,4649,113,117);
 			break;
 		case 5:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(598,4649,106,117);
 			break;
 		case 13:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(1064,4649,75,117);
 			break;
 		case 14:
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(1145,4649,74,117);
 			break;
 		case 15:
 			    _cptAction =0;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    fini=true;
 			    _SPChargee=false;
 
@@ -1424,7 +1424,7 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 
 		if(_cptAction>5 && _cptAction<13)
 		{
-			clockAnim[0].restart();
+			_clockAnim.restart();
 			_cptAction++;
 			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-6][0],_tabSP[_cptAction-6][1],_tabSP[_cptAction-6][2],_tabSP[_cptAction-6][3]));
 			if(_cptAction==10)
@@ -1451,10 +1451,10 @@ bool Jotaro::punchSP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Pers
 }
 
 
-bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
+bool Jotaro::kick(Personnage& champEnnemi, int* degats,int& energie)
 {
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=50;
     bool fini=false;
@@ -1465,7 +1465,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 		{
 		case 0:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1322,2103,74,118);
 
 		    _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -1474,7 +1474,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 		case 1:
 			if(timeAnim > delai*1.5){
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(1414,2103,76,118);
 			    _posX-=9*SCALE*_orientation;
 
@@ -1483,7 +1483,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 		case 2:
 			if(timeAnim > delai*1.5){
 			    _cptAction ++;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(1507,2103,89,118);
 			    _posX-=5*SCALE*_orientation;
 
@@ -1491,7 +1491,7 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 			break;
 		case 3:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1612,2103,130,118);
 		    _posX-=8*SCALE*_orientation;
 
@@ -1500,38 +1500,38 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 			break;
 		case 4:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1758,2103,124,118);
 		    _posX-=2*SCALE*_orientation;
 			break;
 		case 5:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(1893,2103,112,118);
 		    _posX+=1*SCALE*_orientation;
 		    _hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		case 6:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2018,2103,104,118);
 		    _posX+=1*SCALE*_orientation;
 			break;
 		case 7:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2131,2103,71,118);
 		    _posX+=17*SCALE*_orientation;
 			break;
 		case 8:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(2215,2103,76,118);
 		    _posX-=6*SCALE*_orientation;
 			break;
 		case 9:
 		    _cptAction =0;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(4,6,64,117);
 		    _posX+=11*SCALE*_orientation;
 		    fini=true;
@@ -1553,9 +1553,9 @@ bool Jotaro::kick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int
 	return fini;
 }
 
-bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
+bool Jotaro::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 {
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70,deplacement=_scene.getBottom()/6;
     bool fini=false;
@@ -1566,7 +1566,7 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
 	    {
 	    case 0:
 	    	_cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(3123,2127,77,95);
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
@@ -1574,12 +1574,12 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
 			break;
 	    case 1:
 	    	_cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(3208,2127,89,93);
 			break;
 		case 2:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(3304,2116,130,95);
 
 		    _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
@@ -1587,7 +1587,7 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
 			break;
 		case 3:
 			_cptAction =0;
-			clockAnim[0].restart();
+			_clockAnim.restart();
 			setSprite(3695,2134,105,83);
 			fini=true;
 
@@ -1609,13 +1609,13 @@ bool Jotaro::sautKick(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi,
     return fini;
 }
 
-bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, int* degats,int& energie)
+bool Jotaro::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
 		return true;
 
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=40;
     bool fini=false;
@@ -1625,29 +1625,29 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 		{
 		case 0:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(13,2465,89,118);
 
 		    _posX-=6*SCALE*_orientation;
 			break;
 		case 1:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(110,2468,101,115);
 			break;
 		case 2:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(217,2467,138,116);
 			break;
 		case 3:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(361,2467,151,116);
 		    break;
 		case 4:
 		    _cptAction++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(521,2474,176,109);
 
 		    _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.3));
@@ -1655,19 +1655,19 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 			break;
 		case 5:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(705,2476,176,107);
 			break;
 		case 6:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(889,2476,157,107);
 			break;
 		case 7:
 			if(timeAnim>delai*3)
 			{
 			    _cptAction=0;
-			    clockAnim[0].restart();
+			    _clockAnim.restart();
 			    setSprite(1553,2476,154,107);
 			    fini=true;
 
@@ -1697,7 +1697,7 @@ bool Jotaro::kickSP(std::vector<sf::Clock>& clockAnim,Personnage& champEnnemi, i
 }
 
 
-bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Jotaro::SP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<50)
 		return true;
@@ -1716,7 +1716,7 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 		son.play();
 	}
 	_cptStatic=0;
-	sf::Time elapsed = clockAnim[0].getElapsedTime();
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delai=70;
     bool fini=false;
@@ -1727,28 +1727,28 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 		{
 		case 0:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(21,3742,75,116);
 		    starPlat.setTexture(_texture);
 			break;
 		case 1:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(106,3742,100,116);
 			break;
 		case 2:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(216,3742,113,116);
 			break;
 		case 3:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(338,3742,113,116);
 			break;
 		case 4:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 		    setSprite(459,3742,108,116);
 
 			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
@@ -1757,7 +1757,7 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 			break;
 		case 5:
 		    _cptAction ++;
-		    clockAnim[0].restart();
+		    _clockAnim.restart();
 			starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 			_hitbox.setSize(sf::Vector2f(110*SCALE,77*SCALE));
 			_hitbox.setPosition(starPlat.getPosition().x+65*SCALE*_orientation,starPlat.getPosition().y+18*SCALE);
@@ -1771,7 +1771,7 @@ bool Jotaro::SP(std::vector<sf::Clock>& clockAnim,sf::Sprite& starPlat,Personnag
 		{
 			_cptSP++;
 		}
-		clockAnim[0].restart();
+		_clockAnim.restart();
 		_cptAction++;
 		starPlat.setTextureRect(sf::IntRect(_tabSP[_cptAction-4][0],_tabSP[_cptAction-4][1],_tabSP[_cptAction-4][2],_tabSP[_cptAction-4][3]));
 		if(_cptAction==27)

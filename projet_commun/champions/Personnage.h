@@ -20,6 +20,9 @@ protected:
 	sf::Sprite _sprite;
 	sf::Sprite _icone;
 
+	sf::Clock _clockAnim;
+	sf::Clock _clockMove;
+
 	sf::Vector2f _tailleSprite;		//taille du personnage sous la forme d'un vector de float à 2 dimensions
 	Scene _scene;					//la scene sur laquelle se passe le combat
 
@@ -69,33 +72,33 @@ public:
 	void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
 	bool auSol();
 
-	virtual bool victoire(std::vector<sf::Clock>&,sf::Music&){return true;};
-	virtual bool mort(std::vector<sf::Clock>& clockAnim){return true;};
+	virtual bool victoire(sf::Music&){return true;};
+	virtual bool mort(){return true;};
 
-	virtual bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&){return true;};	//animation de prise de coup
-	virtual bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&){return true;};
+	virtual bool prendCoup(int*,sf::Sprite&,int&){return true;};	//animation de prise de coup
+	virtual bool parade(int*,sf::Sprite&){return true;};
 
 
-	virtual void statique(std::vector<sf::Clock>&,Personnage&){};	//animation au repos
-	virtual void garde(std::vector<sf::Clock>&){};			//animation de garde debout				--> gestion de la garde à faire
-	virtual void avancer(std::vector<sf::Clock>&,Personnage&){};		//animation de marche vers l'avant
-	virtual void reculer(std::vector<sf::Clock>&){};		//animation de marche vers l'arrière
+	virtual void statique(Personnage&){};	//animation au repos
+	virtual void garde(){};			//animation de garde debout				--> gestion de la garde à faire
+	virtual void avancer(Personnage&){};		//animation de marche vers l'avant
+	virtual void reculer(){};		//animation de marche vers l'arrière
 
 	void collisionsaut(Personnage&,int&);
-	virtual bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&){return true;};		//animation de saut
-	virtual bool sauterAvant(std::vector<sf::Clock>&,Personnage&){return true;};		//animation de saut vers l'arrière
-	virtual bool sauterArriere(std::vector<sf::Clock>&,Personnage&){return true;};		//animation de saut vers l'arrière
-	virtual void accroupi(std::vector<sf::Clock>&,bool){};		//animation accroupi
-	virtual bool seLever(std::vector<sf::Clock>& clockAnim){return true;};		//animation de fin d'accroupissement
+	virtual bool sauter(int&,Personnage&,int*,int&){return true;};		//animation de saut
+	virtual bool sauterAvant(Personnage&){return true;};		//animation de saut vers l'arrière
+	virtual bool sauterArriere(Personnage&){return true;};		//animation de saut vers l'arrière
+	virtual void accroupi(bool){};		//animation accroupi
+	virtual bool seLever( ){return true;};		//animation de fin d'accroupissement
 
-	virtual bool apparition(std::vector<sf::Clock>&,sf::Sprite&){return true;};	//animation de début de combat
-	virtual bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&){return true;};				//animation de coup de poing
-	virtual bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};	//animation de coup de poing spécial
-	virtual bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&){return true;};			//animation de coup de poing en saut
-	virtual bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&){return true;};					//animation de coup de pied
-	virtual bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&){return true;};				//animation de coup de pied en saut
-	virtual bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&){return true;};
-	virtual bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};		//animation de coup spécial
+	virtual bool apparition(sf::Sprite&){return true;};	//animation de début de combat
+	virtual bool punch(Personnage&,int*,int&){return true;};				//animation de coup de poing
+	virtual bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};	//animation de coup de poing spécial
+	virtual bool sautPunch(Personnage&,int*,int&){return true;};			//animation de coup de poing en saut
+	virtual bool kick(Personnage&,int*,int&){return true;};					//animation de coup de pied
+	virtual bool sautKick(Personnage&,int*,int&){return true;};				//animation de coup de pied en saut
+	virtual bool kickSP(Personnage&,int*,int&){return true;};
+	virtual bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};		//animation de coup spécial
 };
 
 class Jotaro : public Personnage
@@ -108,37 +111,37 @@ public:
     Jotaro(){};
 	Jotaro(int,Scene&);
 
-	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
+	bool apparition(sf::Sprite&) override;
 	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
 	void resetTexture();	//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
 
-	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
-	bool mort(std::vector<sf::Clock>& clockAnim) override;
+	bool victoire(sf::Music&) override;
+	bool mort( ) override;
 
-	bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&) override;
-	bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&) override;
+	bool prendCoup(int*,sf::Sprite&,int&) override;
+	bool parade(int*,sf::Sprite&) override;
 
-	void statique(std::vector<sf::Clock>&,Personnage&) override;
-	void garde(std::vector<sf::Clock>&) override;
-	void avancer(std::vector<sf::Clock>&,Personnage&) override;
-	void reculer(std::vector<sf::Clock>&) override;
+	void statique(Personnage&) override;
+	void garde() override;
+	void avancer(Personnage&) override;
+	void reculer() override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
-	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
-	void accroupi(std::vector<sf::Clock>&,bool) override;
-	bool seLever(std::vector<sf::Clock>& clockAnim) override;
+	bool sauter(int&,Personnage&,int*,int&) override;
+	bool sauterAvant(Personnage&) override;
+	bool sauterArriere(Personnage&) override;
+	void accroupi(bool) override;
+	bool seLever( ) override;
 
 
-	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punch(Personnage&,int*,int&) override;
+	bool sautPunch(Personnage&,int*,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
-	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
+	bool kick(Personnage&,int*,int&) override;
+	bool sautKick(Personnage&,int*,int&) override;
+	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 };
 
 class Dhalsim : public Personnage
@@ -147,33 +150,33 @@ public:
 	Dhalsim(){};
 	Dhalsim(int,Scene&);
 
-	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
-	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
-	bool mort(std::vector<sf::Clock>& clockAnim) override;
+	bool apparition(sf::Sprite&) override;
+	bool victoire(sf::Music&) override;
+	bool mort( ) override;
 
-	bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&) override;
-	bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&) override;
+	bool prendCoup(int*,sf::Sprite&,int&) override;
+	bool parade(int*,sf::Sprite&) override;
 
-	void statique(std::vector<sf::Clock>&,Personnage&) override;
-	void garde(std::vector<sf::Clock>&) override;
-	void avancer(std::vector<sf::Clock>&,Personnage&) override;
-	void reculer(std::vector<sf::Clock>&) override;
+	void statique(Personnage&) override;
+	void garde() override;
+	void avancer(Personnage&) override;
+	void reculer() override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
-	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
-	void accroupi(std::vector<sf::Clock>&,bool) override;
+	bool sauter(int&,Personnage&,int*,int&) override;
+	bool sauterAvant(Personnage&) override;
+	bool sauterArriere(Personnage&) override;
+	void accroupi(bool) override;
 
 
-	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punch(Personnage&,int*,int&) override;
+	bool sautPunch(Personnage&,int*,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
-	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
+	bool kick(Personnage&,int*,int&) override;
+	bool sautKick(Personnage&,int*,int&) override;
+	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 };
 
 class Ryu : public Personnage
@@ -182,32 +185,32 @@ public:
 	Ryu(){};
 	Ryu(int,Scene&);
 
-	bool apparition(std::vector<sf::Clock>&,sf::Sprite&) override;
-	bool victoire(std::vector<sf::Clock>&,sf::Music&) override;
-	bool mort(std::vector<sf::Clock>& clockAnim) override;
+	bool apparition(sf::Sprite&) override;
+	bool victoire(sf::Music&) override;
+	bool mort( ) override;
 
-	bool prendCoup(std::vector<sf::Clock>&,int*,sf::Sprite&,int&) override;
-	bool parade(std::vector<sf::Clock>&,int*,sf::Sprite&) override;
+	bool prendCoup(int*,sf::Sprite&,int&) override;
+	bool parade(int*,sf::Sprite&) override;
 
-	void statique(std::vector<sf::Clock>&,Personnage&) override;
-	void garde(std::vector<sf::Clock>&) override;
-	void avancer(std::vector<sf::Clock>&,Personnage&) override;
-	void reculer(std::vector<sf::Clock>&) override;
+	void statique(Personnage&) override;
+	void garde() override;
+	void avancer(Personnage&) override;
+	void reculer() override;
 
-	bool sauter(std::vector<sf::Clock>&,int&,Personnage&,int*,int&) override;
-	bool sauterAvant(std::vector<sf::Clock>&,Personnage&) override;
-	bool sauterArriere(std::vector<sf::Clock>&,Personnage&) override;
-	void accroupi(std::vector<sf::Clock>&,bool) override;
+	bool sauter(int&,Personnage&,int*,int&) override;
+	bool sauterAvant(Personnage&) override;
+	bool sauterArriere(Personnage&) override;
+	void accroupi(bool) override;
 
-	bool punch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautPunch(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool punchSP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punch(Personnage&,int*,int&) override;
+	bool sautPunch(Personnage&,int*,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 
-	bool kick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool sautKick(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
-	bool kickSP(std::vector<sf::Clock>&,Personnage&,int*,int&) override;
+	bool kick(Personnage&,int*,int&) override;
+	bool sautKick(Personnage&,int*,int&) override;
+	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(std::vector<sf::Clock>&,sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
 };
 
 #endif

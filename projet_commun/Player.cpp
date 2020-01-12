@@ -10,12 +10,6 @@ Player::Player(int n,sf::RenderWindow& window)
 	_PV=100;
 	_energie=0;
 
-	for(int i=0;i<2;i++)
-	{
-		sf::Clock temp;
-		_clockAnim.push_back(temp);
-	}
-
 	_posHorizontale=0;
 	_posVerticale=0;
 	_action=-1;
@@ -68,7 +62,7 @@ Player::Player(int n,sf::RenderWindow& window)
 			_barreEnergie[i].scale(-1,1);
 			_barreEnergie[i].setPosition(sf::Vector2f(window.getSize().x-177,63));
 		}
-	
+
 	}
 }
 
@@ -103,7 +97,7 @@ void Player::setChampion(Personnage* perso)
 		_portrait.setPosition(0,10);
 	}else
 	{
-		
+
 		_portrait=_champion->getIcone();
 		_portrait.setPosition(_barreInfos.getPosition().x,10);
 		_portrait.scale(-1,1);
@@ -156,7 +150,7 @@ void Player::peutAttaquerP1(sf::Event& event, sf::RenderWindow& window)
             	break;
             case 5:
             	_tabPeutAction[1] = true;
-            	break; 
+            	break;
             }
 
             if(event.joystickMove.axis==sf::Joystick::Z || event.joystickMove.axis==sf::Joystick::R)
@@ -195,7 +189,7 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 		/* gestion des attaques */
 		_tabActions[9] =( (sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(0, 1) ) && _tabPeutAction[2]);
 		_tabActions[7] =( (sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3) ) && _tabPeutAction[0]);   // touche pour mettre un coup de poing
-		
+
 		joystick0_axisZ =sf::Joystick::getAxisPosition(0, sf::Joystick::Z);   // touche pour super kick
 		joystick0_axisR =sf::Joystick::getAxisPosition(0, sf::Joystick::R);	 // touche pour super kick
 		_tabActions[10] =( (joystick0_axisZ > 40 || joystick0_axisR>40)  && _tabPeutAction[3]);
@@ -219,7 +213,7 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 		{
 			_tabActions[0] =true;
 			_tabActions[3] =true;
-		}	
+		}
 		else if( (joystick0_axisX>=-100 && joystick0_axisX<=-80) && (joystick0_axisY<-40) )
 		{
 			_tabActions[1] =true;
@@ -252,14 +246,14 @@ void Player::recuperationAttaquesP1()
 			_tabActions[9]=(sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(0, 1));
 		}else
 		{
-			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::A);	  	
+			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::A);
 			_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::E);
 		}
 		if(_tabActions[7])
 			_action=1;
 		else if(_tabActions[9])
 			_action=2;
-	}	
+	}
 }
 
 
@@ -290,7 +284,7 @@ void Player::peutAttaquerP2(sf::Event& event, sf::RenderWindow& window)
             	break;
             case 5:
             	_tabPeutAction[1] = true;
-            	break; 
+            	break;
             }
 
             if(event.joystickMove.axis==sf::Joystick::Z || event.joystickMove.axis==sf::Joystick::R)
@@ -329,7 +323,7 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 		/* gestion des attaques */
 		_tabActions[9] =(sf::Joystick::isButtonPressed(1, 0) || sf::Joystick::isButtonPressed(1, 1));
 		_tabActions[7] =(sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3));   // touche pour mettre un coup de poing
-		
+
 		joystick1_axisZ =sf::Joystick::getAxisPosition(1, sf::Joystick::Z);   // touche pour super punch
 		joystick1_axisR =sf::Joystick::getAxisPosition(1, sf::Joystick::R);	 // touche pour super kick
 		_tabActions[10] =joystick1_axisZ > 40 || joystick1_axisR>40;
@@ -353,7 +347,7 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 		{
 			_tabActions[0] =true;
 			_tabActions[3] =true;
-		}	
+		}
 		else if( (joystick1_axisX>=-100 && joystick1_axisX<=-80) && (joystick1_axisY<-40) )
 		{
 			_tabActions[1] =true;
@@ -373,7 +367,7 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 		_tabActions[11]=sf::Keyboard::isKeyPressed(sf::Keyboard::L);			// touche pour spécial 1:  L
 
 	}
-	
+
 	gestionDesCommandes(ennemi);
 }
 
@@ -387,14 +381,14 @@ void Player::recuperationAttaquesP2()
 			_tabActions[9]=(sf::Joystick::isButtonPressed(1, 0) || sf::Joystick::isButtonPressed(1, 1));
 		}else
 		{
-			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  	
+			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::P);
 			_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::M);
 		}
 		if(_tabActions[7])
 			_action=1;
 		else if(_tabActions[9])
 			_action=2;
-	}	
+	}
 }
 
 void Player::gestionDesCommandes(Player& ennemi)
@@ -435,7 +429,7 @@ void Player::gestionDesCommandes(Player& ennemi)
 	}else if (_tabActions[1] && _tabActions[3])
 	{
 		_posHorizontale=-1;
-		_posVerticale=1;	
+		_posVerticale=1;
 	}
 
 
@@ -454,7 +448,7 @@ void Player::gestionDesCommandes(Player& ennemi)
 		_posVerticale=1;
 	else if(_tabActions[2])
 		_posVerticale=-1;
-	else 
+	else
 		_posVerticale=0;
 
 	if(ennemi.getAction()>0 && _champion->getOrientation()==_posHorizontale)
@@ -475,7 +469,7 @@ void Player::gestionDesCommandes(Player& ennemi)
 
 bool Player::lancerApparition()
 {
-	return _champion->apparition(_clockAnim,_effet);
+	return _champion->apparition(_effet);
 }
 
 bool Player::lancerActions(Player& jEnnemi)
@@ -484,77 +478,77 @@ bool Player::lancerActions(Player& jEnnemi)
 	{
 		if(_action==0)
 		{
-			_actionFini=_champion->parade(_clockAnim,&_prendCoup,_effet);
+			_actionFini=_champion->parade(&_prendCoup,_effet);
 		}else
 		{
 			if(_prendCoup>0)
 				setDegats(_prendCoup);
 			_posHorizontale==0;_posVerticale==0;_action=-1;
-			_actionFini=_champion->prendCoup(_clockAnim,&_prendCoup,_effet,_energie);
+			_actionFini=_champion->prendCoup(&_prendCoup,_effet,_energie);
 		}
 	}
 
 	else if(_etaitAccroupi && _posVerticale!=-1)
-		_actionFini=_champion->seLever(_clockAnim);
+		_actionFini=_champion->seLever();
 
 	else if(_action==0)
-		_champion->garde(_clockAnim);
+		_champion->garde();
 
 	else if(_posHorizontale==1 && _posVerticale==1)
 	{
 		if(_champion->getOrientation()==-1)
-			_actionFini=_champion->sauterAvant(_clockAnim,*jEnnemi.getChampion());
+			_actionFini=_champion->sauterAvant(*jEnnemi.getChampion());
 		else
-			_actionFini=_champion->sauterArriere(_clockAnim,*jEnnemi.getChampion());
+			_actionFini=_champion->sauterArriere(*jEnnemi.getChampion());
 	}
 
 	else if(_posHorizontale==-1 && _posVerticale==1)
 	{
 		if(_champion->getOrientation()==-1)
-			_actionFini=_champion->sauterArriere(_clockAnim,*jEnnemi.getChampion());
+			_actionFini=_champion->sauterArriere(*jEnnemi.getChampion());
 		else
-			_actionFini=_champion->sauterAvant(_clockAnim,*jEnnemi.getChampion());
+			_actionFini=_champion->sauterAvant(*jEnnemi.getChampion());
 	}
-	
+
 	else if(_posHorizontale==1)
 	{
 		if(_champion->getOrientation()==-1)
-			_champion->avancer(_clockAnim,*jEnnemi.getChampion());
+			_champion->avancer(*jEnnemi.getChampion());
 		else
-			_champion->reculer(_clockAnim);
+			_champion->reculer();
 	}
 
 	else if(_posHorizontale==-1)
 	{
 		if(_champion->getOrientation()==-1)
-			_champion->reculer(_clockAnim);
+			_champion->reculer();
 		else
-			_champion->avancer(_clockAnim,*jEnnemi.getChampion());
+			_champion->avancer(*jEnnemi.getChampion());
 	}
 
 	else if(_posVerticale==1)
-		_actionFini=_champion->sauter(_clockAnim,_action,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
+		_actionFini=_champion->sauter(_action,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_posVerticale==-1)
-		_champion->accroupi(_clockAnim,_action==0);
+		_champion->accroupi(_action==0);
 
 	else if(_action==1)
-		_actionFini=_champion->punch(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
+		_actionFini=_champion->punch(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==2)
-		_actionFini=_champion->punchSP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
+		_actionFini=_champion->punchSP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
 
 	else if(_action==3)
-		_actionFini=_champion->kick(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
+		_actionFini=_champion->kick(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==4)
-		_actionFini=_champion->kickSP(_clockAnim,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
+		_actionFini=_champion->kickSP(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==5)
-		_actionFini=_champion->SP(_clockAnim,_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
+		_actionFini=_champion->SP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
 
 	else
-		_champion->statique(_clockAnim,*jEnnemi.getChampion());
+		_champion->statique(*jEnnemi.getChampion());
 
 	if(_posVerticale!=-1)
 		_champion->resetCptAccroupi();
@@ -573,9 +567,9 @@ bool Player::finPartie()
 	_posVerticale=0;_posHorizontale=0;_action=-1;
 	_effet.setTextureRect(sf::IntRect(0,0,0,0));
 	if(_PV>0)
-		return _champion->victoire(_clockAnim,son);
+		return _champion->victoire(son);
 	else
-		return _champion->mort(_clockAnim);
+		return _champion->mort();
 }
 
 int Player::getAction()
@@ -606,13 +600,13 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		_barrePV[1].setFillColor(sf::Color(0,250,0));
 	else if(_PV>33)
 		_barrePV[1].setFillColor(sf::Color(255,165,0));
-	else 
+	else
 		_barrePV[1].setFillColor(sf::Color(255,0,0));
 
 	if(_PV<0)
 		_PV=0;
 	_barrePV[1].setSize(sf::Vector2f(_PV*7.15,38));
-		
+
 	/* gestion de la barre d'energie */
 
 	sf::Time elapsed = _clockPasAssez.getElapsedTime();
@@ -644,7 +638,7 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		window.draw(_barrePV[i]);
 		window.draw(_barreEnergie[i]);
 	}
-	
+
 	window.draw(_barreInfos);
 	window.draw(_portrait);
 }
