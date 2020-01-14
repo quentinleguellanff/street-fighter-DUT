@@ -251,10 +251,11 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         //texte : sélection des personnages
         titre.setFont(fontMenu);
         titre.setString("Selection des personnages");
-        titre.setCharacterSize(50);
-        titre.setFillColor(sf::Color::White);
+        titre.setCharacterSize(90);
+        titre.setFillColor(sf::Color::Red);
         titre.setStyle(sf::Text::Bold);
-        titre.setPosition(sf::Vector2f(720,50));
+        titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
+        titre.setScale(window.getSize().x/1920,window.getSize().x/1080);
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
