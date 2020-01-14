@@ -5,28 +5,27 @@ using namespace std;
 
 MenuPrincipal::MenuPrincipal(float width,float height){
 
-    if(!font.loadFromFile("OCRAEXT.ttf")) {
-        std::cout<<"erreur police";
-    }
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
     spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(width/1920.f,height/1080.f));
 
 // Titre du jeu
 
-    if (!font.loadFromFile("OCRAEXT.TTF")){
+    if (!font.loadFromFile("BebasNeue-Regular.ttf")){
         std::cout<<"erreur texte";
     }
     titre.setFont(font);
 
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color::White);
+    titre.setFillColor(sf::Color(80,80,80));
     titre.setStyle(sf::Text::Bold);
-    titre.setCharacterSize(120);
-    titre.setPosition(sf::Vector2f(width/3.2,height/21.6));
+    titre.setCharacterSize(170);
+    titre.setScale((width/1920)*1.8f,(height/1080)*1.f);
+    titre.setPosition(sf::Vector2f(width/4.3,height/21.6));
 
 
 
@@ -40,32 +39,32 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     spriteMenu[0].setPosition(sf::Vector2f(width/2.74,height/3.08));
     spriteMenu[0].setTexture(textureCase);
     spriteMenu[0].setTextureRect(sf::IntRect(13, 12, 779, 180));
-    spriteMenu[0].setScale(0.7f, 0.7f);
+    spriteMenu[0].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[1].setPosition(sf::Vector2f(width/2.74,height/1.86));
     spriteMenu[1].setTexture(textureCase);
     spriteMenu[1].setTextureRect(sf::IntRect(10, 337, 779, 180));
-    spriteMenu[1].setScale(0.7f, 0.7f);
+    spriteMenu[1].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[2].setPosition(sf::Vector2f(width/2.74,height/1.33));
     spriteMenu[2].setTexture(textureCase);
     spriteMenu[2].setTextureRect(sf::IntRect(10,656, 779, 180));
-    spriteMenu[2].setScale(0.7f, 0.7f);
+    spriteMenu[2].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[3].setPosition(sf::Vector2f(width/2.9,height/3.10));
     spriteMenu[3].setTexture(textureCase);
     spriteMenu[3].setTextureRect(sf::IntRect(816, 12, 779, 180));
-    spriteMenu[3].setScale(0.8f, 0.8f);
+    spriteMenu[3].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
     spriteMenu[4].setPosition(sf::Vector2f(width/2.9,height/1.88));
     spriteMenu[4].setTexture(textureCase);
     spriteMenu[4].setTextureRect(sf::IntRect(816, 337, 779, 180));
-    spriteMenu[4].setScale(0.8f, 0.8f);
+    spriteMenu[4].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
     spriteMenu[5].setPosition(sf::Vector2f(width/2.9,height/1.35));
     spriteMenu[5].setTexture(textureCase);
     spriteMenu[5].setTextureRect(sf::IntRect(816,656, 779, 180));
-    spriteMenu[5].setScale(0.8f, 0.8f);
+    spriteMenu[5].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
 // Les sprites des cases utilisées à l'ouverture du menu
 
