@@ -33,6 +33,8 @@ GestionFenetre::GestionFenetre()
     	_tabActionCombat.push_back(false);
     }
 
+    readyFight.scale(2,2);
+
     if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
@@ -219,8 +221,8 @@ void GestionFenetre::combat(sf::Event& event)
 	{
 		///
 		readyFight.setTexture(readyF);
-        readyFight.setPosition(sf::Vector2f(window.getSize().x*0.45,100));
         readyFight.setTextureRect(sf::IntRect(666,435,300,74));
+        readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,scene.getBottom()*0.5));
 
 		if(!_tabActionCombat[0])
 			_tabActionCombat[0]=joueur1->lancerApparition();
@@ -243,6 +245,7 @@ void GestionFenetre::combat(sf::Event& event)
     }else
 	{
         readyFight.setTextureRect(sf::IntRect(0,401,373,107));
+        readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,window.getSize().y*0.4));
         if(clockReadyFight.getElapsedTime().asSeconds() > 1) {
             readyFight.setTextureRect(sf::IntRect(0,2,0,0));
 

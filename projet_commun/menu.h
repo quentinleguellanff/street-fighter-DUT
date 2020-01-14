@@ -89,6 +89,10 @@ private:
     int choixJ1 = -1;
     int choixJ2 = -1;
 
+    float joystick0_axisX;
+    float joystick0_axisY;
+    sf::Clock clockAttente;
+
     sf::Music _effetSon;
 
 public :

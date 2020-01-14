@@ -404,11 +404,30 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     //Selection j1
     if(choixJ1 == -1)
     {
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
-            persoSuivant_P1(etatPersoJ1,window);
+        if (sf::Joystick::isConnected(0))
+        {
+            sf::Time elapsed = clockAttente.getElapsedTime();
+            int timeAttente = elapsed.asMilliseconds();
+            if(timeAttente>150)
+            {
+                joystick0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+                joystick0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
-            persoPrecedent_P1(etatPersoJ1,window);
+                if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                    persoSuivant_P1(etatPersoJ1,window);
+                else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                    persoPrecedent_P1(etatPersoJ1,window);
+
+                clockAttente.restart();
+            }
+        }else
+        {
+            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+                persoSuivant_P1(etatPersoJ1,window);
+
+            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
+                persoPrecedent_P1(etatPersoJ1,window);
+        }
 
         switch(etatPersoJ1)
         {
@@ -418,17 +437,36 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     break;
             case 2: nomPersoJ1.setString("Ryu");
                     break;
-        }
+        }      
     }
 
     //Selection j2
     if(choixJ2 == -1)
     {
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
-            persoSuivant_P2(etatPersoJ2,window);
+        if (sf::Joystick::isConnected(1))
+        {
+            sf::Time elapsed = clockAttente.getElapsedTime();
+            int timeAttente = elapsed.asMilliseconds();
+            if(timeAttente>150)
+            {
+                joystick0_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+                joystick0_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
-            persoPrecedent_P2(etatPersoJ2,window);
+                if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                    persoPrecedent_P2(etatPersoJ2,window);
+                else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                    persoSuivant_P2(etatPersoJ2,window);
+                
+                clockAttente.restart();
+            }
+        }else
+        {
+            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
+                persoSuivant_P2(etatPersoJ2,window);
+
+            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
+                persoPrecedent_P2(etatPersoJ2,window);
+        }
 
         switch(etatPersoJ2)
         {
@@ -442,14 +480,14 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     }
 
     //Retours
-    if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) && choixJ1 >= 0)
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || ( (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,1) ) ) && choixJ1 >= 0)
     {
         choixJ1 = -1;
         nomPersoJ1.setFillColor(sf::Color::White);
         annulerChoixJ1.setString("");
     }
 
-    if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) && choixJ2 >= 0)
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || ( (sf::Joystick::isConnected(1)) && sf::Joystick::isButtonPressed(1,1) ) ) && choixJ2 >= 0)
     {
         choixJ2 = -1;
         nomPersoJ2.setFillColor(sf::Color::White);
@@ -461,7 +499,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
-     if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
+     if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,0) )
      {
             choixJ1 = etatPersoJ1;
 
@@ -482,7 +520,7 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
      }
 
     //Validation du choix de personage pour Joueur 2
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) || (sf::Joystick::isConnected(1)) && sf::Joystick::isButtonPressed(1,0) )
     {
             choixJ2 = etatPersoJ2;
 
@@ -507,7 +545,7 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
         selecChamp_P2=choixJ2;
         return 4;
     }
-    else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
+    else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,1) ) && choixJ1 == -1 && choixJ2 == -1)
     {
         if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
                 std::cout<<"erreur musique";
