@@ -1,3 +1,12 @@
+/**
+ * \file menu.h
+ * \brief Classe Menu
+ * \author Team La Bagarre
+ *
+ * Classe permettant la gestion des différents menus
+ */
+
+
 #ifndef MENU_H
 #define MENU_H
 
@@ -9,17 +18,64 @@
 #include <SFML/Audio.hpp>
 
 using namespace std ;
-const int nbcase=3;
 
 class MenuPrincipal {
 private:
+
+    /**
+   * \attribute int _selection
+   * \brief Etat de la sélection
+   *
+   * 0 si "Jouer" , 1 si "Commandes" et 2 si "Quitter"
+   */
     int _selection;
+
+    /**
+   * \attribute sf::Font font
+   * \brief Police utilisée pour le titre
+   *
+   * Police du titre "La Bagarre" sur le menu principal
+   */
     sf::Font font;
+
+    /**
+   * \attribute sf::Texture textureCase
+   * \brief Texture des boutons
+   *
+   *  Texture des boutons "JOUER, COMMANDES, QUITTER"
+   */
     sf::Texture textureCase;
+
+    /**
+   * \attribute sf::Texture menuFond;
+   * \brief Texture du fond du menu
+   *
+   *  Texture du fond du menu
+   */
     sf::Texture menuFond;
+
+    /**
+   * \attribute sf::Sprite spriteFond
+   * \brief Sprite d'arrière plan du menu
+   *
+   *  Sprite d'arrière plan du menu
+   */
     sf::Sprite spriteFond;
 
+    /**
+   * \attribute sf::Sprite spriteMenu[6]
+   * \brief Tableau de sprites des boutons du menu
+   *
+   *  3 sprites pour "JOUER, COMMANDES, QUITTER" sélectionnés + 3 sprites pour "JOUER, COMMANDES, QUITTER" non-sélectionnés
+   */
     sf::Sprite spriteMenu[6];
+
+    /**
+   * \attribute sf::Sprite spriteMenux[3]
+   * \brief Tableau de sprites des boutons du menu affiché
+   *
+   *  Sprites remplacés par la sélection courrante
+   */
     sf::Sprite spriteMenux[3];
     sf::Sprite sfond;
     sf::Vector2f position;
@@ -155,8 +211,8 @@ class MenuBackground {
         void bouger(sf::Event,sf::RenderWindow &window);
         void moveRight();
         void moveLeft();
-        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
-        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s);
 
 
 };
