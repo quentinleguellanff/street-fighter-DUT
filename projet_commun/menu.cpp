@@ -694,31 +694,37 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     }
 
     spritebg[0].setTexture(bg[0]);
-    spritebg[0].setPosition(sf::Vector2f(window.getSize().x*0.1,window.getSize().y*0.3));
-    spritebg[0].setScale(0.2f,0.2f);
+    spritebg[0].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.25));
+    spritebg[0].setScale(0.3f,0.3f);
+    spritebg[0].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[1].setTexture(bg[1]);
-    spritebg[1].setPosition(sf::Vector2f(window.getSize().x*0.4,window.getSize().y*0.3));
-    spritebg[1].setScale(0.2f,0.2f);
+    spritebg[1].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.25));
+    spritebg[1].setScale(0.3f,0.3f);
+    spritebg[1].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[2].setTexture(bg[2]);
-    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.7,window.getSize().y*0.3));
-    spritebg[2].setScale(0.2f,0.2f);
+    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.675,window.getSize().y*0.25));
+    spritebg[2].setScale(0.3f,0.3f);
+    spritebg[2].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[3].setTexture(bg[3]);
-    spritebg[3].setPosition(sf::Vector2f(window.getSize().x*0.1,window.getSize().y*0.7));
-    spritebg[3].setScale(0.2f,0.2f);
+    spritebg[3].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.61));
+    spritebg[3].setScale(0.3f,0.3f);
+    spritebg[3].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[4].setTexture(bg[4]);
-    spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.4,window.getSize().y*0.7));
-    spritebg[4].setScale(0.2f,0.2f);
+    spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.61));
+    spritebg[4].setScale(0.3f,0.3f);
+    spritebg[4].scale(window.getSize().x/1920,window.getSize().y/1080);
 
 
     titre.setFont(fontBackground);
     titre.setString("Choix de la Map");
-    titre.setCharacterSize(50);
-    titre.setFillColor(sf::Color(255,0,0));
-    titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.1));
+    titre.setCharacterSize(90);
+    titre.setFillColor(sf::Color::Red);
+    titre.setPosition(sf::Vector2f(window.getSize().x*0.38,window.getSize().y*0.05));
+    titre.setScale(window.getSize().x/1920,window.getSize().y/1080);
 
     retour.setFont(fontBackground);
     retour.setString("Appuyez sur echap pour revenir au menu");
@@ -728,16 +734,19 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
 
     for(int i=0; i<6;i++){
-        rect[i].setSize(sf::Vector2f(window.getSize().x*0.22,window.getSize().y*0.22));
+        rect[i].setSize(sf::Vector2f(window.getSize().x*0.32,window.getSize().y*0.32));
         rect[i].setFillColor(sf::Color(255,0,0));
 
     }
-    rect[0].setPosition(sf::Vector2f(window.getSize().x*0.09,window.getSize().y*0.29));
-    rect[1].setPosition(sf::Vector2f(window.getSize().x*0.39,window.getSize().y*0.29));
-    rect[2].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.29));
-    rect[3].setPosition(sf::Vector2f(window.getSize().x*0.09,window.getSize().y*0.69));
-    rect[4].setPosition(sf::Vector2f(window.getSize().x*0.39,window.getSize().y*0.69));
-
+    rect[0].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.24));
+    rect[1].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.24));
+    rect[2].setPosition(sf::Vector2f(window.getSize().x*0.665,window.getSize().y*0.24));
+    rect[3].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.6));
+    rect[4].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.6));
+    rect[5].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.6));
+    for(int i=0; i<6;i++){
+            rect[i].setScale(window.getSize().x/1920,window.getSize().y/1080);
+    }
 }
 
 void MenuBackground::draw(sf::RenderWindow& window)

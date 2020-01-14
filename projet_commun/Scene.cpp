@@ -13,7 +13,7 @@ void Scene::chargementXenoverse(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-		//_spriteScene.scale(0.83,0.83);
+		_spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 
 	_hauteurSol=75.f;
@@ -29,7 +29,7 @@ void Scene::chargementXenoverse(sf::Music& sonScene)
 	_wallLeft.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallLeft.setPosition(0.f, 0.f);
 	_wallLeft.setFillColor(sf::Color(50,250,60,1));
-	
+
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
@@ -47,7 +47,9 @@ void Scene::chargementFutur(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
+
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
@@ -78,6 +80,7 @@ void Scene::chargementToit(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 	_hauteurSol=200.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
@@ -109,6 +112,7 @@ void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 
 	_hauteurSol=70.f;
@@ -141,6 +145,7 @@ void Scene::chargementSkulls(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
