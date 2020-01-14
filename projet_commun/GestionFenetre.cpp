@@ -167,7 +167,7 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
             joueur2->setChampion(champion_P2);
         }
     }
-    
+
 
     menuBackground->draw(window);
     window.display();
@@ -288,7 +288,7 @@ void GestionFenetre::finCombat()
 	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
-    musique.setVolume(50.f) ;
+    musique.setVolume(50.f);
     musique.play();
     musique.setLoop(true);
 }

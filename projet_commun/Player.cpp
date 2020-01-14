@@ -36,10 +36,15 @@ Player::Player(int n,sf::RenderWindow& window)
 
 	_barrePV[0].setSize(sf::Vector2f(_PV*7.15,40));
 	_barreEnergie[0].setSize(sf::Vector2f(276,40));
+
 	_barrePV[0].setFillColor(sf::Color(90,37,37));
 	_barreEnergie[0].setFillColor(sf::Color(210,254,254));
 
+	_barrePV[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
+	_barreEnergie[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
+
 	_barreEnergie[1].setFillColor(sf::Color(10,255,255));
+	_barreEnergie[1].setScale(window.getSize().x/1920,window.getSize().y/1080);
 
 	if(n==1)
 	{

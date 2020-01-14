@@ -431,12 +431,45 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
             }
         }else
         {
-            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
-                persoSuivant_P1(etatPersoJ1,window);
+                bool peutGauche = true, peutDroite = true;
 
-            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
-                persoPrecedent_P1(etatPersoJ1,window);
+    while (window.pollEvent(event))
+    {
+        switch ( event.type )
+        {
+        case sf::Event::KeyReleased:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::Right:
+              peutDroite = true;
+              break;
+            case sf::Keyboard::Left:
+                peutGauche=true;
+                break;
+            }
         }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        if(peutDroite)
+        {
+            persoSuivant_P1(etatPersoJ1,window);
+            peutDroite = false;
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        if(peutGauche)
+        {
+            persoPrecedent_P1(etatPersoJ1,window);
+            peutGauche = false;
+        }
+    }
+}
+
+
 
         switch(etatPersoJ1)
         {
@@ -469,13 +502,44 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 clockAttente.restart();
             }
         }else
-        {
-            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
-                persoSuivant_P2(etatPersoJ2,window);
+         {
+        bool peutGauche2 = true, peutDroite2 = true;
 
-            if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
-                persoPrecedent_P2(etatPersoJ2,window);
+    while (window.pollEvent(event))
+    {
+        switch ( event.type )
+        {
+        case sf::Event::KeyReleased:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::D:
+              peutDroite2 = true;
+              break;
+            case sf::Keyboard::Q:
+                peutGauche2=true;
+                break;
+            }
         }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        if(peutDroite2)
+        {
+            persoSuivant_P2(etatPersoJ2,window);
+            peutDroite2 = false;
+        }
+    }
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+    {
+        if(peutGauche2)
+        {
+            persoPrecedent_P2(etatPersoJ2,window);
+            peutGauche2 = false;
+        }
+    }
+}
 
         switch(etatPersoJ2)
         {
