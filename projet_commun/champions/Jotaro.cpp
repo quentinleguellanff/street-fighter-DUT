@@ -1347,7 +1347,10 @@ bool Jotaro::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 bool Jotaro::punchSP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	if(!_SPChargee)
 	{
@@ -1612,7 +1615,10 @@ bool Jotaro::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 bool Jotaro::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -1700,7 +1706,10 @@ bool Jotaro::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 bool Jotaro::SP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<50)
+	{
+		energie=-100;
 		return true;
+	}
 
 	if(!_SPChargee)
 	{

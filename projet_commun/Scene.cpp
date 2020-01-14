@@ -87,14 +87,13 @@ void Scene::chargementToit()
 }
 void Scene::chargementBrazil(sf::RenderWindow& window)
 {
-	if(!_textureScene.loadFromFile("background/brazil.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
+	if(!_textureScene.loadFromFile("background/SanFran.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
 	}
-	_spriteScene.setScale(3.3f,3.3f);
 
-	_hauteurSol=160.f;
+	_hauteurSol=70.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 

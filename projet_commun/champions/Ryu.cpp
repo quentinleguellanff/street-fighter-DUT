@@ -1016,7 +1016,10 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -1250,7 +1253,10 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();

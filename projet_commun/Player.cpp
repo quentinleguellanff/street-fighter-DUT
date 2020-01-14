@@ -647,9 +647,9 @@ void Player::affichageChampion(sf::RenderWindow& window)
 {
     window.draw(_champion->getSprite());
     window.draw(_effet);
-    window.draw(_champion->getHurtbox());
-    window.draw(_champion->getHitbox());
-	window.draw(_champion->getGardebox());
+    //window.draw(_champion->getHurtbox());
+    //window.draw(_champion->getHitbox());
+	//window.draw(_champion->getGardebox());
 }
 
 
