@@ -89,7 +89,6 @@ public:
 	virtual bool sauterAvant(Personnage&){return true;};		//animation de saut vers l'arrière
 	virtual bool sauterArriere(Personnage&){return true;};		//animation de saut vers l'arrière
 	virtual void accroupi(bool){};		//animation accroupi
-	virtual bool seLever( ){return true;};		//animation de fin d'accroupissement
 
 	virtual bool apparition(sf::Sprite&){return true;};	//animation de début de combat
 	virtual bool punch(Personnage&,int*,int&){return true;};				//animation de coup de poing
@@ -130,8 +129,7 @@ public:
 	bool sauterAvant(Personnage&) override;
 	bool sauterArriere(Personnage&) override;
 	void accroupi(bool) override;
-	bool seLever( ) override;
-
+	
 
 	bool punch(Personnage&,int*,int&) override;
 	bool sautPunch(Personnage&,int*,int&) override;

@@ -53,8 +53,6 @@ private:
 	int _prendCoup;
 	bool _apparitionsFini;
 	bool _actionFini;
-	bool _etaitAccroupi;
-	int _derniereAction;
 
 	std::vector<bool> _tabActions;
 	/* 0-avancer | 1-reculer | 2-accroupi | 3-saut | 4-sautAvant | 5-sautArriere | 6-garde | 7-punch | 8-punchSP | 9-kick | 10-kickSP | 11-SP */

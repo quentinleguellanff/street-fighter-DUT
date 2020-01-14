@@ -105,7 +105,7 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
                 moveUp();
             else if( (joystick0_axisX>-80 && joystick0_axisX<80) && (joystick0_axisY>30))
                 moveDown();
-            else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==0))
+            else if(sf::Joystick::isButtonPressed(0,0) && (_selection==0))
                 selecEcran=1;
             else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==1))
                 selecEcran=3;
@@ -415,7 +415,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     {
         if (sf::Joystick::isConnected(0))
         {
-            sf::Time elapsed = clockAttente.getElapsedTime();
+            sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
             int timeAttente = elapsed.asMilliseconds();
             if(timeAttente>150)
             {
@@ -427,47 +427,47 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
                     persoPrecedent_P1(etatPersoJ1,window);
 
-                clockAttente.restart();
+                clockAttenteJoystick.restart();
             }
         }else
         {
                 bool peutGauche = true, peutDroite = true;
 
-    while (window.pollEvent(event))
-    {
-        switch ( event.type )
-        {
-        case sf::Event::KeyReleased:
-            switch (event.key.code)
+            while (window.pollEvent(event))
             {
-            case sf::Keyboard::Right:
-              peutDroite = true;
-              break;
-            case sf::Keyboard::Left:
-                peutGauche=true;
-                break;
+                switch ( event.type )
+                {
+                case sf::Event::KeyReleased:
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::Right:
+                      peutDroite = true;
+                      break;
+                    case sf::Keyboard::Left:
+                        peutGauche=true;
+                        break;
+                    }
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                if(peutDroite)
+                {
+                    persoSuivant_P1(etatPersoJ1,window);
+                    peutDroite = false;
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                if(peutGauche)
+                {
+                    persoPrecedent_P1(etatPersoJ1,window);
+                    peutGauche = false;
+                }
             }
         }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        if(peutDroite)
-        {
-            persoSuivant_P1(etatPersoJ1,window);
-            peutDroite = false;
-        }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        if(peutGauche)
-        {
-            persoPrecedent_P1(etatPersoJ1,window);
-            peutGauche = false;
-        }
-    }
-}
 
 
 
@@ -487,7 +487,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     {
         if (sf::Joystick::isConnected(1))
         {
-            sf::Time elapsed = clockAttente.getElapsedTime();
+            sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
             int timeAttente = elapsed.asMilliseconds();
             if(timeAttente>150)
             {
@@ -499,47 +499,47 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
                     persoSuivant_P2(etatPersoJ2,window);
 
-                clockAttente.restart();
+                clockAttenteJoystick.restart();
             }
         }else
-         {
-        bool peutGauche2 = true, peutDroite2 = true;
-
-    while (window.pollEvent(event))
-    {
-        switch ( event.type )
         {
-        case sf::Event::KeyReleased:
-            switch (event.key.code)
+            bool peutGauche2 = true, peutDroite2 = true;
+
+            while (window.pollEvent(event))
             {
-            case sf::Keyboard::D:
-              peutDroite2 = true;
-              break;
-            case sf::Keyboard::Q:
-                peutGauche2=true;
-                break;
+                switch ( event.type )
+                {
+                case sf::Event::KeyReleased:
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::D:
+                      peutDroite2 = true;
+                      break;
+                    case sf::Keyboard::Q:
+                        peutGauche2=true;
+                        break;
+                    }
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                if(peutDroite2)
+                {
+                    persoSuivant_P2(etatPersoJ2,window);
+                    peutDroite2 = false;
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            {
+                if(peutGauche2)
+                {
+                    persoPrecedent_P2(etatPersoJ2,window);
+                    peutGauche2 = false;
+                }
             }
         }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        if(peutDroite2)
-        {
-            persoSuivant_P2(etatPersoJ2,window);
-            peutDroite2 = false;
-        }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-    {
-        if(peutGauche2)
-        {
-            persoPrecedent_P2(etatPersoJ2,window);
-            peutGauche2 = false;
-        }
-    }
-}
 
         switch(etatPersoJ2)
         {
@@ -553,14 +553,19 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     }
 
     //Retours
-    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || ( (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,1) ) ) && choixJ1 >= 0)
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || appuiBouttonManette(0,1,clockAttenteBoutton) ) && choixJ1 >= 0)
     {
         choixJ1 = -1;
         nomPersoJ1.setFillColor(sf::Color::White);
         annulerChoixJ1.setString("");
     }
 
-    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || ( (sf::Joystick::isConnected(1)) && sf::Joystick::isButtonPressed(1,1) ) ) && choixJ2 >= 0)
+    if(sf::Joystick::isButtonPressed(1, 1))
+    {
+        choixJ1 = -1;
+        nomPersoJ1.setFillColor(sf::Color::White);
+        annulerChoixJ1.setString("");
+    }else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || appuiBouttonManette(1,1,clockAttenteBoutton) ) && choixJ2 >= 0)
     {
         choixJ2 = -1;
         nomPersoJ2.setFillColor(sf::Color::White);
@@ -572,28 +577,29 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
-     if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,0) )
-     {
-            choixJ1 = etatPersoJ1;
+    
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || appuiBouttonManette(0,0,clockAttenteBoutton))
+    {
+        choixJ1 = etatPersoJ1;
 
-             nomPersoJ1.setFillColor(sf::Color::Red);
+        nomPersoJ1.setFillColor(sf::Color::Red);
 
-             //texte : annulation du choix J1
-             annulerChoixJ1.setFont(fontMenu);
-             annulerChoixJ1.setString("Touche B pour annuler la selection");
-             annulerChoixJ1.setCharacterSize(20);
-             annulerChoixJ1.setFillColor(sf::Color::White);
-             annulerChoixJ1.setStyle(sf::Text::Italic);
-             annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
+        //texte : annulation du choix J1
+        annulerChoixJ1.setFont(fontMenu);
+        annulerChoixJ1.setString("Touche B pour annuler la selection");
+        annulerChoixJ1.setCharacterSize(20);
+        annulerChoixJ1.setFillColor(sf::Color::White);
+        annulerChoixJ1.setStyle(sf::Text::Italic);
+        annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
 
-            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
-                    std::cout<<"erreur musique";
-            }
-            _effetSon.play();
-     }
+        if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                std::cout<<"erreur musique";
+        }
+        _effetSon.play();
+    }
 
     //Validation du choix de personage pour Joueur 2
-    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) || (sf::Joystick::isConnected(1)) && sf::Joystick::isButtonPressed(1,0) )
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) || appuiBouttonManette(1,0,clockAttenteBoutton))
     {
             choixJ2 = etatPersoJ2;
 
@@ -612,22 +618,22 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
             }
             _effetSon.play();
     }
+
     if(choixJ1 != -1 && choixJ2 != -1)
     {
         selecChamp_P1=choixJ1;
         selecChamp_P2=choixJ2;
         return 4;
     }
-    else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || (sf::Joystick::isConnected(0)) && sf::Joystick::isButtonPressed(0,1) ) && choixJ1 == -1 && choixJ2 == -1)
+    else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) ) && choixJ1 == -1 && choixJ2 == -1)
     {
         if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
                 std::cout<<"erreur musique";
         }
         _effetSon.play();
         return 0;
-    }
-
-    else return 1;
+    }else 
+        return 1;
 }
 
 void MenuSelection::reset(sf::RenderWindow& window)
@@ -651,10 +657,19 @@ void MenuSelection::reset(sf::RenderWindow& window)
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
     spriteP2.setScale(sf::Vector2f(-1.8,1.8));
 }
-void MenuSelection::initValidationPerso(){
+
+void MenuSelection::initValidationPerso()
+{
     choixJ2 = -1;
     nomPersoJ2.setFillColor(sf::Color::White);
-    annulerChoixJ2.setString("");}
+    annulerChoixJ2.setString("");
+}
+
+void MenuSelection::resetClock()
+{
+    clockAttenteJoystick.restart();
+    clockAttenteBoutton.restart();
+}
 
 
 MenuCommandes::MenuCommandes(sf::RenderWindow& window)
@@ -708,13 +723,15 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     ligneDelim.setSize(sf::Vector2f(5, 600));
     ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
 }
+
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
 {
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) )
     {
         selecEcran=0;
     }
 }
+
 void MenuCommandes::draw(sf::RenderWindow &window)
 {
     window.draw(spriteFond);
@@ -828,7 +845,7 @@ void MenuBackground::draw(sf::RenderWindow& window)
 
 void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& m,sf::RenderWindow& window)
 {
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) )
     {
         selecEcran=1;
         m.initValidationPerso();
@@ -857,16 +874,31 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
         }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if(sf::Joystick::isConnected(0))
+    {
+        sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
+        int timeAttente = elapsed.asMilliseconds();
+        if(timeAttente>150)
+        {
+            joystick0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+            joystick0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+            if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                moveRight();
+            else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                moveLeft();
+
+            clockAttenteJoystick.restart();
+        }
+
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         if(peutDroite)
         {
             moveRight();
             peutDroite = false;
         }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if(peutGauche)
         {
@@ -903,7 +935,11 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
         }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    if(sf::Joystick::isConnected(0))
+    {
+        if(appuiBouttonManette(0,0,clockAttenteBoutton))
+            valider(window,selecEcran,s,son);
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
     {
         if(go)
         {
@@ -927,4 +963,20 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==4)
             s.chargementBrazil(window,son);
         selecEcran=2;
+}
+
+
+bool appuiBouttonManette(int numJoy,int numBoutton,sf::Clock& clockAttente)
+{
+    sf::Time elapsed = clockAttente.getElapsedTime();
+    int timeAttente = elapsed.asMilliseconds();
+    if(timeAttente>150)
+    {
+        if (sf::Joystick::isButtonPressed(numJoy,numBoutton))
+        {
+            clockAttente.restart();
+            return true;
+        }
+    }
+    return false;
 }

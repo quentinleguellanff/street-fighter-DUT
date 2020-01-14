@@ -92,6 +92,8 @@ void GestionFenetre::gestionMenuPrinc(sf::Event& event)
         }
         musique.play();
         musique.setLoop(true);
+
+        menuSel->resetClock();
     }
 }
 
