@@ -407,7 +407,7 @@ void Player::gestionDesCommandes(Player& ennemi)
 		_tabActions[9]=true;
 		_tabActions[0]=false;
 		_tabActions[1]=false;
-	}else if(_tabActions[8] && (_tabActions[0] || _tabActions[1]))
+	}else if(_tabActions[9] && (_tabActions[0] || _tabActions[1]))
 	{
 		_tabActions[9]=true;
 		_tabActions[0]=false;

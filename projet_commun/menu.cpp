@@ -450,7 +450,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             {
                 if(peutDroite)
                 {
@@ -459,7 +459,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
             {
                 if(peutGauche)
                 {
@@ -522,7 +522,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
                 if(peutDroite2)
                 {
@@ -531,7 +531,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                 }
             }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
                 if(peutGauche2)
                 {
