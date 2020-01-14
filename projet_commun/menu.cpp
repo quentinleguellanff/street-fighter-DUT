@@ -210,6 +210,12 @@ void MenuPrincipal::moveDown()
 
 MenuSelection::MenuSelection(sf::RenderWindow& window)
 {
+    if(!menuFond.loadFromFile("background/menu.jpg")){
+        std::cout<<"erreur fond"<<endl;
+    }
+
+    spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
     hauteurPerso=window.getSize().y*0.8;
     hauteurTexte=window.getSize().y*0.83;
 
@@ -284,7 +290,9 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     }
 }
 
-void MenuSelection::draw(sf::RenderWindow &window) {
+void MenuSelection::draw(sf::RenderWindow &window)
+{
+        window.draw(spriteFond);
         window.draw(titre);
         window.draw(j1);
         window.draw(j2);
@@ -295,6 +303,7 @@ void MenuSelection::draw(sf::RenderWindow &window) {
         window.draw(nomPersoJ2);
         window.draw(annulerChoixJ1);
         window.draw(annulerChoixJ2);
+
 }
 
 void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
@@ -436,7 +445,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     break;
             case 2: nomPersoJ1.setString("Ryu");
                     break;
-        }      
+        }
     }
 
     //Selection j2
@@ -455,7 +464,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     persoPrecedent_P2(etatPersoJ2,window);
                 else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
                     persoSuivant_P2(etatPersoJ2,window);
-                
+
                 clockAttente.restart();
             }
         }else
@@ -577,12 +586,16 @@ void MenuSelection::reset(sf::RenderWindow& window)
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
     spriteP2.setScale(sf::Vector2f(-1.8,1.8));
 }
+void MenuSelection::initValidationPerso(){
+    choixJ2 = -1;
+    nomPersoJ2.setFillColor(sf::Color::White);
+    annulerChoixJ2.setString("");}
 
 
 MenuCommandes::MenuCommandes(sf::RenderWindow& window)
 {
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -653,7 +666,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
 
     selection=0;
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -744,7 +757,7 @@ void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& 
     if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
     {
         selecEcran=1;
-        m.reset(window);
+        m.initValidationPerso();
     }
     return;
 }

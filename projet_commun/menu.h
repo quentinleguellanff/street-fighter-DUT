@@ -106,6 +106,9 @@ private:
 
     sf::Font fontMenu;
 
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
+
     //texte : sélection des personnages
     sf::Text titre;
 
@@ -166,6 +169,7 @@ public :
     int validationPerso(sf::Event event,int&,int&);
 
     void reset(sf::RenderWindow&);
+    void initValidationPerso();
 };
 
 class MenuCommandes {
