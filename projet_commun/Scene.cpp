@@ -65,6 +65,12 @@ void Scene::chargementFutur(sf::Music& sonScene)
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_future.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 void Scene::chargementToit(sf::Music& sonScene)
 {
@@ -90,6 +96,12 @@ void Scene::chargementToit(sf::Music& sonScene)
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_japon.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
 {
@@ -116,6 +128,12 @@ void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_brazil.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 void Scene::chargementSkulls(sf::Music& sonScene)
 {
@@ -141,6 +159,12 @@ void Scene::chargementSkulls(sf::Music& sonScene)
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_skulls.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 
 sf::Sprite Scene::getSprite() const
