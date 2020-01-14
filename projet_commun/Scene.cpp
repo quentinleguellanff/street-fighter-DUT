@@ -7,7 +7,7 @@ Scene::Scene(sf::RenderWindow& w)
 	_tailleWindow=w.getSize();
 }
 
-void Scene::chargementXenoverse()
+void Scene::chargementXenoverse(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/ring_xenoverse_V2.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
@@ -33,9 +33,15 @@ void Scene::chargementXenoverse()
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 
-void Scene::chargementFutur()
+void Scene::chargementFutur(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/futur.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
@@ -60,7 +66,7 @@ void Scene::chargementFutur()
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
 }
-void Scene::chargementToit()
+void Scene::chargementToit(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/toit.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
@@ -85,7 +91,7 @@ void Scene::chargementToit()
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
 }
-void Scene::chargementBrazil(sf::RenderWindow& window)
+void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/SanFran.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
@@ -111,7 +117,7 @@ void Scene::chargementBrazil(sf::RenderWindow& window)
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
 }
-void Scene::chargementSkulls()
+void Scene::chargementSkulls(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/skulls.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
@@ -161,14 +167,4 @@ int Scene::getRightLimit() const
 sf::RectangleShape Scene::getSol() const
 {
 	return _solScene;
-}
-
-void Scene::lancerMusique(sf::Music& sonScene)
-{
-	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
-            std::cout<<"erreur musique";
-    }
-    sonScene.play();
-    sonScene.setLoop(true);
-    sonScene.setVolume(0.f);
 }

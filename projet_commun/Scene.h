@@ -25,14 +25,12 @@ public:
 	Scene(){};
 	Scene(sf::RenderWindow&);
 
-	void chargementXenoverse();
-	void chargementFutur();
-	void chargementToit();
-	void chargementSkulls();
-	void chargementBrazil(sf::RenderWindow& window);
+	void chargementXenoverse(sf::Music&);
+	void chargementFutur(sf::Music&);
+	void chargementToit(sf::Music&);
+	void chargementSkulls(sf::Music&);
+	void chargementBrazil(sf::RenderWindow&,sf::Music&);
 	
-
-	void lancerMusique(sf::Music&);
 
 	sf::Sprite getSprite() const;	// Renvoi la scene
 	// Permet de dessiner les limites de la map	& gerer les positions limites

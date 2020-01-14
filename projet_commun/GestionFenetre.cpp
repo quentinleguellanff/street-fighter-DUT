@@ -109,34 +109,6 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
     menuSel->draw(window);
     window.display();
 
-    /*if(selecChamp_P1==0)
-    {
-    	champion_P1=new Jotaro(-1);
-    }else if(selecChamp_P1==1)
-    {
-    	champion_P1=new Dhalsim(-1);
-    }else if(selecChamp_P1==2)
-    {
-    	champion_P1=new Ryu(-1);
-    }
-
-    if(selecChamp_P2==0)
-    {
-    	champion_P2= new Jotaro(1);
-    }else if(selecChamp_P2==1)
-    {
-    	champion_P2=new Dhalsim(1);
-    }else if(selecChamp_P2==2)
-    {
-    	champion_P2=new Ryu(1);
-    }
-
-    if(selecChamp_P1!=-1 && selecChamp_P2!=-1)
-    {
-    	joueur1->setChampion(champion_P1);
-    	joueur2->setChampion(champion_P2);
-    }*/
-
     if(selecEcran==0)
     {
     	if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
@@ -145,9 +117,6 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
         musique.play();
         musique.setLoop(true);
 
-    }else if(selecEcran==2)
-    {
-    	scene.lancerMusique(musique);
     }
 }
 
@@ -165,7 +134,7 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
     {
         menuBackground->retourMenu2(selecEcran,event, *menuSel,window);
         menuBackground->bouger(event, window);
-        menuBackground->selectionner(event, window, selecEcran, scene);
+        menuBackground->selectionner(event, window, selecEcran, scene,musique);
     }
 
     if(selecEcran==2)

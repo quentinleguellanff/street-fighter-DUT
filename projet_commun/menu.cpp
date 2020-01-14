@@ -805,7 +805,7 @@ void MenuBackground::moveLeft(){
     }
 
 }
-void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s)
+void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s,sf::Music& son)
 {
     bool go = true;
     while (window.pollEvent(event))
@@ -821,24 +821,24 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
     {
         if(go)
         {
-            valider(window, selecEcran, s);
+            valider(window, selecEcran, s,son);
             go = false;
         }
     }
 
 }
 
-void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s)
+void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s,sf::Music& son)
 {
        if (selection==0)
-            s.chargementToit();
+            s.chargementToit(son);
         if (selection==1)
-            s.chargementFutur();
+            s.chargementFutur(son);
         if (selection==2)
-            s.chargementXenoverse();
+            s.chargementXenoverse(son);
         if (selection==3)
-            s.chargementSkulls();
+            s.chargementSkulls(son);
         if (selection==4)
-            s.chargementBrazil(window);
+            s.chargementBrazil(window,son);
         selecEcran=2;
 }
