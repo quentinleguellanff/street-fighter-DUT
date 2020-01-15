@@ -18,6 +18,7 @@ Ryu::Ryu(int orientation,Scene& s)
 
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
+
     _hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);
     _hurtbox.setOutlineThickness(4);
@@ -211,14 +212,12 @@ bool Ryu::parade(int* degats,sf::Sprite& effet)
     {
     	setSprite(70,4659,68,91);
     	_cptPrendCoup++;
-    	//_posX-=25*SCALE*_orientation;
     }else if(timeAnim > delaiAnim)
     {
 		if(_cptPrendCoup==1)
 		{
 			_clockAnim.restart();
 			_cptPrendCoup++;
-    		//_posX-=25*SCALE*_orientation;
 		}else{
 			_clockAnim.restart();
 			_cptPrendCoup=0;
@@ -428,11 +427,11 @@ void Ryu::statique(Personnage& champEnnemi)
 void Ryu::garde()
 {
 	_cptStatic=0;
-	_posY=_scene.getBottom()-_tailleSprite.y;
-	sf::Time elapsed =
-	_clockAnim.getElapsedTime();
+
+	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
     int delaiAnim=70;
+
     if(timeAnim>delaiAnim)
     {
     	_clockAnim.restart();
@@ -440,6 +439,7 @@ void Ryu::garde()
     	_gardebox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y));
     	_gardebox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY);
     }
+
     _posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
     keepInWalls();
@@ -449,11 +449,13 @@ void Ryu::avancer(Personnage& champEnnemi)
 {
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	_cptStatic=0;
+
 	sf::Time elapsed1 = _clockAnim.getElapsedTime();
     int timeAnim = elapsed1.asMilliseconds();
+    int delai=70;
+
     sf::Time elapsed2 = _clockMove.getElapsedTime();
     int timeMove = elapsed2.asMilliseconds();
-    int delai=70;
     int deplacement=12;
 
     collision(champEnnemi,deplacement);
