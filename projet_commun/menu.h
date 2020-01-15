@@ -78,6 +78,9 @@ private:
    */
     sf::Sprite spriteMenux[3];
 
+    sf::Sprite sfond;
+    sf::Vector2f position;
+
     /**
    * \attribute sf::Text titre
    * \brief Texte du titre du jeu
@@ -111,8 +114,8 @@ private:
    *  Attente afin de ne pas défiler les options du menu à une trop grande vitesse
    */
     sf::Clock clockAttenteJoystick;
-	
-	
+
+
     /**
    * \attribute sf::Clock clockAttenteBoutton
    * \brief Temps d'attente entre chaque déplacement d'option avec le bouton
@@ -120,6 +123,9 @@ private:
    *  Attente afin de ne pas défiler les options du menu à une trop grande vitesse
    */
     sf::Clock clockAttenteBoutton;
+
+        sf::Clock clockAttente;
+
 
     /**
    * \attribute sf::Music _effetSon
@@ -276,6 +282,12 @@ private:
     //image joueur2
     sf::Sprite spriteP2;
 
+    sf::Texture menuFond;
+    sf::Sprite spriteFond;
+
+        sf::Clock clockAttenteJoystick;
+    sf::Clock clockAttenteBoutton;
+
     int hauteurPerso;
 
     int hauteurTexte;
@@ -333,34 +345,35 @@ class MenuCommandes {
         void draw(sf::RenderWindow &window);
 };
 
+
 class MenuBackground {
     private:
-    int selection;
-    sf::Texture bg[6];
-    sf::Sprite spritebg[6];
-    sf::RectangleShape rect[6];
-    sf::Vector2f position;
-    sf::Font fontBackground;
-    sf::Text retour;
-    sf::Text titre;
-    sf::Texture menuFond;
-    sf::Sprite spriteFond;
+        int selection;
+        sf::Texture bg[6];
+        sf::Sprite spritebg[6];
+        sf::RectangleShape rect[6];
+        sf::Vector2f position;
+        sf::Font fontBackground;
+        sf::Text retour;
+        sf::Text titre;
+        sf::Texture menuFond;
+        sf::Sprite spriteFond;
 
-    float joystick0_axisX;
-    float joystick0_axisY;
-    sf::Clock clockAttenteJoystick;
-    sf::Clock clockAttenteBoutton;
+        float joystick0_axisX;
+        float joystick0_axisY;
+        sf::Clock clockAttenteJoystick;
+        sf::Clock clockAttenteBoutton;
 
-public:
-    MenuBackground();
-    MenuBackground(sf::RenderWindow&);
-    void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
-    void draw(sf::RenderWindow &window);
-    void bouger(sf::Event,sf::RenderWindow &window);
-    void moveRight();
-    void moveLeft();
-    void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
-    void valider(sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
+    public:
+        MenuBackground();
+        MenuBackground(sf::RenderWindow&);
+        void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
+        void draw(sf::RenderWindow &window);
+        void bouger(sf::Event,sf::RenderWindow &window);
+        void moveRight();
+        void moveLeft();
+        void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
+        void valider(sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
 
 
 };
