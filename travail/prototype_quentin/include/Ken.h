@@ -1,15 +1,15 @@
-#ifndef RYU_H
-#define RYU_H
+#ifndef KEN_H
+#define KEN_H
 
 #include <Personnage.h>
 
 
-class Ryu : public Personnage
+class Ken : public Personnage
 {
     public:
-        Ryu();
-        Ryu(int,sf::RectangleShape&);
-        virtual ~Ryu();
+        Ken();
+        Ken(int,sf::RectangleShape&);
+        virtual ~Ken();
         void debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi) override;
         void avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi) override;
         void reculer(sf::RenderWindow& window) override;
@@ -25,4 +25,4 @@ class Ryu : public Personnage
     private:
 };
 
-#endif // RYU_H
+#endif // KEN_H

@@ -60,6 +60,7 @@ class Personnage
         virtual bool sauter(sf::RenderWindow&,sf::RectangleShape){return true;}
         virtual bool sauterAvancer(sf::RenderWindow&,sf::RectangleShape){return true;}
         virtual bool sauterArriere(sf::RenderWindow&,sf::RectangleShape){return true;}
+        virtual void seBaisser(sf::RenderWindow&,sf::RectangleShape) {}
 };
 
 #endif // PERSONNAGE_H

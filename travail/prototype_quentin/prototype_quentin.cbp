@@ -49,18 +49,16 @@
 			<Add directory="../../../../SFML-2.5.1/lib" />
 			<Add directory="../../../SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="Broly.cpp" />
-		<Unit filename="Broly.h" />
 		<Unit filename="Combat.cpp" />
 		<Unit filename="Combat.h" />
 		<Unit filename="Personnage.cpp" />
 		<Unit filename="Personnage.h" />
 		<Unit filename="Ryu.cpp" />
 		<Unit filename="Ryu.h" />
-		<Unit filename="collisionmanager.cpp" />
-		<Unit filename="collisionmanager.h" />
+		<Unit filename="include/Ken.h" />
 		<Unit filename="include/joueur.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Ken.cpp" />
 		<Unit filename="src/joueur.cpp" />
 		<Extensions>
 			<code_completion />

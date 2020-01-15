@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Joueur::Joueur(int i,Broly& broly,Personnage* Perso)
+Joueur::Joueur(int i,Personnage* Perso)
 {
 
     _prendcoup = false;
@@ -25,12 +25,10 @@ Joueur::Joueur(int i,Broly& broly,Personnage* Perso)
     if(_numero == 1)
     {
         _barreVie.setPosition(20.f, 20.f); //positionne la barre de vie
-        _Broly = broly;
     }
     else
     {
         _barreVie.setPosition(1440-20-_nbPointVie, 20.f); //positionne la barre de vie
-        _Broly = broly;
     }
     _barreVie.setSize(sf::Vector2f(_nbPointVie,50.f));
 
@@ -235,14 +233,14 @@ void Joueur::coupDePoing(sf::RectangleShape hurtboxEnnemi,bool& touche,sf::Rende
         _peutsauter = false;
         if(_prendcoup){
             _attaque = false;
-            _Broly.resetcoup();
+            _personnage->resetcoup();
         }else{
             //_attaque = _Broly.coupDePoing(hurtboxEnnemi,touche,window);
             _attaque = _personnage->coupDePoing(hurtboxEnnemi,touche,window);
         }
         if(_prendcoup){
             _attaque = false;
-            _Broly.resetcoup();
+            _personnage->resetcoup();
         }
         if(!_attaque && !_couppoing)
         {
@@ -322,11 +320,6 @@ void Joueur::seretourner(sf::RectangleShape hurtboxEnnemi){
     }
 }
 
-Broly Joueur::getBroly()
-{
-    return _Broly;
-}
-
 sf::RectangleShape Joueur::getHurtbox()
 {
     return _personnage->gethurtbox();
@@ -337,19 +330,19 @@ sf::RectangleShape Joueur::getHitbox(){
 }
 
 int Joueur::getOrientation(){
-    return _Broly.getorientation();
+    return _personnage->getorientation();
 }
 
 void Joueur::setVitesseX(int vitesse){
-    _Broly.setVitesseX(vitesse);
+    _personnage->setVitesseX(vitesse);
 }
 
 int Joueur::getVitesseX(){
-    return _Broly.getVitesseX();
+    return _personnage->getVitesseX();
 }
 
 void Joueur::deplacer(int vitesse){
-    _Broly.deplacer(vitesse);
+    _personnage->deplacer(vitesse);
 }
 
 bool Joueur::getEtat(){
@@ -361,13 +354,6 @@ bool Joueur::getEtat(){
         return _ensaut;
 }
 
-void Joueur::pauseAnim(){
-    _Broly.pauseAnimation();
-}
-
-void Joueur::restartClockPerso(){
-    _Broly.restartClock();
-}
 
 Joueur::Joueur(){}
 

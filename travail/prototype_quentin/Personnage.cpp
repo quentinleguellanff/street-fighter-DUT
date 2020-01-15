@@ -196,7 +196,7 @@ void Personnage::collisionsaut(sf::RectangleShape hurtboxEnnemi)
     //si les deux personnages sont en saut on les empêche de se confondre et on stoppe leur vitesse
     else if(positionbasse < 860 && positionbasseennemi < 860)
     {
-        if(_orientation == -1)
+        if(_orientation == 1)
         {
             if(positiondroite + _vitesseX >= positiongaucheennemi)
             {
@@ -204,7 +204,7 @@ void Personnage::collisionsaut(sf::RectangleShape hurtboxEnnemi)
                 _vitesseX = 0;
             }
         }
-        else if(_orientation == 1)
+        else if(_orientation == -1)
         {
             if(positiongauche + _vitesseX <= positiondroiteennemi)
             {

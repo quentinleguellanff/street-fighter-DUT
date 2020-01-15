@@ -2,6 +2,9 @@
 
 using namespace std;
 
+Personnage::Personnage(){
+}
+
 void Personnage::setScene(const Scene& s){
     _scene=s;
 

@@ -31,7 +31,6 @@ class Joueur
 
 
         Personnage* _personnage;
-        Broly _Broly;
         sf::RectangleShape _barreVie;
         sf::Clock _clockjoueur;
 
@@ -39,7 +38,7 @@ class Joueur
     public:
 
         Joueur();
-        Joueur(int i,Broly& broly,Personnage*);
+        Joueur(int i,Personnage*);
         virtual ~Joueur();
 
         void prendDegats();
@@ -59,8 +58,6 @@ class Joueur
         sf::RectangleShape getBarreVie();
         Broly getBroly();
         bool getEtat();
-        void pauseAnim();
-        void restartClockPerso();
         sf::RectangleShape getHurtbox();
         sf::RectangleShape getHitbox();
 };

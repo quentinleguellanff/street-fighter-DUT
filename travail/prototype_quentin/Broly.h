@@ -3,37 +3,33 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
+#include "Personnage.h"
 
-
-class Broly
+class Broly : public Personnage
 {
     private:
-        int _orientation;
-        sf::Texture _Texture;
-        int _scale;
-        int _cptanimstatic;
-        int _cptanimavancer;
-        int _cptanimjump;
-        int _cptAnimCoupPoing;
-        int _cptanimprendcoup;
-        int cptanimprendcoupbis;
-        int _cptTimePauseAnim;
-        int _vsaut;
-        float _vitesseX;
         bool _ok;
-
-        sf::Sprite spriteBroly;
-        sf::RectangleShape _hurtbox;
-        sf::RectangleShape _hitbox;
-        sf::Clock _clockanim;
-        sf::Clock _clockmove;
-
-
-
-
+        int cptanimprendcoupbis;
     public:
         Broly();
-        Broly(int);
+        Broly(int,sf::RectangleShape&);
+        virtual ~Broly();
+        void debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi) override;
+        void avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi) override;
+        void reculer(sf::RenderWindow& window) override;
+        bool coupDePoing(sf::RectangleShape,bool&,sf::RenderWindow&) override;
+        void prendCoup(bool&,sf::RenderWindow&) override;
+        bool sauter(sf::RenderWindow&,sf::RectangleShape) override;
+        bool sauterAvancer(sf::RenderWindow&,sf::RectangleShape) override;
+        bool sauterArriere(sf::RenderWindow&,sf::RectangleShape) override;
+
+        void restartPrendcoup();
+        void resetcoup();
+        void retourner();
+
+        /*
+        Broly();
+        Broly(int,sf::RectangleShape& sol);
         void debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
         void avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi);
         void reculer(sf::RenderWindow& window);
@@ -58,6 +54,8 @@ class Broly
         void pauseAnimation();
         void restartClock();
         virtual ~Broly();
+        sf::Sprite getSprite();
+        */
 
 };
 

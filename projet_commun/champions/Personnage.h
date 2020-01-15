@@ -33,6 +33,8 @@ protected:
 	float _posX;                    //Position X du perso
     float _posY;                    //Position Y du perso
 
+    float _vsaut;
+
 	int _cptAvancer;				//compteur pour l'animation avancer
 	int _cptReculer;				//compteur pour l'animation reculer
 	int _cptStatic;					//compteur pour l'animation de repos
@@ -45,8 +47,9 @@ protected:
 	int _cptPrendCoup;
 	int _cptGarde;					//compteur pour l'animation de garde debout
 	int _cptSP;						//compteur pour les effets sur les animations spéciales
+
 public:
-	Personnage(){};		//constructeur vide
+	Personnage();		//constructeur vide
 	~Personnage(){};
     void setScene(const Scene&);
 	sf::Sprite getSprite();

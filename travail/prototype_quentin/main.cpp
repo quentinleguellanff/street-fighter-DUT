@@ -1,12 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
-#include "Broly.h"
 #include "joueur.h"
-#include "collisionmanager.h"
 #include "combat.h"
 #include "Personnage.h"
 #include "Ryu.h"
+#include "Ken.h"
 
 using namespace std;
 
@@ -31,25 +30,18 @@ int main()
     sol.setPosition(0.f,window.getSize().y-sol.getSize().y);
     sol.setFillColor(sf::Color(255,0,0,130));
 
-    //horloge permettant de récuperer le temps
-    sf::Clock clockanim;
-    sf::Clock clockmove;
-
-    sf::Clock clockanim2;
-    sf::Clock clockmove2;
-
     //CREATION DE DEUX INSTANCES DE LA CLASSE BROLY
-    Broly Brolytest(-1);
-    Broly Brolytest2(1);
+    //Broly Brolytest(-1);
+    //Broly Brolytest2(1,sol);
 
 
     Personnage* PersoJ1;
     Personnage* PersoJ2;
     PersoJ1 = new Ryu(1,sol);
-    PersoJ2 = new Ryu(-1,sol);
+    PersoJ2 = new Ken(-1,sol);
 
-    Joueur joueur1(1,Brolytest,PersoJ1);
-    Joueur joueur2(2,Brolytest2,PersoJ2);
+    Joueur joueur1(1,PersoJ1);
+    Joueur joueur2(2,PersoJ2);
 
     Combat combat(joueur1,joueur2,sol);
 
@@ -59,7 +51,6 @@ int main()
             combat.partie(window,toucheJ1,toucheJ2);
             //window.clear();
             //PersoJ1->debout(window,joueur1.getHurtbox());
-            //window.display();
         }
         if(fincombat){
             window.clear();
