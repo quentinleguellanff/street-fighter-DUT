@@ -74,56 +74,194 @@ private:
    * \attribute sf::Sprite spriteMenux[3]
    * \brief Tableau de sprites des boutons du menu affiché
    *
-   *  Sprites remplacés par la sélection courrante
+   *  Sprites remplacés par la sélection courante et affiché (draw)
    */
     sf::Sprite spriteMenux[3];
-    sf::Sprite sfond;
-    sf::Vector2f position;
+
+    /**
+   * \attribute sf::Text titre
+   * \brief Texte du titre du jeu
+   *
+   *  Titre "La Bagarre"
+   */
     sf::Text titre;
 
+    /**
+   * \attribute  float joystick0_axisX
+   * \brief Position en x du joystick gauche (0)
+   *
+   *  Position en x du joystick gauche (0)
+   */
     float joystick0_axisX;
-    float joystick0_axisY;
-    sf::Clock clockAttente;
 
+
+    /**
+   * \attribute  float joystick0_axisY
+   * \brief Position en y du joystick gauche (0)
+   *
+   *  Position en y du joystick gauche (0)
+   */
+    float joystick0_axisY;
+
+
+    /**
+   * \attribute sf::Clock clockAttenteJoystick
+   * \brief Temps d'attente entre chaque déplacement d'option avec le joystick
+   *
+   *  Attente afin de ne pas défiler les options du menu à une trop grande vitesse
+   */
+    sf::Clock clockAttenteJoystick;
+	
+	
+    /**
+   * \attribute sf::Clock clockAttenteBoutton
+   * \brief Temps d'attente entre chaque déplacement d'option avec le bouton
+   *
+   *  Attente afin de ne pas défiler les options du menu à une trop grande vitesse
+   */
+    sf::Clock clockAttenteBoutton;
+
+    /**
+   * \attribute sf::Music _effetSon
+   * \brief Son de sélection
+   *
+   *  Son de sélection d'une option du menu.
+   */
     sf::Music _effetSon;
+
 public:
+    /**
+   * \fn MenuPrincipal()
+   * \brief Constructeur MenuPrincipal()
+   *
+   * Constructeur du Menu Principal
+   */
     MenuPrincipal();
+
+    /**
+   * \fn MenuPrincipal (float width, float height)
+   * \brief Constructeur MenuPrincipal(float width, float height)
+   *
+   * Constructeur du Menu Principal avec en paramètre la largeur et hauteur de la fenêtre
+   */
     MenuPrincipal (float width, float height);
+
+    /**
+   * \fn ~MenuPrincipal()
+   * \brief Destructeur MenuPrincipal
+   *
+   * Destructeur du Menu Principal
+   */
     ~MenuPrincipal();
 
+    /**
+   * \fn void draw(sf::RenderWindow& window)
+   * \brief Affichages du menu principal
+   *
+   * Gestion des affichages (draw) du menu principal
+   */
     void draw(sf::RenderWindow& window);
+
+    /**
+   * \fn  void bouger(int&,sf::Event, sf::RenderWindow& window)
+   * \brief Sélection des options
+   *
+   * Permet de descendre et monter pour choisir une option
+   */
     void bouger(int&,sf::Event, sf::RenderWindow& window);
+
+    /**
+   * \fn void moveUp()
+   * \brief Monter (changement d'option)
+   *
+   * Permet de monter pour sélectionner une option au-dessus
+   */
     void moveUp();
+
+    /**
+   * \fn void moveDown()
+   * \brief Descendre (changement d'option)
+   *
+   * Permet de descendre pour sélectionner une option en-dessous
+   */
     void moveDown();
+
     };
 
 
 class MenuSelection {
 private:
 
+    /**
+   * \attribute sf::Texture textureVS
+   * \brief Texture image VS
+   *
+   *  Texture image VS entre les deux personnages
+   */
     sf::Texture textureVS;
+
+    /**
+   * \attribute sf::Sprite spriteVS
+   * \brief Sprite VS
+   *
+   *  Sprite de l'image VS entre les deux personnages
+   */
     sf::Sprite spriteVS;
 
+    /**
+   * \attribute sf::Font fontMenu
+   * \brief Police du menu sélection
+   *
+   *  Sprite d'arrière plan du menu
+   */
     sf::Font fontMenu;
 
-    sf::Texture menuFond;
-    sf::Sprite spriteFond;
-
-    //texte : sélection des personnages
+    /**
+   * \attribute sf::Text titre
+   * \brief Titre du menu de sélection
+   *
+   * Texte : "sélection des personnages"
+   */
     sf::Text titre;
 
-    //texte : Joueur 1
+    /**
+   * \attribute sf::Text j1
+   * \brief Texte du menu de selection pour le joueur 1
+   *
+   * Texte : "JOUEUR 1"
+   */
     sf::Text j1;
 
-    //texte : Joueur 2
+    /**
+   * \attribute sf::Text j2
+   * \brief Texte du menu de selection pour le joueur 2
+   *
+   * Texte : "JOUEUR 2"
+   */
     sf::Text j2;
 
-    //texte : Joueur 2
+    /**
+   * \attribute sf::Text nomPersoJ1
+   * \brief Nom du personnage J1
+   *
+   * Texte pour le nom du personnage sélectionné par le joueur 1
+   */
     sf::Text nomPersoJ1;
-    //texte : Joueur 2
+
+    /**
+   * \attribute sf::Text nomPersoJ2
+   * \brief Nom du personnage J2
+   *
+   * Texte pour le nom du personnage sélectionné par le joueur 2
+   */
     sf::Text nomPersoJ2;
 
-    //texte : annuler choix J1
+    /**
+   * \attribute f::Text annulerChoixJ1
+   * \brief Nom du personnage J2
+   *
+   * Texte pour le nom du personnage sélectionné par le joueur 2
+   */
     sf::Text annulerChoixJ1;
 
     //texte : annuler choix J2
@@ -150,8 +288,7 @@ private:
 
     float joystick0_axisX;
     float joystick0_axisY;
-    sf::Clock clockAttenteJoystick;
-    sf::Clock clockAttenteBoutton;
+    sf::Clock clockAttente;
 
     sf::Music _effetSon;
 
@@ -175,31 +312,29 @@ public :
 };
 
 class MenuCommandes {
-private:
-    sf::Texture texturej1;
-    sf::Texture texturej2;
-    sf::Sprite spriteCommandes[2];
-    sf::Vector2f position;
-    sf::Font fontCommandes;
-    sf::Text retour;
-    sf::Text j1;
-    sf::Text j2;
-    sf::Texture menuFond;
-    sf::Sprite spriteFond;
-    sf::RectangleShape ligneDelim;
+    private:
+		sf::Texture texturej1;
+		sf::Texture texturej2;
+		sf::Sprite spriteCommandes[2];
+		sf::Vector2f position;
+		sf::Font fontCommandes;
+		sf::Text retour;
+		sf::Text j1;
+		sf::Text j2;
+		sf::Texture menuFond;
+		sf::Sprite spriteFond;
+		sf::RectangleShape ligneDelim;
+		sf::Clock clockAttenteBoutton;
 
-    sf::Clock clockAttenteBoutton;
-
-
-public:
-    MenuCommandes();
-    MenuCommandes(sf::RenderWindow&);
-    void retourMenu(int& selecEcran,sf::Event event);
-    void draw(sf::RenderWindow &window);
+    public:
+		MenuCommandes();
+		MenuCommandes(sf::RenderWindow&);
+        void retourMenu(int& selecEcran,sf::Event event);
+        void draw(sf::RenderWindow &window);
 };
 
 class MenuBackground {
-private:
+    private:
     int selection;
     sf::Texture bg[6];
     sf::Sprite spritebg[6];
