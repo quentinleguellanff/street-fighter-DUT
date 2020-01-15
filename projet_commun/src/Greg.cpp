@@ -34,7 +34,7 @@ Greg::Greg(int orientation,Scene& s)
 }
 
 
-bool Greg::victoire(sf::Music& son)
+bool Greg::victoire(sf::Music& son)//ok
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -60,43 +60,43 @@ bool Greg::victoire(sf::Music& son)
 	    case 1:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(977,5374,67,94);
+		    setSprite(977,5367,67,101);
 	    	break;
 	    case 2:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1115,5374,67,94);
+		    setSprite(1115,5367,67,101);
 	    	break;
 	    case 3:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1253,5374,67,94);
+		    setSprite(1253,5367,67,101);
 	    	break;
 	    case 4:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1391,5374,67,94);
+		    setSprite(1391,5367,67,101);
 	    	break;
 	    case 5:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1529,5374,67,94);
+		    setSprite(1529,5367,67,101);
 	    	break;
 	    case 6:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1667,5374,67,94);
+		    setSprite(1667,5367,67,101);
 	    	break;
 	    case 7:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(1834,5374,116,94);
+		    setSprite(1834,5367,116,101);
 		    _posX-=49*SCALE*_orientation;
 	    	break;
 	    case 8:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(2364,5374,67,94);
+		    setSprite(2364,5367,67,101);
 		    _posX+=49*SCALE*_orientation;
 	    	break;
 		}
@@ -115,7 +115,7 @@ bool Greg::victoire(sf::Music& son)
 	return fini;
 }
 
-bool Greg::mort()
+bool Greg::mort()//ok
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -130,7 +130,7 @@ bool Greg::mort()
 	    case 0:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-			setSprite(1,4763,65,87);
+			setSprite(1,4753,65,97);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 	    	break;
@@ -196,7 +196,7 @@ bool Greg::mort()
 }
 
 
-bool Greg::parade(int* degats,sf::Sprite& effet)
+bool Greg::parade(int* degats,sf::Sprite& effet)//ok
 {
 	bool fini=false;
 	_cptSauter=0;_cptAction=0;
@@ -209,7 +209,7 @@ bool Greg::parade(int* degats,sf::Sprite& effet)
 
     if(_cptPrendCoup==0)
     {
-    	setSprite(70,4659,68,91);
+    	setSprite(70,4648,68,102);
     	_cptPrendCoup++;
     	//_posX-=25*SCALE*_orientation;
     }else if(timeAnim > delaiAnim)
@@ -243,7 +243,7 @@ bool Greg::parade(int* degats,sf::Sprite& effet)
 }
 
 
-bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)
+bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
 {
 	*degats=-1;
 	bool fini=false;
@@ -280,7 +280,7 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     	case 0:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-            setSprite(574,4752,73,98);
+            setSprite(574,4742,73,108);
     		//_posX-=1*SCALE*_orientation;
     		//_posY+=6*SCALE;
 
@@ -289,13 +289,13 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     	case 1:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(325,4752,73,98);
+    		setSprite(325,4742,73,108);
     		//_posX+=1*SCALE*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(574,4752,73,98);
+    		setSprite(574,4742,73,108);
     		//_posX-=16*SCALE*_orientation;
     		break;
     	case 3:
@@ -321,7 +321,7 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 }
 
 
-bool Greg::apparition(sf::Sprite& inutile)
+bool Greg::apparition(sf::Sprite& inutile)//ok
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -330,7 +330,7 @@ bool Greg::apparition(sf::Sprite& inutile)
 
    	if(_cptApparition==0)
    	{
-		setSprite(9,225,61,104);
+		setSprite(9,216,61,113);
 		_cptApparition ++;
    	}else if(timeAnim>delaiAnim)
    	{
@@ -339,47 +339,47 @@ bool Greg::apparition(sf::Sprite& inutile)
 		case 1:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(80,225,61,104);
+		    setSprite(80,216,61,113);
 			break;
 		case 2:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(152,225,67,104);
+		    setSprite(152,216,67,113);
 			break;
 		case 3:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(227,225,70,104);
+		    setSprite(227,216,70,113);
 			break;
 		case 4:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(306,225,64,104);
+		    setSprite(306,216,64,113);
 			break;
 		case 5:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(379,225,61,104);
+		    setSprite(379,216,61,113);
 			break;
 		case 6:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(449,225,61,104);
+		    setSprite(449,216,61,113);
 			break;
 		case 7:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(519,225,61,104);
+		    setSprite(519,216,61,113);
 			break;
 		case 8:
 		    _cptApparition ++;
 		    _clockAnim.restart();
-		    setSprite(589,225,61,104);
+		    setSprite(589,216,61,113);
 			break;
 		case 9:
 		    _cptApparition=0;
 		    _clockAnim.restart();
-		    setSprite(654,225,68,104);
+		    setSprite(654,216,68,113);
 			fini=true;
 			break;
 		}
@@ -388,7 +388,7 @@ bool Greg::apparition(sf::Sprite& inutile)
 	return fini;
 }
 
-void Greg::statique(Personnage& champEnnemi)
+void Greg::statique(Personnage& champEnnemi)//ok
 {
     sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -400,34 +400,34 @@ void Greg::statique(Personnage& champEnnemi)
 	    case 0:
 		    _cptStatic ++;
 		    _clockAnim.restart();
-    		setSprite(2,423,66,108);
+    		setSprite(2,360,66,105);
     		_posY=_scene.getBottom()-_tailleSprite.y;
 			_sprite.setPosition(_posX,_posY);
 	    	break;
 	    case 1:
 		    _cptStatic ++;
 		    _clockAnim.restart();
-		    setSprite(71,423,66,108);
+		    setSprite(71,360,66,105);
 	    	break;
 	    case 2:
 		    _cptStatic ++;
 		    _clockAnim.restart();
-		    setSprite(140,423,66,108);
+		    setSprite(140,360,66,105);
 	    	break;
 	    case 3:
 		    _cptStatic ++;
 		    _clockAnim.restart();
-		    setSprite(209,423,66,108);
+		    setSprite(209,360,66,105);
 	    	break;
 	    case 4:
 		    _cptStatic ++;
 		    _clockAnim.restart();
-		    setSprite(279,423,64,108);
+		    setSprite(279,360,64,105);
 	    	break;
 	    case 5:
 		    _cptStatic=0;
 		    _clockAnim.restart();
-		    setSprite(347,423,66,108);
+		    setSprite(347,360,66,105);
 	    	break;
 	    }
 	}
@@ -464,7 +464,7 @@ void Greg::garde()
     keepInWalls();
 }
 
-void Greg::avancer(Personnage& champEnnemi)
+void Greg::avancer(Personnage& champEnnemi)//ok
 {
 	_posY=_scene.getBottom()-_tailleSprite.y;
 	_cptStatic=0;
@@ -502,22 +502,22 @@ void Greg::avancer(Personnage& champEnnemi)
             _cptAvancer ++;
             _clockAnim.restart();
         }
-        setSprite(-3,634,72,96);
+        setSprite(-3,626,72,104);
         break;
     case 1:
-        setSprite(70,634,69,96);
+        setSprite(70,626,69,104);
         break;
     case 2:
-        setSprite(143,634,69,96);
+        setSprite(143,626,69,104);
         break;
     case 3:
-        setSprite(212,634,68,96);
+        setSprite(212,626,68,104);
         break;
     case 4:
-        setSprite(281,634,69,96);
+        setSprite(281,626,69,104);
         break;
     case 5:
-        setSprite(350,634,71,96);
+        setSprite(350,626,71,104);
         break;
     }
 
@@ -531,7 +531,7 @@ void Greg::avancer(Personnage& champEnnemi)
 }
 
 
-void Greg::reculer()
+void Greg::reculer()//ok
 {
     if(_cptReculer > 3){
         _cptReculer = 0;
@@ -560,16 +560,16 @@ void Greg::reculer()
     switch (_cptReculer)
     {
     case 0:
-        setSprite(427,634,63,96);
+        setSprite(427,624,63,106);
         break;
     case 1:
-        setSprite(497,634,61,96);
+        setSprite(497,624,61,106);
         break;
     case 2:
-        setSprite(564,634,55,96);
+        setSprite(564,624,55,106);
         break;
     case 3:
-        setSprite(632,634,55,96);
+        setSprite(632,624,55,106);
         break;
     }
 
@@ -583,7 +583,7 @@ void Greg::reculer()
 }
 
 
-bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)
+bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& energie)//ok
 {
     float v_grav = 1.7;
 	_cptStatic=0;
@@ -630,22 +630,22 @@ bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& en
                 _cptSauter ++;
                 _clockAnim.restart();
             }
-            setSprite(651,829,63,89);
+            setSprite(651,818,63,100);
             break;
         case 1:
-            setSprite(714,818,70,108);
+            setSprite(714,809,70,117);
             break;
         case 2:
-            setSprite(791,775,64,88);
+            setSprite(791,764,64,99);
             break;
         case 3:
-            setSprite(861,748,61,70);
+            setSprite(861,737,61,81);
             break;
         case 4:
-            setSprite(925,739,61,65);
+            setSprite(925,729,61,75);
             break;
         case 5:
-            setSprite(1000,750,64,86);
+            setSprite(1000,739,64,97);
             break;
         case 6:
             setSprite(1071,765,62,115);
@@ -655,7 +655,7 @@ bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& en
             break;
         case 7:
             _cptSauter =0;
-            setSprite(2,433,66,98);
+            setSprite(2,423,66,108);
             _posY=_scene.getBottom()-_tailleSprite.y;
             _vsaut = -40;
             fini = true;
@@ -671,7 +671,7 @@ bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& en
 }
 
 
-bool Greg::sauterAvant(Personnage& champEnnemi)
+bool Greg::sauterAvant(Personnage& champEnnemi)//ok
 {
     float v_grav = 1.7;
 	_cptStatic=0;
@@ -730,17 +730,17 @@ bool Greg::sauterAvant(Personnage& champEnnemi)
                  _cptSauter ++;
                  _clockAnim.restart();
             }
-        setSprite(651,829,63,89);
+        setSprite(651,820,63,98);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 1:
-        setSprite(714,818,70,108);
+        setSprite(714,811,70,115);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 2:
-        setSprite(1348,794,62,106);
+        setSprite(1348,785,62,115);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
             if(timeAnim > 200){
@@ -749,27 +749,27 @@ bool Greg::sauterAvant(Personnage& champEnnemi)
             }
         break;
     case 3:
-        setSprite(1488,927,61,90);
+        setSprite(1488,927,65,90);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 4:
-        setSprite(1410,759,93,47);
+        setSprite(1410,760,96,46);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 5:
-        setSprite(1510,736,55,78);
+        setSprite(1510,737,53,82);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 6:
-        setSprite(1565,768,123,52);
+        setSprite(1568,768,120,52);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.4,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.3*_orientation,_posY+_tailleSprite.y*0.1);
         break;
     case 7:
-        setSprite(1689,747,72,94);
+        setSprite(1689,738,70,103);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.1);
         break;
@@ -783,7 +783,7 @@ bool Greg::sauterAvant(Personnage& champEnnemi)
         break;
     case 9:
         _cptSauter =0;
-        setSprite(2,433,66,98);
+        setSprite(2,423,66,108);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
         _posY=_scene.getBottom()-_tailleSprite.y;
@@ -798,7 +798,7 @@ bool Greg::sauterAvant(Personnage& champEnnemi)
     return fini;
 }
 
-bool Greg::sauterArriere(Personnage& champEnnemi)
+bool Greg::sauterArriere(Personnage& champEnnemi)//ok
 {
 	float v_grav = 1.7;
 	_cptStatic=0;
@@ -862,25 +862,25 @@ bool Greg::sauterArriere(Personnage& champEnnemi)
              _cptSauter ++;
              _clockAnim.restart();
         }
-        setSprite(651,829,63,89);
+        setSprite(651,818,63,100);
         break;
     case 1:
-        setSprite(791,775,64,88);
+         setSprite(791,764,64,99);
         break;
     case 2:
-        setSprite(1689,747,72,94);
+        setSprite(1689,738,70,103);
         break;
     case 3:
-        setSprite(1565,768,123,52);
+        setSprite(1568,768,120,52);
         break;
     case 4:
-        setSprite(1510,736,55,78);
+        setSprite(1510,737,53,82);
         break;
     case 5:
         setSprite(1410,759,93,47);
         break;
     case 6:
-        setSprite(1488,927,61,90);
+        setSprite(1488,927,65,90);
         break;
     case 7:
         setSprite(518,982,61,107);
@@ -893,7 +893,7 @@ bool Greg::sauterArriere(Personnage& champEnnemi)
         break;
     case 9:
         _cptSauter =0;
-        setSprite(2,433,66,98);
+        setSprite(2,423,66,108);
         _posY=_scene.getBottom()-_tailleSprite.y;
         _vsaut = -40;
         rotate(champEnnemi);
@@ -908,7 +908,7 @@ bool Greg::sauterArriere(Personnage& champEnnemi)
     return fini;
 }
 
-void Greg::accroupi(bool garde)
+void Greg::accroupi(bool garde)//ok
 {
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -920,7 +920,7 @@ void Greg::accroupi(bool garde)
     	{
     		_clockAnim.restart();
     		_cptAccroupi++;
-    		setSprite(73,555,62,72);
+    		setSprite(73,530,62,82);
 
 			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.9,_tailleSprite.y));
 			_hurtbox.setPosition(_posX,_posY);
@@ -931,10 +931,10 @@ void Greg::accroupi(bool garde)
     	{
     		_clockAnim.restart();
     		if(garde==true)
-	    		setSprite(212,4685,64,65);
+	    		setSprite(212,4674,64,76);
 	    	else
     		{
-    			setSprite(142,562,62,65);
+    			setSprite(142,537,62,75);
     			_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.8,_tailleSprite.y*0.9));
     			_hurtbox.setPosition(_posX+_tailleSprite.x*0.1,_posY+_tailleSprite.y*0.1);
     		}
@@ -944,7 +944,7 @@ void Greg::accroupi(bool garde)
     _sprite.setPosition(_posX,_posY);
 }
 
-bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)
+bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 {
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -959,7 +959,7 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)
 		case 0:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(3,1319,74,94);
+		    setSprite(3,1310,74,102);
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -967,21 +967,21 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)
 		case 1:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(80,1318,102,95);
+		    setSprite(80,1308,102,104);
 		    _hitbox.setSize(sf::Vector2f(40*SCALE,20*SCALE));
 		    _hitbox.setPosition(_posX+60*SCALE*_orientation,_posY+10*SCALE);
 			break;
 		case 2:
 		    _cptAction++;
 		    _clockAnim.restart();
-		    setSprite(185,1319,74,94);
+		    setSprite(3,1310,74,102);
 
 		    _hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		case 3:
 			_cptAction=0;
 			_clockAnim.restart();
-			setSprite(2,433,66,98);
+			setSprite(2,360,66,105);
 			fini=true;
 			break;
 		}
@@ -1192,7 +1192,7 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 		case 0:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(497,2559,67,94);
+		    setSprite(497,2550,67,103);
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -1200,12 +1200,12 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 		case 1:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(566,2559,65,94);
+		    setSprite(566,2550,65,103);
 			break;
 		case 2:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(656,2563,118,90);
+		    setSprite(656,2550,118,103);
 
     		_hitbox.setSize(sf::Vector2f(80*SCALE,22*SCALE));
 		    _hitbox.setPosition(_posX+36*SCALE*_orientation,_posY);
@@ -1213,14 +1213,14 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 		case 3:
 		    _cptAction ++;
 		    _clockAnim.restart();
-		    setSprite(775,2559,65,94);
+		    setSprite(775,2550,65,103);
 
 		    _hitbox.setSize(sf::Vector2f(0,0));
 			break;
 		case 4:
 		    _cptAction =0;
 		    _clockAnim.restart();
-		    setSprite(867,2559,65,94);
+		    setSprite(867,2550,65,103);
 		    fini=true;
 			break;
 		}
