@@ -325,16 +325,16 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 	if (sf::Joystick::isConnected(1))   // Commandes pour manette
 	{
 		/* gestion des attaques */
-		_tabActions[9] =(sf::Joystick::isButtonPressed(1, 0) || sf::Joystick::isButtonPressed(1, 1));
-		_tabActions[7] =(sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3));   // touche pour mettre un coup de poing
+		_tabActions[9] =( (sf::Joystick::isButtonPressed(1, 0) || sf::Joystick::isButtonPressed(1, 1)) && _tabPeutAction[2]);
+		_tabActions[7] =( (sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3)) && _tabPeutAction[0]);   // touche pour mettre un coup de poing
 
 		joystick1_axisZ =sf::Joystick::getAxisPosition(1, sf::Joystick::Z);   // touche pour super punch
 		joystick1_axisR =sf::Joystick::getAxisPosition(1, sf::Joystick::R);	 // touche pour super kick
-		_tabActions[10] =joystick1_axisZ > 40 || joystick1_axisR>40;
+		_tabActions[10] =( (joystick1_axisZ > 40 || joystick1_axisR>40) && _tabPeutAction[3]);
 
-		_tabActions[8]=(sf::Joystick::isButtonPressed(1, 4) || sf::Joystick::isButtonPressed(1, 5));
+		_tabActions[8]=( (sf::Joystick::isButtonPressed(1, 4) || sf::Joystick::isButtonPressed(1, 5)) && _tabPeutAction[1]);
 
-		if( ( (joystick1_axisX > 40 || joystick1_axisX < -40) && joystick1_axisY > 40) &&  (sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3)) )
+		if( ( (joystick1_axisX > 40 || joystick1_axisX < -40) && joystick1_axisY > 40) &&  (sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3)) && _tabPeutAction[4])
 			_tabActions[11] =true;
 
 		/* gestion des deplacements */
@@ -366,12 +366,13 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 		_tabActions[1]=sf::Keyboard::isKeyPressed(sf::Keyboard::Left);  	// touche pour _tabActions[0]:    Left
 		_tabActions[3]=sf::Keyboard::isKeyPressed(sf::Keyboard::Up);	  		// touche pour sauter:     Up
 		_tabActions[2]=sf::Keyboard::isKeyPressed(sf::Keyboard::Down);	// touche pour accroupir:  Down
-		_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::P);	  		// touche pour puncher:    P
-		_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::M);	  		// touche pour kicker:     M
-		_tabActions[11]=sf::Keyboard::isKeyPressed(sf::Keyboard::L);			// touche pour spécial 1:  L
+		_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::P)&& _tabPeutAction[0];	  		// touche pour puncher:    P
+		_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::M) && _tabPeutAction[2];	  		// touche pour kicker:     M
+		_tabActions[11]=sf::Keyboard::isKeyPressed(sf::Keyboard::L) && _tabPeutAction[4];			// touche pour spécial 1:  L
 
 	}
 
+	recuperationAttaqueLancee();
 	gestionDesCommandes(ennemi);
 }
 
@@ -481,9 +482,9 @@ bool Player::lancerActions(Player& jEnnemi)
 	if(_prendCoup!=0)
 	{
 		if(_action==0)
-		{
 			_actionFini=_champion->parade(&_prendCoup,_effet);
-		}else
+
+		else
 		{
 			if(_prendCoup>0)
 				setDegats(_prendCoup);
@@ -493,7 +494,12 @@ bool Player::lancerActions(Player& jEnnemi)
 	}
 
 	else if(_action==0)
-		_champion->garde();
+	{
+		if( (_champion->getOrientation()==-1 && jEnnemi.getChampion()->getPosX() < _champion->getPosX() + _champion->getSprite().getGlobalBounds().width) || (_champion->getOrientation()==1 && jEnnemi.getChampion()->getPosX() > _champion->getPosX()-_champion->getSprite().getGlobalBounds().width) )
+			_champion->garde();
+		else
+			_champion->reculer();
+	}
 
 	else if(_posHorizontale==1 && _posVerticale==1)
 	{
