@@ -6,6 +6,7 @@
 #include "Personnage.h"
 #include "Ryu.h"
 #include "Ken.h"
+#include "Greg.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int main()
     Personnage* PersoJ1;
     Personnage* PersoJ2;
     PersoJ1 = new Ryu(1,sol);
-    PersoJ2 = new Ken(-1,sol);
+    PersoJ2 = new Greg(-1,sol);
 
     Joueur joueur1(1,PersoJ1);
     Joueur joueur2(2,PersoJ2);

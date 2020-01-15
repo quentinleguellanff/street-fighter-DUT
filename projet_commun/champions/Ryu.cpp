@@ -251,9 +251,27 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
+    sf::Time elapsed2 = _clockMove.getElapsedTime();
+    int timeMove = elapsed2.asMilliseconds();
     int delaiAnim=70;
+    int deplacement = 20;
     _hurtbox.setSize(sf::Vector2f(0,0));
     _gardebox.setSize(sf::Vector2f(0,0));
+
+    if(timeMove > 20){
+         switch (_cptPrendCoup)
+	    {
+	    case 1:
+            _posX -= deplacement * _orientation;
+            _clockMove.restart();
+	    	break;
+	    case 2:
+		    _posX -= deplacement * _orientation;
+            _clockMove.restart();
+	    	break;
+	    }
+    }
+
 
     if(timeAnim > delaiAnim)
     {
@@ -262,38 +280,39 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     	case 0:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(1,4859,69,92);
-    		_posX-=1*SCALE*_orientation;
-    		_posY+=6*SCALE;
+            setSprite(574,4752,73,98);
+    		//_posX-=1*SCALE*_orientation;
+    		//_posY+=6*SCALE;
 
     		energie+=5;
     		break;
     	case 1:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(1,4859,69,92);
-    		_posX+=1*SCALE*_orientation;
+    		setSprite(325,4752,73,98);
+    		//_posX+=1*SCALE*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(71,4857,70,94);
-    		_posX-=16*SCALE*_orientation;
+    		setSprite(574,4752,73,98);
+    		//_posX-=16*SCALE*_orientation;
     		break;
     	case 3:
-    		_clockAnim.restart();
-    		_cptPrendCoup++;
-    		setSprite(142,4858,74,93);
-    		_posX-=16*SCALE*_orientation;
+    		_cptPrendCoup=0;
+		    _clockAnim.restart();
+		    fini=true;
+		    *degats = 0;
+    		//_posX-=16*SCALE*_orientation;
     		break;
-    	case 4:
+    	/*case 4:
     		_clockAnim.restart();
     		_cptPrendCoup=0;
     		setSprite(220,4857,70,94);
-    		_posX-=16*SCALE*_orientation;
+    		//_posX-=16*SCALE*_orientation;
     		fini=true;
     		*degats=0;
-    		break;
+    		break;*/
     	}
     }
     _sprite.setPosition(_posX,_posY);
@@ -1495,3 +1514,5 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music&
 	keepInWalls();
 	return fini;
 }
+
+

@@ -132,7 +132,7 @@ public:
 	bool sauterAvant(Personnage&) override;
 	bool sauterArriere(Personnage&) override;
 	void accroupi(bool) override;
-	
+
 
 	bool punch(Personnage&,int*,int&) override;
 	bool sautPunch(Personnage&,int*,int&) override;
@@ -185,6 +185,40 @@ class Ryu : public Personnage
 public:
 	Ryu(){};
 	Ryu(int,Scene&);
+
+	bool apparition(sf::Sprite&) override;
+	bool victoire(sf::Music&) override;
+	bool mort( ) override;
+
+	bool prendCoup(int*,sf::Sprite&,int&) override;
+	bool parade(int*,sf::Sprite&) override;
+
+	void statique(Personnage&) override;
+	void garde() override;
+	void avancer(Personnage&) override;
+	void reculer() override;
+
+	bool sauter(int&,Personnage&,int*,int&) override;
+	bool sauterAvant(Personnage&) override;
+	bool sauterArriere(Personnage&) override;
+	void accroupi(bool) override;
+
+	bool punch(Personnage&,int*,int&) override;
+	bool sautPunch(Personnage&,int*,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+
+	bool kick(Personnage&,int*,int&) override;
+	bool sautKick(Personnage&,int*,int&) override;
+	bool kickSP(Personnage&,int*,int&) override;
+
+	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+};
+
+class Greg : public Personnage
+{
+public:
+	Greg(){};
+	Greg(int,Scene&);
 
 	bool apparition(sf::Sprite&) override;
 	bool victoire(sf::Music&) override;
