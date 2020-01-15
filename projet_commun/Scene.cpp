@@ -7,13 +7,13 @@ Scene::Scene(sf::RenderWindow& w)
 	_tailleWindow=w.getSize();
 }
 
-void Scene::chargementXenoverse()
+void Scene::chargementXenoverse(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/ring_xenoverse_V2.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-		//_spriteScene.scale(0.83,0.83);
+		_spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 
 	_hauteurSol=75.f;
@@ -29,19 +29,27 @@ void Scene::chargementXenoverse()
 	_wallLeft.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallLeft.setPosition(0.f, 0.f);
 	_wallLeft.setFillColor(sf::Color(50,250,60,1));
-	
+
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 
-void Scene::chargementFutur()
+void Scene::chargementFutur(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/futur.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
+
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
@@ -59,13 +67,20 @@ void Scene::chargementFutur()
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_future.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
-void Scene::chargementToit()
+void Scene::chargementToit(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/toit.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 	_hauteurSol=200.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
@@ -84,17 +99,23 @@ void Scene::chargementToit()
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_japon.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
-void Scene::chargementBrazil(sf::RenderWindow& window)
+void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
 {
-	if(!_textureScene.loadFromFile("background/brazil.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
+	if(!_textureScene.loadFromFile("background/SanFran.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
-	_spriteScene.setScale(3.3f,3.3f);
 
-	_hauteurSol=160.f;
+	_hauteurSol=70.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -111,13 +132,20 @@ void Scene::chargementBrazil(sf::RenderWindow& window)
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_brazil.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
-void Scene::chargementSkulls()
+void Scene::chargementSkulls(sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/skulls.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
+        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
 	}
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
@@ -136,6 +164,12 @@ void Scene::chargementSkulls()
 	_wallRight.setSize(sf::Vector2f(5.f, _tailleWindow.y));
 	_wallRight.setPosition(_tailleWindow.x-5, 0.f);
 	_wallRight.setFillColor(sf::Color(50,250,60,1));
+
+	if (!sonScene.openFromFile("musique/theme_skulls.ogg")){
+            std::cout<<"erreur musique";
+    }
+    sonScene.play();
+    sonScene.setLoop(true);
 }
 
 sf::Sprite Scene::getSprite() const
@@ -162,14 +196,4 @@ int Scene::getRightLimit() const
 sf::RectangleShape Scene::getSol() const
 {
 	return _solScene;
-}
-
-void Scene::lancerMusique(sf::Music& sonScene)
-{
-	if (!sonScene.openFromFile("musique/World_tournament_arena_stage.ogg")){
-            std::cout<<"erreur musique";
-    }
-    sonScene.play();
-    sonScene.setLoop(true);
-    sonScene.setVolume(0.f);
 }

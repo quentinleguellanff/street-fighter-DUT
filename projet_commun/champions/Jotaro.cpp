@@ -7,8 +7,10 @@ Jotaro::Jotaro(int orientation,Scene& s)
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi==0;_cptGarde=0;_cptSP=0;_cptPrendCoup=0;
     SCALE=3.7;
 	_orientation=-orientation;
+
     _icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(3081,7499,115,104));
+
     if (!_texture.loadFromFile("sprites/sprite_jotaro.png"))
 	{
 	    std::cout<<"Erreur au chargement du sprite";
@@ -412,7 +414,7 @@ void Jotaro::statique(Personnage& champEnnemi)
 {
     sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
-    int delai=120;
+    int delai=100;
 
 	if(timeAnim>delai)
 	{
@@ -1202,56 +1204,6 @@ void Jotaro::accroupi(bool garde)
     _sprite.setPosition(_posX,_posY);
 }
 
-bool Jotaro::seLever()
-{
-	_cptAccroupi=0;
-	bool fini=false;
-	sf::Time elapsed = _clockAnim.getElapsedTime();
-    int timeAnim = elapsed.asMilliseconds();
-    int delai=50;
-    if(timeAnim>delai)
-    {
-	    switch(_cptAction)
-	    {
-	    case 0:
-	    	_clockAnim.restart();
-	    	_cptAction++;
-	    	setSprite(2186,725,90,118);
-	    	_posX+=1*SCALE*_orientation;
-	    	break;
-	    case 1:
-	    	_clockAnim.restart();
-	    	_cptAction++;
-	    	setSprite(2290,725,90,118);
-	    	_posX-=1*SCALE*_orientation;
-	    	break;
-	    case 2:
-	    	_clockAnim.restart();
-	    	_cptAction++;
-	    	setSprite(2392,725,71,118);
-	    	_posX+=12*SCALE*_orientation;
-	    	break;
-	    case 3:
-	    	_clockAnim.restart();
-	    	_cptAction++;
-	    	setSprite(2471,725,76,118);
-	    	_posX-=6*SCALE*_orientation;
-	    	break;
-	    case 4:
-	    	_clockAnim.restart();
-	    	_cptAction=0;
-	    	setSprite(4,6,64,117);
-	    	_posX+=6*SCALE*_orientation;
-	    	fini=true;
-	    	break;
-	    }
-   	}
-   	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
-	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
-	_sprite.setPosition(_posX,_posY);
-   	keepInWalls();
-   	return fini;
-}
 
 bool Jotaro::punch(Personnage& champEnnemi, int* degats,int& energie)
 {
@@ -1347,7 +1299,10 @@ bool Jotaro::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 bool Jotaro::punchSP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	if(!_SPChargee)
 	{
@@ -1612,7 +1567,10 @@ bool Jotaro::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 bool Jotaro::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -1700,7 +1658,10 @@ bool Jotaro::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 bool Jotaro::SP(sf::Sprite& starPlat,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<50)
+	{
+		energie=-100;
 		return true;
+	}
 
 	if(!_SPChargee)
 	{

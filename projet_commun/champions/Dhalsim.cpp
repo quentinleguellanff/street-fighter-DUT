@@ -1047,7 +1047,10 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -1273,7 +1276,10 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();
@@ -1362,7 +1368,10 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
 {
 	if(energie<50)
+	{
+		energie=-100;
 		return true;
+	}
 
 	_cptStatic=0;
 	sf::Time elapsed = _clockAnim.getElapsedTime();

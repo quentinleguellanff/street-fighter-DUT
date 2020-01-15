@@ -13,7 +13,6 @@ Player::Player(int n,sf::RenderWindow& window)
 	_posHorizontale=0;
 	_posVerticale=0;
 	_action=-1;
-	_derniereAction=-1;
 	_actionFini=true;
 
 	for(int i=0;i<=11;i++)
@@ -36,10 +35,15 @@ Player::Player(int n,sf::RenderWindow& window)
 
 	_barrePV[0].setSize(sf::Vector2f(_PV*7.15,40));
 	_barreEnergie[0].setSize(sf::Vector2f(276,40));
+
 	_barrePV[0].setFillColor(sf::Color(90,37,37));
 	_barreEnergie[0].setFillColor(sf::Color(210,254,254));
 
+	_barrePV[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
+	_barreEnergie[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
+
 	_barreEnergie[1].setFillColor(sf::Color(10,255,255));
+	_barreEnergie[1].setScale(window.getSize().x/1920,window.getSize().y/1080);
 
 	if(n==1)
 	{
@@ -79,7 +83,6 @@ void Player::resetAttributs()
 	_posHorizontale=0;
 	_posVerticale=0;
 	_action=-1;
-	_derniereAction=-1;
 	_actionFini=true;
 
 	for(int i=0;i<=11;i++)
@@ -232,6 +235,7 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 		_tabActions[9] =( sf::Keyboard::isKeyPressed(sf::Keyboard::E) && _tabPeutAction[2]);	  	// touche pour kicker:     E
 		_tabActions[11]=( sf::Keyboard::isKeyPressed(sf::Keyboard::R) && _tabPeutAction[4]);		// touche pour spécial 1:  R
 	}
+
 	recuperationAttaqueLancee();
 	gestionDesCommandes(ennemi);
 }
@@ -403,7 +407,7 @@ void Player::gestionDesCommandes(Player& ennemi)
 		_tabActions[9]=true;
 		_tabActions[0]=false;
 		_tabActions[1]=false;
-	}else if(_tabActions[8] && (_tabActions[0] || _tabActions[1]))
+	}else if(_tabActions[9] && (_tabActions[0] || _tabActions[1]))
 	{
 		_tabActions[9]=true;
 		_tabActions[0]=false;
@@ -488,9 +492,6 @@ bool Player::lancerActions(Player& jEnnemi)
 		}
 	}
 
-	else if(_etaitAccroupi && _posVerticale!=-1)
-		_actionFini=_champion->seLever();
-
 	else if(_action==0)
 		_champion->garde();
 
@@ -553,11 +554,6 @@ bool Player::lancerActions(Player& jEnnemi)
 	if(_posVerticale!=-1)
 		_champion->resetCptAccroupi();
 
-	if( !(_action!=_derniereAction && _derniereAction==0) || _actionFini==true)
-		_derniereAction=_action;
-
-	if(_actionFini==true)
-		_etaitAccroupi=(_posVerticale==-1);
 
 	return _actionFini;
 }

@@ -5,28 +5,27 @@ using namespace std;
 
 MenuPrincipal::MenuPrincipal(float width,float height){
 
-    if(!font.loadFromFile("OCRAEXT.ttf")) {
-        std::cout<<"erreur police";
-    }
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
     spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(width/1920.f,height/1080.f));
 
 // Titre du jeu
 
-    if (!font.loadFromFile("OCRAEXT.TTF")){
+    if (!font.loadFromFile("BebasNeue-Regular.ttf")){
         std::cout<<"erreur texte";
     }
     titre.setFont(font);
 
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color::White);
+    titre.setFillColor(sf::Color(80,80,80));
     titre.setStyle(sf::Text::Bold);
-    titre.setCharacterSize(120);
-    titre.setPosition(sf::Vector2f(width/3.2,height/21.6));
+    titre.setCharacterSize(170);
+    titre.setScale((width/1920)*1.8f,(height/1080)*1.f);
+    titre.setPosition(sf::Vector2f(width/4.3,height/21.6));
 
 
 
@@ -40,32 +39,32 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     spriteMenu[0].setPosition(sf::Vector2f(width/2.74,height/3.08));
     spriteMenu[0].setTexture(textureCase);
     spriteMenu[0].setTextureRect(sf::IntRect(13, 12, 779, 180));
-    spriteMenu[0].setScale(0.7f, 0.7f);
+    spriteMenu[0].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[1].setPosition(sf::Vector2f(width/2.74,height/1.86));
     spriteMenu[1].setTexture(textureCase);
     spriteMenu[1].setTextureRect(sf::IntRect(10, 337, 779, 180));
-    spriteMenu[1].setScale(0.7f, 0.7f);
+    spriteMenu[1].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[2].setPosition(sf::Vector2f(width/2.74,height/1.33));
     spriteMenu[2].setTexture(textureCase);
     spriteMenu[2].setTextureRect(sf::IntRect(10,656, 779, 180));
-    spriteMenu[2].setScale(0.7f, 0.7f);
+    spriteMenu[2].setScale((width/1920)*0.7f,(height/1080)*0.7f);
 
     spriteMenu[3].setPosition(sf::Vector2f(width/2.9,height/3.10));
     spriteMenu[3].setTexture(textureCase);
     spriteMenu[3].setTextureRect(sf::IntRect(816, 12, 779, 180));
-    spriteMenu[3].setScale(0.8f, 0.8f);
+    spriteMenu[3].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
     spriteMenu[4].setPosition(sf::Vector2f(width/2.9,height/1.88));
     spriteMenu[4].setTexture(textureCase);
     spriteMenu[4].setTextureRect(sf::IntRect(816, 337, 779, 180));
-    spriteMenu[4].setScale(0.8f, 0.8f);
+    spriteMenu[4].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
     spriteMenu[5].setPosition(sf::Vector2f(width/2.9,height/1.35));
     spriteMenu[5].setTexture(textureCase);
     spriteMenu[5].setTextureRect(sf::IntRect(816,656, 779, 180));
-    spriteMenu[5].setScale(0.8f, 0.8f);
+    spriteMenu[5].setScale((width/1920)*0.8f,(height/1080)*0.8f);
 
 // Les sprites des cases utilisées à l'ouverture du menu
 
@@ -106,7 +105,7 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
                 moveUp();
             else if( (joystick0_axisX>-80 && joystick0_axisX<80) && (joystick0_axisY>30))
                 moveDown();
-            else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==0))
+            else if(sf::Joystick::isButtonPressed(0,0) && (_selection==0))
                 selecEcran=1;
             else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==1))
                 selecEcran=3;
@@ -211,6 +210,12 @@ void MenuPrincipal::moveDown()
 
 MenuSelection::MenuSelection(sf::RenderWindow& window)
 {
+    if(!menuFond.loadFromFile("background/menu.jpg")){
+        std::cout<<"erreur fond"<<endl;
+    }
+
+    spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
     hauteurPerso=window.getSize().y*0.8;
     hauteurTexte=window.getSize().y*0.83;
 
@@ -246,10 +251,11 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         //texte : sélection des personnages
         titre.setFont(fontMenu);
         titre.setString("Selection des personnages");
-        titre.setCharacterSize(50);
-        titre.setFillColor(sf::Color::White);
+        titre.setCharacterSize(90);
+        titre.setFillColor(sf::Color::Red);
         titre.setStyle(sf::Text::Bold);
-        titre.setPosition(sf::Vector2f(720,50));
+        titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
+        titre.setScale(window.getSize().x/1920,window.getSize().x/1080);
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -285,7 +291,9 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     }
 }
 
-void MenuSelection::draw(sf::RenderWindow &window) {
+void MenuSelection::draw(sf::RenderWindow &window)
+{
+        window.draw(spriteFond);
         window.draw(titre);
         window.draw(j1);
         window.draw(j2);
@@ -296,6 +304,7 @@ void MenuSelection::draw(sf::RenderWindow &window) {
         window.draw(nomPersoJ2);
         window.draw(annulerChoixJ1);
         window.draw(annulerChoixJ2);
+
 }
 
 void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
@@ -404,11 +413,63 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     //Selection j1
     if(choixJ1 == -1)
     {
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
-            persoSuivant_P1(etatPersoJ1,window);
+        if (sf::Joystick::isConnected(0))
+        {
+            sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
+            int timeAttente = elapsed.asMilliseconds();
+            if(timeAttente>150)
+            {
+                joystick0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+                joystick0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Q)
-            persoPrecedent_P1(etatPersoJ1,window);
+                if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                    persoSuivant_P1(etatPersoJ1,window);
+                else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                    persoPrecedent_P1(etatPersoJ1,window);
+
+                clockAttenteJoystick.restart();
+            }
+        }else
+        {
+                bool peutGauche = true, peutDroite = true;
+
+            while (window.pollEvent(event))
+            {
+                switch ( event.type )
+                {
+                case sf::Event::KeyReleased:
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::Right:
+                      peutDroite = true;
+                      break;
+                    case sf::Keyboard::Left:
+                        peutGauche=true;
+                        break;
+                    }
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                if(peutDroite)
+                {
+                    persoSuivant_P1(etatPersoJ1,window);
+                    peutDroite = false;
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            {
+                if(peutGauche)
+                {
+                    persoPrecedent_P1(etatPersoJ1,window);
+                    peutGauche = false;
+                }
+            }
+        }
+
+
 
         switch(etatPersoJ1)
         {
@@ -424,11 +485,61 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     //Selection j2
     if(choixJ2 == -1)
     {
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right)
-            persoSuivant_P2(etatPersoJ2,window);
+        if (sf::Joystick::isConnected(1))
+        {
+            sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
+            int timeAttente = elapsed.asMilliseconds();
+            if(timeAttente>150)
+            {
+                joystick0_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+                joystick0_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 
-        if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left)
-            persoPrecedent_P2(etatPersoJ2,window);
+                if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                    persoPrecedent_P2(etatPersoJ2,window);
+                else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                    persoSuivant_P2(etatPersoJ2,window);
+
+                clockAttenteJoystick.restart();
+            }
+        }else
+        {
+            bool peutGauche2 = true, peutDroite2 = true;
+
+            while (window.pollEvent(event))
+            {
+                switch ( event.type )
+                {
+                case sf::Event::KeyReleased:
+                    switch (event.key.code)
+                    {
+                    case sf::Keyboard::D:
+                      peutDroite2 = true;
+                      break;
+                    case sf::Keyboard::Q:
+                        peutGauche2=true;
+                        break;
+                    }
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                if(peutDroite2)
+                {
+                    persoSuivant_P2(etatPersoJ2,window);
+                    peutDroite2 = false;
+                }
+            }
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                if(peutGauche2)
+                {
+                    persoPrecedent_P2(etatPersoJ2,window);
+                    peutGauche2 = false;
+                }
+            }
+        }
 
         switch(etatPersoJ2)
         {
@@ -442,14 +553,19 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
     }
 
     //Retours
-    if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) && choixJ1 >= 0)
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || appuiBouttonManette(0,1,clockAttenteBoutton) ) && choixJ1 >= 0)
     {
         choixJ1 = -1;
         nomPersoJ1.setFillColor(sf::Color::White);
         annulerChoixJ1.setString("");
     }
 
-    if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) && choixJ2 >= 0)
+    if(sf::Joystick::isButtonPressed(1, 1))
+    {
+        choixJ1 = -1;
+        nomPersoJ1.setFillColor(sf::Color::White);
+        annulerChoixJ1.setString("");
+    }else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || appuiBouttonManette(1,1,clockAttenteBoutton) ) && choixJ2 >= 0)
     {
         choixJ2 = -1;
         nomPersoJ2.setFillColor(sf::Color::White);
@@ -461,28 +577,29 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
-     if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
-     {
-            choixJ1 = etatPersoJ1;
+    
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || appuiBouttonManette(0,0,clockAttenteBoutton))
+    {
+        choixJ1 = etatPersoJ1;
 
-             nomPersoJ1.setFillColor(sf::Color::Red);
+        nomPersoJ1.setFillColor(sf::Color::Red);
 
-             //texte : annulation du choix J1
-             annulerChoixJ1.setFont(fontMenu);
-             annulerChoixJ1.setString("Touche B pour annuler la selection");
-             annulerChoixJ1.setCharacterSize(20);
-             annulerChoixJ1.setFillColor(sf::Color::White);
-             annulerChoixJ1.setStyle(sf::Text::Italic);
-             annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
+        //texte : annulation du choix J1
+        annulerChoixJ1.setFont(fontMenu);
+        annulerChoixJ1.setString("Touche B pour annuler la selection");
+        annulerChoixJ1.setCharacterSize(20);
+        annulerChoixJ1.setFillColor(sf::Color::White);
+        annulerChoixJ1.setStyle(sf::Text::Italic);
+        annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
 
-            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
-                    std::cout<<"erreur musique";
-            }
-            _effetSon.play();
-     }
+        if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
+                std::cout<<"erreur musique";
+        }
+        _effetSon.play();
+    }
 
     //Validation du choix de personage pour Joueur 2
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) || appuiBouttonManette(1,0,clockAttenteBoutton))
     {
             choixJ2 = etatPersoJ2;
 
@@ -501,22 +618,22 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
             }
             _effetSon.play();
     }
+
     if(choixJ1 != -1 && choixJ2 != -1)
     {
         selecChamp_P1=choixJ1;
         selecChamp_P2=choixJ2;
         return 4;
     }
-    else if((sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) && choixJ1 == -1 && choixJ2 == -1)
+    else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) ) && choixJ1 == -1 && choixJ2 == -1)
     {
         if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
                 std::cout<<"erreur musique";
         }
         _effetSon.play();
         return 0;
-    }
-
-    else return 1;
+    }else 
+        return 1;
 }
 
 void MenuSelection::reset(sf::RenderWindow& window)
@@ -541,11 +658,24 @@ void MenuSelection::reset(sf::RenderWindow& window)
     spriteP2.setScale(sf::Vector2f(-1.8,1.8));
 }
 
+void MenuSelection::initValidationPerso()
+{
+    choixJ2 = -1;
+    nomPersoJ2.setFillColor(sf::Color::White);
+    annulerChoixJ2.setString("");
+}
+
+void MenuSelection::resetClock()
+{
+    clockAttenteJoystick.restart();
+    clockAttenteBoutton.restart();
+}
+
 
 MenuCommandes::MenuCommandes(sf::RenderWindow& window)
 {
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -593,13 +723,15 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     ligneDelim.setSize(sf::Vector2f(5, 600));
     ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
 }
+
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
 {
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) )
     {
         selecEcran=0;
     }
 }
+
 void MenuCommandes::draw(sf::RenderWindow &window)
 {
     window.draw(spriteFond);
@@ -616,7 +748,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
 
     selection=0;
 
-    if(!menuFond.loadFromFile("background/menu.png")){
+    if(!menuFond.loadFromFile("background/menu.jpg")){
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -643,31 +775,37 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     }
 
     spritebg[0].setTexture(bg[0]);
-    spritebg[0].setPosition(sf::Vector2f(window.getSize().x*0.1,window.getSize().y*0.3));
-    spritebg[0].setScale(0.2f,0.2f);
+    spritebg[0].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.25));
+    spritebg[0].setScale(0.3f,0.3f);
+    spritebg[0].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[1].setTexture(bg[1]);
-    spritebg[1].setPosition(sf::Vector2f(window.getSize().x*0.4,window.getSize().y*0.3));
-    spritebg[1].setScale(0.2f,0.2f);
+    spritebg[1].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.25));
+    spritebg[1].setScale(0.3f,0.3f);
+    spritebg[1].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[2].setTexture(bg[2]);
-    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.7,window.getSize().y*0.3));
-    spritebg[2].setScale(0.2f,0.2f);
+    spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.675,window.getSize().y*0.25));
+    spritebg[2].setScale(0.3f,0.3f);
+    spritebg[2].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[3].setTexture(bg[3]);
-    spritebg[3].setPosition(sf::Vector2f(window.getSize().x*0.1,window.getSize().y*0.7));
-    spritebg[3].setScale(0.2f,0.2f);
+    spritebg[3].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.61));
+    spritebg[3].setScale(0.3f,0.3f);
+    spritebg[3].scale(window.getSize().x/1920,window.getSize().y/1080);
 
     spritebg[4].setTexture(bg[4]);
-    spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.4,window.getSize().y*0.7));
-    spritebg[4].setScale(0.2f,0.2f);
+    spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.61));
+    spritebg[4].setScale(0.3f,0.3f);
+    spritebg[4].scale(window.getSize().x/1920,window.getSize().y/1080);
 
 
     titre.setFont(fontBackground);
     titre.setString("Choix de la Map");
-    titre.setCharacterSize(50);
-    titre.setFillColor(sf::Color(255,0,0));
-    titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.1));
+    titre.setCharacterSize(90);
+    titre.setFillColor(sf::Color::Red);
+    titre.setPosition(sf::Vector2f(window.getSize().x*0.38,window.getSize().y*0.05));
+    titre.setScale(window.getSize().x/1920,window.getSize().y/1080);
 
     retour.setFont(fontBackground);
     retour.setString("Appuyez sur echap pour revenir au menu");
@@ -677,16 +815,19 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
 
     for(int i=0; i<6;i++){
-        rect[i].setSize(sf::Vector2f(window.getSize().x*0.22,window.getSize().y*0.22));
+        rect[i].setSize(sf::Vector2f(window.getSize().x*0.32,window.getSize().y*0.32));
         rect[i].setFillColor(sf::Color(255,0,0));
 
     }
-    rect[0].setPosition(sf::Vector2f(window.getSize().x*0.09,window.getSize().y*0.29));
-    rect[1].setPosition(sf::Vector2f(window.getSize().x*0.39,window.getSize().y*0.29));
-    rect[2].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.29));
-    rect[3].setPosition(sf::Vector2f(window.getSize().x*0.09,window.getSize().y*0.69));
-    rect[4].setPosition(sf::Vector2f(window.getSize().x*0.39,window.getSize().y*0.69));
-
+    rect[0].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.24));
+    rect[1].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.24));
+    rect[2].setPosition(sf::Vector2f(window.getSize().x*0.665,window.getSize().y*0.24));
+    rect[3].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.6));
+    rect[4].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.6));
+    rect[5].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.6));
+    for(int i=0; i<6;i++){
+            rect[i].setScale(window.getSize().x/1920,window.getSize().y/1080);
+    }
 }
 
 void MenuBackground::draw(sf::RenderWindow& window)
@@ -704,10 +845,10 @@ void MenuBackground::draw(sf::RenderWindow& window)
 
 void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& m,sf::RenderWindow& window)
 {
-    if(sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
+    if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) )
     {
         selecEcran=1;
-        m.reset(window);
+        m.initValidationPerso();
     }
     return;
 }
@@ -733,16 +874,31 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
         }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    if(sf::Joystick::isConnected(0))
+    {
+        sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
+        int timeAttente = elapsed.asMilliseconds();
+        if(timeAttente>150)
+        {
+            joystick0_axisX = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+            joystick0_axisY = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
+
+            if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                moveRight();
+            else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                moveLeft();
+
+            clockAttenteJoystick.restart();
+        }
+
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         if(peutDroite)
         {
             moveRight();
             peutDroite = false;
         }
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if(peutGauche)
         {
@@ -767,7 +923,7 @@ void MenuBackground::moveLeft(){
     }
 
 }
-void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s)
+void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int& selecEcran, Scene& s,sf::Music& son)
 {
     bool go = true;
     while (window.pollEvent(event))
@@ -779,28 +935,48 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
         }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    if(sf::Joystick::isConnected(0))
+    {
+        if(appuiBouttonManette(0,0,clockAttenteBoutton))
+            valider(window,selecEcran,s,son);
+    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
     {
         if(go)
         {
-            valider(window, selecEcran, s);
+            valider(window, selecEcran, s,son);
             go = false;
         }
     }
 
 }
 
-void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s)
+void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s,sf::Music& son)
 {
        if (selection==0)
-            s.chargementToit();
+            s.chargementToit(son);
         if (selection==1)
-            s.chargementFutur();
+            s.chargementFutur(son);
         if (selection==2)
-            s.chargementXenoverse();
+            s.chargementXenoverse(son);
         if (selection==3)
-            s.chargementSkulls();
+            s.chargementSkulls(son);
         if (selection==4)
-            s.chargementBrazil(window);
+            s.chargementBrazil(window,son);
         selecEcran=2;
+}
+
+
+bool appuiBouttonManette(int numJoy,int numBoutton,sf::Clock& clockAttente)
+{
+    sf::Time elapsed = clockAttente.getElapsedTime();
+    int timeAttente = elapsed.asMilliseconds();
+    if(timeAttente>150)
+    {
+        if (sf::Joystick::isButtonPressed(numJoy,numBoutton))
+        {
+            clockAttente.restart();
+            return true;
+        }
+    }
+    return false;
 }
