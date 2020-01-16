@@ -44,11 +44,11 @@ Player::Player(int n,sf::RenderWindow& window)
 	_barrePV[0].setFillColor(sf::Color(90,37,37));
 	_barreEnergie[0].setFillColor(sf::Color(210,254,254));
 
-	_barrePV[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
-	_barreEnergie[0].setScale(window.getSize().x/1920,window.getSize().y/1080);
+	_barrePV[0].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
+	_barreEnergie[0].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
 	_barreEnergie[1].setFillColor(sf::Color(10,255,255));
-	_barreEnergie[1].setScale(window.getSize().x/1920,window.getSize().y/1080);
+	_barreEnergie[1].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
 	if(n==1)
 	{
@@ -548,7 +548,7 @@ bool Player::lancerActions(Player& jEnnemi)
 		_actionFini=_champion->punch(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==2)
-		_actionFini=_champion->punchSP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
+		_actionFini=_champion->punchSP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==3)
 		_actionFini=_champion->kick(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
@@ -557,7 +557,7 @@ bool Player::lancerActions(Player& jEnnemi)
 		_actionFini=_champion->kickSP(*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else if(_action==5)
-		_actionFini=_champion->SP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),son,_energie);
+		_actionFini=_champion->SP(_effet,*jEnnemi.getChampion(),jEnnemi.getPrendCoup(),_energie);
 
 	else
 		_champion->statique(*jEnnemi.getChampion());
@@ -574,7 +574,7 @@ bool Player::finPartie()
 	_posVerticale=0;_posHorizontale=0;_action=-1;
 	_effet.setTextureRect(sf::IntRect(0,0,0,0));
 	if(_PV>0)
-		return _champion->victoire(son);
+		return _champion->victoire();
 	else
 		return _champion->mort();
 }

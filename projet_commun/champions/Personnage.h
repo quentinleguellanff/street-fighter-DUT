@@ -52,6 +52,8 @@ protected:
 	bool _hitSpark;
 	bool _peutHitSpark;
 
+	sf::Music _effetSonore;
+
 public:
 	Personnage();		//constructeur vide
 	~Personnage(){};
@@ -87,7 +89,7 @@ public:
 	void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
 	bool auSol();
 
-	virtual bool victoire(sf::Music&){return true;};
+	virtual bool victoire(){return true;};
 	virtual bool mort(){return true;};
 
 	virtual bool prendCoup(int*,sf::Sprite&,int&){return true;};	//animation de prise de coup
@@ -107,54 +109,12 @@ public:
 
 	virtual bool apparition(sf::Sprite&){return true;};	//animation de début de combat
 	virtual bool punch(Personnage&,int*,int&){return true;};				//animation de coup de poing
-	virtual bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};	//animation de coup de poing spécial
+	virtual bool punchSP(sf::Sprite&,Personnage&,int*,int&){return true;};	//animation de coup de poing spécial
 	virtual bool sautPunch(Personnage&,int*,int&){return true;};			//animation de coup de poing en saut
 	virtual bool kick(Personnage&,int*,int&){return true;};					//animation de coup de pied
 	virtual bool sautKick(Personnage&,int*,int&){return true;};				//animation de coup de pied en saut
 	virtual bool kickSP(Personnage&,int*,int&){return true;};
-	virtual bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&){return true;};		//animation de coup spécial
-};
-
-class Jotaro : public Personnage
-{
-private:
-	std::vector<std::vector<int> > _tabSP{};	//tableau pour stocker les coordonnées des sprites pour les animations spéciales (SP)
-	bool _SPChargee;				//indicateur pour ne génerer le _tabSP qu'un seule fois par attaque
-
-public:
-    Jotaro(){};
-	Jotaro(int,Scene&);
-
-	bool apparition(sf::Sprite&) override;
-	void ajouterTexture(int,int,int,int);	//permet de remplir le tableau _tabSP
-	void resetTexture();	//permet de reinitialiser le tableau pour le réutiliser sur les différents attaques spéciales
-
-	bool victoire(sf::Music&) override;
-	bool mort( ) override;
-
-	bool prendCoup(int*,sf::Sprite&,int&) override;
-	bool parade(int*,sf::Sprite&) override;
-
-	void statique(Personnage&) override;
-	void garde() override;
-	void avancer(Personnage&) override;
-	void reculer() override;
-
-	bool sauter(int&,Personnage&,int*,int&) override;
-	bool sauterAvant(Personnage&) override;
-	bool sauterArriere(Personnage&) override;
-	void accroupi(bool) override;
-
-
-	bool punch(Personnage&,int*,int&) override;
-	bool sautPunch(Personnage&,int*,int&) override;
-	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
-
-	bool kick(Personnage&,int*,int&) override;
-	bool sautKick(Personnage&,int*,int&) override;
-	bool kickSP(Personnage&,int*,int&) override;
-
-	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	virtual bool SP(sf::Sprite&,Personnage&,int*,int&){return true;};		//animation de coup spécial
 };
 
 class Dhalsim : public Personnage
@@ -164,7 +124,7 @@ public:
 	Dhalsim(int,Scene&);
 
 	bool apparition(sf::Sprite&) override;
-	bool victoire(sf::Music&) override;
+	bool victoire() override;
 	bool mort( ) override;
 
 	bool prendCoup(int*,sf::Sprite&,int&) override;
@@ -183,13 +143,13 @@ public:
 
 	bool punch(Personnage&,int*,int&) override;
 	bool sautPunch(Personnage&,int*,int&) override;
-	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,int&) override;
 
 	bool kick(Personnage&,int*,int&) override;
 	bool sautKick(Personnage&,int*,int&) override;
 	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,int&) override;
 };
 
 class Ryu : public Personnage
@@ -199,7 +159,7 @@ public:
 	Ryu(int,Scene&);
 
 	bool apparition(sf::Sprite&) override;
-	bool victoire(sf::Music&) override;
+	bool victoire() override;
 	bool mort( ) override;
 
 	bool prendCoup(int*,sf::Sprite&,int&) override;
@@ -217,13 +177,13 @@ public:
 
 	bool punch(Personnage&,int*,int&) override;
 	bool sautPunch(Personnage&,int*,int&) override;
-	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,int&) override;
 
 	bool kick(Personnage&,int*,int&) override;
 	bool sautKick(Personnage&,int*,int&) override;
 	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,int&) override;
 };
 
 class Greg : public Personnage
@@ -233,7 +193,7 @@ public:
 	Greg(int,Scene&);
 
 	bool apparition(sf::Sprite&) override;
-	bool victoire(sf::Music&) override;
+	bool victoire() override;
 	bool mort( ) override;
 
 	bool prendCoup(int*,sf::Sprite&,int&) override;
@@ -251,13 +211,13 @@ public:
 
 	bool punch(Personnage&,int*,int&) override;
 	bool sautPunch(Personnage&,int*,int&) override;
-	bool punchSP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool punchSP(sf::Sprite&,Personnage&,int*,int&) override;
 
 	bool kick(Personnage&,int*,int&) override;
 	bool sautKick(Personnage&,int*,int&) override;
 	bool kickSP(Personnage&,int*,int&) override;
 
-	bool SP(sf::Sprite&,Personnage&,int*,sf::Music&,int&) override;
+	bool SP(sf::Sprite&,Personnage&,int*,int&) override;
 };
 
 #endif

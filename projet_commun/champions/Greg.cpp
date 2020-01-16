@@ -34,7 +34,7 @@ Greg::Greg(int orientation,Scene& s)
 }
 
 
-bool Greg::victoire(sf::Music& son)//ok
+bool Greg::victoire()//ok
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -53,9 +53,9 @@ bool Greg::victoire(sf::Music& son)//ok
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 
-			if (!son.openFromFile("musique/Greg/Greg_victoire.ogg"))
+			if (!_effetSonore.openFromFile("musique/Greg/Greg_victoire.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -1059,7 +1059,7 @@ bool Greg::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
     return fini;
 }
 
-bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
 	{
@@ -1086,9 +1086,9 @@ bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::
 		    setSprite(8,3795,66,86);
 
 		    _posY=_scene.getBottom()-_tailleSprite.y;
-		    if (!son.openFromFile("musique/Greg/shoGregken.ogg"))
+		    if (!_effetSonore.openFromFile("musique/Greg/shoGregken.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1385,7 +1385,7 @@ bool Greg::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 	return fini;
 }
 
-bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music& son,int& energie)
+bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energie)
 {
 	if(energie<50)
 	{
@@ -1404,9 +1404,9 @@ bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music
 	    switch (_cptAction)
 		{
 		case 0:
-			if (!son.openFromFile("musique/Greg/hadouken.ogg"))
+			if (!_effetSonore.openFromFile("musique/Greg/hadouken.ogg"))
 		        std::cout<<"erreur musique";
-		    son.play();
+		    _effetSonore.play();
 
 		    _cptAction++;
 		    _clockAnim.restart();
