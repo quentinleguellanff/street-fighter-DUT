@@ -991,6 +991,10 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
+	    cout << " peut hitspark " <<  _peutHitSpark << endl;
+	    if(_peutHitSpark)
+            _hitSpark = true;
+	    cout << " hitspark " << _hitSpark << endl;
 		*degats=5;
 		energie+=10;
 

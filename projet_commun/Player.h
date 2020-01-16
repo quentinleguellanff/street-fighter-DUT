@@ -63,6 +63,10 @@ private:
 	/* 0-clock pour les sprites | 1-clock pour le deplacement */
 
 	sf::Sprite _effet;
+	sf::Clock _clockEffet;
+	bool _effetEnCours;
+	int _cptAnimEffet;
+	sf::Texture _textureEffet;
 	sf::Music son;
 
 public:
@@ -103,6 +107,8 @@ public:
 	int getAction();
 	int* getPrendCoup();
 	void setPrendCoup(int);
+
+	void affichageEffet(sf::RenderWindow& window);
 
 	int getPC();
 };

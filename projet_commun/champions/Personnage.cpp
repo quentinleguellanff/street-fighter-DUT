@@ -24,6 +24,8 @@ void Personnage::setScene(const Scene& s){
 		_hurtbox.setScale(-1,1);
 		_hitbox.setScale(-1,1);
 	}
+	_peutHitSpark = true;
+	_hitSpark = false;
 }
 
 sf::Sprite Personnage::getSprite()
@@ -63,6 +65,21 @@ sf::RectangleShape Personnage::getGardebox()
     return _gardebox;
 }
 
+bool Personnage::getPeutHitspark(){
+    return _peutHitSpark;
+}
+
+bool Personnage::getHitspark(){
+    return _hitSpark;
+}
+
+void Personnage::setHitspark(bool val){
+    _hitSpark = val;
+}
+
+void Personnage::setPeuthitspark(bool val){
+    _peutHitSpark = val;
+}
 
 bool Personnage::collisioncoup(Personnage& ennemi)
 {
@@ -151,8 +168,6 @@ int Personnage::getPosY()
 {
     return _posY;
 }
-
-
 
 void Personnage::resetCptAccroupi()
 {

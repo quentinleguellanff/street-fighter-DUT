@@ -20,6 +20,7 @@ protected:
 	sf::Sprite _sprite;
 	sf::Sprite _icone;
 
+	sf::Clock _clockEffet;
 	sf::Clock _clockAnim;
 	sf::Clock _clockMove;
 
@@ -48,6 +49,9 @@ protected:
 	int _cptGarde;					//compteur pour l'animation de garde debout
 	int _cptSP;						//compteur pour les effets sur les animations spéciales
 
+	bool _hitSpark;
+	bool _peutHitSpark;
+
 public:
 	Personnage();		//constructeur vide
 	~Personnage(){};
@@ -55,6 +59,14 @@ public:
 	sf::Sprite getSprite();
 	void setSprite(int, int, int, int);		//permet de définir le sprite du personnage ainsi que de mettre à jour sa taille
 	sf::Sprite getIcone();
+
+	bool getPeutHitspark();
+
+    bool getHitspark();
+
+    void setHitspark(bool val);
+
+    void setPeuthitspark(bool val);
 
 	sf::RectangleShape getHurtbox();	//permet de récupérer la zone de prise de dégats
 	sf::RectangleShape getHitbox();		//permet de récupérer la zone de mise de dégats
