@@ -95,7 +95,7 @@ void Player::setChampion(Personnage* perso)
 	_champion=perso;
 	resetPlayer();
 
-	if(_barreInfos.getScale().x==1)
+	if(_barreInfos.getScale().x>=0)
 	{
 		_portrait=_champion->getIcone();
 		_portrait.setPosition(0,10);

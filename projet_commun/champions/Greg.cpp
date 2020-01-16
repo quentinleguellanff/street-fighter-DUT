@@ -4,8 +4,9 @@ using namespace std;
 
 Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
 {
-    double temp=window.getSize().x;
-    _scale=4.2*(temp/1920);
+    double largeurFenetre=window.getSize().x;
+    _scale=4.2*(largeurFenetre/1920);
+
 	_orientation=-orientation;
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
     _vsaut = -40;
@@ -19,6 +20,7 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
 
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(859,5579,119,108));
+    _icone.scale(largeurFenetre/1920,largeurFenetre/1920);
 
     _hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);

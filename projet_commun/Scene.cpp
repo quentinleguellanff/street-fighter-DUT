@@ -16,7 +16,7 @@ void Scene::chargementXenoverse(sf::Music& sonScene)
 		_spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
-	_hauteurSol=75.f;
+	_hauteurSol=75.f*(_tailleWindow.y/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -51,7 +51,9 @@ void Scene::chargementFutur(sf::Music& sonScene)
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
-	_hauteurSol=75.f;
+	double temp=_tailleWindow.x;
+
+	_hauteurSol=75.f*(temp/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -84,7 +86,10 @@ void Scene::chargementToit(sf::Music& sonScene)
 		_spriteScene.setTexture(_textureScene);
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
-	_hauteurSol=200.f;
+
+	double temp=_tailleWindow.x;
+
+	_hauteurSol=200.f*(temp/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -118,7 +123,9 @@ void Scene::chargementSanFran(sf::RenderWindow& window,sf::Music& sonScene)
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
-	_hauteurSol=70.f;
+	double temp=_tailleWindow.x;
+
+	_hauteurSol=70.f*(temp/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -151,7 +158,10 @@ void Scene::chargementSkulls(sf::Music& sonScene)
 		_spriteScene.setTexture(_textureScene);
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
-	_hauteurSol=75.f;
+
+	double temp=_tailleWindow.x;
+
+	_hauteurSol=75.f*(temp/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
@@ -185,7 +195,10 @@ void Scene::chargementAvion(sf::Music& sonScene)
 		_spriteScene.setTexture(_textureScene);
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
-	_hauteurSol=50.f;
+
+	double temp=_tailleWindow.x;
+	
+	_hauteurSol=50.f*(temp/1920);
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 
