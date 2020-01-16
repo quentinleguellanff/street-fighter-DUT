@@ -63,12 +63,7 @@ private:
 	/* 0-clock pour les sprites | 1-clock pour le deplacement */
 
 
-	sf::Clock _clockEffet;
-	bool _effetEnCours;
-	int _cptAnimEffet;
-	sf::Texture _textureEffet;
 	sf::Music son;
-	sf::Sprite _spriteHitSpark;
 
 public:
 	Player(){};		//constructeur vide
@@ -109,7 +104,9 @@ public:
 	int* getPrendCoup();
 	void setPrendCoup(int);
 
-	void affichageEffet(sf::RenderWindow& window);
+	void afficherHitspark(sf::RenderWindow& window);
+
+
 
 	int getPC();
 };

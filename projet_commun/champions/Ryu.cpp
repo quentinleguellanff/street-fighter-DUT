@@ -972,6 +972,7 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 		    setSprite(80,1318,102,95);
 		    _hitbox.setSize(sf::Vector2f(40*SCALE,20*SCALE));
 		    _hitbox.setPosition(_posX+60*SCALE*_orientation,_posY+10*SCALE);
+		    _spriteHitSpark.setPosition(_posX+60*SCALE*_orientation,_posY);
 			break;
 		case 2:
 		    _cptAction++;
@@ -991,10 +992,7 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-	    cout << " peut hitspark " <<  _peutHitSpark << endl;
-	    if(_peutHitSpark)
-            _hitSpark = true;
-	    cout << " hitspark " << _hitSpark << endl;
+        _hitSpark = true;
 		*degats=5;
 		energie+=10;
 

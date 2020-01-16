@@ -267,8 +267,8 @@ void GestionFenetre::affichageCombat()
     joueur1->affichageChampion(window);
     joueur2->affichageChampion(window);
 
-    joueur1->affichageEffet(window);
-    joueur2->affichageEffet(window);
+    joueur1->afficherHitspark(window);
+    joueur2->afficherHitspark(window);
 
     window.draw(readyFight);
     window.display();

@@ -24,8 +24,16 @@ void Personnage::setScene(const Scene& s){
 		_hurtbox.setScale(-1,1);
 		_hitbox.setScale(-1,1);
 	}
-	_peutHitSpark = true;
+	_cptAnimEffet = 0;
 	_hitSpark = false;
+	_peutHitSpark = true;
+	_effetEnCours = false;
+
+    if(!_textureEffet.loadFromFile("sprites/hitsparks.png")){
+         std::cout<<"Erreur au chargement du sprite";
+	}
+	_spriteHitSpark.setTexture(_textureEffet);
+	_spriteHitSpark.setScale(2,2);
 }
 
 sf::Sprite Personnage::getSprite()
@@ -258,3 +266,62 @@ void Personnage::collisionsaut(Personnage& ennemi,int& deplacement)
         keepInWalls();
     }
 }
+
+
+void Personnage::affichageEffet(sf::RenderWindow& window){
+sf::Time elapsed = _clockEffet.getElapsedTime();
+int timeAnim = elapsed.asMilliseconds();
+int decalageX;
+    if(_hitSpark && _peutHitSpark){
+        _peutHitSpark = false;
+        _effetEnCours = true;
+        _clockEffet.restart();
+    }
+    if(_effetEnCours){
+        _hitSpark = false;
+        if(_orientation == -1){
+            _spriteHitSpark.setScale(-1,1);
+        }
+        else{
+            _spriteHitSpark.setScale(1,1);
+        }
+        switch(_cptAnimEffet){
+            case 0:
+                _spriteHitSpark.setTextureRect(sf::IntRect(1,1,142,220));
+                decalageX = 0;
+                break;
+            case 1:
+                _spriteHitSpark.setTextureRect(sf::IntRect(147,1,145,220));
+                decalageX = -10*_orientation;
+                break;
+            case 2:
+                _spriteHitSpark.setTextureRect(sf::IntRect(296,1,196,220));
+                decalageX = 20*_orientation;
+                break;
+            case 3:
+                _spriteHitSpark.setTextureRect(sf::IntRect(496,1,196,220));
+                decalageX = +20*_orientation;
+                break;
+            case 4:
+                _spriteHitSpark.setTextureRect(sf::IntRect(696,1,196,220));
+                decalageX = +20*_orientation;
+                break;
+            case 5:
+                _spriteHitSpark.setTextureRect(sf::IntRect(896,1,184,220));
+                decalageX = +60*_orientation;
+                break;
+        }
+        if(timeAnim > 40){
+            _cptAnimEffet +=1;
+            _clockEffet.restart();
+            _spriteHitSpark.setPosition(sf::Vector2f(_spriteHitSpark.getPosition().x+decalageX,_spriteHitSpark.getPosition().y));
+        }
+        if(_cptAnimEffet > 5){
+            _cptAnimEffet = 0;
+            _effetEnCours = false;
+            _peutHitSpark = true;
+        }
+        window.draw(_spriteHitSpark);
+    }
+}
+
