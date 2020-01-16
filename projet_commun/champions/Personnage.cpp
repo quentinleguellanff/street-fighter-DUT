@@ -44,7 +44,7 @@ sf::Sprite Personnage::getSprite()
 
 void Personnage::setSprite(int n1, int n2, int i1, int i2)
 {
-	_tailleSprite.x=i1*SCALE;_tailleSprite.y=i2*SCALE;
+	_tailleSprite.x=i1*_scale;_tailleSprite.y=i2*_scale;
 	_sprite.setTextureRect(sf::IntRect(n1, n2,i1,i2));
 }
 
@@ -73,23 +73,7 @@ sf::RectangleShape Personnage::getGardebox()
     return _gardebox;
 }
 
-bool Personnage::getPeutHitspark(){
-    return _peutHitSpark;
-}
-
-bool Personnage::getHitspark(){
-    return _hitSpark;
-}
-
-void Personnage::setHitspark(bool val){
-    _hitSpark = val;
-}
-
-void Personnage::setPeuthitspark(bool val){
-    _peutHitSpark = val;
-}
-
-bool Personnage::collisioncoup(Personnage& ennemi)
+bool Personnage::collisionCoup(Personnage& ennemi)
 {
     return _hitbox.getGlobalBounds().intersects(ennemi.getHurtbox().getGlobalBounds());
 }
@@ -143,7 +127,7 @@ void Personnage::rotate(Personnage& ennemi)
         }
 		_posX=_posX-_tailleSprite.x*_orientation;
 		_sprite.setPosition(_posX,_posY);
-		_sprite.setScale(_orientation*SCALE,SCALE);
+		_sprite.setScale(_orientation*_scale,_scale);
 	}
 }
 
