@@ -1509,30 +1509,38 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
 		}
 	}
 
-	if(_cptAction>6 && _cptAction<11)
-	{
-		setSprite(400,3605,119,79);
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1426,5744,231,181));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>10 && _cptAction<15)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1713,5742,234,176));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>14 && _cptAction<19)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(2003,5738,234,178));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>18 && _cptAction<23)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1130,5745,240,171));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-		if(_cptAction==23)
-			_cptAction=7;
-	}
+    sf::Time elapsedEffet = _clockEffet.getElapsedTime();
+    int timeEffet = elapsedEffet.asMilliseconds();
+    int delaiEffet=5;
+
+    if(timeEffet>delaiEffet)
+    {
+
+    	if(_cptAction>6 && _cptAction<11)
+    	{
+    		setSprite(400,3605,119,79);
+    		_cptAction ++;
+    		bouleFeu.setTextureRect(sf::IntRect(1426,5744,231,181));
+    		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+    	}else if(_cptAction>10 && _cptAction<15)
+    	{
+    		_cptAction ++;
+    		bouleFeu.setTextureRect(sf::IntRect(1713,5742,234,176));
+    		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+    	}else if(_cptAction>14 && _cptAction<19)
+    	{
+    		_cptAction ++;
+    		bouleFeu.setTextureRect(sf::IntRect(2003,5738,234,178));
+    		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+    	}else if(_cptAction>18 && _cptAction<23)
+    	{
+    		_cptAction ++;
+    		bouleFeu.setTextureRect(sf::IntRect(1130,5745,240,171));
+    		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+    		if(_cptAction==23)
+    			_cptAction=7;
+    	}
+    }
 
 
 	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )

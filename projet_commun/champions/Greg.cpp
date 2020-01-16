@@ -32,8 +32,6 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
 
-    _spriteHitSpark.setColor(sf::Color(150,150,255,255));
-
     setScene(s);
 }
 
@@ -265,7 +263,6 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     int deplacement = 20;
     _hurtbox.setSize(sf::Vector2f(0,0));
     _gardebox.setSize(sf::Vector2f(0,0));
-    _posY=_scene.getBottom()-_tailleSprite.y;
 
     if(timeMove > 20){
          switch (_cptPrendCoup)
@@ -289,10 +286,7 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     	case 0:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-            setSprite(574,4748,70,102);
-    		//_posX-=1*SCALE*_orientation;
-    		//_posY+=6*SCALE;
-
+            setSprite(574,4748,69,102);
             if (!_effetSonore.openFromFile("musique/Greg/degat.ogg"))
                 std::cout<<"erreur musique";
             _effetSonore.play();
@@ -302,30 +296,19 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     	case 1:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(324,4750,73,100);
-    		//_posX+=1*SCALE*_orientation;
+    		setSprite(325,4750,73,99);
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(574,4748,69,102);
-    		//_posX-=16*SCALE*_orientation;
     		break;
     	case 3:
     		_cptPrendCoup=0;
 		    _clockAnim.restart();
 		    fini=true;
 		    *degats = 0;
-    		//_posX-=16*SCALE*_orientation;
     		break;
-    	/*case 4:
-    		_clockAnim.restart();
-    		_cptPrendCoup=0;
-    		setSprite(220,4857,70,94);
-    		//_posX-=16*SCALE*_orientation;
-    		fini=true;
-    		*degats=0;
-    		break;*/
     	}
     }
     _sprite.setPosition(_posX,_posY);
@@ -1023,8 +1006,6 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 
 	if(collisionCoup(champEnnemi))
 	{
-	    if(_peutHitSpark)
-            _hitSpark = true;
 		*degats=5;
 		energie+=10;
 
@@ -1504,38 +1485,53 @@ bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& ener
 		    setSprite(1229,3635,119,86);
 		    _posX+=2*_scale*_orientation;
 
-			bouleFeu.setTextureRect(sf::IntRect(1130,5745,240,171));
+			bouleFeu.setTextureRect(sf::IntRect(1127,5553,142,126));
 			bouleFeu.setScale(_orientation,1);
 			bouleFeu.setPosition(_posX+(_tailleSprite.x*0.7*_orientation),_posY);
 			break;
 		}
 	}
 
-	if(_cptAction>6 && _cptAction<11)
-	{
-		setSprite(400,3605,119,79);
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1426,5744,231,181));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>10 && _cptAction<15)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1713,5742,234,176));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>14 && _cptAction<19)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(2003,5738,234,178));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-	}else if(_cptAction>18 && _cptAction<23)
-	{
-		_cptAction ++;
-		bouleFeu.setTextureRect(sf::IntRect(1130,5745,240,171));
-		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
-		if(_cptAction==23)
-			_cptAction=7;
-	}
+    sf::Time elapsedEffet = _clockEffet.getElapsedTime();
+    int timeEffet = elapsedEffet.asMilliseconds();
+    int delaiEffet=10;
 
+    if(timeEffet>delaiEffet)
+    {
+        if(_cptAction>6 && _cptAction<11)
+        {
+            setSprite(400,3605,119,79);
+            _cptAction ++;
+            bouleFeu.setTextureRect(sf::IntRect(1395,5555,128,130));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+        }else if(_cptAction>10 && _cptAction<15)
+        {
+            _cptAction ++;
+            bouleFeu.setTextureRect(sf::IntRect(1544,5556,99,133));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+        }else if(_cptAction>14 && _cptAction<19)
+        {
+            _cptAction ++;
+            bouleFeu.setTextureRect(sf::IntRect(1680,5553,65,135));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+        }else if(_cptAction>18 && _cptAction<23)
+        {
+            _cptAction ++;
+            bouleFeu.setTextureRect(sf::IntRect(1762,5557,99,133));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+        }else if(_cptAction>22 && _cptAction<27)
+        {
+            _cptAction ++;
+            bouleFeu.setTextureRect(sf::IntRect(1887,5556,131,129));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
+            if(_cptAction==27)
+            {
+               cout<<"coucou"<<endl;
+               _cptAction=7;
+            }
+        }
+        _clockEffet.restart();
+    }
 
 	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
 	{

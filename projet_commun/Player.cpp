@@ -113,11 +113,6 @@ Personnage* Player::getChampion()
 	return _champion;
 }
 
-sf::Sprite Player::getEffet()
-{
-	return _effet;
-}
-
 void Player::recuperationAttaqueLancee()
 {
 	for(int i=7;i<_tabActions.size();i++)
@@ -241,26 +236,6 @@ void Player::recuperationCommandesP1(Player& ennemi)    // Commandes pour le pla
 	gestionDesCommandes(ennemi);
 }
 
-void Player::recuperationAttaquesP1()
-{
-	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
-	{
-		if (sf::Joystick::isConnected(0))   // Commandes pour manette
-		{
-			_tabActions[7]=(sf::Joystick::isButtonPressed(0, 2) || sf::Joystick::isButtonPressed(0, 3));
-			_tabActions[9]=(sf::Joystick::isButtonPressed(0, 0) || sf::Joystick::isButtonPressed(0, 1));
-		}else
-		{
-			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-			_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::E);
-		}
-		if(_tabActions[7])
-			_action=1;
-		else if(_tabActions[9])
-			_action=2;
-	}
-}
-
 
 void Player::peutAttaquerP2(sf::Event& event, sf::RenderWindow& window)
 {
@@ -377,25 +352,6 @@ void Player::recuperationCommandesP2(Player& ennemi)    // Commandes pour le pla
 	gestionDesCommandes(ennemi);
 }
 
-void Player::recuperationAttaquesP2()
-{
-	if(_posHorizontale==0 && _posVerticale==1 && _action==-1)
-	{
-		if (sf::Joystick::isConnected(1))   // Commandes pour manette
-		{
-			_tabActions[7]=(sf::Joystick::isButtonPressed(1, 2) || sf::Joystick::isButtonPressed(1, 3));
-			_tabActions[9]=(sf::Joystick::isButtonPressed(1, 0) || sf::Joystick::isButtonPressed(1, 1));
-		}else
-		{
-			_tabActions[7]=sf::Keyboard::isKeyPressed(sf::Keyboard::P);
-			_tabActions[9]=sf::Keyboard::isKeyPressed(sf::Keyboard::M);
-		}
-		if(_tabActions[7])
-			_action=1;
-		else if(_tabActions[9])
-			_action=2;
-	}
-}
 
 void Player::gestionDesCommandes(Player& ennemi)
 {
@@ -585,17 +541,12 @@ int Player::getPV()
 	return _PV;
 }
 
-void Player::resetPV()
-{
-	_PV=100;
-}
-
 void Player::setDegats(int degats)
 {
 	_PV-=degats;
 }
 
-void Player::afficherEnergie(sf::RenderWindow& window)
+void Player::afficherInfos(sf::RenderWindow& window)
 {
 	/* gestion de la barre de points de vie */
 
@@ -627,8 +578,9 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 		_barreEnergie[0].setFillColor(sf::Color(255,30,30));
 		_clockPasAssez.restart();
 	}
-	/*else if(_energie<0)
-		_energie=0;*/
+
+	else if(_energie<0 && _energie!=-100)
+		_energie=0;
 	else if(_energie>100)
 		_energie=100;
 
@@ -664,14 +616,4 @@ void Player::affichageChampion(sf::RenderWindow& window)
 int* Player::getPrendCoup()
 {
 	return &_prendCoup;
-}
-
-void Player::setPrendCoup(int n)
-{
-	_prendCoup=n;
-}
-
-int Player::getPC()
-{
-	return _prendCoup;
 }

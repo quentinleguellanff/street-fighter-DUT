@@ -419,7 +419,7 @@ void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
 }
 
 // Recupérer les intructions de l'utilisateur
-void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
+void MenuSelection::bouger_P1(sf::Event event,sf::RenderWindow& window)
 {
     //Selection j1
     if(choixJ1 == -1)
@@ -480,8 +480,6 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
             }
         }
 
-
-
         switch(etatPersoJ1)
         {
             case 0: nomPersoJ1.setString("Greg");
@@ -493,14 +491,25 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
         }
     }
 
+    //Retour
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || appuiBouttonManette(0,1,clockAttenteBoutton) ) && choixJ1 >= 0)
+    {
+        choixJ1 = -1;
+        nomPersoJ1.setFillColor(sf::Color::White);
+        annulerChoixJ1.setString("");
+    }
+}
+
+void MenuSelection::bouger_P2(sf::Event event,sf::RenderWindow& window)
+{
     //Selection j2
     if(choixJ2 == -1)
     {
-        if (sf::Joystick::isConnected(1))
-        {
+        //if (sf::Joystick::isConnected(1))
+        //{
             sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
             int timeAttente = elapsed.asMilliseconds();
-            if(timeAttente>150)
+            if(timeAttente>142)
             {
                 joystick0_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
                 joystick0_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
@@ -512,8 +521,8 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 
                 clockAttenteJoystick.restart();
             }
-        }else
-        {
+        //}else
+        //{
             bool peutGauche2 = true, peutDroite2 = true;
 
             while (window.pollEvent(event))
@@ -550,7 +559,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
                     peutGauche2 = false;
                 }
             }
-        }
+        //}
 
         switch(etatPersoJ2)
         {
@@ -563,20 +572,8 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
         }
     }
 
-    //Retours
-    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::B) || appuiBouttonManette(0,1,clockAttenteBoutton) ) && choixJ1 >= 0)
-    {
-        choixJ1 = -1;
-        nomPersoJ1.setFillColor(sf::Color::White);
-        annulerChoixJ1.setString("");
-    }
-
-    if(sf::Joystick::isButtonPressed(1, 1))
-    {
-        choixJ1 = -1;
-        nomPersoJ1.setFillColor(sf::Color::White);
-        annulerChoixJ1.setString("");
-    }else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || appuiBouttonManette(1,1,clockAttenteBoutton) ) && choixJ2 >= 0)
+    //Retour
+    if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::BackSpace) || appuiBouttonManette(1,1,clockAttenteBoutton) ) && choixJ2 >= 0)
     {
         choixJ2 = -1;
         nomPersoJ2.setFillColor(sf::Color::White);
