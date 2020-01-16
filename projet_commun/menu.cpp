@@ -268,7 +268,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j1.setCharacterSize(60);
         j1.setFillColor(sf::Color::White);
         j1.setStyle(sf::Text::Bold);
-        j1.setPosition(sf::Vector2f(window.getSize().x*0.20,window.getSize().y*0.25));
+        j1.setPosition(sf::Vector2f(window.getSize().x*0.18,window.getSize().y*0.20));
         j1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
         //texte : Joueur 2
@@ -277,7 +277,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j2.setCharacterSize(60);
         j2.setFillColor(sf::Color::White);
         j2.setStyle(sf::Text::Bold);
-        j2.setPosition(sf::Vector2f(window.getSize().x*0.71,window.getSize().y*0.25));
+        j2.setPosition(sf::Vector2f(window.getSize().x*0.73,window.getSize().y*0.20));
         j2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
 
@@ -287,7 +287,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         nomPersoJ1.setCharacterSize(40);
         nomPersoJ1.setFillColor(sf::Color::White);
         nomPersoJ1.setStyle(sf::Text::Bold);
-        nomPersoJ1.setPosition(sf::Vector2f(window.getSize().x*0.21, hauteurTexte));
+        nomPersoJ1.setPosition(sf::Vector2f(window.getSize().x*0.20, hauteurTexte));
         nomPersoJ1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
 
@@ -297,7 +297,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         nomPersoJ2.setCharacterSize(40);
         nomPersoJ2.setFillColor(sf::Color::White);
         nomPersoJ2.setStyle(sf::Text::Bold);
-        nomPersoJ2.setPosition(sf::Vector2f(window.getSize().x*0.72,hauteurTexte));
+        nomPersoJ2.setPosition(sf::Vector2f(window.getSize().x*0.76,hauteurTexte));
         nomPersoJ2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
     }
 }
