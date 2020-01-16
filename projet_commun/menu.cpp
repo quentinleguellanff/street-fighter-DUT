@@ -920,6 +920,11 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             peutGauche = false;
         }
     }
+    if ((selection>=0) && (selection<3) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
+        selection=selection+3;
+
+    if ((selection>=3) && (selection<6) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
+        selection=selection-3;
 }
 
 void MenuBackground::moveRight()
@@ -975,7 +980,7 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==3)
             s.chargementSkulls(son);
         if (selection==4)
-            s.chargementBrazil(window,son);
+            s.chargementSanFran(window,son);
         selecEcran=2;
 }
 
