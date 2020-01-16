@@ -12,10 +12,11 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add option="-DSFML_STATIC" />
 					<Add directory="C:/Program Files (x86)/SFML-2.5.1/include" />
-					<Add directory="include" />
+					<Add directory="../../ProjetTutoré/SFML-2.5.1/include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
@@ -23,6 +24,7 @@
 					<Add library="sfml-audio-d" />
 					<Add library="sfml-system-d" />
 					<Add directory="C:/Program Files (x86)/SFML-2.5.1/lib" />
+					<Add directory="../../ProjetTutoré/SFML-2.5.1/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -58,6 +60,7 @@
 		<Unit filename="Scene.cpp" />
 		<Unit filename="Scene.h" />
 		<Unit filename="champions/Dhalsim.cpp" />
+		<Unit filename="champions/Greg.cpp" />
 		<Unit filename="champions/Jotaro.cpp" />
 		<Unit filename="champions/Personnage.cpp" />
 		<Unit filename="champions/Personnage.h" />
@@ -65,7 +68,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />
-		<Unit filename="src/Greg.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

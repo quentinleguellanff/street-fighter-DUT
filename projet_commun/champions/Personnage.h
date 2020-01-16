@@ -128,7 +128,7 @@ class Dhalsim : public Personnage
 {
 public:
 	Dhalsim(){};
-	Dhalsim(int,Scene&);
+	Dhalsim(int,Scene&,sf::RenderWindow&);
 
 	bool apparition(sf::Sprite&) override;
 	bool victoire() override;
@@ -163,7 +163,7 @@ class Ryu : public Personnage
 {
 public:
 	Ryu(){};
-	Ryu(int,Scene&);
+	Ryu(int,Scene&,sf::RenderWindow&);
 
 	bool apparition(sf::Sprite&) override;
 	bool victoire() override;
@@ -197,7 +197,7 @@ class Greg : public Personnage
 {
 public:
 	Greg(){};
-	Greg(int,Scene&);
+	Greg(int,Scene&,sf::RenderWindow&);
 
 	bool apparition(sf::Sprite&) override;
 	bool victoire() override;

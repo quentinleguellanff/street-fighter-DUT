@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Ryu::Ryu(int orientation,Scene& s)
+Ryu::Ryu(int orientation,Scene& s,sf::RenderWindow& window)
 {
-    SCALE=4.2;
+    double temp=window.getSize().x;
+    SCALE=4.2*(temp/1920);
 	_orientation=-orientation;
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
     _vsaut = -40;
@@ -14,7 +15,7 @@ Ryu::Ryu(int orientation,Scene& s)
 	    std::cout<<"Erreur au chargement du sprite";
 	}
 	_sprite.setTexture(_texture);
-	_sprite.scale(_orientation*SCALE,SCALE);
+	_sprite.setScale(_orientation*SCALE,SCALE);
 
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
@@ -134,6 +135,10 @@ bool Ryu::mort()
 			setSprite(1,4763,65,87);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
+
+            if (!_effetSonore.openFromFile("musique/Ryu/mort.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -283,6 +288,10 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		//_posX-=1*SCALE*_orientation;
     		//_posY+=6*SCALE;
 
+            if (!_effetSonore.openFromFile("musique/Ryu/degat.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
+
     		energie+=5;
     		break;
     	case 1:
@@ -331,6 +340,10 @@ bool Ryu::apparition(sf::Sprite& inutile)
    	{
 		setSprite(9,225,61,104);
 		_cptApparition ++;
+
+        if (!_effetSonore.openFromFile("musique/Ryu/apparition.ogg"))
+            std::cout<<"erreur musique";
+        _effetSonore.play();
    	}else if(timeAnim>delaiAnim)
    	{
 	   	switch(_cptApparition)
@@ -631,6 +644,10 @@ bool Ryu::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& ene
             if(timeAnim > 20){
                 _cptSauter ++;
                 _clockAnim.restart();
+
+                if (!_effetSonore.openFromFile("musique/Ryu/saut.ogg"))
+                    std::cout<<"erreur musique";
+                _effetSonore.play();
             }
             setSprite(651,829,63,89);
             break;
@@ -735,6 +752,10 @@ bool Ryu::sauterAvant(Personnage& champEnnemi)
         setSprite(651,829,63,89);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
         _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+        if (!_effetSonore.openFromFile("musique/Ryu/saut.ogg"))
+            std::cout<<"erreur musique";
+        _effetSonore.play();
         break;
     case 1:
         setSprite(714,818,70,108);
@@ -863,6 +884,10 @@ bool Ryu::sauterArriere(Personnage& champEnnemi)
         if(timeAnim > 20){
              _cptSauter ++;
              _clockAnim.restart();
+
+             if (!_effetSonore.openFromFile("musique/Ryu/saut.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
         }
         setSprite(651,829,63,89);
         break;
@@ -965,6 +990,10 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Ryu/coup_poing.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -992,7 +1021,8 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-        _hitSpark = true;
+	    if(_peutHitSpark)
+            _hitSpark = true;
 		*degats=5;
 		energie+=10;
 
@@ -1025,6 +1055,10 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Ryu/coup_poing.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1200,6 +1234,10 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Ryu/coup_pied.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1262,6 +1300,10 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Ryu/coup_pied.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 	    case 1:
 	    	_cptAction ++;
@@ -1323,6 +1365,10 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 		    _clockAnim.restart();
 		    setSprite(1,3039,71,110);
 		    _posY=_scene.getBottom()-_tailleSprite.y;
+
+            if (!_effetSonore.openFromFile("musique/Ryu/tatsumaki.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;

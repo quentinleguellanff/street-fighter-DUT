@@ -19,13 +19,15 @@ MenuPrincipal::MenuPrincipal(float width,float height){
         std::cout<<"erreur texte";
     }
     titre.setFont(font);
-
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color(80,80,80));
+    titre.setFillColor(sf::Color(255,215,0));
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(170);
-    titre.setScale((width/1920)*1.8f,(height/1080)*1.f);
-    titre.setPosition(sf::Vector2f(width/4.3,height/21.6));
+    titre.setLetterSpacing (0.8);
+    titre.setOutlineColor(sf::Color::Black);
+    titre.setOutlineThickness (1.5);
+    titre.setScale((width/1920)*2.5f,(height/1080)*1.f);
+    titre.setPosition(sf::Vector2f(width/10,height/21.6));
 
 
 
@@ -226,7 +228,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     spriteVS.setTexture(textureVS);
     spriteVS.setPosition(sf::Vector2f(window.getSize().x*0.44,window.getSize().y*0.42));
     spriteVS.setTextureRect(sf::IntRect(0,0,324,277));
-    spriteVS.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+    //spriteVS.scale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
     if (!fontMenu.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -240,13 +242,13 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
 
     spriteP1.setTexture(texturePersos);
     spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
-    spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-    spriteP1.setScale(sf::Vector2f(3.5,3.5));
+    spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+    spriteP1.setScale(sf::Vector2f(2,2));
 
     spriteP2.setTexture(texturePersos);
     spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-    spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+    spriteP2.setScale(sf::Vector2f(-1.9,1.9));
 
     if((choixJ1 == -1) || (choixJ2 == -1)) {
         //texte : sélection des personnages
@@ -254,9 +256,11 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setString("Selection des personnages");
         titre.setCharacterSize(90);
         titre.setFillColor(sf::Color::Red);
-        titre.setStyle(sf::Text::Bold);
         titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
         titre.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+    }
+
+    if((choixJ1 == -1) || (choixJ2 == -1)) {
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -264,7 +268,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j1.setCharacterSize(60);
         j1.setFillColor(sf::Color::White);
         j1.setStyle(sf::Text::Bold);
-        j1.setPosition(sf::Vector2f(window.getSize().x*0.20,window.getSize().y*0.25));
+        j1.setPosition(sf::Vector2f(window.getSize().x*0.18,window.getSize().y*0.20));
         j1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
         //texte : Joueur 2
@@ -273,17 +277,17 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j2.setCharacterSize(60);
         j2.setFillColor(sf::Color::White);
         j2.setStyle(sf::Text::Bold);
-        j2.setPosition(sf::Vector2f(window.getSize().x*0.71,window.getSize().y*0.25));
+        j2.setPosition(sf::Vector2f(window.getSize().x*0.73,window.getSize().y*0.20));
         j2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
 
         //texte : nomPersoJ1
         nomPersoJ1.setFont(fontMenu);
-        nomPersoJ1.setString("Jotaro");
+        nomPersoJ1.setString("Greg");
         nomPersoJ1.setCharacterSize(40);
         nomPersoJ1.setFillColor(sf::Color::White);
         nomPersoJ1.setStyle(sf::Text::Bold);
-        nomPersoJ1.setPosition(sf::Vector2f(window.getSize().x*0.21, hauteurTexte));
+        nomPersoJ1.setPosition(sf::Vector2f(window.getSize().x*0.20, hauteurTexte));
         nomPersoJ1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
 
@@ -293,7 +297,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         nomPersoJ2.setCharacterSize(40);
         nomPersoJ2.setFillColor(sf::Color::White);
         nomPersoJ2.setStyle(sf::Text::Bold);
-        nomPersoJ2.setPosition(sf::Vector2f(window.getSize().x*0.72,hauteurTexte));
+        nomPersoJ2.setPosition(sf::Vector2f(window.getSize().x*0.76,hauteurTexte));
         nomPersoJ2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
     }
 }
@@ -321,7 +325,7 @@ void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
     case 0:
         etatPersoJ1 = 1;
         spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
-        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setScale(sf::Vector2f(1.9,1.9));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
         break;
     case 1:
@@ -332,8 +336,8 @@ void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ1 = 0;
-        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP1.setScale(sf::Vector2f(1.9,1.9));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
         break;
     }
@@ -346,7 +350,7 @@ void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
     case 0:
         etatPersoJ2 = 1;
         spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setScale(sf::Vector2f(-1.9,1.9));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
         break;
     case 1:
@@ -357,8 +361,8 @@ void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ2 = 0;
-        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP2.setScale(sf::Vector2f(-1.9,1.9));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
         break;
     }
@@ -376,8 +380,8 @@ void MenuSelection::persoPrecedent_P1(int& etatPerso,sf::RenderWindow& window)
         break;
     case 1:
         etatPersoJ1 = 0;
-        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP1.setScale(sf::Vector2f(1.9,1.9));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
         break;
     case 2:
@@ -401,14 +405,14 @@ void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
         break;
     case 1:
         etatPersoJ2 = 0;
-        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP2.setScale(sf::Vector2f(-1.9,1.9));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
         break;
     case 2:
         etatPersoJ2 = 1;
         spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setScale(sf::Vector2f(-1.9,1.9));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
         break;
     }
@@ -480,7 +484,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 
         switch(etatPersoJ1)
         {
-            case 0: nomPersoJ1.setString("Jotaro");
+            case 0: nomPersoJ1.setString("Greg");
                     break;
             case 1: nomPersoJ1.setString("Dhalsim");
                     break;
@@ -550,7 +554,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 
         switch(etatPersoJ2)
         {
-            case 0: nomPersoJ2.setString("Jotaro");
+            case 0: nomPersoJ2.setString("Greg");
                     break;
             case 1: nomPersoJ2.setString("Dhalsim");
                     break;
@@ -715,14 +719,14 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     j2.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
 
-    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.2, window.getSize().y*0.2));
+    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.1, window.getSize().y*0.2));
     spriteCommandes[0].setTexture(texturej1);
-    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0, 515, 515));
+    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0,  679, 415));
     spriteCommandes[0].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     spriteCommandes[1].setPosition(sf::Vector2f(window.getSize().x*0.55, window.getSize().y*0.2));
     spriteCommandes[1].setTexture(texturej2);
-    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0, 679, 415));
+    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0,515, 515));
     spriteCommandes[1].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     retour.setFont(fontCommandes);
@@ -734,8 +738,9 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     //ligne delim
-    ligneDelim.setSize(sf::Vector2f(5, 600));
-    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
+    ligneDelim.setSize(sf::Vector2f(window.getSize().x*0.005,window.getSize().y*0.6));
+    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/5));
+    ligneDelim.setFillColor(sf::Color::Black);
 }
 
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
@@ -836,7 +841,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setCharacterSize(30);
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
-    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
+    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.95));
     retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     for(int i=0; i<6;i++){
