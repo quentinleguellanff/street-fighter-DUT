@@ -1,0 +1,25 @@
+var class_ryu =
+[
+    [ "Ryu", "class_ryu.html#aff4803aa93f7c98f2b34cc779a115960", null ],
+    [ "Ryu", "class_ryu.html#a41e14283d3c9d10fed3dadc07d31a190", null ],
+    [ "accroupi", "class_ryu.html#a45544cae3bb859f939e3d0060a2e211d", null ],
+    [ "apparition", "class_ryu.html#a1e1eafc35f12b33acf00ee72d5f1dbeb", null ],
+    [ "avancer", "class_ryu.html#a208a9142c84805701f249014f9bd0469", null ],
+    [ "garde", "class_ryu.html#a4875e7fd6a5dc9c94a9d42f1af153457", null ],
+    [ "kick", "class_ryu.html#abc0b400ad8f731e40c1a30a0748d7378", null ],
+    [ "kickSP", "class_ryu.html#a56bddc5176096e2aa0f8f86fee975cc0", null ],
+    [ "mort", "class_ryu.html#ae5313b3bbc0333c0cec4dfeb79e01c13", null ],
+    [ "parade", "class_ryu.html#a030ca68e4bb92332cae1561ca29a416f", null ],
+    [ "prendCoup", "class_ryu.html#a7c69ed809bf50c77993335b573955f01", null ],
+    [ "punch", "class_ryu.html#aec9d649892f963144b67e7eda1d7af3f", null ],
+    [ "punchSP", "class_ryu.html#a3822035a9ab3f15b3d9ac646db05d4fa", null ],
+    [ "reculer", "class_ryu.html#a4a09ae6051d00005301f2bc609cc915d", null ],
+    [ "sauter", "class_ryu.html#a6c723a610c33d84997d85eae0c32caec", null ],
+    [ "sauterArriere", "class_ryu.html#ad9b7f49a9eaf54b36f0e5bd30dd9206c", null ],
+    [ "sauterAvant", "class_ryu.html#ad538a5d663d554dcf0e52f94fe3e2948", null ],
+    [ "sautKick", "class_ryu.html#a57d3c9ad7cc06124e1372a47df71a758", null ],
+    [ "sautPunch", "class_ryu.html#acbf3e09a2f9d9e5eeff273c10c848304", null ],
+    [ "SP", "class_ryu.html#af1c9f2ca58a679223461f7222a8801dd", null ],
+    [ "statique", "class_ryu.html#a0ce9633ea48cf572582f36ab0cf2689b", null ],
+    [ "victoire", "class_ryu.html#a7a6ab3b9ade001f9c9fa91bb9009ad5d", null ]
+];

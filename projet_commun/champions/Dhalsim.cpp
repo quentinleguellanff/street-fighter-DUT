@@ -922,8 +922,6 @@ bool Dhalsim::sauterArriere(Personnage& champEnnemi)
             fini=true;
             break;
         }
-
-        //_sprite.setPosition(_posX,_posY);
     }
 
     keepInWalls();
@@ -1037,6 +1035,8 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1098,6 +1098,8 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1207,6 +1209,8 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     return fini;
@@ -1285,6 +1289,8 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1346,6 +1352,8 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1445,6 +1453,8 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     return fini;

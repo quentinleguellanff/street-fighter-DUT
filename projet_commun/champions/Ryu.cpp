@@ -285,8 +285,6 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
             setSprite(574,4752,73,98);
-    		//_posX-=1*_scale*_orientation;
-    		//_posY+=6*_scale;
 
             if (!_effetSonore.openFromFile("musique/Ryu/degat.ogg"))
                 std::cout<<"erreur musique";
@@ -298,29 +296,18 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(325,4752,73,98);
-    		//_posX+=1*_scale*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(574,4752,73,98);
-    		//_posX-=16*_scale*_orientation;
     		break;
     	case 3:
     		_cptPrendCoup=0;
 		    _clockAnim.restart();
 		    fini=true;
 		    *degats = 0;
-    		//_posX-=16*_scale*_orientation;
     		break;
-    	/*case 4:
-    		_clockAnim.restart();
-    		_cptPrendCoup=0;
-    		setSprite(220,4857,70,94);
-    		//_posX-=16*_scale*_orientation;
-    		fini=true;
-    		*degats=0;
-    		break;*/
     	}
     }
     _sprite.setPosition(_posX,_posY);
@@ -713,7 +700,6 @@ bool Ryu::sauterAvant(Personnage& champEnnemi)
     if(timeAnim > delaiAnim){
         if(_cptSauter < 8 && _cptSauter != 2){
             if(_cptSauter == 1){
-                //_spritePerso.setPosition(_spritePerso.getPosition().x+25*_orientation,_spritePerso.getPosition().y-5);
                 _posX += 25*_orientation;
                 _posY -= 5;
             }
@@ -722,24 +708,20 @@ bool Ryu::sauterAvant(Personnage& champEnnemi)
         }
 
         if(_cptSauter == 4){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x-100*_orientation,_spritePerso.getPosition().y+50);
             _posX -= 100*_orientation;;
             _posY += 50;
         }
         else if(_cptSauter == 5){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x+100*_orientation,_spritePerso.getPosition().y-50);
             _posX += 100*_orientation;;
             _posY -= 50;
         }
         else if(_cptSauter == 6){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x-140*_orientation,_spritePerso.getPosition().y+100);
             _posX -= 140*_orientation;;
             _posY += 100;
         }
         else if(_cptSauter == 7){
             _posX += 70*_orientation;;
             _posY -= 70;
-            //_spritePerso.setPosition(_spritePerso.getPosition().x+70*_orientation,_spritePerso.getPosition().y-70);
         }
     }
     switch (_cptSauter)
@@ -845,7 +827,6 @@ bool Ryu::sauterArriere(Personnage& champEnnemi)
     if(timeAnim > delaiAnim){
         if(_cptSauter < 8){
             if(_cptSauter == 1){
-                //_spritePerso.setPosition(_spritePerso.getPosition().x+25*_orientation,_spritePerso.getPosition().y-5);
                 _posX += 25*_orientation;
                 _posY -= 5;
             }
@@ -1028,6 +1009,8 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	_posY=_scene.getBottom()-_tailleSprite.y;
@@ -1091,6 +1074,8 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1212,6 +1197,8 @@ bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& 
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();
@@ -1281,6 +1268,8 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
@@ -1342,6 +1331,8 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1439,6 +1430,8 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();
