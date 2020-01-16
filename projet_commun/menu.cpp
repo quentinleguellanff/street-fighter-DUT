@@ -19,13 +19,15 @@ MenuPrincipal::MenuPrincipal(float width,float height){
         std::cout<<"erreur texte";
     }
     titre.setFont(font);
-
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color(80,80,80));
+    titre.setFillColor(sf::Color(220,40,40));
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(170);
-    titre.setScale((width/1920)*1.8f,(height/1080)*1.f);
-    titre.setPosition(sf::Vector2f(width/4.3,height/21.6));
+    titre.setLetterSpacing (0.8);
+    titre.setOutlineColor(sf::Color::Black);
+    titre.setOutlineThickness (1);
+    titre.setScale((width/1920)*2.5f,(height/1080)*1.f);
+    titre.setPosition(sf::Vector2f(width/10,height/21.6));
 
 
 
@@ -226,7 +228,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     spriteVS.setTexture(textureVS);
     spriteVS.setPosition(sf::Vector2f(window.getSize().x*0.44,window.getSize().y*0.42));
     spriteVS.setTextureRect(sf::IntRect(0,0,324,277));
-    spriteVS.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+    //spriteVS.scale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
     if (!fontMenu.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -247,16 +249,15 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
     spriteP2.setScale(sf::Vector2f(-1.8,1.8));
-
-    if((choixJ1 == -1) || (choixJ2 == -1)) {
         //texte : sélection des personnages
         titre.setFont(fontMenu);
         titre.setString("Selection des personnages");
         titre.setCharacterSize(90);
         titre.setFillColor(sf::Color::Red);
-        titre.setStyle(sf::Text::Bold);
         titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
         titre.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+
+    if((choixJ1 == -1) || (choixJ2 == -1)) {
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -734,8 +735,8 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     //ligne delim
-    ligneDelim.setSize(sf::Vector2f(5, 600));
-    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/3.6));
+    ligneDelim.setSize(sf::Vector2f(window.getSize().x*0.005,window.getSize().y*0.6));
+    ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/5));
 }
 
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
