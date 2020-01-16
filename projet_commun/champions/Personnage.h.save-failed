@@ -384,7 +384,6 @@ public:
     void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
     void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
     void resetHitbox();
-    bool auSol();
     virtual bool victoire()
     {
         return true;
