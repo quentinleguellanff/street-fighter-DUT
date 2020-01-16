@@ -20,7 +20,7 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     }
     titre.setFont(font);
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color(255,215,0));
+    titre.setFillColor(sf::Color(220,60,60));
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(170);
     titre.setLetterSpacing (0.8);
