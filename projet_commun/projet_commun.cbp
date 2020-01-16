@@ -61,7 +61,6 @@
 		<Unit filename="Scene.h" />
 		<Unit filename="champions/Dhalsim.cpp" />
 		<Unit filename="champions/Greg.cpp" />
-		<Unit filename="champions/Jotaro.cpp" />
 		<Unit filename="champions/Personnage.cpp" />
 		<Unit filename="champions/Personnage.h" />
 		<Unit filename="champions/Ryu.cpp" />

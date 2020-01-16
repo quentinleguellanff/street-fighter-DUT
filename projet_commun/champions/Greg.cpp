@@ -31,6 +31,8 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
 
+    _spriteHitSpark.setColor(sf::Color(150,150,255,255));
+
     setScene(s);
 }
 
@@ -262,6 +264,7 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     int deplacement = 20;
     _hurtbox.setSize(sf::Vector2f(0,0));
     _gardebox.setSize(sf::Vector2f(0,0));
+    _posY=_scene.getBottom()-_tailleSprite.y;
 
     if(timeMove > 20){
          switch (_cptPrendCoup)
@@ -285,7 +288,7 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     	case 0:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-            setSprite(574,4742,73,108);
+            setSprite(574,4748,70,102);
     		//_posX-=1*SCALE*_orientation;
     		//_posY+=6*SCALE;
 
@@ -298,13 +301,13 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     	case 1:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(325,4742,73,108);
+    		setSprite(324,4750,73,100);
     		//_posX+=1*SCALE*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
-    		setSprite(574,4742,73,108);
+    		setSprite(574,4748,69,102);
     		//_posX-=16*SCALE*_orientation;
     		break;
     	case 3:
@@ -999,6 +1002,7 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 		    setSprite(80,1308,102,104);
 		    _hitbox.setSize(sf::Vector2f(40*SCALE,20*SCALE));
 		    _hitbox.setPosition(_posX+60*SCALE*_orientation,_posY+10*SCALE);
+		    _spriteHitSpark.setPosition(_posX+60*SCALE*_orientation,_posY+10*SCALE);
 			break;
 		case 2:
 		    _cptAction++;
@@ -1018,6 +1022,8 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 
 	if(collisioncoup(champEnnemi))
 	{
+	    if(_peutHitSpark)
+            _hitSpark = true;
 		*degats=5;
 		energie+=10;
 
