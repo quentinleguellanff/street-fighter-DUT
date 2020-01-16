@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Dhalsim::Dhalsim(int orientation,Scene& s)
+Dhalsim::Dhalsim(int orientation,Scene& s,sf::RenderWindow& window)
 {
-    SCALE=4;
+    double temp=window.getSize().x;
+    SCALE=4*(temp/1920);
 	_orientation=-orientation;
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
     _vsaut = -40;

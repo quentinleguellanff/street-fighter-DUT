@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Ryu::Ryu(int orientation,Scene& s)
+Ryu::Ryu(int orientation,Scene& s,sf::RenderWindow& window)
 {
-    SCALE=4.2;
+    double temp=window.getSize().x;
+    SCALE=4.2*(temp/1920);
 	_orientation=-orientation;
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
     _vsaut = -40;
@@ -14,7 +15,7 @@ Ryu::Ryu(int orientation,Scene& s)
 	    std::cout<<"Erreur au chargement du sprite";
 	}
 	_sprite.setTexture(_texture);
-	_sprite.scale(_orientation*SCALE,SCALE);
+	_sprite.setScale(_orientation*SCALE,SCALE);
 
 	_icone.setTexture(_texture);
 	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
