@@ -42,7 +42,7 @@ GestionFenetre::GestionFenetre()
     musique.setLoop(true);
 }
 
-sf::RenderWindow& GestionFenetre::returnWindow()
+sf::RenderWindow& GestionFenetre::getWindow()
 {
 
 	return window;
@@ -190,7 +190,7 @@ void GestionFenetre::combat(sf::Event& event)
 	/* lancement des animations de début de combat */
 	if(!_tabActionCombat[0] || !_tabActionCombat[1])
 	{
-		///
+
 		readyFight.setTexture(readyF);
         readyFight.setTextureRect(sf::IntRect(666,435,300,74));
         readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,scene.getBottom()*0.5));
@@ -203,6 +203,10 @@ void GestionFenetre::combat(sf::Event& event)
 
 	}else if( (joueur1->getPV()<=0 || joueur2->getPV()<=0) && ( ( joueur1->getChampion()->auSol() && joueur2->getChampion()->auSol() ) || _tabActionCombat[4] ) )
     {
+        readyFight.setTexture(readyF);
+        readyFight.setTextureRect(sf::IntRect(377,384,287,128));
+        readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,scene.getBottom()*0.5));
+
     	_tabActionCombat[4]=true;
     	if(_tabActionCombat[5]==false)
     		_tabActionCombat[5]=joueur1->finPartie();

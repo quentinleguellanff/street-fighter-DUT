@@ -876,7 +876,6 @@ void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& 
         selecEcran=1;
         m.initValidationPerso();
     }
-    return;
 }
 
 void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
