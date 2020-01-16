@@ -13,7 +13,7 @@ int main()
 {
 	GestionFenetre fenetre;
 
-	while(fenetre.returnWindow().isOpen())
+	while(fenetre.getWindow().isOpen())
 	{
 		fenetre.action();
 	}
