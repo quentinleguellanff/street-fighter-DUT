@@ -39,6 +39,8 @@ Dhalsim::Dhalsim(int orientation,Scene& s,sf::RenderWindow& window)
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
 
+    _spriteHitSpark.setColor(sf::Color(130,255,130,255));
+
     setScene(s);
 }
 
@@ -1009,6 +1011,7 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
             setSprite(197,419,108,117);
             _hitbox.setSize(sf::Vector2f(40*_scale,20*_scale));
             _hitbox.setPosition(_posX+68*_scale*_orientation,_posY+56*_scale);
+            _spriteHitSpark.setPosition(_posX+68*_scale*_orientation,_posY+56*_scale);
             break;
         case 3:
             _cptAction ++;
@@ -1027,11 +1030,15 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=5;
         energie+=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1093,6 +1100,8 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1145,6 +1154,7 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 
             _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
             _hitbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.1);
+            _spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.1);
             break;
         case 4:
             if(timeAnim>delai*4)
@@ -1195,10 +1205,14 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     return fini;
@@ -1242,6 +1256,7 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
             _hitbox.setSize(sf::Vector2f(39*_scale,22*_scale));
             _hitbox.setPosition(_posX+87*_scale*_orientation,_posY+51*_scale);
+            _spriteHitSpark.setPosition(_posX+87*_scale*_orientation,_posY+51*_scale);
             break;
         case 3:
             _cptAction ++;
@@ -1269,11 +1284,15 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=7;
         energie+=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1315,6 +1334,7 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
             _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
             _hitbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.25);
+            _spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.25);
             break;
         case 3:
             _cptAction =0;
@@ -1334,6 +1354,8 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     keepInWalls();
@@ -1427,10 +1449,14 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
             _posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
     }
 
     return fini;
@@ -1452,99 +1478,108 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 
     if(timeAnim > delai)
     {
-        switch (_cptAction)
-        {
-        case 0:
-            _cptAction ++;
-            _clockAnim.restart();
-            setSprite(24,3233,76,120);
-            _posX-=10*_scale*_orientation;
+	    switch (_cptAction)
+		{
+		case 0:
+		    _cptAction ++;
+		    _clockAnim.restart();
+		    setSprite(24,3233,76,120);
+		    _posX-=10*_scale*_orientation;
 
-            if (!_effetSonore.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
-                std::cout<<"erreur musique";
-            _effetSonore.play();
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 
-            bouleFeu.setPosition(10,10);
-            bouleFeu.setTexture(_texture);
-            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-            break;
-        case 1:
-            _cptAction ++;
-            _clockAnim.restart();
-            setSprite(108,3233,81,120);
-            _posX-=6*_scale*_orientation;
-            break;
-        case 2:
-            _cptAction ++;
-            _clockAnim.restart();
-            setSprite(197,3233,58,120);
-            _posX+=28*_scale*_orientation;
-            break;
-        case 3:
-            _cptAction ++;
-            _clockAnim.restart();
-            setSprite(263,3233,92,120);
-            _posX-=4*_scale*_orientation;
+		    bouleFeu.setTexture(_texture);
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+			break;
+		case 1:
+		    _cptAction ++;
+		    _clockAnim.restart();
+		    setSprite(108,3233,81,120);
+		    _posX-=6*_scale*_orientation;
+			break;
+		case 2:
+		    _cptAction ++;
+		    _clockAnim.restart();
+		    setSprite(197,3233,58,120);
+		    _posX+=28*_scale*_orientation;
+			break;
+		case 3:
+		    _cptAction ++;
+		    _clockAnim.restart();
+		    setSprite(263,3233,92,120);
+		    _posX-=4*_scale*_orientation;
 
-            bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
-            bouleFeu.setScale(_orientation*_scale,_scale);
-            bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));
-            break;
-        }
-        _sprite.setPosition(_posX,_posY);
-    }
+			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
+			bouleFeu.setScale(_orientation*_scale,_scale);
+			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));
+			break;
+		}
+		_sprite.setPosition(_posX,_posY);
+	}
 
-    if(_cptAction>=4 && _cptAction<8)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(310,3355,39,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>7 && _cptAction<11)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(263,3355,39,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>10 && _cptAction<15)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(217,3355,38,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>14 && _cptAction<20)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(167,3355,42,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>19 && _cptAction<24)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(119,3355,40,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>23 && _cptAction<28)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(71,3355,40,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
-    else if(_cptAction>27)
-    {
-        _cptAction ++;
-        bouleFeu.setTextureRect(sf::IntRect(24,3355,39,25));
-        bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
-    }
+	if(_cptAction>=4 && _cptAction<8)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(310,3355,39,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>7 && _cptAction<11)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(263,3355,39,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>10 && _cptAction<15)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(217,3355,38,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>14 && _cptAction<20)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(167,3355,42,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>19 && _cptAction<24)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(119,3355,40,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>23 && _cptAction<28)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(71,3355,40,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}else if(_cptAction>27)
+	{
+		_cptAction ++;
+		bouleFeu.setTextureRect(sf::IntRect(24,3355,39,25));
+		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
+	}
 
-    if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
-    {
-        bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-        fini=true;
-        energie-=50;
-        _cptAction=0;
-    }
+	if(_cptAction>4)
+	{
+		if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+		{
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			fini=true;
+			energie-=50;
+			_cptAction=0;
+		}
 
+		if(collisionCoup(champEnnemi))
+		{
+			*degats=30;
+
+			if(champEnnemi.getPosX()==_scene.getRightLimit())
+				_posX-=25*_scale*_orientation;
+
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			fini=true;
+			energie-=50;
+			_cptAction=0;
+		}
+	}
 
     _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
     _hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
@@ -1552,18 +1587,6 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
     _hitbox.setSize(sf::Vector2f(bouleFeu.getGlobalBounds().width,bouleFeu.getGlobalBounds().height));
     _hitbox.setPosition(bouleFeu.getPosition().x,bouleFeu.getPosition().y);
 
-    if(collisionCoup(champEnnemi))
-    {
-        *degats=30;
-
-        if(champEnnemi.getPosX()==_scene.getRightLimit())
-            _posX-=25*_scale*_orientation;
-
-        bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-        fini=true;
-        energie-=50;
-        _cptAction=0;
-    }
 
     keepInWalls();
     return fini;
