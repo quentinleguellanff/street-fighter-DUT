@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=La Bagarre
+Comment=
+Exec=./sfml-app
+Icon=/home/miguel/GIT_IUT/projet_tutoré/rendu3/Rendu linux/sprites/greg_iconepng.png
+Terminal=false
+StartupNotify=false

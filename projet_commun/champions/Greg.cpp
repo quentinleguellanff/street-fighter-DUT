@@ -4,6 +4,7 @@ using namespace std;
 
 Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
 {
+<<<<<<< HEAD
     double temp=window.getSize().x;
     _scale=4.2*(temp/1920);
     _orientation=-orientation;
@@ -15,6 +16,13 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
     _cptAction=0;
     _cptAccroupi=0;
     _cptPrendCoup=0;
+=======
+    double largeurFenetre=window.getSize().x;
+    _scale=4.2*(largeurFenetre/1920);
+
+	_orientation=-orientation;
+    _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
+>>>>>>> 92cebf194d27f339310248da35774fd6246e6ba6
     _vsaut = -40;
 
     if (!_texture.loadFromFile("sprites/sprite_greg.png"))
@@ -24,8 +32,14 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
     _sprite.setTexture(_texture);
     _sprite.scale(_orientation*_scale,_scale);
 
+<<<<<<< HEAD
     _icone.setTexture(_texture);
     _icone.setTextureRect(sf::IntRect(859,5579,119,108));
+=======
+	_icone.setTexture(_texture);
+	_icone.setTextureRect(sf::IntRect(859,5579,119,108));
+    _icone.scale(largeurFenetre/1920,largeurFenetre/1920);
+>>>>>>> 92cebf194d27f339310248da35774fd6246e6ba6
 
     _hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);

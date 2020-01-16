@@ -93,6 +93,7 @@ void Player::resetAttributs()
 
 void Player::setChampion(Personnage* perso)
 {
+<<<<<<< HEAD
     _champion=perso;
     resetPlayer();
 
@@ -108,6 +109,22 @@ void Player::setChampion(Personnage* perso)
         _portrait.setPosition(_barreInfos.getPosition().x,10);
         _portrait.scale(-1,1);
     }
+=======
+	_champion=perso;
+	resetPlayer();
+
+	if(_barreInfos.getScale().x>=0)
+	{
+		_portrait=_champion->getIcone();
+		_portrait.setPosition(0,10);
+	}else
+	{
+
+		_portrait=_champion->getIcone();
+		_portrait.setPosition(_barreInfos.getPosition().x,10);
+		_portrait.scale(-1,1);
+	}
+>>>>>>> 92cebf194d27f339310248da35774fd6246e6ba6
 }
 
 Personnage* Player::getChampion()
