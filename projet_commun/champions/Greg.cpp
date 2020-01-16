@@ -18,7 +18,8 @@ Greg::Greg(int orientation,Scene& s,sf::RenderWindow& window)
 	_sprite.scale(_orientation*SCALE,SCALE);
 
 	_icone.setTexture(_texture);
-	_icone.setTextureRect(sf::IntRect(824,5573,124,104));
+	_icone.setTextureRect(sf::IntRect(859,5579,119,108));
+
     _hurtbox.setFillColor(sf::Color(255,255,255,0));
     _hurtbox.setOutlineColor(sf::Color::Green);
     _hurtbox.setOutlineThickness(4);
