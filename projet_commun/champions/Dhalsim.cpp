@@ -39,6 +39,8 @@ Dhalsim::Dhalsim(int orientation,Scene& s,sf::RenderWindow& window)
     _gardebox.setOutlineColor(sf::Color::Blue);
     _gardebox.setOutlineThickness(4);
 
+    _spriteHitSpark.setColor(sf::Color(130,255,130,255));
+
     setScene(s);
 }
 
@@ -1009,6 +1011,7 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
             setSprite(197,419,108,117);
             _hitbox.setSize(sf::Vector2f(40*_scale,20*_scale));
             _hitbox.setPosition(_posX+68*_scale*_orientation,_posY+56*_scale);
+            _spriteHitSpark.setPosition(_posX+68*_scale*_orientation,_posY+56*_scale);
             break;
         case 3:
             _cptAction ++;
@@ -1027,6 +1030,8 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=5;
         energie+=10;
 
@@ -1149,6 +1154,7 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 
             _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
             _hitbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.1);
+            _spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.1);
             break;
         case 4:
             if(timeAnim>delai*4)
@@ -1199,6 +1205,8 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1248,6 +1256,7 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
             _hitbox.setSize(sf::Vector2f(39*_scale,22*_scale));
             _hitbox.setPosition(_posX+87*_scale*_orientation,_posY+51*_scale);
+            _spriteHitSpark.setPosition(_posX+87*_scale*_orientation,_posY+51*_scale);
             break;
         case 3:
             _cptAction ++;
@@ -1275,6 +1284,8 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=7;
         energie+=10;
 
@@ -1323,6 +1334,7 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
             _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
             _hitbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.25);
+            _spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.25);
             break;
         case 3:
             _cptAction =0;
@@ -1437,6 +1449,8 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
     if(collisionCoup(champEnnemi))
     {
+        if(_peutHitSpark)
+            _hitSpark=true;
         *degats=10;
 
         if(champEnnemi.getPosX()==_scene.getRightLimit())

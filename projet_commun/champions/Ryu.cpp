@@ -1141,6 +1141,7 @@ bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& 
 
 		    _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.2,_tailleSprite.y*0.4));
 		    _hitbox.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY+_tailleSprite.y*0.1);
+		    _spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.8*_orientation,_posY+_tailleSprite.y*0.1);
 			break;
 		case 2:
 		    _cptAction ++;
@@ -1209,6 +1210,8 @@ bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& 
 
 	if(collisionCoup(champEnnemi))
 	{
+	    if(_peutHitSpark)
+            _hitSpark = true;
 		*degats=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1257,6 +1260,7 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
     		_hitbox.setSize(sf::Vector2f(80*_scale,22*_scale));
 		    _hitbox.setPosition(_posX+36*_scale*_orientation,_posY);
+		    _spriteHitSpark.setPosition(_posX+80*_scale*_orientation,_posY);
 			break;
 		case 3:
 		    _cptAction ++;
@@ -1276,6 +1280,8 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisionCoup(champEnnemi))
 	{
+	    if(_peutHitSpark)
+            _hitSpark = true;
 		*degats=7;
 		energie+=10;
 
@@ -1412,6 +1418,7 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 		    _hitbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.3));
 			_hitbox.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.4);
+			_spriteHitSpark.setPosition(_posX+_tailleSprite.x*0.4*_orientation,_posY+_tailleSprite.y*0.4);
 			break;
 		case 6:
 		    _cptAction++;
@@ -1435,6 +1442,9 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 	if(collisionCoup(champEnnemi))
 	{
+	    if(_peutHitSpark)
+            _hitSpark = true;
+
 		*degats=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
