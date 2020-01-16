@@ -30,6 +30,7 @@ public:
 	void chargementToit(sf::Music&);
 	void chargementSkulls(sf::Music&);
 	void chargementSanFran(sf::RenderWindow&,sf::Music&);
+	void chargementAvion(sf::Music&);
 
 
 	sf::Sprite getSprite() const;	// Renvoi la scene
