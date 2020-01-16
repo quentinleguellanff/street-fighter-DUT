@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=La Bagarre
+Comment=
+Exec=./sfml-app
+Icon=/home/miguel/GIT_IUT/projet_tutoré/test_nico_greg_perso/greg_iconepng.png
+Terminal=false
+StartupNotify=false
