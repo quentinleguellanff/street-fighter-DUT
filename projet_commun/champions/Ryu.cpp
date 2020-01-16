@@ -285,8 +285,8 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
             setSprite(574,4752,73,98);
-    		//_posX-=1*SCALE*_orientation;
-    		//_posY+=6*SCALE;
+    		//_posX-=1*_scale*_orientation;
+    		//_posY+=6*_scale;
 
             if (!_effetSonore.openFromFile("musique/Ryu/degat.ogg"))
                 std::cout<<"erreur musique";
@@ -298,26 +298,26 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(325,4752,73,98);
-    		//_posX+=1*SCALE*_orientation;
+    		//_posX+=1*_scale*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(574,4752,73,98);
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		break;
     	case 3:
     		_cptPrendCoup=0;
 		    _clockAnim.restart();
 		    fini=true;
 		    *degats = 0;
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		break;
     	/*case 4:
     		_clockAnim.restart();
     		_cptPrendCoup=0;
     		setSprite(220,4857,70,94);
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		fini=true;
     		*degats=0;
     		break;*/
@@ -1447,7 +1447,7 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energie)
 {
-	if(energie<50)
+    if(energie<50)
 	{
 		energie=-100;
 		return true;
@@ -1472,9 +1472,9 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
 		    _clockAnim.restart();
 		    setSprite(10,3493,74,90);
 
-		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
-			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1521,7 +1521,7 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
 
     sf::Time elapsedEffet = _clockEffet.getElapsedTime();
     int timeEffet = elapsedEffet.asMilliseconds();
-    int delaiEffet=5;
+    int delaiEffet=10;
 
     if(timeEffet>delaiEffet)
     {
@@ -1552,23 +1552,27 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
     	}
     }
 
+    if(_cptAction>6)
+    {
+        if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+        {
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+            cout<<endl<<"ici\t"<<bouleFeu.getPosition().x<<endl;
+        }
 
-	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
-	{
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
+        if(collisionCoup(champEnnemi))
+        {
+            *degats=30;
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+        }
+    }
 
-	if(collisionCoup(champEnnemi))
-	{
-		*degats=30;
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);

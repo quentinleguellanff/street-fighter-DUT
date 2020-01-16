@@ -219,14 +219,14 @@ bool Greg::parade(int* degats,sf::Sprite& effet)//ok
     {
     	setSprite(70,4648,68,102);
     	_cptPrendCoup++;
-    	//_posX-=25*SCALE*_orientation;
+    	//_posX-=25*_scale*_orientation;
     }else if(timeAnim > delaiAnim)
     {
 		if(_cptPrendCoup==1)
 		{
 			_clockAnim.restart();
 			_cptPrendCoup++;
-    		//_posX-=25*SCALE*_orientation;
+    		//_posX-=25*_scale*_orientation;
 		}else{
 			_clockAnim.restart();
 			_cptPrendCoup=0;
@@ -1459,9 +1459,9 @@ bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& ener
 		    _clockAnim.restart();
 		    setSprite(10,3493,74,90);
 
-		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
 			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1514,7 +1514,7 @@ bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& ener
     {
         if(_cptAction>6 && _cptAction<11)
         {
-            setSprite(400,3605,119,79);
+            setSprite(413,3495,114,88);
             _cptAction ++;
             bouleFeu.setTextureRect(sf::IntRect(1395,5555,128,130));
             bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
@@ -1539,30 +1539,32 @@ bool Greg::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& ener
             bouleFeu.setTextureRect(sf::IntRect(1887,5556,131,129));
             bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
             if(_cptAction==27)
-            {
-               cout<<"coucou"<<endl;
                _cptAction=7;
-            }
         }
         _clockEffet.restart();
     }
 
-	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
-	{
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
+    if(_cptAction>6)
+    {
+        if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+        {
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+        }
 
-	if(collisionCoup(champEnnemi))
-	{
-		*degats=30;
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
+        if(collisionCoup(champEnnemi))
+        {
+            *degats=30;
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+        }
+
+    }
+	
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
