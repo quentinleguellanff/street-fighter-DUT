@@ -1011,6 +1011,8 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	_posY=_scene.getBottom()-_tailleSprite.y;
@@ -1074,6 +1076,8 @@ bool Greg::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1192,6 +1196,8 @@ bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int&
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();
@@ -1258,6 +1264,8 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
@@ -1319,6 +1327,8 @@ bool Greg::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1412,6 +1422,8 @@ bool Greg::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();

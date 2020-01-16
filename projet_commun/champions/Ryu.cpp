@@ -1028,6 +1028,8 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	_posY=_scene.getBottom()-_tailleSprite.y;
@@ -1091,6 +1093,8 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1209,6 +1213,8 @@ bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& 
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();
@@ -1275,6 +1281,8 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 	_posY=_scene.getBottom()-_tailleSprite.y;
     _sprite.setPosition(_posX,_posY);
@@ -1336,6 +1344,8 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
     keepInWalls();
@@ -1429,6 +1439,8 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
 			_posX-=25*_scale*_orientation;
+        else if(champEnnemi.getPosX()<=5)
+            _posX+=25*_scale;
 	}
 
 	keepInWalls();
