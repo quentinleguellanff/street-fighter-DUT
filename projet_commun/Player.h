@@ -68,6 +68,7 @@ private:
 	int _cptAnimEffet;
 	sf::Texture _textureEffet;
 	sf::Music son;
+	sf::Sprite _spriteHitSpark;
 
 public:
 	Player(){};		//constructeur vide
