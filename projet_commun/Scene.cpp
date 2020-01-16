@@ -172,9 +172,9 @@ void Scene::chargementSkulls(sf::Music& sonScene)
     sonScene.setLoop(true);
 }
 
-void Scene::chargementBateau(sf::Music& sonScene)
+void Scene::chargementAvion(sf::Music& sonScene)
 {
-	if(!_textureScene.loadFromFile("background/bateau.jpg")){cout<<"Erreur chargement de Scene"<<endl;}
+	if(!_textureScene.loadFromFile("background/avion.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);

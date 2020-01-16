@@ -788,7 +788,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     if(!bg[4].loadFromFile("background/SanFran.png")) {
         std::cout<<"erreur fond brazil";
     }
-    if(!bg[5].loadFromFile("background/bateau.jpg")) {
+    if(!bg[5].loadFromFile("background/avion.png")) {
         std::cout<<"erreur fond brazil";
     }
 
@@ -939,7 +939,7 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
 
 void MenuBackground::moveRight()
 {
-    if (selection<4)
+    if (selection<5)
     {
         selection=selection+1;
     }
@@ -992,7 +992,7 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==4)
             s.chargementSanFran(window,son);
         if (selection==5)
-            s.chargementBateau(son);
+            s.chargementAvion(son);
         selecEcran=2;
 }
 
