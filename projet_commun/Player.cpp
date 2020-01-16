@@ -29,7 +29,7 @@ Player::Player(int n,sf::RenderWindow& window)
          std::cout<<"Erreur au chargement du sprite";
 	}
 	_barreInfos.setTexture(_textureBI);
-	_effet.setTexture(_textureEffet);
+	_spriteHitSpark.setTexture(_textureEffet);
 
 	for(int i=0;i<2;i++)
 	{
@@ -653,9 +653,9 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 void Player::affichageChampion(sf::RenderWindow& window)
 {
     window.draw(_champion->getSprite());
-    //window.draw(_effet);
+    window.draw(_effet);
     //window.draw(_champion->getHurtbox());
-    //window.draw(_champion->getHitbox());
+    window.draw(_champion->getHitbox());
 	//window.draw(_champion->getGardebox());
 }
 
@@ -677,18 +677,18 @@ void Player::affichageEffet(sf::RenderWindow& window){
                               {896,1,184,220}
                              };
         if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
-            _effet.setTextureRect(sf::IntRect(tabTexture[_cptAnimEffet][0],tabTexture[_cptAnimEffet][1],tabTexture[_cptAnimEffet][2],tabTexture[_cptAnimEffet][3]));
+            _spriteHitSpark.setTextureRect(sf::IntRect(tabTexture[_cptAnimEffet][0],tabTexture[_cptAnimEffet][1],tabTexture[_cptAnimEffet][2],tabTexture[_cptAnimEffet][3]));
         }
         Orientation = _champion->getOrientation();
         if(Orientation == -1){
-            _effet.setScale(-1,1);
-            positionHitboxX =  _champion->getHitbox().getPosition().x + _effet.getGlobalBounds().width +20;
-            positionHitboxY = _champion->getHitbox().getPosition().y - _effet.getGlobalBounds().height/2.3;
+            _spriteHitSpark.setScale(-1,1);
+            positionHitboxX =  _champion->getHitbox().getPosition().x;
+            positionHitboxY = _champion->getHitbox().getPosition().y - _spriteHitSpark.getGlobalBounds().height/2.3;
         }
         else if(Orientation == 1){
-            _effet.setScale(1,1);
-            positionHitboxX = _champion->getHitbox().getGlobalBounds().left - _effet.getGlobalBounds().width - 20;
-            positionHitboxY = _champion->getHitbox().getPosition().y - _effet.getGlobalBounds().height/2.3;
+            _spriteHitSpark.setScale(1,1);
+            positionHitboxX = _champion->getHitbox().getGlobalBounds().left - _spriteHitSpark.getGlobalBounds().width - 20;
+            positionHitboxY = _champion->getHitbox().getPosition().y - _spriteHitSpark.getGlobalBounds().height/2.3;
         }
         _champion->setHitspark(false);
 
@@ -703,14 +703,14 @@ void Player::affichageEffet(sf::RenderWindow& window){
                                            };
         sf::Time elapsed = _clockEffet.getElapsedTime();
         int timeAnim = elapsed.asMilliseconds();
-        if(timeAnim > 40)//30 bonne valeur
+        if(timeAnim > 10)//30 bonne valeur
         {
             _cptAnimEffet +=1;
             _clockEffet.restart();
         }
         if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
-            _effet.setPosition(tabPosition[_cptAnimEffet]);
-            window.draw(_effet);
+            _spriteHitSpark.setPosition(tabPosition[_cptAnimEffet]);
+            window.draw(_spriteHitSpark);
         }
         else if(_cptAnimEffet > 7){
             _cptAnimEffet = 0;

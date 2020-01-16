@@ -14,7 +14,7 @@ class Player
 {
 private:
 	Personnage* _champion;
-
+    sf::Sprite _effet;
 	sf::Sprite _portrait;
 	sf::Sprite _barreInfos;
 	sf::Texture _textureBI;
@@ -62,12 +62,13 @@ private:
 	//std::vector<sf::Clock> _clockAnim;
 	/* 0-clock pour les sprites | 1-clock pour le deplacement */
 
-	sf::Sprite _effet;
+
 	sf::Clock _clockEffet;
 	bool _effetEnCours;
 	int _cptAnimEffet;
 	sf::Texture _textureEffet;
 	sf::Music son;
+	sf::Sprite _spriteHitSpark;
 
 public:
 	Player(){};		//constructeur vide
