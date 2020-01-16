@@ -35,7 +35,7 @@ Ryu::Ryu(int orientation,Scene& s)
 }
 
 
-bool Ryu::victoire(sf::Music& son)
+bool Ryu::victoire()
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -54,9 +54,9 @@ bool Ryu::victoire(sf::Music& son)
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 
-			if (!son.openFromFile("musique/Ryu/ryu_victoire.ogg"))
+			if (!_effetSonore.openFromFile("musique/Ryu/ryu_victoire.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -1065,7 +1065,7 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
     return fini;
 }
 
-bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
 	{
@@ -1092,9 +1092,9 @@ bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::M
 		    setSprite(8,3795,66,86);
 
 		    _posY=_scene.getBottom()-_tailleSprite.y;
-		    if (!son.openFromFile("musique/Ryu/shoryuken.ogg"))
+		    if (!_effetSonore.openFromFile("musique/Ryu/shoryuken.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1391,7 +1391,7 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 	return fini;
 }
 
-bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music& son,int& energie)
+bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energie)
 {
 	if(energie<50)
 	{
@@ -1410,9 +1410,9 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,sf::Music&
 	    switch (_cptAction)
 		{
 		case 0:
-			if (!son.openFromFile("musique/Ryu/hadouken.ogg"))
+			if (!_effetSonore.openFromFile("musique/Ryu/hadouken.ogg"))
 		        std::cout<<"erreur musique";
-		    son.play();
+		    _effetSonore.play();
 
 		    _cptAction++;
 		    _clockAnim.restart();

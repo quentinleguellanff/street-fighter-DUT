@@ -36,7 +36,7 @@ Dhalsim::Dhalsim(int orientation,Scene& s)
 
 
 
-bool Dhalsim::victoire(sf::Music& son)
+bool Dhalsim::victoire()
 {
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -55,9 +55,9 @@ bool Dhalsim::victoire(sf::Music& son)
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 
-			if (!son.openFromFile("musique/Dhalsim/dhalsim_victoire.ogg"))
+			if (!_effetSonore.openFromFile("musique/Dhalsim/dhalsim_victoire.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -1043,7 +1043,7 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
     return fini;
 }
 
-bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<25)
 	{
@@ -1364,7 +1364,7 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 	return fini;
 }
 
-bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::Music& son,int& energie)
+bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& energie)
 {
 	if(energie<50)
 	{
@@ -1388,9 +1388,9 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,sf::M
 		    setSprite(24,3233,76,120);
 		    _posX-=10*SCALE*_orientation;
 
-		    if (!son.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
 		        std::cout<<"erreur musique";
-			son.play();
+			_effetSonore.play();
 
 		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
