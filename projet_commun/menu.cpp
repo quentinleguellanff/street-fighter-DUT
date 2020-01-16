@@ -849,7 +849,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     rect[2].setPosition(sf::Vector2f(window.getSize().x*0.665,window.getSize().y*0.24));
     rect[3].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.6));
     rect[4].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.6));
-    rect[5].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.6));
+    rect[5].setPosition(sf::Vector2f(window.getSize().x*0.665,window.getSize().y*0.6));
 
 }
 
