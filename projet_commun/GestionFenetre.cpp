@@ -5,7 +5,7 @@ using namespace std;
 GestionFenetre::GestionFenetre()
 {
 
-	window.create(sf::VideoMode(1600,900),"la Bagarre");//,sf::Style::Fullscreen);
+	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
 	window.setFramerateLimit(120);
 	window.setMouseCursorVisible(0);
 
@@ -267,8 +267,8 @@ void GestionFenetre::affichageCombat()
     joueur1->affichageChampion(window);
     joueur2->affichageChampion(window);
 
-    joueur1->affichageEffet(window);
-    joueur2->affichageEffet(window);
+    joueur1->afficherHitspark(window);
+    joueur2->afficherHitspark(window);
 
     window.draw(readyFight);
     window.display();

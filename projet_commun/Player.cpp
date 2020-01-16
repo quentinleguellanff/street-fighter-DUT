@@ -7,6 +7,9 @@ using namespace std;
 
 Player::Player(int n,sf::RenderWindow& window)
 {
+	double largeurFenetre=window.getSize().x;
+	ratioScale=largeurFenetre/1920;
+
 	_PV=100;
 	_energie=0;
 
@@ -14,7 +17,6 @@ Player::Player(int n,sf::RenderWindow& window)
 	_posVerticale=0;
 	_action=-1;
 	_actionFini=true;
-                _cptAnimEffet = 0;
 
 	for(int i=0;i<=11;i++)
 		_tabActions.push_back(false);
@@ -25,11 +27,7 @@ Player::Player(int n,sf::RenderWindow& window)
 	{
 	    std::cout<<"Erreur au chargement du sprite";
 	}
-	if(!_textureEffet.loadFromFile("sprites/hitsparks.png")){
-         std::cout<<"Erreur au chargement du sprite";
-	}
 	_barreInfos.setTexture(_textureBI);
-	_spriteHitSpark.setTexture(_textureEffet);
 
 	for(int i=0;i<2;i++)
 	{
@@ -38,38 +36,36 @@ Player::Player(int n,sf::RenderWindow& window)
 		_barreEnergie.push_back(temp);
 	}
 
-	_barrePV[0].setSize(sf::Vector2f(_PV*7.15,40));
-	_barreEnergie[0].setSize(sf::Vector2f(276,40));
+	_barrePV[0].setSize(sf::Vector2f(_PV*7.15*ratioScale,38*ratioScale));
+	_barreEnergie[0].setSize(sf::Vector2f(100*2.76*ratioScale,40*ratioScale));
 
 	_barrePV[0].setFillColor(sf::Color(90,37,37));
 	_barreEnergie[0].setFillColor(sf::Color(210,254,254));
 
-	_barrePV[0].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
-	_barreEnergie[0].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
-
 	_barreEnergie[1].setFillColor(sf::Color(10,255,255));
-	_barreEnergie[1].setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
+	_barreEnergie[1].setScale(ratioScale,ratioScale);
 
 	if(n==1)
 	{
-		_barreInfos.setPosition(sf::Vector2f(0,10));
+		_barreInfos.setScale(ratioScale,ratioScale);
+		_barreInfos.setPosition(sf::Vector2f(0,10*ratioScale));
 
 		for(int i=0;i<2;i++)
 		{
-			_barrePV[i].setPosition(sf::Vector2f(177,19));
-			_barreEnergie[i].setPosition(sf::Vector2f(177,63));
+			_barrePV[i].setPosition(sf::Vector2f(177*ratioScale,19*ratioScale));
+			_barreEnergie[i].setPosition(sf::Vector2f(177*ratioScale,63*ratioScale));
 		}
 	}else
 	{
-		_barreInfos.scale(-1,1);
-		_barreInfos.setPosition(sf::Vector2f(window.getSize().x,10));
+		_barreInfos.setScale(-1*ratioScale,1*ratioScale);
+		_barreInfos.setPosition(sf::Vector2f(window.getSize().x,10*ratioScale));
 
 		for(int i=0;i<2;i++)
 		{
 			_barrePV[i].scale(-1,1);
-			_barrePV[i].setPosition(sf::Vector2f(window.getSize().x-177,18));
+			_barrePV[i].setPosition(sf::Vector2f(window.getSize().x-177*ratioScale,18*ratioScale));
 			_barreEnergie[i].scale(-1,1);
-			_barreEnergie[i].setPosition(sf::Vector2f(window.getSize().x-177,63));
+			_barreEnergie[i].setPosition(sf::Vector2f(window.getSize().x-177*ratioScale,63*ratioScale));
 		}
 
 	}
@@ -612,7 +608,7 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 
 	if(_PV<0)
 		_PV=0;
-	_barrePV[1].setSize(sf::Vector2f(_PV*7.15,38));
+	_barrePV[1].setSize(sf::Vector2f(_PV*7.15*ratioScale,38*ratioScale));
 
 	/* gestion de la barre d'energie */
 
@@ -636,7 +632,7 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 	else if(_energie>100)
 		_energie=100;
 
-	_barreEnergie[1].setSize(sf::Vector2f(_energie*2.76,38));
+	_barreEnergie[1].setSize(sf::Vector2f(_energie*2.76*ratioScale,44*ratioScale));
 
 	/* affichage des barres */
 
@@ -650,74 +646,19 @@ void Player::afficherEnergie(sf::RenderWindow& window)
 	window.draw(_portrait);
 }
 
+
+void Player::afficherHitspark(sf::RenderWindow& window){
+    _champion->affichageEffet(window);
+}
+
+
 void Player::affichageChampion(sf::RenderWindow& window)
 {
     window.draw(_champion->getSprite());
     window.draw(_effet);
     //window.draw(_champion->getHurtbox());
-    window.draw(_champion->getHitbox());
+    //window.draw(_champion->getHitbox());
 	//window.draw(_champion->getGardebox());
-}
-
-void Player::affichageEffet(sf::RenderWindow& window){
-    float positionHitboxX;
-    float positionHitboxY;
-    int Orientation;
-    if(_champion->getHitspark() && _champion->getPeutHitspark()){
-        _effetEnCours = true;
-        _champion->setPeuthitspark(false);
-    }
-    if(_effetEnCours){
-        vector<vector<int>> tabTexture = {{},{},
-                              {1,1,142,220},
-                              {147,1,145,220},
-                              {296,1,196,220},
-                              {496,1,196,220},
-                              {696,1,196,220},
-                              {896,1,184,220}
-                             };
-        if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
-            _spriteHitSpark.setTextureRect(sf::IntRect(tabTexture[_cptAnimEffet][0],tabTexture[_cptAnimEffet][1],tabTexture[_cptAnimEffet][2],tabTexture[_cptAnimEffet][3]));
-        }
-        Orientation = _champion->getOrientation();
-        if(Orientation == -1){
-            _spriteHitSpark.setScale(-1,1);
-            positionHitboxX =  _champion->getHitbox().getPosition().x;
-            positionHitboxY = _champion->getHitbox().getPosition().y - _spriteHitSpark.getGlobalBounds().height/2.3;
-        }
-        else if(Orientation == 1){
-            _spriteHitSpark.setScale(1,1);
-            positionHitboxX = _champion->getHitbox().getGlobalBounds().left - _spriteHitSpark.getGlobalBounds().width - 20;
-            positionHitboxY = _champion->getHitbox().getPosition().y - _spriteHitSpark.getGlobalBounds().height/2.3;
-        }
-        _champion->setHitspark(false);
-
-        vector<sf::Vector2f> tabPosition = {sf::Vector2f(positionHitboxX,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX-10*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX-40*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX-20*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX-5*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX*Orientation+40,positionHitboxY)
-                                           };
-        sf::Time elapsed = _clockEffet.getElapsedTime();
-        int timeAnim = elapsed.asMilliseconds();
-        if(timeAnim > 10)//30 bonne valeur
-        {
-            _cptAnimEffet +=1;
-            _clockEffet.restart();
-        }
-        if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
-            _spriteHitSpark.setPosition(tabPosition[_cptAnimEffet]);
-            window.draw(_spriteHitSpark);
-        }
-        else if(_cptAnimEffet > 7){
-            _cptAnimEffet = 0;
-            _effetEnCours = false;
-            _champion->setPeuthitspark(true);
-        }
-    }
 }
 
 int* Player::getPrendCoup()

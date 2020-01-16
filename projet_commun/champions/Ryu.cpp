@@ -4,8 +4,8 @@ using namespace std;
 
 Ryu::Ryu(int orientation,Scene& s,sf::RenderWindow& window)
 {
-    double temp=window.getSize().x;
-    SCALE=4.2*(temp/1920);
+    double largeurFenetre=window.getSize().x;
+    SCALE=4.2*(largeurFenetre/1920);
 	_orientation=-orientation;
     _cptStatic=0;_cptAvancer=0;_cptReculer=0;_cptSauter=0;_cptApparition=0;_cptAction=0;_cptAccroupi=0;_cptPrendCoup=0;
     _vsaut = -40;
@@ -1001,6 +1001,7 @@ bool Ryu::punch(Personnage& champEnnemi,int* degats,int& energie)
 		    setSprite(80,1318,102,95);
 		    _hitbox.setSize(sf::Vector2f(40*SCALE,20*SCALE));
 		    _hitbox.setPosition(_posX+60*SCALE*_orientation,_posY+10*SCALE);
+		    _spriteHitSpark.setPosition(_posX+60*SCALE*_orientation,_posY);
 			break;
 		case 2:
 		    _cptAction++;
@@ -1098,7 +1099,7 @@ bool Ryu::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 bool Ryu::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;
@@ -1269,7 +1270,7 @@ bool Ryu::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=7;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1330,7 +1331,7 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=7;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1343,7 +1344,7 @@ bool Ryu::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;
