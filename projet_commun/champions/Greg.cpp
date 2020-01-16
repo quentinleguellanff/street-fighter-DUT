@@ -219,14 +219,12 @@ bool Greg::parade(int* degats,sf::Sprite& effet)//ok
     {
     	setSprite(70,4648,68,102);
     	_cptPrendCoup++;
-    	//_posX-=25*_scale*_orientation;
     }else if(timeAnim > delaiAnim)
     {
 		if(_cptPrendCoup==1)
 		{
 			_clockAnim.restart();
 			_cptPrendCoup++;
-    		//_posX-=25*_scale*_orientation;
 		}else{
 			_clockAnim.restart();
 			_cptPrendCoup=0;
@@ -700,7 +698,6 @@ bool Greg::sauterAvant(Personnage& champEnnemi)//ok
     if(timeAnim > delaiAnim){
         if(_cptSauter < 8 && _cptSauter != 2){
             if(_cptSauter == 1){
-                //_spritePerso.setPosition(_spritePerso.getPosition().x+25*_orientation,_spritePerso.getPosition().y-5);
                 _posX += 25*_orientation;
                 _posY -= 5;
             }
@@ -709,24 +706,20 @@ bool Greg::sauterAvant(Personnage& champEnnemi)//ok
         }
 
         if(_cptSauter == 4){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x-100*_orientation,_spritePerso.getPosition().y+50);
             _posX -= 100*_orientation;;
             _posY += 50;
         }
         else if(_cptSauter == 5){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x+100*_orientation,_spritePerso.getPosition().y-50);
             _posX += 100*_orientation;;
             _posY -= 50;
         }
         else if(_cptSauter == 6){
-            //_spritePerso.setPosition(_spritePerso.getPosition().x-140*_orientation,_spritePerso.getPosition().y+100);
             _posX -= 140*_orientation;;
             _posY += 100;
         }
         else if(_cptSauter == 7){
             _posX += 70*_orientation;;
             _posY -= 70;
-            //_spritePerso.setPosition(_spritePerso.getPosition().x+70*_orientation,_spritePerso.getPosition().y-70);
         }
     }
     switch (_cptSauter)
@@ -832,7 +825,6 @@ bool Greg::sauterArriere(Personnage& champEnnemi)//ok
     if(timeAnim > delaiAnim){
         if(_cptSauter < 8){
             if(_cptSauter == 1){
-                //_spritePerso.setPosition(_spritePerso.getPosition().x+25*_orientation,_spritePerso.getPosition().y-5);
                 _posX += 25*_orientation;
                 _posY -= 5;
             }

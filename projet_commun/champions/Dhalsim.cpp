@@ -922,8 +922,6 @@ bool Dhalsim::sauterArriere(Personnage& champEnnemi)
             fini=true;
             break;
         }
-
-        //_sprite.setPosition(_posX,_posY);
     }
 
     keepInWalls();

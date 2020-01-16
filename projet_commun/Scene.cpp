@@ -38,6 +38,7 @@ void Scene::chargementXenoverse(sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 
@@ -72,6 +73,7 @@ void Scene::chargementFutur(sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 void Scene::chargementToit(sf::Music& sonScene)
@@ -104,6 +106,7 @@ void Scene::chargementToit(sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 void Scene::chargementSanFran(sf::RenderWindow& window,sf::Music& sonScene)
@@ -137,6 +140,7 @@ void Scene::chargementSanFran(sf::RenderWindow& window,sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 void Scene::chargementSkulls(sf::Music& sonScene)
@@ -169,6 +173,7 @@ void Scene::chargementSkulls(sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 
@@ -202,6 +207,7 @@ void Scene::chargementAvion(sf::Music& sonScene)
             std::cout<<"erreur musique";
     }
     sonScene.play();
+    sonScene.setVolume(40.f) ;
     sonScene.setLoop(true);
 }
 sf::Sprite Scene::getSprite() const

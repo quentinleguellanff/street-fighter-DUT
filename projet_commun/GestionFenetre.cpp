@@ -37,7 +37,7 @@ GestionFenetre::GestionFenetre()
     if (!musique.openFromFile("musique/theme_menu_princ.ogg")){
         std::cout<<"erreur musique";
     }
-    //musique.setVolume(1.f) ;
+    musique.setVolume(30.f) ;
     musique.play();
     musique.setLoop(true);
 }
@@ -117,6 +117,7 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
             std::cout<<"erreur musique";
         }
         musique.play();
+        musique.setVolume(30.f) ;
         musique.setLoop(true);
 
     }
