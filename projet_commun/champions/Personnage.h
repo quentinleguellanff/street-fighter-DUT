@@ -54,6 +54,11 @@ protected:
 
 	sf::Music _effetSonore;
 
+	bool _effetEnCours;
+	int _cptAnimEffet;
+	sf::Texture _textureEffet;
+	sf::Sprite _spriteHitSpark;
+
 public:
 	Personnage();		//constructeur vide
 	~Personnage(){};
@@ -88,6 +93,8 @@ public:
 	void resetCptAccroupi();	//reinitialise le compteur pour l'animation accroupi
 	void rotate(Personnage&);		//gère la rotation des personnages quand ils se dépassent
 	bool auSol();
+
+	void affichageEffet(sf::RenderWindow& window);
 
 	virtual bool victoire(){return true;};
 	virtual bool mort(){return true;};
