@@ -72,8 +72,9 @@ void Ryu::debout(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
         setSprite(347,433,66,98);
         break;
     }
-    _hurtbox.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
     _hurtbox.setSize(sf::Vector2f(_spritePerso.getGlobalBounds().width,_spritePerso.getGlobalBounds().height));
+    _spritePerso.setPosition(_spritePerso.getPosition().x,_sol.getPosition().y-_spritePerso.getGlobalBounds().height);
+    _hurtbox.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
     ResteDansFenetre();
     window.draw(_spritePerso);
     //window.draw(_hurtbox);
@@ -151,7 +152,8 @@ void Ryu::avancer(sf::RenderWindow& window,sf::RectangleShape hurtboxEnnemi){
 
 	//_sprite.setPosition(_posX,_posY);
     _hurtbox.setSize(sf::Vector2f(_spritePerso.getGlobalBounds().width,_spritePerso.getGlobalBounds().height+7));
-    _spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
+    //_spritePerso.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
+    _spritePerso.setPosition(_spritePerso.getPosition().x,_sol.getPosition().y-_spritePerso.getGlobalBounds().height);
     _hurtbox.setPosition(_spritePerso.getPosition().x,_spritePerso.getPosition().y);
     //rotate(champEnnemi);
     window.draw(_spritePerso);

@@ -55,9 +55,11 @@
 		<Unit filename="Personnage.h" />
 		<Unit filename="Ryu.cpp" />
 		<Unit filename="Ryu.h" />
+		<Unit filename="include/Greg.h" />
 		<Unit filename="include/Ken.h" />
 		<Unit filename="include/joueur.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Greg.cpp" />
 		<Unit filename="src/Ken.cpp" />
 		<Unit filename="src/joueur.cpp" />
 		<Extensions>
