@@ -258,6 +258,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setFillColor(sf::Color::Red);
         titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
         titre.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+    }
 
     if((choixJ1 == -1) || (choixJ2 == -1)) {
 
@@ -718,14 +719,14 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     j2.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
 
-    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.2, window.getSize().y*0.2));
+    spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.1, window.getSize().y*0.2));
     spriteCommandes[0].setTexture(texturej1);
-    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0, 515, 515));
+    spriteCommandes[0].setTextureRect(sf::IntRect(0, 0,  679, 415));
     spriteCommandes[0].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     spriteCommandes[1].setPosition(sf::Vector2f(window.getSize().x*0.55, window.getSize().y*0.2));
     spriteCommandes[1].setTexture(texturej2);
-    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0, 679, 415));
+    spriteCommandes[1].setTextureRect(sf::IntRect(0, 0,515, 515));
     spriteCommandes[1].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     retour.setFont(fontCommandes);
@@ -739,6 +740,7 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     //ligne delim
     ligneDelim.setSize(sf::Vector2f(window.getSize().x*0.005,window.getSize().y*0.6));
     ligneDelim.setPosition(sf::Vector2f(window.getSize().x/2, window.getSize().y/5));
+    ligneDelim.setFillColor(sf::Color::Black);
 }
 
 void MenuCommandes::retourMenu(int& selecEcran,sf::Event event)
@@ -839,7 +841,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setCharacterSize(30);
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
-    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
+    retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.95));
     retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     for(int i=0; i<6;i++){
