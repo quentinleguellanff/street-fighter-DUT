@@ -482,9 +482,17 @@ class MenuSelection {
 	   * \fn void bouger(sf::Event,sf::RenderWindow&)
 	   * \brief Pression des touches
 	   *
-	   * Pression des touches pour passer au personnage suivant/précédent
+	   * Pression des touches pour passer au personnage suivant/précédent si jouer 1
 	   */
-		void bouger(sf::Event,sf::RenderWindow&);
+		void bouger_P1(sf::Event,sf::RenderWindow&);
+
+    /**
+     * \fn void bouger(sf::Event,sf::RenderWindow&)
+     * \brief Pression des touches
+     *
+     * Pression des touches pour passer au personnage suivant/précédent si joueur 2
+     */
+    void bouger_P2(sf::Event,sf::RenderWindow&);
 
 		/**
 	   * \fn int validationPerso(sf::Event event,int&,int&)

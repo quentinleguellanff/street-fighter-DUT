@@ -102,7 +102,8 @@ void GestionFenetre::gestionSelecPerso(sf::Event& event)
     {
         if (event.type == sf::Event::Closed)
             window.close();
-            menuSel->bouger(event,window);
+            menuSel->bouger_P1(event,window);
+            menuSel->bouger_P2(event,window);
             selecEcran = menuSel->validationPerso(event,selecChamp_P1,selecChamp_P2);
     }
 
@@ -224,18 +225,12 @@ void GestionFenetre::combat(sf::Event& event)
 		if(_tabActionCombat[2])
 		{
 			joueur1->recuperationCommandesP1(*joueur2);
-		}else if(_tabActionCombat[2]==false)
-		{
-			joueur1->recuperationAttaquesP1();
 		}
 
 
 		if(_tabActionCombat[3])
 		{
 			joueur2->recuperationCommandesP2(*joueur1);
-		}else if(_tabActionCombat[3]==false)
-		{
-			joueur2->recuperationAttaquesP2();
 		}
 
 		/* Lancement des animations Player 2*/
@@ -261,8 +256,8 @@ void GestionFenetre::affichageCombat()
 {
 	window.draw(scene.getSprite());
 
-    joueur1->afficherEnergie(window);
-	joueur2->afficherEnergie(window);
+    joueur1->afficherInfos(window);
+	joueur2->afficherInfos(window);
 
     joueur1->affichageChampion(window);
     joueur2->affichageChampion(window);
@@ -283,9 +278,7 @@ void GestionFenetre::finCombat()
     _tabActionCombat[2]=true;_tabActionCombat[3]=true;
 
 	selecEcran=0;
-	joueur1->resetPV();
 	joueur1->getChampion()->resetHitbox();
-	joueur2->resetPV();
 	joueur2->getChampion()->resetHitbox();
 	menuSel->reset(window);
 
