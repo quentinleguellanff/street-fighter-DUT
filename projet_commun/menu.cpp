@@ -785,7 +785,10 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     if(!bg[3].loadFromFile("background/skulls.jpg")) {
         std::cout<<"erreur fond skulls";
     }
-    if(!bg[4].loadFromFile("background/brazil.jpg")) {
+    if(!bg[4].loadFromFile("background/SanFran.png")) {
+        std::cout<<"erreur fond brazil";
+    }
+    if(!bg[5].loadFromFile("background/bateau.jpg")) {
         std::cout<<"erreur fond brazil";
     }
 
@@ -813,6 +816,12 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.61));
     spritebg[4].setScale(0.3f,0.3f);
     spritebg[4].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
+
+    spritebg[5].setTexture(bg[5]);
+    spritebg[5].setPosition(sf::Vector2f(window.getSize().x*0.675,window.getSize().y*0.61));
+    spritebg[5].setScale(0.3f,0.3f);
+    spritebg[5].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
+
 
 
     titre.setFont(fontBackground);
@@ -853,6 +862,7 @@ void MenuBackground::draw(sf::RenderWindow& window)
         window.draw(spritebg[2]);
         window.draw(spritebg[3]);
         window.draw(spritebg[4]);
+        window.draw(spritebg[5]);
         window.draw(retour);
         window.draw(titre);
     }
@@ -981,6 +991,8 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
             s.chargementSkulls(son);
         if (selection==4)
             s.chargementSanFran(window,son);
+        if (selection==5)
+            s.chargementBateau(son);
         selecEcran=2;
 }
 
