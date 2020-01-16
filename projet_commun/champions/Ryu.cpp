@@ -1437,7 +1437,7 @@ bool Ryu::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 
 bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energie)
 {
-	if(energie<50)
+    if(energie<50)
 	{
 		energie=-100;
 		return true;
@@ -1462,9 +1462,9 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
 		    _clockAnim.restart();
 		    setSprite(10,3493,74,90);
 
-		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
-			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY);
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1511,7 +1511,7 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
 
     sf::Time elapsedEffet = _clockEffet.getElapsedTime();
     int timeEffet = elapsedEffet.asMilliseconds();
-    int delaiEffet=5;
+    int delaiEffet=10;
 
     if(timeEffet>delaiEffet)
     {
@@ -1542,23 +1542,28 @@ bool Ryu::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi,int* degats,int& energ
     	}
     }
 
+    if(_cptAction>6)
+    {
+        if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+        {
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+            cout<<endl<<"ici\t"<<bouleFeu.getPosition().x<<endl;
+        }
 
-	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
-	{
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
+        if(collisioncoup(champEnnemi))
+        {
+            *degats=30;
+            bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+            fini=true;
+            energie-=50;
+            _cptAction=0;
+            cout<<"la"<<endl;
+        }
+    }
 
-	if(collisioncoup(champEnnemi))
-	{
-		*degats=30;
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
 
 	_hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 	_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);

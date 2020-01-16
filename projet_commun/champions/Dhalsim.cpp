@@ -1441,9 +1441,9 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 		        std::cout<<"erreur musique";
 			_effetSonore.play();
 
-		    bouleFeu.setPosition(10,10);
 		    bouleFeu.setTexture(_texture);
 			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1508,12 +1508,28 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 		bouleFeu.setPosition(bouleFeu.getPosition().x+20*_orientation,_posY+(_tailleSprite.y/2));
 	}
 
-	if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+	if(_cptAction>4)
 	{
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
+		if( (_orientation==1 && bouleFeu.getPosition().x>=_scene.getRightLimit()) || (_orientation==-1 && bouleFeu.getPosition().x<=_scene.getLeftLimit()) )
+		{
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			fini=true;
+			energie-=50;
+			_cptAction=0;
+		}
+
+		if(collisioncoup(champEnnemi))
+		{
+			*degats=30;
+
+			if(champEnnemi.getPosX()==_scene.getRightLimit())
+				_posX-=25*SCALE*_orientation;
+
+			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
+			fini=true;
+			energie-=50;
+			_cptAction=0;
+		}
 	}
 
 
@@ -1523,18 +1539,6 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
     _hitbox.setSize(sf::Vector2f(bouleFeu.getGlobalBounds().width,bouleFeu.getGlobalBounds().height));
 	_hitbox.setPosition(bouleFeu.getPosition().x,bouleFeu.getPosition().y);
 
-	if(collisioncoup(champEnnemi))
-	{
-		*degats=30;
-
-		if(champEnnemi.getPosX()==_scene.getRightLimit())
-			_posX-=25*SCALE*_orientation;
-
-		bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
-		fini=true;
-		energie-=50;
-		_cptAction=0;
-	}
 
 	keepInWalls();
 	return fini;
