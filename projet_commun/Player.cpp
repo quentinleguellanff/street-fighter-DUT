@@ -655,7 +655,7 @@ void Player::affichageChampion(sf::RenderWindow& window)
     window.draw(_champion->getSprite());
     //window.draw(_effet);
     //window.draw(_champion->getHurtbox());
-    window.draw(_champion->getHitbox());
+    //window.draw(_champion->getHitbox());
 	//window.draw(_champion->getGardebox());
 }
 
@@ -668,7 +668,7 @@ void Player::affichageEffet(sf::RenderWindow& window){
         _champion->setPeuthitspark(false);
     }
     if(_effetEnCours){
-        vector<vector<int>> tabTexture = {{},
+        vector<vector<int>> tabTexture = {{},{},
                               {1,1,142,220},
                               {147,1,145,220},
                               {296,1,196,220},
@@ -676,44 +676,43 @@ void Player::affichageEffet(sf::RenderWindow& window){
                               {696,1,196,220},
                               {896,1,184,220}
                              };
+        if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
+            _effet.setTextureRect(sf::IntRect(tabTexture[_cptAnimEffet][0],tabTexture[_cptAnimEffet][1],tabTexture[_cptAnimEffet][2],tabTexture[_cptAnimEffet][3]));
+        }
         Orientation = _champion->getOrientation();
         if(Orientation == -1){
-            _effet.setScale(1,1);
-            positionHitboxX =  _champion->getHitbox().getPosition().x + _effet.getGlobalBounds().width/2;
+            _effet.setScale(-1,1);
+            positionHitboxX =  _champion->getHitbox().getPosition().x + _effet.getGlobalBounds().width +20;
             positionHitboxY = _champion->getHitbox().getPosition().y - _effet.getGlobalBounds().height/2.3;
         }
         else if(Orientation == 1){
-            _effet.setScale(-1,1);
-            positionHitboxX = _champion->getHitbox().getGlobalBounds().left - _effet.getGlobalBounds().width/2;
-            positionHitboxY = _champion->getHitbox().getPosition().y - _effet.getGlobalBounds().height;
-        }
-        if(_cptAnimEffet >= 1 && _cptAnimEffet <= 6){
-            _effet.setTextureRect(sf::IntRect(tabTexture[_cptAnimEffet][0],tabTexture[_cptAnimEffet][1],tabTexture[_cptAnimEffet][2],tabTexture[_cptAnimEffet][3]));
+            _effet.setScale(1,1);
+            positionHitboxX = _champion->getHitbox().getGlobalBounds().left - _effet.getGlobalBounds().width - 20;
+            positionHitboxY = _champion->getHitbox().getPosition().y - _effet.getGlobalBounds().height/2.3;
         }
         _champion->setHitspark(false);
-            cout << "compteur" << _cptAnimEffet << endl;
-            cout << _effet.getPosition().x << endl;
 
-        vector<sf::Vector2f> tabPosition = {sf::Vector2f(positionHitboxX*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+10*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+20*Orientation,positionHitboxY),
-                                            sf::Vector2f(positionHitboxX+5*Orientation,positionHitboxY),
+        vector<sf::Vector2f> tabPosition = {sf::Vector2f(positionHitboxX,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-10*Orientation,positionHitboxY),
                                             sf::Vector2f(positionHitboxX-40*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-20*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX-5*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX+40*Orientation,positionHitboxY),
+                                            sf::Vector2f(positionHitboxX*Orientation+40,positionHitboxY)
                                            };
         sf::Time elapsed = _clockEffet.getElapsedTime();
         int timeAnim = elapsed.asMilliseconds();
-        if(timeAnim > 30)//30 bonne valeur
+        if(timeAnim > 40)//30 bonne valeur
         {
             _cptAnimEffet +=1;
             _clockEffet.restart();
         }
-        if(_cptAnimEffet >= 1 && _cptAnimEffet <= 6){
+        if(_cptAnimEffet >= 2 && _cptAnimEffet <= 7){
             _effet.setPosition(tabPosition[_cptAnimEffet]);
             window.draw(_effet);
         }
-        else if(_cptAnimEffet > 6){
+        else if(_cptAnimEffet > 7){
             _cptAnimEffet = 0;
             _effetEnCours = false;
             _champion->setPeuthitspark(true);
