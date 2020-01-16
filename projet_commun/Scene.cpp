@@ -13,7 +13,7 @@ void Scene::chargementXenoverse(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-		_spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
+		_spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
 	_hauteurSol=75.f;
@@ -47,7 +47,7 @@ void Scene::chargementFutur(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
+        _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
 	_hauteurSol=75.f;
@@ -80,7 +80,7 @@ void Scene::chargementToit(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
+        _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 	_hauteurSol=200.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
@@ -106,13 +106,13 @@ void Scene::chargementToit(sf::Music& sonScene)
     sonScene.play();
     sonScene.setLoop(true);
 }
-void Scene::chargementBrazil(sf::RenderWindow& window,sf::Music& sonScene)
+void Scene::chargementSanFran(sf::RenderWindow& window,sf::Music& sonScene)
 {
 	if(!_textureScene.loadFromFile("background/SanFran.png")){cout<<"Erreur chargement de Scene"<<endl;}
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
+        _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 
 	_hauteurSol=70.f;
@@ -145,7 +145,7 @@ void Scene::chargementSkulls(sf::Music& sonScene)
 	else{
 		_textureScene.setSmooth(true);
 		_spriteScene.setTexture(_textureScene);
-        _spriteScene.setScale(_tailleWindow.x/1920,_tailleWindow.y/1080);
+        _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
 	_hauteurSol=75.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;

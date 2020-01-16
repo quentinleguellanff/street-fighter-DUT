@@ -29,8 +29,8 @@ public:
 	void chargementFutur(sf::Music&);
 	void chargementToit(sf::Music&);
 	void chargementSkulls(sf::Music&);
-	void chargementBrazil(sf::RenderWindow&,sf::Music&);
-	
+	void chargementSanFran(sf::RenderWindow&,sf::Music&);
+
 
 	sf::Sprite getSprite() const;	// Renvoi la scene
 	// Permet de dessiner les limites de la map	& gerer les positions limites

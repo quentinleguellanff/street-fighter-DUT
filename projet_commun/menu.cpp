@@ -226,6 +226,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     spriteVS.setTexture(textureVS);
     spriteVS.setPosition(sf::Vector2f(window.getSize().x*0.44,window.getSize().y*0.42));
     spriteVS.setTextureRect(sf::IntRect(0,0,324,277));
+    spriteVS.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
     if (!fontMenu.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -255,7 +256,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setFillColor(sf::Color::Red);
         titre.setStyle(sf::Text::Bold);
         titre.setPosition(sf::Vector2f(window.getSize().x*0.3,window.getSize().y*0.05));
-        titre.setScale(window.getSize().x/1920,window.getSize().x/1080);
+        titre.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -264,6 +265,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j1.setFillColor(sf::Color::White);
         j1.setStyle(sf::Text::Bold);
         j1.setPosition(sf::Vector2f(window.getSize().x*0.20,window.getSize().y*0.25));
+        j1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
 
         //texte : Joueur 2
         j2.setFont(fontMenu);
@@ -272,6 +274,8 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         j2.setFillColor(sf::Color::White);
         j2.setStyle(sf::Text::Bold);
         j2.setPosition(sf::Vector2f(window.getSize().x*0.71,window.getSize().y*0.25));
+        j2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+
 
         //texte : nomPersoJ1
         nomPersoJ1.setFont(fontMenu);
@@ -280,6 +284,8 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         nomPersoJ1.setFillColor(sf::Color::White);
         nomPersoJ1.setStyle(sf::Text::Bold);
         nomPersoJ1.setPosition(sf::Vector2f(window.getSize().x*0.21, hauteurTexte));
+        nomPersoJ1.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
+
 
         //texte : nomPersoJ2
         nomPersoJ2.setFont(fontMenu);
@@ -288,6 +294,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         nomPersoJ2.setFillColor(sf::Color::White);
         nomPersoJ2.setStyle(sf::Text::Bold);
         nomPersoJ2.setPosition(sf::Vector2f(window.getSize().x*0.72,hauteurTexte));
+        nomPersoJ2.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
     }
 }
 
@@ -577,7 +584,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
      //Validation du choix de personage pour Joueur 1
-    
+
     if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || appuiBouttonManette(0,0,clockAttenteBoutton))
     {
         choixJ1 = etatPersoJ1;
@@ -632,7 +639,7 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
         }
         _effetSon.play();
         return 0;
-    }else 
+    }else
         return 1;
 }
 
@@ -680,6 +687,7 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     }
 
     spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     if (!fontCommandes.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -696,21 +704,26 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     j1.setCharacterSize(50);
     j1.setFillColor(sf::Color(255,0,0));
     j1.setPosition(sf::Vector2f(100,100));
+    j1.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
+
 
     j2.setFont(fontCommandes);
     j2.setString("Joueur 2");
     j2.setCharacterSize(50);
     j2.setFillColor(sf::Color(255,0,0));
     j2.setPosition(sf::Vector2f(1000,100));
+    j2.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
 
     spriteCommandes[0].setPosition(sf::Vector2f(window.getSize().x*0.2, window.getSize().y*0.2));
     spriteCommandes[0].setTexture(texturej1);
     spriteCommandes[0].setTextureRect(sf::IntRect(0, 0, 515, 515));
+    spriteCommandes[0].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     spriteCommandes[1].setPosition(sf::Vector2f(window.getSize().x*0.55, window.getSize().y*0.2));
     spriteCommandes[1].setTexture(texturej2);
     spriteCommandes[1].setTextureRect(sf::IntRect(0, 0, 679, 415));
+    spriteCommandes[1].setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     retour.setFont(fontCommandes);
     retour.setString("Appuyez sur echap pour revenir au menu");
@@ -718,6 +731,7 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
     retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
+    retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     //ligne delim
     ligneDelim.setSize(sf::Vector2f(5, 600));
@@ -753,6 +767,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     }
 
     spriteFond.setTexture(menuFond);
+    spriteFond.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     if (!fontBackground.loadFromFile("MenuSelection/atari.ttf"))
     {
@@ -777,27 +792,27 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     spritebg[0].setTexture(bg[0]);
     spritebg[0].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.25));
     spritebg[0].setScale(0.3f,0.3f);
-    spritebg[0].scale(window.getSize().x/1920,window.getSize().y/1080);
+    spritebg[0].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
     spritebg[1].setTexture(bg[1]);
     spritebg[1].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.25));
     spritebg[1].setScale(0.3f,0.3f);
-    spritebg[1].scale(window.getSize().x/1920,window.getSize().y/1080);
+    spritebg[1].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
     spritebg[2].setTexture(bg[2]);
     spritebg[2].setPosition(sf::Vector2f(window.getSize().x*0.675,window.getSize().y*0.25));
     spritebg[2].setScale(0.3f,0.3f);
-    spritebg[2].scale(window.getSize().x/1920,window.getSize().y/1080);
+    spritebg[2].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
     spritebg[3].setTexture(bg[3]);
     spritebg[3].setPosition(sf::Vector2f(window.getSize().x*0.025,window.getSize().y*0.61));
     spritebg[3].setScale(0.3f,0.3f);
-    spritebg[3].scale(window.getSize().x/1920,window.getSize().y/1080);
+    spritebg[3].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
     spritebg[4].setTexture(bg[4]);
     spritebg[4].setPosition(sf::Vector2f(window.getSize().x*0.35,window.getSize().y*0.61));
     spritebg[4].setScale(0.3f,0.3f);
-    spritebg[4].scale(window.getSize().x/1920,window.getSize().y/1080);
+    spritebg[4].scale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
 
     titre.setFont(fontBackground);
@@ -805,7 +820,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     titre.setCharacterSize(90);
     titre.setFillColor(sf::Color::Red);
     titre.setPosition(sf::Vector2f(window.getSize().x*0.38,window.getSize().y*0.05));
-    titre.setScale(window.getSize().x/1920,window.getSize().y/1080);
+    titre.setScale(window.getSize().x/1920.f,window.getSize().y/1080.f);
 
     retour.setFont(fontBackground);
     retour.setString("Appuyez sur echap pour revenir au menu");
@@ -813,6 +828,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setFillColor(sf::Color::White);
     retour.setStyle(sf::Text::Italic);
     retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.9));
+    retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
     for(int i=0; i<6;i++){
         rect[i].setSize(sf::Vector2f(window.getSize().x*0.32,window.getSize().y*0.32));
@@ -825,9 +841,7 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     rect[3].setPosition(sf::Vector2f(window.getSize().x*0.015,window.getSize().y*0.6));
     rect[4].setPosition(sf::Vector2f(window.getSize().x*0.34,window.getSize().y*0.6));
     rect[5].setPosition(sf::Vector2f(window.getSize().x*0.69,window.getSize().y*0.6));
-    for(int i=0; i<6;i++){
-            rect[i].setScale(window.getSize().x/1920,window.getSize().y/1080);
-    }
+
 }
 
 void MenuBackground::draw(sf::RenderWindow& window)
@@ -906,6 +920,11 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             peutGauche = false;
         }
     }
+    if ((selection>=0) && (selection<3) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
+        selection=selection+3;
+
+    if ((selection>=3) && (selection<6) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
+        selection=selection-3;
 }
 
 void MenuBackground::moveRight()
@@ -961,7 +980,7 @@ void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s
         if (selection==3)
             s.chargementSkulls(son);
         if (selection==4)
-            s.chargementBrazil(window,son);
+            s.chargementSanFran(window,son);
         selecEcran=2;
 }
 
