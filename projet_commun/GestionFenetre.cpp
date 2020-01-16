@@ -5,7 +5,7 @@ using namespace std;
 GestionFenetre::GestionFenetre()
 {
 
-	window.create(sf::VideoMode(1600,900),"la Bagarre");//,sf::Style::Fullscreen);
+	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
 	window.setFramerateLimit(120);
 	window.setMouseCursorVisible(0);
 

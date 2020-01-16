@@ -14,6 +14,7 @@ class Player
 {
 private:
 	Personnage* _champion;
+	double ratioScale;
     sf::Sprite _effet;
 	sf::Sprite _portrait;
 	sf::Sprite _barreInfos;
