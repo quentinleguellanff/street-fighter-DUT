@@ -42,7 +42,7 @@ GestionFenetre::GestionFenetre()
     musique.setLoop(true);
 }
 
-sf::RenderWindow& GestionFenetre::returnWindow()
+sf::RenderWindow& GestionFenetre::getWindow()
 {
 
 	return window;
