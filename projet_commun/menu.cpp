@@ -3,10 +3,12 @@
 
 using namespace std;
 
-MenuPrincipal::MenuPrincipal(float width,float height){
+MenuPrincipal::MenuPrincipal(float width,float height)
+{
 
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.jpg"))
+    {
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -15,7 +17,8 @@ MenuPrincipal::MenuPrincipal(float width,float height){
 
 // Titre du jeu
 
-    if (!font.loadFromFile("BebasNeue-Regular.ttf")){
+    if (!font.loadFromFile("BebasNeue-Regular.ttf"))
+    {
         std::cout<<"erreur texte";
     }
     titre.setFont(font);
@@ -33,7 +36,8 @@ MenuPrincipal::MenuPrincipal(float width,float height){
 
 // Tableau de sprites avec toutes les cases utilisables
 
-    if(!textureCase.loadFromFile("sprites/spriteMenu.png")) {
+    if(!textureCase.loadFromFile("sprites/spriteMenu.png"))
+    {
         std::cout<<"erreur case";
     }
     textureCase.setSmooth(true);
@@ -79,16 +83,18 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     _selection=0;
 }
 
-MenuPrincipal::~MenuPrincipal(){
+MenuPrincipal::~MenuPrincipal()
+{
 }
 
-void MenuPrincipal::draw(sf::RenderWindow &window){
-        window.draw(spriteFond);
-        window.draw(titre);
-        window.draw(spriteMenux[0]);
-        window.draw(spriteMenux[1]);
-        window.draw(spriteMenux[2]);
-    }
+void MenuPrincipal::draw(sf::RenderWindow &window)
+{
+    window.draw(spriteFond);
+    window.draw(titre);
+    window.draw(spriteMenux[0]);
+    window.draw(spriteMenux[1]);
+    window.draw(spriteMenux[2]);
+}
 
 // Recupérer les intructions de l'utilisateur
 void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& window)
@@ -115,56 +121,70 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
                 selecEcran=-1;
             clockAttenteJoystick.restart();
         }
-    }else
+    }
+    else
     {
         while (window.pollEvent(event))
         {
-            switch ( event.type ){
+            switch ( event.type )
+            {
 
             case sf::Event::Closed:
-                    window.close( );
-                    break;
+                window.close( );
+                break;
             case sf::Event::KeyReleased:
-                switch (event.key.code){
+                switch (event.key.code)
+                {
                 case sf::Keyboard::Z:
-                  peutmonter = true;
-                  break;
+                    peutmonter = true;
+                    break;
                 case sf::Keyboard::S:
                     peutdescendre=true;
-                    break;}
+                    break;
+                }
             }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-            if(peutmonter){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            if(peutmonter)
+            {
                 moveUp();
                 peutmonter = false;
             }
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-            if(peutdescendre){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            if(peutdescendre)
+            {
                 moveDown();
                 peutdescendre = false;
             }
-        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
+        }
+        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==0))
         {
             selecEcran=1;
-            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
-                    std::cout<<"erreur musique";
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg"))
+            {
+                std::cout<<"erreur musique";
             }
             _effetSon.play();
 
-        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
+        }
+        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==1))
         {
             selecEcran=3;
-            if (!_effetSon.openFromFile("musique/menu_selec.ogg")){
-                    std::cout<<"erreur musique";
+            if (!_effetSon.openFromFile("musique/menu_selec.ogg"))
+            {
+                std::cout<<"erreur musique";
             }
             _effetSon.play();
 
-        }else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
+        }
+        else if ((event.type==sf::Event::KeyReleased && event.key.code==sf::Keyboard::Enter) && (_selection==2))
         {
-            if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
-                    std::cout<<"erreur musique";
+            if (!_effetSon.openFromFile("musique/menu_retour.ogg"))
+            {
+                std::cout<<"erreur musique";
             }
             _effetSon.play();
             window.close();
@@ -174,17 +194,20 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
 }
 
 //Monter dans le menu
-void MenuPrincipal::moveUp(){
-    if (_selection==1){
-            spriteMenux[_selection]=spriteMenu[1];
-            _selection=_selection -1;
-            spriteMenux[_selection]=spriteMenu[3];
+void MenuPrincipal::moveUp()
+{
+    if (_selection==1)
+    {
+        spriteMenux[_selection]=spriteMenu[1];
+        _selection=_selection -1;
+        spriteMenux[_selection]=spriteMenu[3];
 
     }
-    if (_selection==2){
-            spriteMenux[_selection]=spriteMenu[2];
-            _selection=_selection -1;
-            spriteMenux[_selection]=spriteMenu[4];
+    if (_selection==2)
+    {
+        spriteMenux[_selection]=spriteMenu[2];
+        _selection=_selection -1;
+        spriteMenux[_selection]=spriteMenu[4];
 
     }
 }
@@ -192,15 +215,17 @@ void MenuPrincipal::moveUp(){
 //Descendre dans le menu
 void MenuPrincipal::moveDown()
 {
-    if (_selection==1){
-            spriteMenux[_selection]=spriteMenu[1];
-            _selection=_selection+1;
-            spriteMenux[_selection]=spriteMenu[5];
+    if (_selection==1)
+    {
+        spriteMenux[_selection]=spriteMenu[1];
+        _selection=_selection+1;
+        spriteMenux[_selection]=spriteMenu[5];
     }
-    if (_selection==0){
-            spriteMenux[0]=spriteMenu[0];
-            _selection=1;
-            spriteMenux[1]=spriteMenu[4];
+    if (_selection==0)
+    {
+        spriteMenux[0]=spriteMenu[0];
+        _selection=1;
+        spriteMenux[1]=spriteMenu[4];
 
     }
 
@@ -212,7 +237,8 @@ void MenuPrincipal::moveDown()
 
 MenuSelection::MenuSelection(sf::RenderWindow& window)
 {
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.jpg"))
+    {
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -250,7 +276,8 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
     spriteP2.setScale(sf::Vector2f(-1.9,1.9));
 
-    if((choixJ1 == -1) || (choixJ2 == -1)) {
+    if((choixJ1 == -1) || (choixJ2 == -1))
+    {
         //texte : sélection des personnages
         titre.setFont(fontMenu);
         titre.setString("Selection des personnages");
@@ -260,7 +287,8 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
         titre.setScale(window.getSize().x/1920.f,window.getSize().x/1080.f);
     }
 
-    if((choixJ1 == -1) || (choixJ2 == -1)) {
+    if((choixJ1 == -1) || (choixJ2 == -1))
+    {
 
         //texte : Joueur 1
         j1.setFont(fontMenu);
@@ -304,17 +332,17 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
 
 void MenuSelection::draw(sf::RenderWindow &window)
 {
-        window.draw(spriteFond);
-        window.draw(titre);
-        window.draw(j1);
-        window.draw(j2);
-        window.draw(spriteVS);
-        window.draw(spriteP1);
-        window.draw(spriteP2);
-        window.draw(nomPersoJ1);
-        window.draw(nomPersoJ2);
-        window.draw(annulerChoixJ1);
-        window.draw(annulerChoixJ2);
+    window.draw(spriteFond);
+    window.draw(titre);
+    window.draw(j1);
+    window.draw(j2);
+    window.draw(spriteVS);
+    window.draw(spriteP1);
+    window.draw(spriteP2);
+    window.draw(nomPersoJ1);
+    window.draw(nomPersoJ2);
+    window.draw(annulerChoixJ1);
+    window.draw(annulerChoixJ2);
 
 }
 
@@ -440,9 +468,10 @@ void MenuSelection::bouger_P1(sf::Event event,sf::RenderWindow& window)
 
                 clockAttenteJoystick.restart();
             }
-        }else
+        }
+        else
         {
-                bool peutGauche = true, peutDroite = true;
+            bool peutGauche = true, peutDroite = true;
 
             while (window.pollEvent(event))
             {
@@ -452,8 +481,8 @@ void MenuSelection::bouger_P1(sf::Event event,sf::RenderWindow& window)
                     switch (event.key.code)
                     {
                     case sf::Keyboard::Right:
-                      peutDroite = true;
-                      break;
+                        peutDroite = true;
+                        break;
                     case sf::Keyboard::Left:
                         peutGauche=true;
                         break;
@@ -482,12 +511,15 @@ void MenuSelection::bouger_P1(sf::Event event,sf::RenderWindow& window)
 
         switch(etatPersoJ1)
         {
-            case 0: nomPersoJ1.setString("Greg");
-                    break;
-            case 1: nomPersoJ1.setString("Dhalsim");
-                    break;
-            case 2: nomPersoJ1.setString("Ryu");
-                    break;
+        case 0:
+            nomPersoJ1.setString("Greg");
+            break;
+        case 1:
+            nomPersoJ1.setString("Dhalsim");
+            break;
+        case 2:
+            nomPersoJ1.setString("Ryu");
+            break;
         }
     }
 
@@ -507,68 +539,71 @@ void MenuSelection::bouger_P2(sf::Event event,sf::RenderWindow& window)
     {
         //if (sf::Joystick::isConnected(1))
         //{
-            sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
-            int timeAttente = elapsed.asMilliseconds();
-            if(timeAttente>142)
-            {
-                joystick0_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
-                joystick0_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
+        sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
+        int timeAttente = elapsed.asMilliseconds();
+        if(timeAttente>142)
+        {
+            joystick0_axisX = sf::Joystick::getAxisPosition(1, sf::Joystick::X);
+            joystick0_axisY = sf::Joystick::getAxisPosition(1, sf::Joystick::Y);
 
-                if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
-                    persoPrecedent_P2(etatPersoJ2,window);
-                else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
-                    persoSuivant_P2(etatPersoJ2,window);
+            if( (joystick0_axisX > 40) && (joystick0_axisY < 70 && joystick0_axisY > -55))
+                persoPrecedent_P2(etatPersoJ2,window);
+            else if( (joystick0_axisX < -40) && (joystick0_axisY < 70 && joystick0_axisY > -40))
+                persoSuivant_P2(etatPersoJ2,window);
 
-                clockAttenteJoystick.restart();
-            }
+            clockAttenteJoystick.restart();
+        }
         //}else
         //{
-            bool peutGauche2 = true, peutDroite2 = true;
+        bool peutGauche2 = true, peutDroite2 = true;
 
-            while (window.pollEvent(event))
+        while (window.pollEvent(event))
+        {
+            switch ( event.type )
             {
-                switch ( event.type )
+            case sf::Event::KeyReleased:
+                switch (event.key.code)
                 {
-                case sf::Event::KeyReleased:
-                    switch (event.key.code)
-                    {
-                    case sf::Keyboard::D:
-                      peutDroite2 = true;
-                      break;
-                    case sf::Keyboard::Q:
-                        peutGauche2=true;
-                        break;
-                    }
+                case sf::Keyboard::D:
+                    peutDroite2 = true;
+                    break;
+                case sf::Keyboard::Q:
+                    peutGauche2=true;
+                    break;
                 }
             }
+        }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            if(peutDroite2)
             {
-                if(peutDroite2)
-                {
-                    persoSuivant_P2(etatPersoJ2,window);
-                    peutDroite2 = false;
-                }
+                persoSuivant_P2(etatPersoJ2,window);
+                peutDroite2 = false;
             }
+        }
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+            if(peutGauche2)
             {
-                if(peutGauche2)
-                {
-                    persoPrecedent_P2(etatPersoJ2,window);
-                    peutGauche2 = false;
-                }
+                persoPrecedent_P2(etatPersoJ2,window);
+                peutGauche2 = false;
             }
+        }
         //}
 
         switch(etatPersoJ2)
         {
-            case 0: nomPersoJ2.setString("Greg");
-                    break;
-            case 1: nomPersoJ2.setString("Dhalsim");
-                    break;
-            case 2: nomPersoJ2.setString("Ryu");
-                    break;
+        case 0:
+            nomPersoJ2.setString("Greg");
+            break;
+        case 1:
+            nomPersoJ2.setString("Dhalsim");
+            break;
+        case 2:
+            nomPersoJ2.setString("Ryu");
+            break;
         }
     }
 
@@ -584,7 +619,7 @@ void MenuSelection::bouger_P2(sf::Event event,sf::RenderWindow& window)
 
 int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& selecChamp_P2)
 {
-     //Validation du choix de personage pour Joueur 1
+    //Validation du choix de personage pour Joueur 1
 
     if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) || appuiBouttonManette(0,0,clockAttenteBoutton))
     {
@@ -600,8 +635,9 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
         annulerChoixJ1.setStyle(sf::Text::Italic);
         annulerChoixJ1.setPosition(sf::Vector2f(650,hauteurTexte+15));
 
-        if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
-                std::cout<<"erreur musique";
+        if (!_effetSon.openFromFile("musique/perso_selec.ogg"))
+        {
+            std::cout<<"erreur musique";
         }
         _effetSon.play();
     }
@@ -609,22 +645,23 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
     //Validation du choix de personage pour Joueur 2
     if( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) || appuiBouttonManette(1,0,clockAttenteBoutton))
     {
-            choixJ2 = etatPersoJ2;
+        choixJ2 = etatPersoJ2;
 
-            nomPersoJ2.setFillColor(sf::Color::Red);
+        nomPersoJ2.setFillColor(sf::Color::Red);
 
-            //texte : annulation du choix J1
-            annulerChoixJ2.setFont(fontMenu);
-            annulerChoixJ2.setString("Touche BackSpace pour annuler la selection");
-            annulerChoixJ2.setCharacterSize(20);
-            annulerChoixJ2.setFillColor(sf::Color::White);
-            annulerChoixJ2.setStyle(sf::Text::Italic);
-            annulerChoixJ2.setPosition(sf::Vector2f(1000,hauteurTexte+15));
+        //texte : annulation du choix J1
+        annulerChoixJ2.setFont(fontMenu);
+        annulerChoixJ2.setString("Touche BackSpace pour annuler la selection");
+        annulerChoixJ2.setCharacterSize(20);
+        annulerChoixJ2.setFillColor(sf::Color::White);
+        annulerChoixJ2.setStyle(sf::Text::Italic);
+        annulerChoixJ2.setPosition(sf::Vector2f(1000,hauteurTexte+15));
 
-            if (!_effetSon.openFromFile("musique/perso_selec.ogg")){
-                    std::cout<<"erreur musique";
-            }
-            _effetSon.play();
+        if (!_effetSon.openFromFile("musique/perso_selec.ogg"))
+        {
+            std::cout<<"erreur musique";
+        }
+        _effetSon.play();
     }
 
     if(choixJ1 != -1 && choixJ2 != -1)
@@ -635,19 +672,23 @@ int MenuSelection::validationPerso(sf::Event event,int& selecChamp_P1, int& sele
     }
     else if( ( (sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape) || appuiBouttonManette(0,3,clockAttenteBoutton) ) && choixJ1 == -1 && choixJ2 == -1)
     {
-        if (!_effetSon.openFromFile("musique/menu_retour.ogg")){
-                std::cout<<"erreur musique";
+        if (!_effetSon.openFromFile("musique/menu_retour.ogg"))
+        {
+            std::cout<<"erreur musique";
         }
         _effetSon.play();
         return 0;
-    }else
+    }
+    else
         return 1;
 }
 
 void MenuSelection::reset(sf::RenderWindow& window)
 {
-    choixJ1=-1;choixJ2=-1;
-    etatPersoJ1=0;etatPersoJ2=1;
+    choixJ1=-1;
+    choixJ2=-1;
+    etatPersoJ1=0;
+    etatPersoJ2=1;
 
     annulerChoixJ1.setString("");
     annulerChoixJ2.setString("");
@@ -683,7 +724,8 @@ void MenuSelection::resetClock()
 MenuCommandes::MenuCommandes(sf::RenderWindow& window)
 {
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.jpg"))
+    {
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -694,10 +736,12 @@ MenuCommandes::MenuCommandes(sf::RenderWindow& window)
     {
         cout << "ERREUR : chargement de police atari.ttf" << endl;
     }
-    if(!texturej1.loadFromFile("sprites/commandej1.png")) {
+    if(!texturej1.loadFromFile("sprites/commandej1.png"))
+    {
         std::cout<<"erreur manette";
     }
-    if(!texturej2.loadFromFile("sprites/commandej2.png")) {
+    if(!texturej2.loadFromFile("sprites/commandej2.png"))
+    {
         std::cout<<"erreur clavier";
     }
     j1.setFont(fontCommandes);
@@ -764,7 +808,8 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
 
     selection=0;
 
-    if(!menuFond.loadFromFile("background/menu.jpg")){
+    if(!menuFond.loadFromFile("background/menu.jpg"))
+    {
         std::cout<<"erreur fond"<<endl;
     }
 
@@ -775,22 +820,28 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     {
         cout << "ERREUR : chargement de police atari.ttf" << endl;
     }
-    if(!bg[0].loadFromFile("background/toit.png")) {
+    if(!bg[0].loadFromFile("background/toit.png"))
+    {
         std::cout<<"erreur fond toit";
     }
-    if(!bg[1].loadFromFile("background/futur.jpg")) {
+    if(!bg[1].loadFromFile("background/futur.jpg"))
+    {
         std::cout<<"erreur fond futur";
     }
-    if(!bg[2].loadFromFile("background/ring_xenoverse_V2.jpg")) {
+    if(!bg[2].loadFromFile("background/ring_xenoverse_V2.jpg"))
+    {
         std::cout<<"erreur fond xenorverse";
     }
-    if(!bg[3].loadFromFile("background/skulls.jpg")) {
+    if(!bg[3].loadFromFile("background/skulls.jpg"))
+    {
         std::cout<<"erreur fond skulls";
     }
-    if(!bg[4].loadFromFile("background/SanFran.png")) {
+    if(!bg[4].loadFromFile("background/SanFran.png"))
+    {
         std::cout<<"erreur fond brazil";
     }
-    if(!bg[5].loadFromFile("background/avion.png")) {
+    if(!bg[5].loadFromFile("background/avion.png"))
+    {
         std::cout<<"erreur fond brazil";
     }
 
@@ -841,7 +892,8 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
     retour.setPosition(sf::Vector2f(window.getSize().x*0.40, window.getSize().y*0.95));
     retour.setScale(sf::Vector2f(window.getSize().x/1920.f,window.getSize().y/1080.f));
 
-    for(int i=0; i<6;i++){
+    for(int i=0; i<6; i++)
+    {
         rect[i].setSize(sf::Vector2f(window.getSize().x*0.32,window.getSize().y*0.32));
         rect[i].setFillColor(sf::Color(255,0,0));
 
@@ -857,17 +909,17 @@ MenuBackground::MenuBackground(sf::RenderWindow& window)
 
 void MenuBackground::draw(sf::RenderWindow& window)
 {
-        window.draw(spriteFond);
-        window.draw(rect[selection]);
-        window.draw(spritebg[0]);
-        window.draw(spritebg[1]);
-        window.draw(spritebg[2]);
-        window.draw(spritebg[3]);
-        window.draw(spritebg[4]);
-        window.draw(spritebg[5]);
-        window.draw(retour);
-        window.draw(titre);
-    }
+    window.draw(spriteFond);
+    window.draw(rect[selection]);
+    window.draw(spritebg[0]);
+    window.draw(spritebg[1]);
+    window.draw(spritebg[2]);
+    window.draw(spritebg[3]);
+    window.draw(spritebg[4]);
+    window.draw(spritebg[5]);
+    window.draw(retour);
+    window.draw(titre);
+}
 
 void MenuBackground::retourMenu2(int& selecEcran,sf::Event event,MenuSelection& m,sf::RenderWindow& window)
 {
@@ -890,8 +942,8 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             switch (event.key.code)
             {
             case sf::Keyboard::Right:
-              peutDroite = true;
-              break;
+                peutDroite = true;
+                break;
             case sf::Keyboard::Left:
                 peutGauche=true;
                 break;
@@ -916,14 +968,16 @@ void MenuBackground::bouger(sf::Event event, sf::RenderWindow& window)
             clockAttenteJoystick.restart();
         }
 
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         if(peutDroite)
         {
             moveRight();
             peutDroite = false;
         }
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         if(peutGauche)
         {
@@ -946,7 +1000,8 @@ void MenuBackground::moveRight()
     }
 }
 
-void MenuBackground::moveLeft(){
+void MenuBackground::moveLeft()
+{
     if (selection>0)
     {
         selection=selection-1;
@@ -969,7 +1024,8 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
     {
         if(appuiBouttonManette(0,0,clockAttenteBoutton))
             valider(window,selecEcran,s,son);
-    }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
     {
         if(go)
         {
@@ -982,19 +1038,19 @@ void MenuBackground::selectionner(sf::Event event, sf::RenderWindow& window, int
 
 void MenuBackground::valider(sf::RenderWindow& window, int& selecEcran, Scene& s,sf::Music& son)
 {
-       if (selection==0)
-            s.chargementToit(son);
-        if (selection==1)
-            s.chargementFutur(son);
-        if (selection==2)
-            s.chargementXenoverse(son);
-        if (selection==3)
-            s.chargementSkulls(son);
-        if (selection==4)
-            s.chargementSanFran(window,son);
-        if (selection==5)
-            s.chargementAvion(son);
-        selecEcran=2;
+    if (selection==0)
+        s.chargementToit(son);
+    if (selection==1)
+        s.chargementFutur(son);
+    if (selection==2)
+        s.chargementXenoverse(son);
+    if (selection==3)
+        s.chargementSkulls(son);
+    if (selection==4)
+        s.chargementSanFran(window,son);
+    if (selection==5)
+        s.chargementAvion(son);
+    selecEcran=2;
 }
 
 

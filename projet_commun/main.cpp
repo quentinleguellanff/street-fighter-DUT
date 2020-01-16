@@ -11,11 +11,11 @@ using namespace std;
 
 int main()
 {
-	GestionFenetre fenetre;
+    GestionFenetre fenetre;
 
-	while(fenetre.getWindow().isOpen())
-	{
-		fenetre.action();
-	}
-	return 0;
+    while(fenetre.getWindow().isOpen())
+    {
+        fenetre.action();
+    }
+    return 0;
 }
