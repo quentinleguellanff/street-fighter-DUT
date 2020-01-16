@@ -124,8 +124,6 @@ private:
    */
     sf::Clock clockAttenteBoutton;
 
-        sf::Clock clockAttente;
-
 
     /**
    * \attribute sf::Music _effetSon
@@ -285,7 +283,7 @@ private:
     sf::Texture menuFond;
     sf::Sprite spriteFond;
 
-        sf::Clock clockAttenteJoystick;
+    sf::Clock clockAttenteJoystick;
     sf::Clock clockAttenteBoutton;
 
     int hauteurPerso;
@@ -300,7 +298,6 @@ private:
 
     float joystick0_axisX;
     float joystick0_axisY;
-    sf::Clock clockAttente;
 
     sf::Music _effetSon;
 

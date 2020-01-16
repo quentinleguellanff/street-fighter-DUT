@@ -1094,7 +1094,7 @@ bool Greg::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;
@@ -1265,7 +1265,7 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=7;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1326,7 +1326,7 @@ bool Greg::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=7;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1339,7 +1339,7 @@ bool Greg::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 bool Greg::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;

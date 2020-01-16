@@ -241,7 +241,7 @@ bool Dhalsim::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 
     		energie+=5;
 
-    		if (!_effetSonore.openFromFile("musique/Dhalsim/degats.ogg"))
+    		if (!_effetSonore.openFromFile("musique/Dhalsim/degat.ogg"))
 		        std::cout<<"erreur musique";
 			_effetSonore.play();
     		break;
@@ -1004,7 +1004,7 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=10;
+		*degats=5;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1078,7 +1078,7 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;
@@ -1246,7 +1246,7 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
 	if(collisioncoup(champEnnemi))
 	{
-		*degats=8;
+		*degats=7;
 		energie+=10;
 
 		if(champEnnemi.getPosX()==_scene.getRightLimit())
@@ -1319,7 +1319,7 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
 bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 {
-	if(energie<25)
+	if(energie<20)
 	{
 		energie=-100;
 		return true;
