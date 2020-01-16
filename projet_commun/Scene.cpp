@@ -180,7 +180,7 @@ void Scene::chargementAvion(sf::Music& sonScene)
 		_spriteScene.setTexture(_textureScene);
         _spriteScene.setScale(_tailleWindow.x/1920.f,_tailleWindow.y/1080.f);
 	}
-	_hauteurSol=72.f;
+	_hauteurSol=50.f;
 	_limiteSol=_tailleWindow.y-_hauteurSol;
 	_largeurWindow=_tailleWindow.x;
 

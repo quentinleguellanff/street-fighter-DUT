@@ -20,12 +20,12 @@ MenuPrincipal::MenuPrincipal(float width,float height){
     }
     titre.setFont(font);
     titre.setString("La Bagarre");
-    titre.setFillColor(sf::Color(220,40,40));
+    titre.setFillColor(sf::Color(255,215,0));
     titre.setStyle(sf::Text::Bold);
     titre.setCharacterSize(170);
     titre.setLetterSpacing (0.8);
     titre.setOutlineColor(sf::Color::Black);
-    titre.setOutlineThickness (1);
+    titre.setOutlineThickness (1.5);
     titre.setScale((width/1920)*2.5f,(height/1080)*1.f);
     titre.setPosition(sf::Vector2f(width/10,height/21.6));
 
@@ -96,7 +96,7 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
     bool peutmonter = true, peutdescendre = true;
     if (sf::Joystick::isConnected(0))
     {
-        sf::Time elapsed = clockAttente.getElapsedTime();
+        sf::Time elapsed = clockAttenteJoystick.getElapsedTime();
         int timeAttente = elapsed.asMilliseconds();
         if(timeAttente>150)
         {
@@ -113,7 +113,7 @@ void MenuPrincipal::bouger(int& selecEcran, sf::Event event,sf::RenderWindow& wi
                 selecEcran=3;
             else if(sf::Joystick::isButtonPressed(0, 0) && (_selection==2))
                 selecEcran=-1;
-            clockAttente.restart();
+            clockAttenteJoystick.restart();
         }
     }else
     {
@@ -656,13 +656,13 @@ void MenuSelection::reset(sf::RenderWindow& window)
     annulerChoixJ2.setString("");
 
     nomPersoJ1.setFillColor(sf::Color::White);
-    nomPersoJ1.setString("Jotaro");
+    nomPersoJ1.setString("Greg");
     nomPersoJ2.setFillColor(sf::Color::White);
     nomPersoJ2.setString("Dhalsim");
 
     spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
-    spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-    spriteP1.setScale(sf::Vector2f(3.5,3.5));
+    spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+    spriteP1.setScale(sf::Vector2f(1.9,1.9));
 
     spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));

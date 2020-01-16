@@ -286,7 +286,7 @@ class MenuSelection {
 
 		/**
 	   * \attribute sf::Texture texturePersos
-	   * \brief Texture des personnages 
+	   * \brief Texture des personnages
 	   *
 	   * Texture des personnages affichés pour la sélection
 	   */
@@ -315,13 +315,13 @@ class MenuSelection {
 	   * Texture du fond du menu
 	   */
 		sf::Texture menuFond;
-		
+
 		/**
 	   * \attribute sf::Sprite spriteFond
 	   * \brief Sprite du fond du menu
 	   *
 	   * Sprite du fond du menu
-	   */	
+	   */
 		sf::Sprite spriteFond;
 
 		/**
@@ -370,7 +370,7 @@ class MenuSelection {
 	   * Personnage 1 = etat 0, Personnage 2 = etat 1 ...
 	   */
 		int etatPersoJ1 = 0;
-		
+
 		/**
 	   * \attribute int etatPersoJ2 = 1
 	   * \brief Personnage à afficher pour le joueur 2
@@ -378,7 +378,7 @@ class MenuSelection {
 	   * Personnage 1 = etat 0, Personnage 2 = etat 1 ...
 	   */
 		int etatPersoJ2 = 1;
-		
+
 		/**
 	   * \attribute int choixJ1 = -1
 	   * \brief Choix du personnage pour le joueur 1
@@ -386,7 +386,7 @@ class MenuSelection {
 	   * ChoixJ1 = -1 => pas de selection, choixJ1 = 2 => Personnage 1 selectionné
 	   */
 		int choixJ1 = -1;
-		
+
 		/**
 	   * \attribute int choixJ2 = -1
 	   * \brief Choix du personnage pour le joueur 2
@@ -421,7 +421,7 @@ class MenuSelection {
 		sf::Music _effetSon;
 
 	public :
-	
+
 		/**
 	   * \fn MenuSelection()
 	   * \brief Constructeur de MenuSelection
@@ -429,7 +429,7 @@ class MenuSelection {
 	   *  Constructeur de MenuSelection
 	   */
 		MenuSelection();
-		
+
 		/**
 	   * \fn MenuSelection(sf::RenderWindow&)
 	   * \brief Constructeur de MenuSelection avec la gestion de la fenêtre en paramètre
@@ -437,7 +437,7 @@ class MenuSelection {
 	   *  Constructeur de MenuSelection avec la gestion de la fenêtre en paramètre
 	   */
 		MenuSelection(sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void draw(sf::RenderWindow &window)
 	   * \brief Gestion des affichages du menu
@@ -453,7 +453,7 @@ class MenuSelection {
 	   *  Passer au personnage suivant pour le joueur 1
 	   */
 		void persoSuivant_P1(int&,sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void persoPrecedent_P1(int&,sf::RenderWindow&)
 	   * \brief Passer au personnage précédent pour le joueur 1
@@ -469,7 +469,7 @@ class MenuSelection {
 	   *  Passer au personnage suivant pour le joueur 2
 	   */
 		void persoSuivant_P2(int&,sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void persoPrecedent_P1(int&,sf::RenderWindow&)
 	   * \brief Passer au personnage précédent pour le joueur 2
@@ -477,7 +477,7 @@ class MenuSelection {
 	   *  Passer au personnage précédent pour le joueur 2
 	   */
 		void persoPrecedent_P2(int&,sf::RenderWindow&);
-	
+
 		/**
 	   * \fn void bouger(sf::Event,sf::RenderWindow&)
 	   * \brief Pression des touches
@@ -485,15 +485,15 @@ class MenuSelection {
 	   * Pression des touches pour passer au personnage suivant/précédent
 	   */
 		void bouger(sf::Event,sf::RenderWindow&);
-		
+
 		/**
 	   * \fn int validationPerso(sf::Event event,int&,int&)
-	   * \brief Valider les personnages 
+	   * \brief Valider les personnages
 	   *
-	   * Valider les personnages 
+	   * Valider les personnages
 	   */
 		int validationPerso(sf::Event event,int&,int&);
-		
+
 		/**
 	   * \fn void reset(sf::RenderWindow&)
 	   * \brief Réinitialiser les paramètres pour une deuxieme selection
@@ -501,7 +501,7 @@ class MenuSelection {
 	   *  Reinitialiser les paramètres pour une deuxième selection après un combat ou après un retour au menu principal.
 	   */
 		void reset(sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void resetClock()
 	   * \brief Réinitialiser les horloges
@@ -509,7 +509,7 @@ class MenuSelection {
 	   *  Reinitialiser les horloges pour l'attente boutons et joystick.
 	   */
 		void resetClock();
-		
+
 		/**
 	   * \fn void initValidationPerso()
 	   * \brief Initialiser l'état de sélection du joueur 2
@@ -528,7 +528,7 @@ class MenuCommandes {
 	   *  Texture pour affichage des commandes du joueur 1
 	   */
 		sf::Texture texturej1;
-		
+
 		/**
 	   * \attribute sf::Texture texturej2
 	   * \brief Texture pour affichage des commandes du joueur 2
@@ -536,7 +536,7 @@ class MenuCommandes {
 	   *  Texture pour affichage des commandes du joueur 2
 	   */
 		sf::Texture texturej2;
-		
+
 		/**
 	   * \attribute sf::Sprite spriteCommandes[2]
 	   * \brief Sprites pour l'affichage des commandes
@@ -544,7 +544,7 @@ class MenuCommandes {
 	   *  Sprites pour l'affichage des commandes
 	   */
 		sf::Sprite spriteCommandes[2];
-		
+
 		/**
 	   * \attribute sf::Font fontCommandes
 	   * \brief Police pour les textes du menu commande
@@ -552,7 +552,7 @@ class MenuCommandes {
 	   *  Police pour les textes du menu commande
 	   */
 		sf::Font fontCommandes;
-		
+
 		/**
 	   * \attribute sf::Font fontCommandes
 	   * \brief Texte pour afficher la commande de retour
@@ -560,7 +560,7 @@ class MenuCommandes {
 	   *  Instructions pour le retour au menu principal
 	   */
 		sf::Text retour;
-		
+
 		/**
 	   * \attribute sf::Text j1
 	   * \brief Texte "Joueur 1"
@@ -568,7 +568,7 @@ class MenuCommandes {
 	   *  Texte "Joueur 1" au-dessus des commandes
 	   */
 		sf::Text j1;
-		
+
 		/**
 	   * \attribute sf::Text j2
 	   * \brief Texte "Joueur 2"
@@ -576,7 +576,7 @@ class MenuCommandes {
 	   *  Texte "Joueur 2" au-dessus des commandes
 	   */
 		sf::Text j2;
-		
+
 		/**
 	   * \attribute sf::Texture menuFond
 	   * \brief Texture du fond du menu
@@ -584,7 +584,7 @@ class MenuCommandes {
 	   *  Texture du fond du menu
 	   */
 		sf::Texture menuFond;
-		
+
 		/**
 	   * \attribute sf::Texture menuFond
 	   * \brief Sprite du fond du menu
@@ -592,7 +592,7 @@ class MenuCommandes {
 	   *  Sprite du fond du menu
 	   */
 		sf::Sprite spriteFond;
-		
+
 		/**
 	   * \attribute sf::RectangleShape ligneDelim
 	   * \brief Ligne de délimitation
@@ -600,7 +600,7 @@ class MenuCommandes {
 	   *  Ligne de délimitation entre les commandes J1 et J2
 	   */
 		sf::RectangleShape ligneDelim;
-		
+
 		/**
 	   * \attribute sf::Clock clockAttenteBoutton
 	   * \brief Temps d'attente entre chaque déplacement d'option avec le bouton
@@ -610,7 +610,7 @@ class MenuCommandes {
 		sf::Clock clockAttenteBoutton;
 
     public:
-		
+
 		/**
 	   * \fn MenuCommandes()
 	   * \brief Constructeur du MenuCommandes
@@ -618,15 +618,15 @@ class MenuCommandes {
 	   *  Constructeur du MenuCommandes
 	   */
 		MenuCommandes();
-		
+
 		/**
 	   * \fn MenuCommandes(sf::RenderWindow&)
-	   * \brief Constructeur du MenuCommandes 
+	   * \brief Constructeur du MenuCommandes
 	   *
 	   *  Constructeur du MenuCommandes avec la gestion de fenêtre en paramètre
 	   */
 		MenuCommandes(sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void retourMenu(int& selecEcran,sf::Event event)
 	   * \brief Retourner au menu principal
@@ -634,7 +634,7 @@ class MenuCommandes {
 	   *  Retourner au menu principal
 	   */
         void retourMenu(int& selecEcran,sf::Event event);
-		
+
 		/**
 	   * \fn void draw(sf::RenderWindow& window)
 	   * \brief Affichages du menu de commandes
@@ -654,71 +654,71 @@ class MenuBackground {
 	   * Numero de la map sélectionnée
 	   */
         int selection;
-		
-		/** 
+
+		/**
 	   * \attribute sf::Texture bg[6]
 	   * \brief Textures des aperçus des maps
 	   *
 	   * Textures des aperçus des maps
 	   */
         sf::Texture bg[6];
-		
-		/** 
+
+		/**
 	   * \attribute sf::Sprite spritebg[6]
 	   * \brief Sprites des aperçus des maps
 	   *
 	   * Sprites des aperçus des maps
 	   */
         sf::Sprite spritebg[6];
-		
-		/** 
+
+		/**
 	   * \attribute sf::RectangleShape rect[6]
 	   * \brief Rectangle des sélections de maps
 	   *
 	   * Permet de situer la sélection courante de la map
 	   */
         sf::RectangleShape rect[6];
-		
-		/** 
+
+		/**
 	   * \attribute sf::Font fontBackground
 	   * \brief Police des textes du menu
 	   *
 	   * Police des textes du menu
 	   */
         sf::Font fontBackground;
-		
-		/** 
+
+		/**
 	   * \attribute sf::Text retour
 	   * \brief Texte pour le retour au menu précédent
 	   *
 	   * Texte pour le retour au menu de sélection de personnages
 	   */
         sf::Text retour;
-		
-		/** 
+
+		/**
 	   * \attribute sf::Text titre
-	   * \brief Titre du menu 
+	   * \brief Titre du menu
 	   *
 	   * Titre du menu
 	   */
         sf::Text titre;
-		
-		/** 
+
+		/**
 	   * \attribute sf::Texture menuFond
-	   * \brief Texture du fond du menu 
+	   * \brief Texture du fond du menu
 	   *
-	   * Texture du fond du menu 
+	   * Texture du fond du menu
 	   */
         sf::Texture menuFond;
-		
-		/** 
+
+		/**
 	   * \attribute sf::Sprite spriteFond
-	   * \brief Sprite du fond du menu 
+	   * \brief Sprite du fond du menu
 	   *
-	   * Sprite du fond du menu 
+	   * Sprite du fond du menu
 	   */
         sf::Sprite spriteFond;
-      
+
 		/**
 	   * \attribute  float joystick0_axisX
 	   * \brief Position en x du joystick gauche (0)
@@ -762,7 +762,7 @@ class MenuBackground {
 	   * Constructeur du menu de maps
 	   */
         MenuBackground();
-		
+
 		/**
 	   * \fn MenuBackground(sf::RenderWindow&)
 	   * \brief Constructeur du menu de maps
@@ -770,7 +770,7 @@ class MenuBackground {
 	   * Constructeur du menu de maps avec la gestion de fenêtre en paramètre
 	   */
         MenuBackground(sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&)
 	   * \brief Retour au menu de sélection de personnages
@@ -778,7 +778,7 @@ class MenuBackground {
 	   * Retour au menu de sélection de personnages
 	   */
         void retourMenu2(int& selecEcran,sf::Event event, MenuSelection& m,sf::RenderWindow&);
-		
+
 		/**
 	   * \fn void draw(sf::RenderWindow& window)
 	   * \brief Affichages du menu de commandes
@@ -786,7 +786,7 @@ class MenuBackground {
 	   * Gestion des affichages (draw) du menu de commandes
 	   */
         void draw(sf::RenderWindow &window);
-		
+
 		/**
 		* \fn void bouger(sf::Event,sf::RenderWindow &window)
 		* \brief Sélection des options
@@ -794,7 +794,7 @@ class MenuBackground {
 		* Permet de déplacer la sélection pour choisir une option
 		*/
         void bouger(sf::Event,sf::RenderWindow &window);
-		
+
 		/**
 		* \fn void moveRight()
 		* \brief Déplacer à droite (changement d'option)
@@ -802,7 +802,7 @@ class MenuBackground {
 	    * Permet de déplacer la sélection pour sélectionner une option à droite
 	    */
         void moveRight();
-		
+
 		/**
 		* \fn void moveLeft()
 		* \brief Déplacer à gauche (changement d'option)
@@ -810,7 +810,7 @@ class MenuBackground {
 	    * Permet de déplacer la sélection pour sélectionner une option à gauche
 	    */
         void moveLeft();
-		
+
 		/**
 		* \fn void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&)
 		* \brief Sélectionner une map
@@ -818,9 +818,9 @@ class MenuBackground {
 	    * Permet de sélectionner une map
 	    */
         void selectionner(sf::Event event, sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
-		
+
 		/**
-		* \fn void valider(sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&);
+		* \fn void valider(sf::RenderWindow& window,int& selecEcran, Scene& s,sf::Music&)
 		* \brief Valider une map
 	    *
 	    * Permet de valider la map sélectionnée et la charger
@@ -830,6 +830,12 @@ class MenuBackground {
 
 };
 
+/**
+* \fn bool appuiBouttonManette(int joueur,int numBoutton,sf::Clock& clockAttente)
+* \brief Détecte l'appui sur un bouton de la manette
+*
+* Détecte l'appui sur un bouton de la manette
+*/
 bool appuiBouttonManette(int joueur,int numBoutton,sf::Clock& clockAttente);
 
 #endif // MENU_H

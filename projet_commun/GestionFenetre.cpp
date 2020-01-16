@@ -142,24 +142,24 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
     {
         if(selecChamp_P1==0)
         {
-            champion_P1=new Greg(-1,scene);
+            champion_P1=new Greg(-1,scene,window);
         }else if(selecChamp_P1==1)
         {
-            champion_P1=new Dhalsim(-1,scene);
+            champion_P1=new Dhalsim(-1,scene,window);
         }else if(selecChamp_P1==2)
         {
-            champion_P1=new Ryu(-1,scene);
+            champion_P1=new Ryu(-1,scene,window);
         }
 
         if(selecChamp_P2==0)
         {
-            champion_P2= new Greg(1,scene);
+            champion_P2= new Greg(1,scene,window);
         }else if(selecChamp_P2==1)
         {
-            champion_P2=new Dhalsim(1,scene);
+            champion_P2=new Dhalsim(1,scene,window);
         }else if(selecChamp_P2==2)
         {
-            champion_P2=new Ryu(1,scene);
+            champion_P2=new Ryu(1,scene,window);
         }
 
         if(selecChamp_P1!=-1 && selecChamp_P2!=-1)
@@ -189,7 +189,7 @@ void GestionFenetre::combat(sf::Event& event)
 	/* lancement des animations de début de combat */
 	if(!_tabActionCombat[0] || !_tabActionCombat[1])
 	{
-		///
+
 		readyFight.setTexture(readyF);
         readyFight.setTextureRect(sf::IntRect(666,435,300,74));
         readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,scene.getBottom()*0.5));
@@ -202,6 +202,10 @@ void GestionFenetre::combat(sf::Event& event)
 
 	}else if( (joueur1->getPV()<=0 || joueur2->getPV()<=0) && ( ( joueur1->getChampion()->auSol() && joueur2->getChampion()->auSol() ) || _tabActionCombat[4] ) )
     {
+        readyFight.setTexture(readyF);
+        readyFight.setTextureRect(sf::IntRect(377,384,287,128));
+        readyFight.setPosition(sf::Vector2f(window.getSize().x/2-readyFight.getGlobalBounds().width/2,scene.getBottom()*0.5));
+
     	_tabActionCombat[4]=true;
     	if(_tabActionCombat[5]==false)
     		_tabActionCombat[5]=joueur1->finPartie();
@@ -267,8 +271,8 @@ void GestionFenetre::affichageCombat()
     joueur1->affichageChampion(window);
     joueur2->affichageChampion(window);
 
-    joueur1->affichageEffet(window);
-    joueur2->affichageEffet(window);
+    joueur1->afficherHitspark(window);
+    joueur2->afficherHitspark(window);
 
     window.draw(readyFight);
     window.display();
