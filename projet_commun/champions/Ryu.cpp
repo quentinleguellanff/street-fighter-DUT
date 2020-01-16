@@ -246,7 +246,7 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
-	_cptSauter=0;_cptAction=0;
+	_cptSauter=0;_cptAction=0;_vsaut=-40;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
