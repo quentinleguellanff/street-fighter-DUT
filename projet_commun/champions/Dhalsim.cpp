@@ -55,7 +55,7 @@ bool Dhalsim::victoire()
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 
-			if (!_effetSonore.openFromFile("musique/Dhalsim/dhalsim_victoire.ogg"))
+			if (!_effetSonore.openFromFile("musique/Dhalsim/victoire.ogg"))
 		        std::cout<<"erreur musique";
 			_effetSonore.play();
 	    	break;
@@ -124,6 +124,10 @@ bool Dhalsim::mort()
 		    setSprite(102,5112,90,111);
 		    _hurtbox.setSize(sf::Vector2f(0,0));
 		    _posX-=deplacementX*_orientation;
+
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/mort.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -235,6 +239,10 @@ bool Dhalsim::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_posX-=10*SCALE*_orientation;
 
     		energie+=5;
+
+    		if (!_effetSonore.openFromFile("musique/Dhalsim/degats.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
     		break;
     	case 1:
     		_clockAnim.restart();
@@ -288,6 +296,10 @@ bool Dhalsim::apparition(sf::Sprite& bandeau)
 
 		_posY=_scene.getBottom()-_tailleSprite.y;
 		_sprite.setPosition(_posX,_posY);
+
+		if (!_effetSonore.openFromFile("musique/Dhalsim/apparition.ogg"))
+	        std::cout<<"erreur musique";
+		_effetSonore.play();
    	}else if(timeAnim>delai)
    	{
 	   	switch(_cptApparition)
@@ -656,6 +668,10 @@ bool Dhalsim::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int&
 		    setSprite(974,1705,50,126);
 		    _clockAnim.restart();
 		    _cptSauter++;
+
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/saut.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 	    }else
 	    {
 		    int n=0;
@@ -737,6 +753,10 @@ bool Dhalsim::sauterAvant(Personnage& champEnnemi)
 		    _clockAnim.restart();
 		    _cptSauter++;
 			setSprite(108,1720,68,111);
+
+			if (!_effetSonore.openFromFile("musique/Dhalsim/saut.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _clockAnim.restart();
@@ -829,6 +849,10 @@ bool Dhalsim::sauterArriere(Personnage& champEnnemi)
 		    _clockAnim.restart();
 		    _cptSauter++;
     		setSprite(108,1720,68,111);
+
+    		if (!_effetSonore.openFromFile("musique/Dhalsim/saut.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 	    	break;
 	    case 1:
 		    _clockAnim.restart();
@@ -945,6 +969,10 @@ bool Dhalsim::punch(Personnage& champEnnemi, int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+			if (!_effetSonore.openFromFile("musique/Dhalsim/coup_poing.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1005,6 +1033,10 @@ bool Dhalsim::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+			if (!_effetSonore.openFromFile("musique/Dhalsim/coup_poing.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1067,6 +1099,10 @@ bool Dhalsim::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,i
 		    setSprite(24,660,86,92);
 
 		    _posX+=2*SCALE*_orientation;
+
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/punch_sp.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1163,6 +1199,10 @@ bool Dhalsim::kick(Personnage& champEnnemi, int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.5,_tailleSprite.y*0.8));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+			if (!_effetSonore.openFromFile("musique/Dhalsim/coup_pied.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1234,6 +1274,10 @@ bool Dhalsim::sautKick(Personnage& champEnnemi, int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+			if (!_effetSonore.openFromFile("musique/Dhalsim/coup_pied.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 	    case 1:
 	    	_cptAction ++;
@@ -1296,6 +1340,10 @@ bool Dhalsim::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 		    setSprite(24,1165,77,113);
 
 		    _posX+=2*SCALE*_orientation;
+
+		    if (!_effetSonore.openFromFile("musique/Dhalsim/punch_sp.ogg"))
+		        std::cout<<"erreur musique";
+			_effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;

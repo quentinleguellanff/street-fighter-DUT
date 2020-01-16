@@ -242,13 +242,15 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
 
     spriteP1.setTexture(texturePersos);
     spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
-    spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-    spriteP1.setScale(sf::Vector2f(3.5,3.5));
+    spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+    spriteP1.setScale(sf::Vector2f(2,2));
 
     spriteP2.setTexture(texturePersos);
     spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
     spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-    spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+    spriteP2.setScale(sf::Vector2f(-1.9,1.9));
+
+    if((choixJ1 == -1) || (choixJ2 == -1)) {
         //texte : sélection des personnages
         titre.setFont(fontMenu);
         titre.setString("Selection des personnages");
@@ -280,7 +282,7 @@ MenuSelection::MenuSelection(sf::RenderWindow& window)
 
         //texte : nomPersoJ1
         nomPersoJ1.setFont(fontMenu);
-        nomPersoJ1.setString("Jotaro");
+        nomPersoJ1.setString("Greg");
         nomPersoJ1.setCharacterSize(40);
         nomPersoJ1.setFillColor(sf::Color::White);
         nomPersoJ1.setStyle(sf::Text::Bold);
@@ -322,7 +324,7 @@ void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
     case 0:
         etatPersoJ1 = 1;
         spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
-        spriteP1.setScale(sf::Vector2f(1.8,1.8));
+        spriteP1.setScale(sf::Vector2f(1.9,1.9));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
         break;
     case 1:
@@ -333,8 +335,8 @@ void MenuSelection::persoSuivant_P1(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ1 = 0;
-        spriteP1.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP1.setScale(sf::Vector2f(3.5,3.5));
+        spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP1.setScale(sf::Vector2f(1.8,1.8));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-127*3.5));
         break;
     }
@@ -347,7 +349,7 @@ void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
     case 0:
         etatPersoJ2 = 1;
         spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
-        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
+        spriteP2.setScale(sf::Vector2f(-1.9,1.9));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
         break;
     case 1:
@@ -358,8 +360,8 @@ void MenuSelection::persoSuivant_P2(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ2 = 0;
-        spriteP2.setTextureRect(sf::IntRect(26,27,109,127));
-        spriteP2.setScale(sf::Vector2f(-3.5,3.5));
+        spriteP2.setTextureRect(sf::IntRect(293,315,117,241));
+        spriteP2.setScale(sf::Vector2f(-1.8,1.8));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-127*3.5));
         break;
     }
@@ -383,7 +385,7 @@ void MenuSelection::persoPrecedent_P1(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ1 = 1;
-        spriteP1.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP1.setTextureRect(sf::IntRect(293,315,117,241));
         spriteP1.setScale(sf::Vector2f(1.8,1.8));
         spriteP1.setPosition(sf::Vector2f(window.getSize().x*0.15, hauteurPerso-220*1.8));
         break;
@@ -408,7 +410,7 @@ void MenuSelection::persoPrecedent_P2(int& etatPerso,sf::RenderWindow& window)
         break;
     case 2:
         etatPersoJ2 = 1;
-        spriteP2.setTextureRect(sf::IntRect(205,19,141,220));
+        spriteP2.setTextureRect(sf::IntRect(293,315,117,241));
         spriteP2.setScale(sf::Vector2f(-1.8,1.8));
         spriteP2.setPosition(sf::Vector2f(window.getSize().x*0.85, hauteurPerso-220*1.8));
         break;
@@ -481,7 +483,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 
         switch(etatPersoJ1)
         {
-            case 0: nomPersoJ1.setString("Jotaro");
+            case 0: nomPersoJ1.setString("Greg");
                     break;
             case 1: nomPersoJ1.setString("Dhalsim");
                     break;
@@ -551,7 +553,7 @@ void MenuSelection::bouger(sf::Event event,sf::RenderWindow& window)
 
         switch(etatPersoJ2)
         {
-            case 0: nomPersoJ2.setString("Jotaro");
+            case 0: nomPersoJ2.setString("Greg");
                     break;
             case 1: nomPersoJ2.setString("Dhalsim");
                     break;

@@ -53,9 +53,9 @@ bool Greg::victoire()//ok
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
 
-			if (!_effetSonore.openFromFile("musique/Greg/Greg_victoire.ogg"))
-		        std::cout<<"erreur musique";
-			_effetSonore.play();
+			if (!_effetSonore.openFromFile("musique/Greg/victoire.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -133,6 +133,10 @@ bool Greg::mort()//ok
 			setSprite(1,4753,65,97);
 
 			_hurtbox.setSize(sf::Vector2f(0,0));
+
+            if (!_effetSonore.openFromFile("musique/Greg/mort.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 	    	break;
 	    case 1:
 		    _cptApparition ++;
@@ -284,6 +288,10 @@ bool Greg::prendCoup(int* degats,sf::Sprite& effet,int& energie)//ok
     		//_posX-=1*SCALE*_orientation;
     		//_posY+=6*SCALE;
 
+            if (!_effetSonore.openFromFile("musique/Greg/degat.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
+
     		energie+=5;
     		break;
     	case 1:
@@ -332,6 +340,10 @@ bool Greg::apparition(sf::Sprite& inutile)//ok
    	{
 		setSprite(9,216,61,113);
 		_cptApparition ++;
+
+        if (!_effetSonore.openFromFile("musique/Greg/apparition.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
    	}else if(timeAnim>delaiAnim)
    	{
 	   	switch(_cptApparition)
@@ -629,6 +641,10 @@ bool Greg::sauter(int& lancerAttaque,Personnage& champEnnemi,int* degats,int& en
             if(timeAnim > 20){
                 _cptSauter ++;
                 _clockAnim.restart();
+
+                if (!_effetSonore.openFromFile("musique/Greg/saut.ogg"))
+                    std::cout<<"erreur musique";
+                _effetSonore.play();
             }
             setSprite(651,818,63,100);
             break;
@@ -729,6 +745,10 @@ bool Greg::sauterAvant(Personnage& champEnnemi)//ok
             if(timeAnim > 20){
                  _cptSauter ++;
                  _clockAnim.restart();
+
+                 if (!_effetSonore.openFromFile("musique/Greg/saut.ogg"))
+                    std::cout<<"erreur musique";
+                _effetSonore.play();
             }
         setSprite(651,820,63,98);
         _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.8));
@@ -861,6 +881,10 @@ bool Greg::sauterArriere(Personnage& champEnnemi)//ok
         if(timeAnim > 20){
              _cptSauter ++;
              _clockAnim.restart();
+
+            if (!_effetSonore.openFromFile("musique/Greg/saut.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
         }
         setSprite(651,818,63,100);
         break;
@@ -963,6 +987,10 @@ bool Greg::punch(Personnage& champEnnemi,int* degats,int& energie)//ok
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Greg/coup_poing.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1021,6 +1049,10 @@ bool Greg::sautPunch(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Greg/coup_poing.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1086,7 +1118,7 @@ bool Greg::punchSP(sf::Sprite& inutile,Personnage& champEnnemi, int* degats,int&
 		    setSprite(8,3795,66,86);
 
 		    _posY=_scene.getBottom()-_tailleSprite.y;
-		    if (!_effetSonore.openFromFile("musique/Greg/shoGregken.ogg"))
+		    if (!_effetSonore.openFromFile("musique/Greg/shoryuken.ogg"))
 		        std::cout<<"erreur musique";
 			_effetSonore.play();
 			break;
@@ -1196,6 +1228,10 @@ bool Greg::kick(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Greg/coup_pied.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
@@ -1258,6 +1294,10 @@ bool Greg::sautKick(Personnage& champEnnemi,int* degats,int& energie)
 
 		    _hurtbox.setSize(sf::Vector2f(_tailleSprite.x*0.6,_tailleSprite.y*0.9));
 			_hurtbox.setPosition(_posX+_tailleSprite.x*0.2*_orientation,_posY+_tailleSprite.y*0.1);
+
+            if (!_effetSonore.openFromFile("musique/Greg/coup_pied.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 	    case 1:
 	    	_cptAction ++;
@@ -1319,6 +1359,10 @@ bool Greg::kickSP(Personnage& champEnnemi, int* degats,int& energie)
 		    _clockAnim.restart();
 		    setSprite(1,3039,71,110);
 		    _posY=_scene.getBottom()-_tailleSprite.y;
+
+            if (!_effetSonore.openFromFile("musique/Greg/tatsumaki.ogg"))
+                std::cout<<"erreur musique";
+            _effetSonore.play();
 			break;
 		case 1:
 		    _cptAction ++;
