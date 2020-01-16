@@ -1458,7 +1458,7 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 		    _cptAction ++;
 		    _clockAnim.restart();
 		    setSprite(24,3233,76,120);
-		    _posX-=10*SCALE*_orientation;
+		    _posX-=10*_scale*_orientation;
 
 		    if (!_effetSonore.openFromFile("musique/Dhalsim/yoga_fire.ogg"))
 		        std::cout<<"erreur musique";
@@ -1472,22 +1472,22 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 		    _cptAction ++;
 		    _clockAnim.restart();
 		    setSprite(108,3233,81,120);
-		    _posX-=6*SCALE*_orientation;
+		    _posX-=6*_scale*_orientation;
 			break;
 		case 2:
 		    _cptAction ++;
 		    _clockAnim.restart();
 		    setSprite(197,3233,58,120);
-		    _posX+=28*SCALE*_orientation;
+		    _posX+=28*_scale*_orientation;
 			break;
 		case 3:
 		    _cptAction ++;
 		    _clockAnim.restart();
 		    setSprite(263,3233,92,120);
-		    _posX-=4*SCALE*_orientation;
+		    _posX-=4*_scale*_orientation;
 
 			bouleFeu.setTextureRect(sf::IntRect(357,3355,38,25));
-			bouleFeu.setScale(_orientation*SCALE,SCALE);
+			bouleFeu.setScale(_orientation*_scale,_scale);
 			bouleFeu.setPosition(_posX+(_tailleSprite.x*_orientation/2),_posY+(_tailleSprite.y/3));
 			break;
 		}
@@ -1546,7 +1546,7 @@ bool Dhalsim::SP(sf::Sprite& bouleFeu,Personnage& champEnnemi, int* degats,int& 
 			*degats=30;
 
 			if(champEnnemi.getPosX()==_scene.getRightLimit())
-				_posX-=25*SCALE*_orientation;
+				_posX-=25*_scale*_orientation;
 
 			bouleFeu.setTextureRect(sf::IntRect(0,0,0,0));
 			fini=true;

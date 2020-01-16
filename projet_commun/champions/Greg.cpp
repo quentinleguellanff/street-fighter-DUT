@@ -217,14 +217,14 @@ bool Greg::parade(int* degats,sf::Sprite& effet)//ok
     {
     	setSprite(70,4648,68,102);
     	_cptPrendCoup++;
-    	//_posX-=25*SCALE*_orientation;
+    	//_posX-=25*_scale*_orientation;
     }else if(timeAnim > delaiAnim)
     {
 		if(_cptPrendCoup==1)
 		{
 			_clockAnim.restart();
 			_cptPrendCoup++;
-    		//_posX-=25*SCALE*_orientation;
+    		//_posX-=25*_scale*_orientation;
 		}else{
 			_clockAnim.restart();
 			_cptPrendCoup=0;

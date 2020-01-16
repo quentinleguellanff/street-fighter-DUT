@@ -285,8 +285,8 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
             setSprite(574,4752,73,98);
-    		//_posX-=1*SCALE*_orientation;
-    		//_posY+=6*SCALE;
+    		//_posX-=1*_scale*_orientation;
+    		//_posY+=6*_scale;
 
             if (!_effetSonore.openFromFile("musique/Ryu/degat.ogg"))
                 std::cout<<"erreur musique";
@@ -298,26 +298,26 @@ bool Ryu::prendCoup(int* degats,sf::Sprite& effet,int& energie)
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(325,4752,73,98);
-    		//_posX+=1*SCALE*_orientation;
+    		//_posX+=1*_scale*_orientation;
     		break;
     	case 2:
     		_clockAnim.restart();
     		_cptPrendCoup++;
     		setSprite(574,4752,73,98);
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		break;
     	case 3:
     		_cptPrendCoup=0;
 		    _clockAnim.restart();
 		    fini=true;
 		    *degats = 0;
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		break;
     	/*case 4:
     		_clockAnim.restart();
     		_cptPrendCoup=0;
     		setSprite(220,4857,70,94);
-    		//_posX-=16*SCALE*_orientation;
+    		//_posX-=16*_scale*_orientation;
     		fini=true;
     		*degats=0;
     		break;*/
