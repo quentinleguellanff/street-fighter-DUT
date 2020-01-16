@@ -110,7 +110,7 @@ public:
 	*
 	* Chargement de la scène Futur
     */
-	void chargementFutur(sf::Music&)
+	void chargementFutur(sf::Music&);
 	
 	/**
     * \fn void chargementToit(sf::Music&)
