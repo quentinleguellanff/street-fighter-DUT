@@ -216,7 +216,7 @@ bool Dhalsim::prendCoup(int* degats,sf::Sprite& effet,int& energie)
 {
 	*degats=-1;
 	bool fini=false;
-	_cptSauter=0;_cptAction=0;
+	_cptSauter=0;_cptAction=0;_vsaut=-40;
 	effet.setTextureRect(sf::IntRect(0,0,0,0));
 	sf::Time elapsed = _clockAnim.getElapsedTime();
     int timeAnim = elapsed.asMilliseconds();
@@ -769,17 +769,18 @@ bool Dhalsim::sauterAvant(Personnage& champEnnemi)
 	    	break;
 	    case 7:
 		    _clockAnim.restart();
+		    setSprite(108,1720,68,111);
 		    if(_posY + _tailleSprite.y + _vsaut >= _scene.getBottom()){
 	            _cptSauter ++;
+	            setSprite(24,1720,82,111);
 	        }
-    		setSprite(108,1720,68,111);
 	    	break;
 	    case 8:
 		    _clockAnim.restart();
-		    setSprite(24,1720,82,111);
 		    _cptSauter=0;
 		    _vsaut=-40;
 			fini=true;
+			rotate(champEnnemi);
 	    	break;
 	    }   
 	}
@@ -861,16 +862,16 @@ bool Dhalsim::sauterArriere(Personnage& champEnnemi)
 	    	break;
 	    case 7:
 		    _clockAnim.restart();
+		    setSprite(108,1720,68,111);
 		    if(_posY + _tailleSprite.y + _vsaut >= _scene.getBottom()){
 	            _cptSauter ++;
+	            setSprite(24,1720,82,111);
 	        }
-    		setSprite(108,1720,68,111);
 	    	break;
 	    case 8:
 		    _clockAnim.restart();
 		    _cptSauter=0;
 		    _vsaut=-40;
-			setSprite(24,1720,82,111);
 			fini=true;
 	    	break;
 	    }

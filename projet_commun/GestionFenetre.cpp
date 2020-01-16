@@ -5,8 +5,7 @@ using namespace std;
 GestionFenetre::GestionFenetre()
 {
 
-	window.create(sf::VideoMode(1920,1080),"la Bagarre",sf::Style::Fullscreen);
-	window.setVerticalSyncEnabled(true);
+	window.create(sf::VideoMode(1920,1080),"la Bagarre");
 	window.setFramerateLimit(120);
 	window.setMouseCursorVisible(0);
 
@@ -143,18 +142,18 @@ void GestionFenetre::gestionSelecScene(sf::Event& event)
     {
         if(selecChamp_P1==0)
         {
-            champion_P1=new Jotaro(-1,scene);
+            champion_P1=new Greg(-1,scene);
         }else if(selecChamp_P1==1)
         {
             champion_P1=new Dhalsim(-1,scene);
         }else if(selecChamp_P1==2)
         {
-            champion_P1=new Greg(-1,scene);
+            champion_P1=new Ryu(-1,scene);
         }
 
         if(selecChamp_P2==0)
         {
-            champion_P2= new Jotaro(1,scene);
+            champion_P2= new Greg(1,scene);
         }else if(selecChamp_P2==1)
         {
             champion_P2=new Dhalsim(1,scene);
